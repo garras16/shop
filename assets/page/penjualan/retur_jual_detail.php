@@ -120,7 +120,7 @@ if ($row['status_bayar']=='1'){
 			</div>
 			<div class="col-md-6">
 				<div class="input-group">
-					<span class="input-group-addon"><i class="fa fa-file fa-fw" style="width: 58px;"></i><br><small>No. Nota</small></span>
+					<span class="input-group-addon"><i class="fa fa-file fa-fw" style="width: 68px;"></i><br><small>No. Nota</small></span>
 					<input class="form-control" id="no_nota_jual" name="no_nota_jual" style="padding: 20px 15px;" placeholder="No Nota Jual" title="No Nota Jual" value="<?php echo $row['invoice'] ?>" disabled="disabled" required>
 				</div>
 			</div>
@@ -132,7 +132,7 @@ if ($row['status_bayar']=='1'){
 			</div>
 			<div class="col-md-6">
 				<div class="input-group">
-					<span class="input-group-addon"><i class="fa fa-calendar fa-fw" style="width: 58px;"></i><br><small>Tgl.</small></span>
+					<span class="input-group-addon"><i class="fa fa-calendar fa-fw" style="width: 68px;"></i><br><small>Tgl.</small></span>
 					<input class="form-control" id="tgl_retur" name="tgl_retur" style="padding: 20px 15px;" placeholder="Tanggal Retur" title="Tanggal Retur" value="<?php echo date("d-m-Y", strtotime($row['tgl_retur'])) ?>" disabled="disabled" required>
 				</div>
 			</div>
@@ -146,7 +146,7 @@ if ($row['status_bayar']=='1'){
 			</div>
 			<div class="col-md-6">
 				<div class="input-group">
-					<span class="input-group-addon"><i class="fa fa-bookmark fa-fw"></i><br><small>Stat. Retur</small></span>
+					<span class="input-group-addon"><i class="fa fa-bookmark fa-fw" style="width: 68px"></i><br><small>Stat. Retur</small></span>
 					<input class="form-control" id="status_retur" name="status_retur" style="padding: 20px 15px;" placeholder="Status Retur" title="Status Retur" value="<?php echo $status_retur ?>" disabled="disabled" required>
 				</div>
 			</div>
@@ -372,7 +372,7 @@ WHERE id_jual=$id_jual");
 					<input type="hidden" id="id_retur_jual_detail" name="id_retur_jual_detail" value="">
 					<div class="col-md-12">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-file fa-fw"></i></span>
+						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-file fa-fw"></i><br><small>Barang</small></span>
 						<select id="select_barang_2" class="select2 form-control" disabled required="true">
 							<option value="" disabled selected>-= Pilih Barang Retur =-</option>
 							<?php 
@@ -402,14 +402,14 @@ WHERE id_jual=$id_jual");
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-shopping-cart fa-fw"></i></span>
-						<input id="qty_retur_2" name="qty_retur" type="tel" class="form-control" placeholder="Qty Retur" min="0" required>
+						<span class="input-group-addon"><i class="fa fa-shopping-cart fa-fw" style="width: 39px;"></i><br><small>Qty.</small></span>
+						<input id="qty_retur_2" name="qty_retur" style="padding: 20px 15px;" type="tel" class="form-control" placeholder="Qty Retur" min="0" required>
 						<span class="input-group-addon" id="det_satuan_2"></span>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-dollar fa-fw"></i></span>
-						<input id="harga_retur_2" name="harga_retur" type="tel" class="form-control" placeholder="Harga Retur" required>
+						<span class="input-group-addon"><i class="fa fa-dollar fa-fw" style="width: 39px;"></i><br><small>Harga</small></span>
+						<input id="harga_retur_2" name="harga_retur" type="tel" style="padding: 20px 15px;" class="form-control" placeholder="Harga Retur" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					</div>
