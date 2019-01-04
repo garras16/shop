@@ -60,7 +60,7 @@ $row=mysqli_fetch_array($sql);
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-			<p align="left"><a href="?page=master&mode=komisi" class="btn btn-danger"><i class="fa fa-arrow-left"></i> Kembali</a></p>
+			<p align="left"><a href="?page=master&mode=komisi class="btn btn-danger"><i class="fa fa-arrow-left"></i> Kembali</a></p>
 			
 			<p align="right"><button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah Jenjang</button></p>
 			<table id="table1" class="table table-bordered table-striped">

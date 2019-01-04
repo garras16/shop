@@ -59,7 +59,9 @@ $row=mysqli_fetch_array($sql);
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-			<a class="btn btn-danger" href="?page=komisi&mode=view_detail&id=<?php echo $row['id_karyawan'] ?>"><i class="fa fa-arrow-left"></i> Kembali</a><br/><br/>
+			
+			<a class="btn btn-danger" href="javascript:history.back()"><i class="fa fa-arrow-left"></i> Kembali</a><br/><br/>
+			<!--<a class="btn btn-danger" href="?page=komisi&mode=view_detail&id="<?php echo $row['id_karyawan'] ?>""><i class="fa fa-arrow-left"></i> Kembali</a><br/><br/>-->
 			
 			<div class="input-group">
 				<span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
