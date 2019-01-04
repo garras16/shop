@@ -1,16 +1,17 @@
 <?php
-if (isset($edit_karyawan_post)){
-	$sql = "UPDATE karyawan SET nama_karyawan='$nama_karyawan',barcode='$barcode',ktp='$ktp',no_hp='$no_hp',id_jabatan=$jabatan,gaji=$gaji WHERE id_karyawan='$id'";
-	if ($sql){
-		_buat_pesan("Input Berhasil","green");
-	} else {
-		_buat_pesan("Input Gagal","red");
+	if (isset($edit_karyawan_post)){
+		$sql = "UPDATE karyawan SET nama_karyawan='$nama_karyawan',barcode='$barcode',ktp='$ktp',no_hp='$no_hp',id_jabatan=$jabatan,gaji=$gaji WHERE id_karyawan='$id'";
+		if ($sql){
+			_buat_pesan("Input Berhasil","green");
+		} else {
+			_buat_pesan("Input Gagal","red");
+		}
+		_direct("index.php?page=master&mode=karyawan");
 	}
-	_direct("index.php?page=master&mode=karyawan");
-}
-$sql=mysqli_query($con, "SELECT * FROM karyawan WHERE id_karyawan=$id");
-$row=mysqli_fetch_array($sql);
+	$sql=mysqli_query($con, "SELECT * FROM karyawan WHERE id_karyawan=$id");
+	$row=mysqli_fetch_array($sql);
 ?>
+
 <!-- page content -->
 		<div class="right_col" role="main">
 			<div class="">

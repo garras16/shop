@@ -1,22 +1,22 @@
 <?php
-if (isset($tambah_karyawan_post)){
-	$sql = "INSERT INTO karyawan VALUES(null,'$nama_karyawan','$barcode','$ktp','$no_hp',$jabatan,$gaji,$harian,$lembur,$status)";
-	$q = mysqli_query($con, $sql);
-	if ($q){
-		_buat_pesan("Input Berhasil","green");
-	} else {
-		_buat_pesan("Input Gagal","red");
+	if (isset($tambah_karyawan_post)){
+		$sql = "INSERT INTO karyawan VALUES(null,'$nama_karyawan','$barcode','$ktp','$no_hp',$jabatan,$gaji,$harian,$lembur,$status)";
+		$q = mysqli_query($con, $sql);
+		if ($q){
+			_buat_pesan("Input Berhasil","green");
+		} else {
+			_buat_pesan("Input Gagal","red");
+		}
 	}
-}
-if (isset($edit_karyawan_post)){
-	$sql = "UPDATE karyawan SET nama_karyawan='$nama_karyawan',barcode='$barcode',ktp='$ktp',no_hp='$no_hp',id_jabatan=$jabatan,gaji=$gaji,harian=$harian,lembur=$lembur,status=$status WHERE id_karyawan='$id_karyawan'";
-	$q = mysqli_query($con, $sql);
-	if ($q){
-		_buat_pesan("Input Berhasil","green");
-	} else {
-		_buat_pesan("Input Gagal","red");
+	if (isset($edit_karyawan_post)){
+		$sql = "UPDATE karyawan SET nama_karyawan='$nama_karyawan',barcode='$barcode',ktp='$ktp',no_hp='$no_hp',id_jabatan=$jabatan,gaji=$gaji,harian=$harian,lembur=$lembur,status=$status WHERE id_karyawan='$id_karyawan'";
+		$q = mysqli_query($con, $sql);
+		if ($q){
+			_buat_pesan("Input Berhasil","green");
+		} else {
+			_buat_pesan("Input Gagal","red");
+		}
 	}
-}
 ?>
 <!-- page content -->
 <div class="right_col" role="main">
@@ -27,73 +27,73 @@ if (isset($edit_karyawan_post)){
 					<div class="x_title">
 						<h3>MASTER KARYAWAN</h3>
 							<?php
-							if (isset($pesan)){
-								echo '<span class="badge bg-' .$warna. '">' .$pesan. '</span>';
-							}
+								if (isset($pesan)){
+									echo '<span class="badge bg-' .$warna. '">' .$pesan. '</span>';
+								}
 							?>
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-					<div class="alert alert-info">
-					  <strong>Klik kolom pada tabel untuk ubah.</strong>
+						<div class="alert alert-info">
+						  <strong>Klik kolom pada tabel untuk ubah.</strong>
+						</div>
+						<p align="right"><button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah</button></p>
+						<div class="clearfix"></div>
+						<div class="table responsive">
+							<table id="table1" class="table table-bordered table-striped">
+								<thead>
+									<tr>
+										<th>No.</th>
+										<th>Nama Karyawan</th>
+										<th>Barcode</th>
+										<th>No KTP</th>
+										<th>No HP</th>
+										<th>Jabatan</th>
+										<th>Gaji (Rp)</th>
+										<th>Harian (Rp)</th>
+										<th>Lembur (Rp)</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php
+									$sql=mysqli_query($con, "SELECT * 
+									FROM
+									    karyawan
+								    INNER JOIN jabatan 
+								        ON (karyawan.id_jabatan = jabatan.id_jabatan)
+									ORDER BY karyawan.id_karyawan DESC");
+									$i=0;
+							
+									while($row=mysqli_fetch_array($sql)){
+									$i+=1;
+									$status = ($row['status'] == 1 ? 'Aktif' : 'Non Aktif');
+										echo '<tr>
+												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .$i. '</a></td>
+												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .$row['nama_karyawan']. '</a></td>
+												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .$row['barcode']. '</a></td>
+												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .$row['ktp']. '</a></td>
+												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .$row['no_hp']. '</a></td>
+												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .$row['nama_jabatan']. '</a></td>
+												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .format_uang($row['gaji']). '</a></td>
+												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .format_uang($row['harian']). '</a></td>
+												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .format_uang($row['lembur']). '</a></td>
+												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .$status. '</a></td>
+											</tr>';
+									}
+									?>
+								</tbody>
+							</table>
+						</div>
 					</div>
-			<p align="right"><button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah</button></p>
-			<div class="clearfix"></div>
-			<div class="table responsive">
-			<table id="table1" class="table table-bordered table-striped">
-				<thead>
-					<tr>
-						<th>No.</th>
-						<th>Nama Karyawan</th>
-						<th>Barcode</th>
-						<th>No KTP</th>
-						<th>No HP</th>
-						<th>Jabatan</th>
-						<th>Gaji (Rp)</th>
-						<th>Harian (Rp)</th>
-						<th>Lembur (Rp)</th>
-						<th>Status</th>
-					</tr>
-				</thead>
-				<tbody>
-<?php
-$sql=mysqli_query($con, "SELECT * 
-FROM
-    karyawan
-    INNER JOIN jabatan 
-        ON (karyawan.id_jabatan = jabatan.id_jabatan)
-ORDER BY karyawan.id_karyawan DESC");
-$i=0;
-while($row=mysqli_fetch_array($sql)){
-$i+=1;
-$status = ($row['status'] == 1 ? 'Aktif' : 'Non Aktif');
-	echo '			<tr>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .$i. '</a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .$row['nama_karyawan']. '</a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .$row['barcode']. '</a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .$row['ktp']. '</a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .$row['no_hp']. '</a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .$row['nama_jabatan']. '</a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .format_uang($row['gaji']). '</a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .format_uang($row['harian']). '</a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .format_uang($row['lembur']). '</a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .$status. '</a></td>
-					</tr>';
-}
-?>
-					
-				</tbody>
-			</table>
-			</div>
-		</div>
 		<!-- /page content -->
 
         
-					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 </div>
 
 	<!-- modal input -->

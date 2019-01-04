@@ -46,53 +46,52 @@ if (isset($_GET['cari'])){
 					</tr>
 				</thead>
 				<tbody>
-<?php
-$jumlah_masuk=0;$jumlah_keluar=0;
-$sql=mysqli_query($con, "SELECT * FROM kas_kecil WHERE jenis='KELUAR' AND MONTH(tanggal)=$bln_sql AND YEAR(tanggal)=$thn_sql");
-if (mysqli_num_rows($sql)>0) echo '<tr style="background: red">
-			<td colspan="6"><font color="white">PENGELUARAN</font></td>
-		</tr>';
-while($row=mysqli_fetch_array($sql)){
-$jumlah_keluar+=$row['jumlah'];
-	echo '	<tr>
-				<td><div style="min-width:70px">' .date("d-m-Y",strtotime($row['tanggal'])). '</div></td>
-				<td><div style="min-width:70px">' .$row['komponen']. '</div></td>
-				<td><div style="min-width:70px">' .$row['keterangan']. '</div></td>
-				<td align="right"><div style="min-width:70px">-</div></td>
-				<td align="right"><div style="min-width:70px">' .format_uang($row['jumlah']). '</div></td>
-			</tr>';
-}
+					<?php
+					$jumlah_masuk=0;$jumlah_keluar=0;
+					$sql=mysqli_query($con, "SELECT * FROM kas_kecil WHERE jenis='KELUAR' AND MONTH(tanggal)=$bln_sql AND YEAR(tanggal)=$thn_sql");
+					if (mysqli_num_rows($sql)>0) 
+						echo '<tr style="background: red">
+								<td colspan="6"><font color="white">PENGELUARAN</font></td>
+							</tr>';
+					while($row=mysqli_fetch_array($sql)){
+					$jumlah_keluar+=$row['jumlah'];
+						echo '<tr>
+								<td><div style="min-width:70px">' .date("d-m-Y",strtotime($row['tanggal'])). '</div></td>
+								<td><div style="min-width:70px">' .$row['komponen']. '</div></td>
+								<td><div style="min-width:70px">' .$row['keterangan']. '</div></td>
+								<td align="right"><div style="min-width:70px">-</div></td>
+								<td align="right"><div style="min-width:70px">' .format_uang($row['jumlah']). '</div></td>
+							</tr>';
+					}
 
-$sql2=mysqli_query($con, "SELECT * FROM kas_kecil WHERE jenis='MASUK' AND MONTH(tanggal)=$bln_sql AND YEAR(tanggal)=$thn_sql");
-if (mysqli_num_rows($sql2)>0) echo '<tr style="background: blue">
-			<td colspan="6"><font color="white">PEMASUKAN</font></td>
-		</tr>';
-while($row2=mysqli_fetch_array($sql2)){
-$jumlah_masuk+=$row2['jumlah'];
-	echo '	<tr>
-				<td><div style="min-width:70px">' .date("d-m-Y",strtotime($row2['tanggal'])). '</div></td>
-				<td><div style="min-width:70px">' .$row2['komponen']. '</div></td>
-				<td><div style="min-width:70px">' .$row2['keterangan']. '</div></td>
-				<td align="right"><div style="min-width:70px">' .format_uang($row2['jumlah']). '</div></td>
-				<td align="right"><div style="min-width:70px">-</div></td>
-			</tr>';
-}
-if (mysqli_num_rows($sql)>0 || mysqli_num_rows($sql2)>0) {
-	echo '<tr style="background: aqua">
-			<td colspan="3"><b>TOTAL</b></td>
-			<td align="right">' .format_uang($jumlah_masuk). '</td>
-			<td align="right">' .format_uang($jumlah_keluar). '</td>
-		  </tr>';
-}
-?>
-					
+					$sql2=mysqli_query($con, "SELECT * FROM kas_kecil WHERE jenis='MASUK' AND MONTH(tanggal)=$bln_sql AND YEAR(tanggal)=$thn_sql");
+					if (mysqli_num_rows($sql2)>0)
+						echo '<tr style="background: blue">
+								<td colspan="6"><font color="white">PEMASUKAN</font></td>
+							</tr>';
+					while($row2=mysqli_fetch_array($sql2)){
+					$jumlah_masuk+=$row2['jumlah'];
+						echo '<tr>
+								<td><div style="min-width:70px">' .date("d-m-Y",strtotime($row2['tanggal'])). '</div></td>
+								<td><div style="min-width:70px">' .$row2['komponen']. '</div></td>
+								<td><div style="min-width:70px">' .$row2['keterangan']. '</div></td>
+								<td align="right"><div style="min-width:70px">' .format_uang($row2['jumlah']). '</div></td>
+								<td align="right"><div style="min-width:70px">-</div></td>
+							</tr>';
+					}
+					if (mysqli_num_rows($sql)>0 || mysqli_num_rows($sql2)>0) {
+						echo '<tr style="background: aqua">
+								<td colspan="3"><b>TOTAL</b></td>
+								<td align="right">' .format_uang($jumlah_masuk). '</td>
+								<td align="right">' .format_uang($jumlah_keluar). '</td>
+							  </tr>';
+					}
+					?>
 				</tbody>
 			</table>
 			</div>
 		</div>
 		<!-- /page content -->
-
-        
 					</div>
 				</div>
 			</div>
