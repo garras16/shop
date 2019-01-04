@@ -202,6 +202,8 @@ function cek_valid(){
 	return true;
 }
 $(document).ready(function(){
-	$('#jumlah_bayar').inputmask('decimal', {allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, removeMaskOnSubmit: true});
+	$('#jumlah_bayar').inputmask('currency', { prefix : "Rp ", allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, removeMaskOnSubmit: true});
+
+	/*$('#jumlah_bayar').inputmask('decimal', { allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, removeMaskOnSubmit: true}); */
 });
 </script>
