@@ -203,11 +203,11 @@ $total_datang=$s['total_datang']+($s['total_datang']*$s['ppn_all_persen']/100);
 					<div class="col-md-12">
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-file fa-fw"></i><br><small>No. Nota</small></span>
-						<input id="no_nota" name="no_nota_beli" type="text" class="form-control" placeholder="No Nota Beli" maxlength="15" required>
+						<input id="no_nota" name="no_nota_beli" style="padding: 20px 15px;" type="text" class="form-control" placeholder="No Nota Beli" maxlength="15" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-building fa-fw" style="width: 46px;"></i><br><small>Supplier</small></span>
+						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-building fa-fw" style="width: 46px;"></i><br><small>Supplier</small></span>
 						<select name="id_supplier" class="select2 form-control" required="true">
 							<option value="" disabled selected>-= Pilih Supplier =-</option>
 							<?php 

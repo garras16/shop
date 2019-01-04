@@ -137,7 +137,7 @@ if ($row['status']=='1'){
 					<input type="hidden" name="tambah_retur_beli_post" value="true">
 					<div class="col-md-12">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-file fa-fw"></i><br><small>Nota Beli</small></span>
+						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-file fa-fw"></i><br><small>Nota Beli</small></span>
 						<select name="id_beli" class="select2 form-control" required="true">
 							<option value="" disabled selected>-= Pilih Nota Beli =-</option>
 							<?php 

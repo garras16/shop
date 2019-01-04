@@ -137,7 +137,7 @@ $i+=1;
 					<input type="hidden" name="tambah_rak_post" value="true">
 					<div class="col-md-12">
 						<div class="input-group">
-							<span class="input-group-addon" style="padding:2px 12px;"><i class="fa fa-building fa-fw"></i><br><small>Nama</small></span>
+							<span class="input-group-addon" style="padding:2px 12px;"><i class="fa fa-building fa-fw"></i><br><small>Gudang</small></span>
 							<select class="form-control select" id="select_gudang" name="id_gudang" required>
 								<option value="" disabled selected>Pilih Gudang</option>
 								<?php
@@ -150,8 +150,8 @@ $i+=1;
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-archive fa-fw"></i></span>
-							<input class="form-control" type="text" name="nama_rak" placeholder="Nama Rak" maxlength="20" required>
+							<span class="input-group-addon"><i class="fa fa-archive fa-fw" style="width: 42px;"></i><br><small>Nama</small></span>
+							<input class="form-control" type="text" name="nama_rak" style="padding: 20px 15px;" placeholder="Nama Rak" maxlength="20" required>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 					</div>

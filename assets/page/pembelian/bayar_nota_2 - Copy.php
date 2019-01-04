@@ -80,43 +80,43 @@ $id_supplier=$row['id_supplier'];
 						<input type="hidden" name="tambah_bayar_nota_beli_post" value="true">
 						<div class="col-xs-6">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-building fa-fw"></i></span>
+								<span class="input-group-addon"><i class="fa fa-building fa-fw"></i><br><small>Supplier</small></span>
 								<input class="form-control" value="<?php echo $row['nama_supplier']; ?>" title="Nama Supplier" readonly>
 							</div>
 						</div>
 						<div class="col-xs-6">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+								<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i><b><small>Tgl. Nota</small></span>
 								<input class="form-control" value="<?php echo date("d-m-Y", strtotime($row['tanggal'])); ?>" title="Tanggal Nota Beli" readonly>
 							</div>
 						</div>
 						<div class="col-xs-6">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-file fa-fw"></i></span>
+								<span class="input-group-addon"><i class="fa fa-file fa-fw"></i><b><small>No. Nota</small></span>
 								<input class="form-control" name="no_nota_beli" value="<?php echo $no_nota_beli ?>" title="No Nota Beli" readonly>
 							</div>
 						</div>
 						<div class="col-xs-6">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-money fa-fw"></i></span>
+								<span class="input-group-addon"><i class="fa fa-money fa-fw"></i><b><small>Total</small></span>
 								<input class="form-control" id="total_nota" value="<?php echo $row['total'] ?>" title="Total Nota Beli (Rp)" readonly>
 							</div>
 						</div>
 						<div class="col-xs-6">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-info fa-fw"></i></span>
+								<span class="input-group-addon"><i class="fa fa-info fa-fw"></i><b><small>Jenis</small></span>
 								<input class="form-control" name="jenis" value="<?php echo $jenis ?>" title="Jenis" readonly>
 							</div>
 						</div>
 						<div class="col-xs-6">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-money fa-fw"></i></span>
+								<span class="input-group-addon"><i class="fa fa-money fa-fw"></i><b><small>Sisa</small></span>
 								<input class="form-control" name="sisa_nota" value="" title="Sisa Nota (Rp)" readonly>
 							</div>
 						</div>
 						<div class="col-xs-12">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-money fa-fw"></i></span>
+								<span class="input-group-addon"><i class="fa fa-money fa-fw"></i><b><small>Jml.</small></span>
 <?php
 if ($jenis=='Retur'){
 	echo '						<input class="form-control" id="jumlah_bayar" name="jumlah_bayar" value="0" placeHolder="Jumlah Bayar (Rp)" readonly>';

@@ -11,7 +11,7 @@ if (isset($_GET['jenis'])){
 
 ?>
 <div class="input-group">
-	<span class="input-group-addon"><i class="fa fa-credit-card fa-fw"></i></span>
+	<span class="input-group-addon" style="font-size: 12px;"><i class="fa fa-credit-card fa-fw"></i><br><small>Komponen</small></span>
 	<select class="form-control select2" id="select_komponen" name="komponen" required>
 		<option value="" disabled selected>Pilih Komponen</option>
 <?php
