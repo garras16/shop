@@ -1,0 +1,40 @@
+a {
+color: #000000;
+}
+.dataTables_filter input {
+width: 400px;
+}
+.x_title span{
+	color:#fff;
+}
+.dropdown-menu>li>a {
+    color: #000;
+}
+.dropdown-menu>li>a:hover {
+    background: #B6B6B7;
+}
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+    color: #000;
+}
+input[readonly].form-control{
+	color: #000;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #000;
+}
+.dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_filter label {
+    float:left;
+	text-align:left;
+}
+
+thead, th {text-align: center;}
+
+/*select2: fixes word text wrap issues on long select values*/
+.select2-selection--single {
+  height: 100% !important;
+}
+.select2-selection__rendered{
+  word-wrap: break-word !important;
+  text-overflow: inherit !important;
+  white-space: normal !important;
+}
