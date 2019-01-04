@@ -34,7 +34,7 @@ if (isset($_GET['cari'])){
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-			<div class="table responsive">
+			<div class="table-responsive">
 			<table id="table1" class="table table-bordered table-striped">
 				<thead>
 					<tr>
