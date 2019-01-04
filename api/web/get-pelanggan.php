@@ -37,11 +37,11 @@ $row=mysqli_fetch_array($sql);
 </div>
 <div class="input-group">
 	<span class="input-group-addon"><i class="fa fa-user fa-fw"></i><br><small>No. Kontak</small></span>
-	<input name="kontak" class="form-control" placeholder="Kontak Person" value="<?php echo $row['kontakperson']; ?>" maxlength="30" required>
+	<input name="kontak" class="form-control" style="padding: 20px 15px;" placeholder="Kontak Person" value="<?php echo $row['kontakperson']; ?>" maxlength="30" required>
 </div>
 <div class="input-group">
 	<span class="input-group-addon"><i class="fa fa-phone fa-fw"></i><br><small>Tlp. Kontak</small></span>
-	<input class="form-control" type="number" name="telepon_kontak" placeholder="Telepon Kontak Person" value="<?php echo $row['telepon_kontak']; ?>" onKeyPress="if(this.value.length==20) return false;" required>
+	<input class="form-control" type="number" style="padding: 20px 15px;" name="telepon_kontak" placeholder="Telepon Kontak Person" value="<?php echo $row['telepon_kontak']; ?>" onKeyPress="if(this.value.length==20) return false;" required>
 </div>
 <div class="input-group">
 	<span class="input-group-addon"><i class="fa fa-arrows-v fa-fw" style="width:59px;"></i><br><small>Plafon Rp.</small></span>

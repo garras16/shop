@@ -83,35 +83,35 @@ FROM
 				<input type="hidden" name="edit_pembelian_post" value="true">
 				<div class="form-group">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+						<span class="input-group-addon"><i class="fa fa-calendar fa-fw" style="width: 45px;"></i><br><small>Tgl.</small></span>
 						<input class="form-control" id="tanggal" name="tanggal" type="date" value="<?php echo $row['tanggal']; ?>" readonly>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>									
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-file fa-fw"></i></span>
+						<span class="input-group-addon" style="font-size: 13px;"><i class="fa fa-file fa-fw"></i><br><small>No. Nota</small></span>
 						<input id="no_nota" name="no_nota" class="form-control" placeholder="No Nota Beli" value="<?php echo $row['no_nota_beli']; ?>" maxlength="15" readonly>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-building fa-fw"></i></span>
+						<span class="input-group-addon"><i class="fa fa-building fa-fw" style="width: 45px;"></i><br><small>Supplier</small></span>
 						<input id="nama_supplier" name="nama_supplier" class="form-control" placeholder="Nama Supplier" value="<?php echo $row['nama_supplier']; ?>" readonly>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="clearfix"></div><br/>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-truck fa-fw"></i></span>
+						<span class="input-group-addon" style="font-size: 12px;"><i class="fa fa-truck fa-fw" style="width: 45px;"></i><br><small>Ekspedisi</small></span>
 						<input id="nama_ekspedisi" name="nama_ekspedisi" class="form-control" placeholder="Nama Ekspedisi" value="<?php echo $row['nama_ekspedisi']; ?>" readonly>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-balance-scale fa-fw"></i></span>
+						<span class="input-group-addon"><i class="fa fa-balance-scale fa-fw" style="width: 45px;"></i><br><small>Berat</small></span>
 						<input class="form-control" placeholder="Berat Ekspedisi (gr)" value="<?php echo format_angka($row['berat_ekspedisi']); ?> gr" readonly>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-balance-scale fa-fw"></i></span>
+						<span class="input-group-addon"><i class="fa fa-balance-scale fa-fw" style="width: 45px;"></i><br><small>Vol.</small></span>
 						<input class="form-control" placeholder="Volume Ekspedisi (cm3)" value="<?php echo format_angka($row['volume_ekspedisi']); ?> cm3" readonly>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-money fa-fw"></i></span>
+						<span class="input-group-addon"><i class="fa fa-money fa-fw" style="width: 45px;"></i><br><small>Tarif</small></span>
 						<input class="form-control" placeholder="Tarif Ekspedisi (Rp)" value="Rp <?php echo format_uang($row['tarif_ekspedisi']); ?>" readonly>
 					</div>
 				</div>
@@ -265,31 +265,28 @@ $jumlah=$jumlah+$ppn_all_rp;
 				
 				<div class="col-md-6 text-right">
 					<div class="input-group">
-						<span class="input-group-addon" style="width:200px;text-align:left;color:#000"><small>Berat Datang (gr)</small></span>
-						<input class="form-control" id="berat_2" name="berat" value="<?php echo format_angka($berat) ?>" readonly>
+						<span class="input-group-addon" style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;"><small>Berat Datang (gr)</small></span>
+						<input class="form-control" id="berat_2" name="berat" style="background: #fff; outline: none; border: none;" value="<?php echo format_angka($berat) ?>" readonly>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon" style="width:200px;text-align:left;color:#000"><small>Volume Datang (cm3)</small></span>
-						<input class="form-control" id="volume_2" name="volume" value="<?php echo format_angka($volume) ?>" readonly>
+						<span class="input-group-addon" style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;"><small>Volume Datang (cm3)</small></span>
+						<input class="form-control" id="volume_2" style="background: #fff; outline: none; border: none;" name="volume" value="<?php echo format_angka($volume) ?>" readonly>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon" style="width:200px;text-align:left;color:#000"><small>Diskon Nota Beli (Rp)</small> <a title="Tidak mempengaruhi harga modal"><i class="fa fa-question-circle"></i></a></span>
-						<input class="form-control" id="diskon" name="total" value="<?php echo format_uang($diskon_all_rp) ?>" readonly>
-						<span class="input-group-btn">
-							<a data-toggle="modal" data-target="#myModal3" class="btn btn-primary"><span class="fa fa-edit"></span></a>
-						</span>
+						<span data-toggle="modal" data-target="#myModal3" class="input-group-addon" style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;"><small style="color: red;">Diskon Nota Beli (Rp)</small><a title=""><small style="font-size: 10px; color: blue;"> [UBAH]</small></a></span>
+						<input class="form-control" id="diskon" name="total" style="background: #fff; outline: none; border: none;" value="<?php echo format_uang($diskon_all_rp) ?>" readonly>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon" style="width:200px;text-align:left;color:#000"><small>PPN (Rp)</small></span>
-						<input class="form-control" id="diskon" name="total" value="<?php echo format_uang($ppn_all_rp) ?>" readonly>
+						<span class="input-group-addon" style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;"><small>PPN (Rp)</small></span>
+						<input class="form-control" id="diskon" name="total" style="background: #fff; outline: none; border: none;" value="<?php echo format_uang($ppn_all_rp) ?>" readonly>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon" style="width:200px;text-align:left;color:#000"><small>Tot. N.Beli Set. Disc & PPN (Rp)</small></span>
-						<input class="form-control" id="total_2" name="total" value="<?php echo format_uang($jumlah) ?>" readonly>
+						<span class="input-group-addon" style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;"><small>Tot. N.Beli Set. Disc & PPN (Rp)</small></span>
+						<input class="form-control" id="total_2" style="background: #fff; outline: none; border: none;" name="total" value="<?php echo format_uang($jumlah) ?>" readonly>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon" style="width:200px;text-align:left;color:#000"><small>Tot. Datang Set. Disc & PPN (Rp)</small></span>
-						<input class="form-control" id="total_2" name="total" value="<?php echo format_uang($total_datang) ?>" readonly>
+						<span class="input-group-addon" style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;"><small>Tot. Datang Set. Disc & PPN (Rp)</small></span>
+						<input class="form-control" id="total_2" style="background: #fff; outline: none; border: none;" name="total" value="<?php echo format_uang($total_datang) ?>" readonly>
 					</div>
 				</div>
 			</div>
@@ -316,7 +313,7 @@ $jumlah=$jumlah+$ppn_all_rp;
 					<input type="hidden" name="tambah_beli_detail_post" value="true">
 					<div id="add_beli_detail" class="col-md-12">
 						<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-archive fa-fw"></i></span>
+						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-archive fa-fw"></i><br><small>Barang</small></span>
 						<select id="select_barang" class="form-control select2"  name="id_barang_supplier" required>
 							<option value="" disabled selected>Pilih Barang</option>
 <?php
@@ -340,26 +337,26 @@ WHERE
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-shopping-cart fa-fw"></i></span>
-						<input id="qty_2" name="qty" type="text" class="form-control" placeholder="Qty Beli" required>
+						<span class="input-group-addon"><i class="fa fa-shopping-cart fa-fw" style="width: 38px;"></i><br><small>Qty.</small></span>
+						<input id="qty_2" name="qty" type="text" style="padding: 20px 15px;" class="form-control" placeholder="Qty Beli" required>
 						<span class="input-group-addon" id="satuan"></span>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-dollar fa-fw"></i></span>
-						<input class="form-control" id="harga_2" name="harga" type="text" placeholder="Harga Modal (Rp)" required>
+						<span class="input-group-addon"><i class="fa fa-dollar fa-fw" style="width: 38px;"></i><br><small>Modal</small></span>
+						<input class="form-control" style="padding: 20px 15px;" id="harga_2" name="harga" type="text" placeholder="Harga Modal (Rp)" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><div style="min-width:70px;text-align:left">Diskon Barang 1 (%)</div></span>
+						<span class="input-group-addon"><div style="min-width:70px;text-align:left">Diskon 1 (%)</div></span>
 						<input class="form-control" id="diskon_persen_2_1" name="diskon_persen_1" type="text" placeholder="Diskon 1" value="0" required>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><div style="min-width:70px;text-align:left">Diskon Barang 2 (%)</div></span>
+						<span class="input-group-addon"><div style="min-width:70px;text-align:left">Diskon 2 (%)</div></span>
 						<input class="form-control" id="diskon_persen_2_2" name="diskon_persen_2" type="text" placeholder="Diskon 2" value="0" required>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><div style="min-width:70px;text-align:left">Diskon Barang 3 (%)</div></span>
+						<span class="input-group-addon"><div style="min-width:70px;text-align:left">Diskon 3 (%)</div></span>
 						<input class="form-control" id="diskon_persen_2_3" name="diskon_persen_3" type="text" placeholder="Diskon 3" value="0" required>
 					</div>
 					</div>
@@ -431,18 +428,20 @@ WHERE
 				<form action="" method="post">
 					<input type="hidden" name="edit_diskon_nota_beli" value="true">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-cut fa-fw"></i></span>
-						<input type="number" id="diskon_nota_persen" name="diskon_all_persen" class="form-control" placeholder="Diskon Nota Beli (%)" title="Diskon Nota Beli (%)" value="<?php echo $diskon_nota*100 ?>" min="0" max="100">
+						<span class="input-group-addon" style="font-size: 12px;"><i class="fa fa-cut fa-fw"></i><br><small>Disk. Nota</small></span>
+						<input type="number" id="diskon_nota_persen" style="padding: 20px 15px;" name="diskon_all_persen" class="form-control" placeholder="Diskon Nota Beli (%)" title="Diskon Nota Beli (%)" value="<?php echo $diskon_nota*100 ?>" min="0" max="100">
 						<span class="input-group-addon">%</span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-cut fa-fw"></i></span>
-						<input id="diskon_nota_rp" class="form-control" placeholder="Diskon Nota Beli (Rp)" title="Diskon Nota Beli (Rp)" value="<?php echo $diskon_all_rp ?>" readonly>
+						<span class="input-group-addon"><i class="fa fa-cut fa-fw" style="width: 47px;"></i><br><small>Nominal</small></span>
+						<input id="diskon_nota_rp" class="form-control" style="padding: 20px 15px;" placeholder="Diskon Nota Beli (Rp)" title="Diskon Nota Beli (Rp)" value="<?php echo $diskon_all_rp ?>" readonly>
 					</div>
 					<div class="modal-footer">
 						<input type="submit" class="btn btn-primary" value="Simpan">
 					</div>
 				</form>
+
+				<small style="color: red;">* Tidak mempengaruhi harga modal</small>
 			</div>
 		</div>
 	</div>

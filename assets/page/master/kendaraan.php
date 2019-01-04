@@ -133,7 +133,7 @@ $canvass = ($row['canvass'] == 1 ? 'Ya' : 'Tidak');
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-check fa-fw" style="width: 48px;"></i><br><small>Varian</small></span>
+						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-check fa-fw" style="width: 48px;"></i><br><small>Varian</small></span>
 						<select class="form-control select" id="select_varian" name="id_varian" required>
 							<option value="" disabled selected>Pilih Varian</option>
 							
