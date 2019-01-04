@@ -84,35 +84,35 @@ FROM
 				<div class="form-group">
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-calendar fa-fw" style="width: 45px;"></i><br><small>Tgl.</small></span>
-						<input class="form-control" id="tanggal" name="tanggal" type="date" value="<?php echo $row['tanggal']; ?>" readonly>
+						<input class="form-control" id="tanggal" name="tanggal" type="date" style="padding: 20px 15px;" value="<?php echo $row['tanggal']; ?>" readonly>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>									
 					<div class="input-group">
 						<span class="input-group-addon" style="font-size: 13px;"><i class="fa fa-file fa-fw"></i><br><small>No. Nota</small></span>
-						<input id="no_nota" name="no_nota" class="form-control" placeholder="No Nota Beli" value="<?php echo $row['no_nota_beli']; ?>" maxlength="15" readonly>
+						<input id="no_nota" name="no_nota" style="padding: 20px 15px;" class="form-control" placeholder="No Nota Beli" value="<?php echo $row['no_nota_beli']; ?>" maxlength="15" readonly>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-building fa-fw" style="width: 45px;"></i><br><small>Supplier</small></span>
-						<input id="nama_supplier" name="nama_supplier" class="form-control" placeholder="Nama Supplier" value="<?php echo $row['nama_supplier']; ?>" readonly>
+						<input id="nama_supplier" name="nama_supplier" class="form-control" style="padding: 20px 15px;" placeholder="Nama Supplier" value="<?php echo $row['nama_supplier']; ?>" readonly>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="clearfix"></div><br/>
 					<div class="input-group">
 						<span class="input-group-addon" style="font-size: 12px;"><i class="fa fa-truck fa-fw" style="width: 45px;"></i><br><small>Ekspedisi</small></span>
-						<input id="nama_ekspedisi" name="nama_ekspedisi" class="form-control" placeholder="Nama Ekspedisi" value="<?php echo $row['nama_ekspedisi']; ?>" readonly>
+						<input id="nama_ekspedisi" name="nama_ekspedisi" style="padding: 20px 15px;" class="form-control" placeholder="Nama Ekspedisi" value="<?php echo $row['nama_ekspedisi']; ?>" readonly>
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-balance-scale fa-fw" style="width: 45px;"></i><br><small>Berat</small></span>
-						<input class="form-control" placeholder="Berat Ekspedisi (gr)" value="<?php echo format_angka($row['berat_ekspedisi']); ?> gr" readonly>
+						<input class="form-control" style="padding: 20px 15px;" placeholder="Berat Ekspedisi (gr)" value="<?php echo format_angka($row['berat_ekspedisi']); ?> gr" readonly>
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-balance-scale fa-fw" style="width: 45px;"></i><br><small>Vol.</small></span>
-						<input class="form-control" placeholder="Volume Ekspedisi (cm3)" value="<?php echo format_angka($row['volume_ekspedisi']); ?> cm3" readonly>
+						<input class="form-control" style="padding: 20px 15px;" placeholder="Volume Ekspedisi (cm3)" value="<?php echo format_angka($row['volume_ekspedisi']); ?> cm3" readonly>
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-money fa-fw" style="width: 45px;"></i><br><small>Tarif</small></span>
-						<input class="form-control" placeholder="Tarif Ekspedisi (Rp)" value="Rp <?php echo format_uang($row['tarif_ekspedisi']); ?>" readonly>
+						<input class="form-control" style="padding: 20px 15px;" placeholder="Tarif Ekspedisi (Rp)" value="Rp <?php echo format_uang($row['tarif_ekspedisi']); ?>" readonly>
 					</div>
 				</div>
 			</form>
