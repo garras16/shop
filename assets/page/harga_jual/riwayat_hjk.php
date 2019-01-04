@@ -38,16 +38,16 @@ $id_pelanggan=$row['id_pelanggan'];
 						<a class="btn btn-danger" href="?page=harga_jual&mode=view_detail&id=<?php echo $id_pelanggan ?>"><i class="fa fa-arrow-left"></i> Kembali</a>
 						<div class="clearfix"></div><br/>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-							<input class="form-control" value="<?php echo $row['nama_pelanggan'] ?>" readonly="readonly">
+							<span class="input-group-addon"><i class="fa fa-user fa-fw"></i><br><small>Pelanggan</small></span>
+							<input class="form-control" style="padding: 20px 15px;" value="<?php echo $row['nama_pelanggan'] ?>" readonly="readonly">
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-archive fa-fw"></i></span>
-							<input class="form-control" value="<?php echo $row['nama_barang'] ?>" readonly="readonly" style="color:black">
+							<span class="input-group-addon"><i class="fa fa-archive fa-fw" style="width: 55px;"></i><br><small>Barang</small></span>
+							<input class="form-control" style="padding: 20px 15px;" value="<?php echo $row['nama_barang'] ?>" readonly="readonly" style="color:black">
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-building fa-fw"></i></span>
-							<input class="form-control" value="<?php echo $row['nama_supplier'] ?>" readonly="readonly">
+							<span class="input-group-addon"><i class="fa fa-building fa-fw" style="width: 55px;"></i><br><small>Supplier</small></span>
+							<input class="form-control" style="padding: 20px 15px;" value="<?php echo $row['nama_supplier'] ?>" readonly="readonly">
 						</div>
 						<div class="clearfix"></div><br/>
 						

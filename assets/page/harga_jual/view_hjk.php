@@ -72,16 +72,16 @@ $row=mysqli_fetch_array($sql);
 					<div id="dummy"></div>
 					<div class="clearfix"></div>
 			<div class="input-group">
-				<span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-				<input class="form-control" value="<?php echo $row['nama_pelanggan'] ?>" readonly="readonly">
+				<span class="input-group-addon"><i class="fa fa-user fa-fw"></i><br><small>Pelanggan</small></span>
+				<input class="form-control" style="padding: 20px 15px;" value="<?php echo $row['nama_pelanggan'] ?>" readonly="readonly">
 			</div>
 			<div class="input-group">
-				<span class="input-group-addon"><i class="fa fa-archive fa-fw"></i></span>
-				<input class="form-control" value="<?php echo $row['nama_barang'] ?>" readonly="readonly" style="color:black">
+				<span class="input-group-addon"><i class="fa fa-archive fa-fw" style="width: 56px;"></i><br><small>Barang</small></span>
+				<input class="form-control" style="padding: 20px 15px;" value="<?php echo $row['nama_barang'] ?>" readonly="readonly" style="color:black">
 			</div>
 			<div class="input-group">
-				<span class="input-group-addon"><i class="fa fa-building fa-fw"></i></span>
-				<input class="form-control" value="<?php echo $row['nama_supplier'] ?>" readonly="readonly">
+				<span class="input-group-addon"><i class="fa fa-building fa-fw" style="width: 56px;"></i><br><small>Supplier</small></sup></span>
+				<input class="form-control" style="padding: 20px 15px;" value="<?php echo $row['nama_supplier'] ?>" readonly="readonly">
 			</div>
 			<br/><br/>
 			<div class="col-xs-12 bg-blue">

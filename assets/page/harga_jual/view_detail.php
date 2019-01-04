@@ -33,7 +33,7 @@ if (isset($tambah_harga_jual_tunai_post)){
 					</div>
 					<div class="x_content">
 						<div class="col-md-6">
-							<a href="?page=harga_jual"><button class="btn btn-danger"><i class="fa fa-arrow-left"></i> Kembali</button></a><br/><br/>
+							<a href="?page=master&mode=harga_jual"><button class="btn btn-danger"><i class="fa fa-arrow-left"></i> Kembali</button></a><br/><br/>
 						</div>
 						<div class="col md-6 text-right">
 							<a class="btn btn-primary" data-toggle="modal" data-target="#myAHJTModal"><i class="fa fa-plus"></i> Tambah Harga Jual Tunai</a>
@@ -121,7 +121,7 @@ $i+=1;
 					<input type="hidden" name="tambah_harga_jual_tunai_post" value="true">
 					<div class="col-md-12">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-bookmark fa-fw"></i></span>
+						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-bookmark fa-fw"></i><br><small>Barang</small></span>
 						<select class="select2 form-control" id="select_barang" name="id_barang_supplier" required>
 							<option value="" disabled selected>Pilih  Barang & Supplier</option>
 <?php 
@@ -147,8 +147,8 @@ WHERE
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-money fa-fw"></i></span>
-						<input id="harga_jual" type="text" name="harga_jual" class="form-control" placeholder="Harga Jual Tunai (Rp)" required>
+						<span class="input-group-addon"><i class="fa fa-money fa-fw" style="width: 39px;"></i><br><small>Harga</small></span>
+						<input id="harga_jual" type="text" name="harga_jual" style="padding: 20px 15px;" class="form-control" placeholder="Harga Jual Tunai (Rp)" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					</div>

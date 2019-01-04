@@ -111,7 +111,8 @@ while($row=mysqli_fetch_array($sql)){
 							<select class="form-control select" id="id_prov" name="id_prov" required>
 								<option value="" disabled selected>Pilih Provinsi</option>
 							<?php
-								$sql=mysqli_query($con, "SELECT
+							$sql=mysqli_query($con, "SELECT provinsi.nama_prov , negara.nama_negara FROM provinsi INNER JOIN negara ON (negara.id_negara = provinsi.id_negara)");
+								/*$sql=mysqli_query($con, "SELECT
     provinsi.nama_prov
 	, kabupaten.id_kab
 	, kabupaten.id_prov
@@ -122,7 +123,7 @@ FROM
     INNER JOIN provinsi 
         ON (kabupaten.id_prov = provinsi.id_prov)
     INNER JOIN negara 
-        ON (negara.id_negara = provinsi.id_negara) GROUP BY nama_prov");
+        ON (negara.id_negara = provinsi.id_negara) GROUP BY nama_prov");*/
 								while ($row=mysqli_fetch_array($sql)){
 									echo '<option negara="' .$row['nama_negara']. '" value="' .$row['id_prov']. '">' .$row['nama_prov']. '</option>';
 								}
