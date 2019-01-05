@@ -1,3 +1,2 @@
-# Layout sudah diperbaharui, format uang 2 angka dibelakang koma sudah sebagian
-# beberapa fungsi masih belum ada
-# view detail penjualan belum selesai
+# update mysqli
+folder mobile belum
