@@ -360,7 +360,7 @@ WHERE id_beli=$id_beli");
 					<input type="hidden" id="id_retur_beli_detail" name="id_retur_beli_detail" value="">
 					<div class="col-md-12">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-file fa-fw"></i></span>
+						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-file fa-fw"></i><br><small>Barang</small></span>
 						<select id="select_barang_2" name="id_retur_beli_detail" class="select2 form-control" disabled required="true">
 							<option value="" disabled selected>-= Pilih Barang Retur =-</option>
 							<?php 
@@ -395,14 +395,14 @@ WHERE id_beli=$id_beli");
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-shopping-cart fa-fw"></i></span>
-						<input id="qty_retur_2" name="qty_retur" type="tel" class="form-control" placeholder="Qty Retur" min="0" required>
+						<span class="input-group-addon"><i class="fa fa-shopping-cart fa-fw" style="width: 38px;"></i><br><small>Qty.</small></span>
+						<input id="qty_retur_2" name="qty_retur" type="tel" class="form-control" style="padding: 20px 15px;" placeholder="Qty Retur" min="0" required>
 						<span class="input-group-addon" id="det_satuan_2"></span>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-dollar fa-fw"></i></span>
-						<input id="harga_retur_2" name="harga_retur" type="tel" class="form-control" placeholder="Harga Retur" required>
+						<span class="input-group-addon"><i class="fa fa-dollar fa-fw" style="width: 38px;"></i><br><small>Harga</small></span>
+						<input id="harga_retur_2" style="padding: 20px 15px;" name="harga_retur" type="tel" class="form-control" placeholder="Harga Retur" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					</div>
