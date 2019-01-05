@@ -203,12 +203,12 @@ $sql2=mysqli_query($con, "SELECT * FROM barang_masuk WHERE id_beli_detail=$id_be
 	(mysqli_num_rows($sql2) > 0 ? $ada="1" : $ada="0");
 	($row['qty_di_rak']=='' ? $datang='0' : $datang=$row['qty_di_rak']);
 	
-	$diskon1=($row['harga']*$row['diskon_persen']/100);
-	$tot_set_disk_1=$row['qty']*($row['harga']-$diskon1);
-	$diskon2=($row['harga']-$diskon1)*$row['diskon_persen_2']/100;
-	$tot_set_disk_2=$row['qty'] * ($row['harga']-$diskon1-$diskon2);
-	$diskon3=($row['harga']-$diskon1-$diskon2)*$row['diskon_persen_3']/100;
-	$tot_set_disk_3=$row['qty'] * ($row['harga']-$diskon1-$diskon2-$diskon3);
+	$diskon1=($row['harga']*$row['qty'])*($row['diskon_persen']/100);
+	$tot_set_disk_1=($row['qty']*$row['harga'])-$diskon1;
+	$diskon2=$tot_set_disk_1*($row['diskon_persen_2']/100);
+	$tot_set_disk_2=($row['qty'] * $row['harga'])-$diskon1-$diskon2;
+	$diskon3=$tot_set_disk_2*($row['diskon_persen_3']/100);
+	$tot_set_disk_3=($row['qty']*$row['harga'])-$diskon1-$diskon2-$diskon3;
 	$jumlah+=$tot_set_disk_3;
 	
 	if ($_SESSION['posisi']=="DIREKSI" or $_SESSION['posisi']=="OWNER" OR isset($tambah_pembelian_post)){

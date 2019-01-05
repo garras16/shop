@@ -163,12 +163,12 @@ FROM
         ON (barang.id_satuan = satuan.id_satuan) WHERE (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier) AND jual_detail.id_jual='$id'");
 $total_jual=0;
 while($row=mysqli_fetch_array($sql)){
-	$diskon1=$row['harga_jual']*$row['diskon_persen']/100;
-	$tot_set_disk_1=$row['qty']*($row['harga_jual']-$diskon1);
-	$diskon2=($row['harga_jual']-$diskon1)*$row['diskon_persen_2']/100;
-	$tot_set_disk_2=$row['qty']*($row['harga_jual']-$diskon1-$diskon2);
-	$diskon3=($row['harga_jual']-$diskon1-$diskon2)*$row['diskon_persen_3']/100;
-	$tot_set_disk_3=$row['qty']*($row['harga_jual']-$diskon1-$diskon2-$diskon3);
+	$diskon1=$row['qty']*$row['harga_jual']*$row['diskon_persen']/100;
+	$tot_set_disk_1=($row['harga_jual']-$diskon1);
+	$diskon2=$row['qty']*($row['harga_jual']-$diskon1)*$row['diskon_persen_2']/100;
+	$tot_set_disk_2=($row['harga_jual']-$diskon1-$diskon2);
+	$diskon3=$row['qty']*($row['harga_jual']-$diskon1-$diskon2)*$row['diskon_persen_3']/100;
+	$tot_set_disk_3=($row['harga_jual']-$diskon1-$diskon2-$diskon3);
 	$total_jual+=$tot_set_disk_3;
 	echo '			<tr>
 						<td>' .$row['barcode']. '</td>
