@@ -196,7 +196,7 @@ $volume+=$row['volume'];
 
 $val1="";$val2="";
 ($row['qty']!=$row['qty_di_rak'] ? $tgl_datang="BELUM LENGKAP" : $tgl_datang=date("d-m-Y", strtotime($row['tgl_datang'])));
-($row['qty']!=$row['qty_di_rak'] ? $val="color: red; font-weight:bold" : $val="");
+($row['qty']!=$row['qty_di_rak'] ? $val="color: black; font-weight:bold" : $val="");
 $sql2=mysqli_query($con, "SELECT * FROM barang_masuk WHERE id_beli_detail=$id_beli_detail");
 	echo '			<tr>
 						<td><div style="min-width:70px; ' .$val. '">' .$row['nama_barang']. '</div></td>';
@@ -387,26 +387,26 @@ WHERE
 					<div id="add_beli_detail" class="col-md-12">
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-shopping-cart fa-fw" style="width: 34px;"></i><br><small>Qty.</small></span>
-						<input id="qty" name="qty" type="text" class="form-control" style="padding: 20px 15px;" placeholder="Qty Beli" required>
+						<input id="qty" min="0" name="qty" type="text" class="form-control" style="padding: 20px 15px;" placeholder="Qty Beli" required>
 						<span class="input-group-addon" id="satuan_2"></span>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-dollar fa-fw"></i><br><small>Harga</small></span>
-						<input class="form-control" style="padding: 20px 15px;" id="harga" name="harga" type="text" placeholder="Harga Modal (Rp)" required>
+						<input class="form-control" min="0" style="padding: 20px 15px;" id="harga" name="harga" type="text" placeholder="Harga Modal (Rp)" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><div style="min-width:18px;text-align:left">Diskon 1 (%)</div></span>
-						<input class="form-control" id="diskon_persen_1_1" name="diskon_persen_1" type="text" placeholder="Diskon 1" value="0" required>
+						<input class="form-control" min="0" max="100" id="diskon_persen_1_1" name="diskon_persen_1" type="text" placeholder="Diskon 1" value="0" required>
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><div style="min-width:18px;text-align:left">Diskon 2 (%)</div></span>
-						<input class="form-control" id="diskon_persen_1_2" name="diskon_persen_2" type="text" placeholder="Diskon 2" value="0" required>
+						<input class="form-control" min="0" max="100" id="diskon_persen_1_2" name="diskon_persen_2" type="text" placeholder="Diskon 2" value="0" required>
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><div style="min-width:18px;text-align:left">Diskon 3 (%)</div></span>
-						<input class="form-control" id="diskon_persen_1_3" name="diskon_persen_3" type="text" placeholder="Diskon 3" value="0" required>
+						<input class="form-control" min="0" max="100" id="diskon_persen_1_3" name="diskon_persen_3" type="text" placeholder="Diskon 3" value="0" required>
 					</div>
 					</div>
 					<div class="modal-footer">
@@ -431,7 +431,7 @@ WHERE
 					<input type="hidden" name="edit_diskon_nota_beli" value="true">
 					<div class="input-group">
 						<span class="input-group-addon" style="font-size: 12px;"><i class="fa fa-cut fa-fw"></i><br><small>Disk. Nota</small></span>
-						<input type="number" id="diskon_nota_persen" style="padding: 20px 15px;" name="diskon_all_persen" class="form-control" placeholder="Diskon Nota Beli (%)" title="Diskon Nota Beli (%)" value="<?php echo $diskon_nota*100 ?>" min="0" max="100">
+						<input type="number" id="diskon_nota_persen" min="0" max="100	" style="padding: 20px 15px;" name="diskon_all_persen" class="form-control" placeholder="Diskon Nota Beli (%)" title="Diskon Nota Beli (%)" value="<?php echo $diskon_nota*100 ?>" min="0" max="100">
 						<span class="input-group-addon">%</span>
 					</div>
 					<div class="input-group">

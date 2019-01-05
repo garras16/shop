@@ -277,10 +277,6 @@ if ($status=="1" or $locked){
 			</table>
 			
 			<div class="col-md-12">
-				<div class="col-md-4">
-				</div>
-				<div class="col-md-4">
-				</div>
 				<div class="col-md-4 text-right">
 					<div class="input-group">
 						<span class="input-group-addon" style="width:160px;text-align:left;color:#000">Total Jumlah Retur (Rp)</span>

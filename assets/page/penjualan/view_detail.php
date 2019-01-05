@@ -12,10 +12,10 @@ if (isset($edit_diskon_nota_jual)){
 	$sql=mysqli_query($con, "UPDATE jual SET diskon_all_persen=$diskon_all_persen WHERE id_jual=$id");
 	_direct("index.php?page=penjualan&mode=view_detail&id=$id");
 }
-	
+
 	$sql=mysqli_query($con, "SELECT status_konfirm FROM jual WHERE id_jual=$id");
 	$row=mysqli_fetch_array($sql);
-	(($row['status_konfirm']>=0) && ($row['status_konfirm']<=4) ? $dalam_kota=true : $dalam_kota=false); 
+	(($row['status_konfirm']>=0) && ($row['status_konfirm']<=4) ? $dalam_kota=true : $dalam_kota=false);
 	if ($dalam_kota){
 		$sql4=mysqli_query($con, "SELECT status FROM nota_sudah_cek WHERE id_jual=$id");
 		$row4=mysqli_fetch_array($sql4);
@@ -28,9 +28,9 @@ if (isset($edit_diskon_nota_jual)){
 	$sql=mysqli_query($con, "SELECT *
 FROM
     jual
-    INNER JOIN pelanggan 
+    INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
-    INNER JOIN karyawan 
+    INNER JOIN karyawan
         ON (jual.id_karyawan = karyawan.id_karyawan)
 WHERE id_jual=$id");
 	$row=mysqli_fetch_array($sql);
@@ -50,7 +50,7 @@ WHERE id_jual=$id");
 					<div class="x_content">
 					<?php (isset($_GET['direct']) ? $url="?page=laporan&mode=kirim_barang" : $url="?page=penjualan&mode=penjualan"); ?>
 			<a href="<?php echo $url ?>"><button style="margin-bottom:10px" class="btn btn-danger"><i class="fa fa-arrow-left"></i> Kembali</button></a>
-			
+
 			<form action="" method="post">
 				<input type="hidden" name="edit_penjualan_post" value="true">
 				<div class="col-sm-6">
@@ -115,12 +115,12 @@ WHERE id_jual=$id");
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
 					<div class="x_content">
-				
+
 				<table id="table1" class="table table-bordered table-striped table-responsive">
 				<thead>
 					<tr>
@@ -154,12 +154,12 @@ $sql=mysqli_query($con, "SELECT
     , harga_jual.harga_jual
 FROM
     jual_detail
-    INNER JOIN harga_jual 
+    INNER JOIN harga_jual
         ON (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
     , barang_supplier
-	INNER JOIN barang 
+	INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-    INNER JOIN satuan 
+    INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan) WHERE (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier) AND jual_detail.id_jual='$id'");
 $total_jual=0;
 while($row=mysqli_fetch_array($sql)){
@@ -186,13 +186,13 @@ while($row=mysqli_fetch_array($sql)){
 }
 $diskon_all_rp=($diskon_nota/100)*$total_jual;
 ?>
-					
+
 				</tbody>
 			</table>
 			<div class="col-md-12">
-				<div class="col-md-6">
+				<!--<div class="col-md-6">
 				</div>
-				
+				-->
 				<div class="col-md-6 text-right">
 					<div class="input-group">
 						<span class="input-group-addon" style="width:200px;text-align:left;color:#000"><small>Tot. Jual Set. Disc. (Rp)</small></span>
@@ -218,7 +218,7 @@ $diskon_all_rp=($diskon_nota/100)*$total_jual;
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><div style="min-width:50px">&times;</div></button>
 				<h4 class="modal-title">Ubah Data Diskon Nota Jual</h4>
 			</div>
-			<div class="modal-body">				
+			<div class="modal-body">
 				<form action="" method="post">
 					<input type="hidden" name="edit_diskon_nota_jual" value="true">
 					<div class="input-group">
@@ -244,7 +244,7 @@ $(document).ready(function(){
 	$('#total_jual').inputmask('decimal', {allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, removeMaskOnSubmit: true});
 	$('#diskon_nota').inputmask('decimal', {allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, removeMaskOnSubmit: true});
 	$('#diskon_nota_rp').inputmask('decimal', {allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, removeMaskOnSubmit: true});
-	$('#total_jual').val(<?php echo $total_jual ?>);	
+	$('#total_jual').val(<?php echo $total_jual ?>);
 	$('#diskon_nota').val(<?php echo $diskon_nota*$total_jual ?>);
 	$('#myModal').on('show.bs.modal', function(e){
 		$('#diskon_nota_persen').val(<?php echo $diskon_nota*100 ?>);
