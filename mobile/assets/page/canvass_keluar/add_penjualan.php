@@ -68,7 +68,7 @@ if (isset($tambah_penjualan_post)){
 		}
 	}
 	$sql=mysql_query("UPDATE canvass_keluar SET status='2' WHERE id_canvass_keluar=$id_canvass_keluar[0]");
-//	_direct("?page=canvass_keluar&mode=menu_penjualan");
+	_direct("?page=canvass_keluar&mode=menu_penjualan");
 }
 $id_karyawan=$_SESSION['id_karyawan'];
 $sql=mysql_query("SELECT plafon FROM pelanggan WHERE id_pelanggan=" .$_SESSION['id_pelanggan']. "");
