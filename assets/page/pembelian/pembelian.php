@@ -8,7 +8,7 @@ if (isset($tambah_pembelian_post)){
 	} else {
 		$sql = "INSERT INTO beli VALUES(null,'$no_nota_beli','$tanggal','$id_supplier',null,null,null,null,null,null,0,$diskon_all,$ppn_all)";
 		$q = mysqli_query($con, $sql);
-		$e_id = mysqli_insert_id();
+		$e_id = mysqli_insert_id($con);
 		if ($q){
 			_buat_pesan("Input Berhasil","green");
 		} else {
