@@ -1,6 +1,6 @@
 <?php
 if (isset($tambah_beli_detail_post)){
-	$sql=mysqli_query($con, "INSERT INTO beli_detail VALUES(null,$id,$id_barang_supplier,$qty,$harga,0,$diskon_persen,$diskon_rp)");
+	$sql=mysql_query("INSERT INTO beli_detail VALUES(null,$id,$id_barang_supplier,$qty,$harga,0,$diskon_persen,$diskon_rp)");
 	if ($sql){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -9,7 +9,7 @@ if (isset($tambah_beli_detail_post)){
 	_direct("?page=pembelian&mode=view_detail&id=" .$id);
 }
 if (isset($edit_beli_detail_post)){
-	$sql=mysqli_query($con, "UPDATE beli_detail SET qty=$qty,harga=$harga,diskon_persen=$diskon_persen,diskon_rp=$diskon_rp WHERE id_beli_detail=$id_beli_detail");
+	$sql=mysql_query("UPDATE beli_detail SET qty=$qty,harga=$harga,diskon_persen=$diskon_persen,diskon_rp=$diskon_rp WHERE id_beli_detail=$id_beli_detail");
 	if ($sql){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -18,10 +18,10 @@ if (isset($edit_beli_detail_post)){
 	_direct("?page=pembelian&mode=view_detail&id=" .$id);
 }
 if (isset($edit_diskon_nota_beli)){
-	$sql=mysqli_query($con, "UPDATE beli SET diskon_all_persen=$diskon_all_persen WHERE id_beli=$id");
+	$sql=mysql_query("UPDATE beli SET diskon_all_persen=$diskon_all_persen WHERE id_beli=$id");
 	_direct("?page=pembelian&mode=view_detail&id=" .$id);
 }
-$sql3=mysqli_query($con, "SELECT
+$sql3=mysql_query("SELECT
     SUM((beli_detail.harga-beli_detail.diskon_rp) * barang_masuk_rak.qty_di_rak) AS total_datang
 FROM
     beli_detail
@@ -32,19 +32,19 @@ FROM
     LEFT JOIN barang_masuk_rak 
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
 WHERE beli.id_beli=$id");
-$s=mysqli_fetch_array($sql3);
-$sql2=mysqli_query($con, "SELECT diskon_all_persen,ppn_all_persen FROM beli WHERE id_beli=$id");
-$row2=mysqli_fetch_array($sql2);
+$s=mysql_fetch_array($sql3);
+$sql2=mysql_query("SELECT diskon_all_persen,ppn_all_persen FROM beli WHERE id_beli=$id");
+$row2=mysql_fetch_array($sql2);
 $diskon_all_persen=$row2['diskon_all_persen'];
 $ppn_all_persen=$row2['ppn_all_persen'];
-	$sql=mysqli_query($con, "SELECT *
+	$sql=mysql_query("SELECT *
 FROM
     beli
     INNER JOIN supplier 
         ON (beli.id_supplier = supplier.id_supplier)
     LEFT JOIN ekspedisi 
         ON (beli.id_ekspedisi = ekspedisi.id_ekspedisi) WHERE id_beli=$id");
-	$row=mysqli_fetch_array($sql);
+	$row=mysql_fetch_array($sql);
 	$id_supplier=$row['id_supplier'];
 	$diskon_nota=$row['diskon_all_persen']/100;
 ?>
@@ -141,7 +141,7 @@ FROM
 				</thead>
 				<tbody>
 				<?php
-$sql=mysqli_query($con, "SELECT
+$sql=mysql_query("SELECT
     beli_detail.id_beli_detail
     , beli_detail.qty
     , beli_detail.harga
@@ -173,7 +173,7 @@ GROUP BY
 $berat=0;
 $volume=0;
 $jumlah=0;
-while($row=mysqli_fetch_array($sql)){
+while($row=mysql_fetch_array($sql)){
 $id_beli_detail=$row['id_beli_detail'];
 $berat+=$row['berat'];
 $volume+=$row['volume'];
@@ -182,10 +182,10 @@ $jumlah+=$row['qty']*($row['harga']-$row['diskon_rp']);
 $val1="";$val2="";
 ($row['qty']!=$row['qty_di_rak'] ? $tgl_datang="BELUM LENGKAP" : $tgl_datang=date("d-m-Y", strtotime($row['tgl_datang'])));
 ($row['qty']!=$row['qty_di_rak'] ? $val="color: red; font-weight:bold" : $val="");
-$sql2=mysqli_query($con, "SELECT * FROM barang_masuk WHERE id_beli_detail=$id_beli_detail");
+$sql2=mysql_query("SELECT * FROM barang_masuk WHERE id_beli_detail=$id_beli_detail");
 	echo '			<tr>
 						<td><div style="min-width:70px; ' .$val. '">' .$row['nama_barang']. '</div></td>';
-	(mysqli_num_rows($sql2) > 0 ? $ada="1" : $ada="0");
+	(mysql_num_rows($sql2) > 0 ? $ada="1" : $ada="0");
 	($row['qty_di_rak']=='' ? $datang='0' : $datang=$row['qty_di_rak']);
 	
 	if ($_SESSION['posisi']=="DIREKSI" or $_SESSION['posisi']=="OWNER" OR isset($tambah_pembelian_post)){
@@ -212,7 +212,7 @@ $sql2=mysqli_query($con, "SELECT * FROM barang_masuk WHERE id_beli_detail=$id_be
 					<td><div style="min-width:70px; ' .$val. '">' .format_angka($row['qty_di_rak']). ' ' .$row['nama_satuan']. '</div></td>';
 	}
 	
-	if (mysqli_num_rows($sql2) > 0){
+	if (mysql_num_rows($sql2) > 0){
 		echo '<td></td>';
 	} else {
 		if ($_SESSION['posisi']=="DIREKSI" or $_SESSION['posisi']=="OWNER" OR isset($tambah_pembelian_post)){
@@ -291,7 +291,7 @@ $jumlah=$jumlah+$ppn_all_rp;
 						<select id="select_barang" class="form-control select2"  name="id_barang_supplier" required>
 							<option value="" disabled selected>Pilih Barang</option>
 <?php
-$sql=mysqli_query($con, "SELECT
+$sql=mysql_query("SELECT
     barang_supplier.id_barang_supplier
     , barang.nama_barang
 	, satuan.nama_satuan
@@ -303,7 +303,7 @@ FROM
 		ON (satuan.id_satuan=barang.id_satuan)
 WHERE 
 	barang_supplier.id_supplier=$id_supplier");
-								while($row=mysqli_fetch_array($sql)){
+								while($row=mysql_fetch_array($sql)){
 									echo '<option data-satuan="' .$row['nama_satuan']. '" value="' .$row['id_barang_supplier']. '">' .$row['nama_barang']. '</option>';
 								}
 							?>

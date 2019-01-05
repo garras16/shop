@@ -27,7 +27,7 @@
 				</thead>
 				<tbody>
 				<?php
-$sql=mysqli_query($con, "SELECT
+$sql=mysql_query("SELECT
     barang.id_barang
     , barang.nama_barang
     , satuan.nama_satuan
@@ -36,9 +36,9 @@ FROM
     INNER JOIN satuan 
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE barang.status=1");
-while($row=mysqli_fetch_array($sql)){
+while($row=mysql_fetch_array($sql)){
 $id_barang=$row['id_barang'];
-$sql2=mysqli_query($con, "SELECT
+$sql2=mysql_query("SELECT
     SUM(barang_masuk_rak.stok) AS total
 FROM
     barang_supplier
@@ -51,7 +51,7 @@ FROM
     INNER JOIN barang_masuk_rak 
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
 WHERE barang.id_barang=$id_barang AND barang_masuk_rak.stok>0");
-$r=mysqli_fetch_array($sql2);
+$r=mysql_fetch_array($sql2);
 $total=$r['total'];
 if ($total!='')
 	echo '			<tr>

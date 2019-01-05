@@ -4,12 +4,12 @@ if (isset($tambah_bayar_nota_jual_post)){
 }
 if (isset($_GET['del'])){
 	$del=$_GET['del'];
-	$sql=mysqli_query($con, "SELECT * FROM bayar_nota_jual WHERE id_bayar=$del");
-	$row=mysqli_fetch_array($sql);
+	$sql=mysql_query("SELECT * FROM bayar_nota_jual WHERE id_bayar=$del");
+	$row=mysql_fetch_array($sql);
 	$no_nota_beli=$row['no_nota_jual'];
-	$sql=mysqli_query($con, "DELETE FROM bayar_nota_jual_detail WHERE id_bayar=$del");
-	$sql=mysqli_query($con, "DELETE FROM bayar_nota_jual WHERE id_bayar=$del");
-	$sql=mysqli_query($con, "UPDATE bayar_nota_jual SET status=2 WHERE no_nota_jual='$no_nota_beli'");
+	$sql=mysql_query("DELETE FROM bayar_nota_jual_detail WHERE id_bayar=$del");
+	$sql=mysql_query("DELETE FROM bayar_nota_jual WHERE id_bayar=$del");
+	$sql=mysql_query("UPDATE bayar_nota_jual SET status=2 WHERE no_nota_jual='$no_nota_beli'");
 	_direct("?page=penjualan&mode=bayar_nota");
 }
 ?>
@@ -65,7 +65,7 @@ if (isset($_GET['dari'])){
 } else {
 	$val="WHERE tgl_bayar > DATE_SUB(now(), INTERVAL 6 MONTH)";
 }
-$sql=mysqli_query($con, "SELECT
+$sql=mysql_query("SELECT
     bayar_nota_jual.id_bayar
     , bayar_nota_jual.tgl_bayar
     , bayar_nota_jual.no_nota_jual
@@ -84,20 +84,20 @@ FROM
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
 $val
 ORDER BY id_bayar DESC");
-while($row=mysqli_fetch_array($sql)){
+while($row=mysql_fetch_array($sql)){
 	$tmp_id_jual=$row['id_jual'];
-	$sql2=mysqli_query($con, "SELECT SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah_nota FROM jual_detail WHERE id_jual=$tmp_id_jual");
-	$b2=mysqli_fetch_array($sql2);
+	$sql2=mysql_query("SELECT SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah_nota FROM jual_detail WHERE id_jual=$tmp_id_jual");
+	$b2=mysql_fetch_array($sql2);
 	$jumlah_nota=$b2['jumlah_nota']-($b2['jumlah_nota']*$row['diskon_all_persen']/100);
 
 //-----------------------------------------------------------------------------------------	
 	$tmp_nota_jual=$row['no_nota_jual'];
-	$sql3=mysqli_query($con, "SELECT SUM(jumlah) AS jumlah_bayar FROM bayar_nota_jual WHERE no_nota_jual='$tmp_nota_jual'");
-	$b3=mysqli_fetch_array($sql3);
+	$sql3=mysql_query("SELECT SUM(jumlah) AS jumlah_bayar FROM bayar_nota_jual WHERE no_nota_jual='$tmp_nota_jual'");
+	$b3=mysql_fetch_array($sql3);
 	$jumlah_bayar=$b3['jumlah_bayar'];
 //-------------------------------------------------------------------------------------------
-	$sql3=mysqli_query($con, "SELECT SUM(bayar) AS jumlah_bayar FROM penagihan_detail WHERE id_jual=$tmp_id_jual");
-	$b3=mysqli_fetch_array($sql3);
+	$sql3=mysql_query("SELECT SUM(bayar) AS jumlah_bayar FROM penagihan_detail WHERE id_jual=$tmp_id_jual");
+	$b3=mysql_fetch_array($sql3);
 	$jumlah_bayar+=$b3['jumlah_bayar'];
 //-------------------------------------------------------------------------------------------
 	
@@ -151,11 +151,11 @@ if ($row['status']=='1'){
 					<input type="hidden" id="jumlah_bayar" name="jumlah_bayar" value="">
 					<div class="col-md-12">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-file fa-fw"></i><br><small>No. Nota Jual</small></span>
+						<span class="input-group-addon"><i class="fa fa-file fa-fw"></i></span>
 						<select id="select_nota" name="no_nota_jual" class="select2 form-control" required="true">
 							<option value="" disabled selected>-= No Nota Jual | Nama Pelanggan | Jumlah Nota (Rp) =-</option>
 							<?php 
-								$sql=mysqli_query($con, "SELECT 
+								$sql=mysql_query("SELECT 
     id_jual
     , jual.invoice
     , jual.diskon_all_persen
@@ -168,41 +168,41 @@ FROM
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
 WHERE (bayar_nota_jual.status IS NULL OR bayar_nota_jual.status=2 OR bayar_nota_jual.status=0) AND jual.status_konfirm < 5
 GROUP BY id_jual");
-								while($b=mysqli_fetch_array($sql)){
+								while($b=mysql_fetch_array($sql)){
 									$tmp_id_jual=$b['id_jual'];
-									$sql2=mysqli_query($con, "SELECT SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah_nota
+									$sql2=mysql_query("SELECT SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah_nota
 										FROM
 											jual
 											INNER JOIN jual_detail 
 												ON (jual.id_jual = jual_detail.id_jual)
 									WHERE jual.id_jual=" .$b['id_jual']);
-									$row2=mysqli_fetch_array($sql2);
+									$row2=mysql_fetch_array($sql2);
 									$jumlah_nota=$row2['jumlah_nota']-($row2['jumlah_nota']*$b['diskon_all_persen']/100);
 									
-									$sql2=mysqli_query($con, "SELECT SUM(jumlah) AS jumlah_bayar
+									$sql2=mysql_query("SELECT SUM(jumlah) AS jumlah_bayar
 									FROM
 										bayar_nota_jual
 										INNER JOIN jual 
 											ON (bayar_nota_jual.no_nota_jual = jual.invoice)
 									WHERE jual.id_jual=" .$b['id_jual']);
-									$row2=mysqli_fetch_array($sql2);
+									$row2=mysql_fetch_array($sql2);
 									$jumlah_bayar=$row2['jumlah_bayar'];
 
-									$sql2=mysqli_query($con, "SELECT SUM(bayar) AS jumlah_bayar
+									$sql2=mysql_query("SELECT SUM(bayar) AS jumlah_bayar
 									FROM
 										penagihan_detail
 										INNER JOIN jual 
 											ON (penagihan_detail.id_jual = jual.id_jual)
 									WHERE jual.id_jual=" .$b['id_jual']);
-									$row2=mysqli_fetch_array($sql2);
+									$row2=mysql_fetch_array($sql2);
 									$jumlah_bayar+=$row2['jumlah_bayar'];
 
 									$sisa_piutang=$jumlah_nota-$jumlah_bayar;
-									$sql2=mysqli_query($con, "SELECT SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah
+									$sql2=mysql_query("SELECT SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah
 									FROM
 										jual_detail 
 									WHERE id_jual=$tmp_id_jual");
-									$b2=mysqli_fetch_array($sql2);
+									$b2=mysql_fetch_array($sql2);
 									if ($sisa_piutang>0) echo '<option data-piutang="' .$sisa_piutang. '" data-jumlah="' .$b2['jumlah']. '" value="' .$b['invoice']. '">' .$b['invoice']. ' | ' .$b['nama_pelanggan']. ' | Rp ' .format_uang($b2['jumlah']). '</option>';
 								}
 							?>
@@ -210,7 +210,7 @@ GROUP BY id_jual");
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-money fa-fw"></i><br><small>Jenis</small></span>
+						<span class="input-group-addon"><i class="fa fa-money fa-fw"></i></span>
 						<select id="jenis" name="jenis" class="select2 form-control" required="true">
 							<option value="" disabled selected>-= Pilih Jenis Bayar =-</option>
 							<option value="Transfer">Transfer</option>

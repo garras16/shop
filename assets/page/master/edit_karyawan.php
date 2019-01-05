@@ -1,17 +1,16 @@
 <?php
-	if (isset($edit_karyawan_post)){
-		$sql = "UPDATE karyawan SET nama_karyawan='$nama_karyawan',barcode='$barcode',ktp='$ktp',no_hp='$no_hp',id_jabatan=$jabatan,gaji=$gaji WHERE id_karyawan='$id'";
-		if ($sql){
-			_buat_pesan("Input Berhasil","green");
-		} else {
-			_buat_pesan("Input Gagal","red");
-		}
-		_direct("index.php?page=master&mode=karyawan");
+if (isset($edit_karyawan_post)){
+	$sql = "UPDATE karyawan SET nama_karyawan='$nama_karyawan',barcode='$barcode',ktp='$ktp',no_hp='$no_hp',id_jabatan=$jabatan,gaji=$gaji WHERE id_karyawan='$id'";
+	if ($sql){
+		_buat_pesan("Input Berhasil","green");
+	} else {
+		_buat_pesan("Input Gagal","red");
 	}
-	$sql=mysqli_query($con, "SELECT * FROM karyawan WHERE id_karyawan=$id");
-	$row=mysqli_fetch_array($sql);
+	_direct("index.php?page=master&mode=karyawan");
+}
+$sql=mysql_query("SELECT * FROM karyawan WHERE id_karyawan=$id");
+$row=mysql_fetch_array($sql);
 ?>
-
 <!-- page content -->
 		<div class="right_col" role="main">
 			<div class="">
@@ -47,8 +46,8 @@
 						<select class="form-control" id="select_jabatan" name="jabatan" required>
 							<option value="" disabled selected>Pilih Jabatan</option>
 							<?php 
-								$sql=mysqli_query($con, "select * from jabatan");
-								while($b=mysqli_fetch_array($sql)){
+								$sql=mysql_query("select * from jabatan");
+								while($b=mysql_fetch_array($sql)){
 							?>	
 							<option value="<?php echo $b['id_jabatan']; ?>" <?php echo select_opsi($row['id_jabatan'], $b['id_jabatan']) ?> ><?php echo $b['nama_jabatan'];?></option>
 							<?php 

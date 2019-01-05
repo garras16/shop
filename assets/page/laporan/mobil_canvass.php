@@ -33,20 +33,20 @@ if (isset($_GET['cari'])){
 	$val="canvass_keluar.status=4 AND MONTH(tanggal_canvass)=MONTH(CURRENT_DATE()) AND YEAR(tanggal_canvass)=YEAR(CURRENT_DATE())";
 }
 
-$sql=mysqli_query($con, "SELECT *
+$sql=mysql_query("SELECT *
 FROM
     canvass_keluar
     INNER JOIN kendaraan 
         ON (canvass_keluar.id_mobil = kendaraan.id_kendaraan)
 WHERE $val
 ORDER BY id_canvass_keluar DESC");
-while($row=mysqli_fetch_array($sql)){
+while($row=mysql_fetch_array($sql)){
 	echo '			<tr>
 						<td><a data-toggle="modal" data-target="#myModal" data-id-canvass="' .$row['id_canvass_keluar']. '"><div style="min-width:70px">' .date("d-m-Y",strtotime($row['tanggal_canvass'])). '</div></a></td>
 						<td><a data-toggle="modal" data-target="#myModal" data-id-canvass="' .$row['id_canvass_keluar']. '"><div style="min-width:70px">' .$row['nama_kendaraan']. '</div></a></td>
 						<td><a data-toggle="modal" data-target="#myModal" data-id-canvass="' .$row['id_canvass_keluar']. '"><div style="min-width:70px">' .$row['plat']. '</div></a></td>
 						<td><a data-toggle="modal" data-target="#myModal" data-id-canvass="' .$row['id_canvass_keluar']. '"><div style="min-width:70px">';
-	$sql2=mysqli_query($con, "SELECT nama_karyawan, nama_jabatan
+	$sql2=mysql_query("SELECT nama_karyawan, nama_jabatan
 FROM
     canvass_keluar_karyawan
     INNER JOIN karyawan 
@@ -54,7 +54,7 @@ FROM
     INNER JOIN jabatan 
         ON (karyawan.id_jabatan = jabatan.id_jabatan)
 WHERE id_canvass_keluar=" .$row['id_canvass_keluar']);
-	while ($row2=mysqli_fetch_array($sql2)){
+	while ($row2=mysql_fetch_array($sql2)){
 		echo "- " .$row2['nama_karyawan']. " (" .$row2['nama_jabatan']. ")<br>";
 	}
 	echo '</div></a></td></tr>';

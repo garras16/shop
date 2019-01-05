@@ -12,8 +12,8 @@
 	}
 
 	if ($_SESSION['posisi']=='DIREKSI'){
-		$sql=mysqli_query($con, "SELECT * FROM penagihan WHERE status_tagih<>2 AND DATE(tanggal_tagih) <> DATE(NOW())");
-		if (mysqli_num_rows($sql)>0){
+		$sql=mysql_query("SELECT * FROM penagihan WHERE status_tagih<>2 AND DATE(tanggal_tagih) <> DATE(NOW())");
+		if (mysql_num_rows($sql)>0){
 			if (strpos($_SERVER['REQUEST_URI'], 'page=penagihan&mode=penagihan') == false) _direct("?page=penagihan&mode=penagihan");
 		}
 	}

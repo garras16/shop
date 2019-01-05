@@ -1,7 +1,7 @@
 <?php
 if (isset($tambah_input_kas_kecil_post)){
 	$sql = "INSERT INTO kas_kecil VALUES(null,'$tanggal','$komponen','$jenis','$keterangan',$jumlah)";
-	$q = mysqli_query($con, $sql);
+	$q = mysql_query($sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -11,7 +11,7 @@ if (isset($tambah_input_kas_kecil_post)){
 }
 if (isset($_GET['del'])){
 	$sql = "DELETE FROM kas_kecil WHERE id_kas_kecil=" .$_GET['del']. "";
-	$q = mysqli_query($con, $sql);
+	$q = mysql_query($sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -57,7 +57,7 @@ $thn_sql="YEAR(CURRENT_DATE())";
 				</thead>
 				<tbody>
 <?php
-$sql=mysqli_query($con, "SELECT *,SUM(bayar) AS bayar
+$sql=mysql_query("SELECT *,SUM(bayar) AS bayar
 FROM
     penagihan
     INNER JOIN karyawan 
@@ -75,7 +75,7 @@ FROM
 WHERE penagihan.id_penagihan=$id
 GROUP BY penagihan.id_penagihan,jual.id_jual");
 while ($row=mysql_fetch_array($sql)){
-	$sql2=mysqli_query($con, "SELECT (qty_ambil*harga) AS total
+	$sql2=mysql_query("SELECT (qty_ambil*harga) AS total
 FROM
     jual_detail
     INNER JOIN nota_siap_kirim_detail 

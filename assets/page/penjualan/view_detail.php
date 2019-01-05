@@ -1,6 +1,6 @@
 <?php
 if (isset($edit_penjualan_post)){
-	$sql=mysqli_query($con, "UPDATE jual SET tgl_nota='$tgl_nota',invoice='$invoice',id_pelanggan=$id_pelanggan,id_karyawan=$id_karyawan,keterangan='$keterangan' WHERE id_jual='$id'");
+	$sql=mysql_query("UPDATE jual SET tgl_nota='$tgl_nota',invoice='$invoice',id_pelanggan=$id_pelanggan,id_karyawan=$id_karyawan,keterangan='$keterangan' WHERE id_jual='$id'");
 	if ($sql){
 		$pesan="INPUT BERHASIL";
 	} else {
@@ -9,23 +9,23 @@ if (isset($edit_penjualan_post)){
 	_direct("index.php?page=penjualan");
 }
 if (isset($edit_diskon_nota_jual)){
-	$sql=mysqli_query($con, "UPDATE jual SET diskon_all_persen=$diskon_all_persen WHERE id_jual=$id");
+	$sql=mysql_query("UPDATE jual SET diskon_all_persen=$diskon_all_persen WHERE id_jual=$id");
 	_direct("index.php?page=penjualan&mode=view_detail&id=$id");
 }
 	
-	$sql=mysqli_query($con, "SELECT status_konfirm FROM jual WHERE id_jual=$id");
-	$row=mysqli_fetch_array($sql);
+	$sql=mysql_query("SELECT status_konfirm FROM jual WHERE id_jual=$id");
+	$row=mysql_fetch_array($sql);
 	(($row['status_konfirm']>=0) && ($row['status_konfirm']<=4) ? $dalam_kota=true : $dalam_kota=false); 
 	if ($dalam_kota){
-		$sql4=mysqli_query($con, "SELECT status FROM nota_sudah_cek WHERE id_jual=$id");
-		$row4=mysqli_fetch_array($sql4);
+		$sql4=mysql_query("SELECT status FROM nota_sudah_cek WHERE id_jual=$id");
+		$row4=mysql_fetch_array($sql4);
 		($row4['status']=='1' || $row4['status']=='2' || $row4['status']=='3' ? $print=true : $print=false);
 	} else {
-		$sql4=mysqli_query($con, "SELECT status_konfirm FROM jual WHERE id_jual=$id");
-		$row4=mysqli_fetch_array($sql4);
+		$sql4=mysql_query("SELECT status_konfirm FROM jual WHERE id_jual=$id");
+		$row4=mysql_fetch_array($sql4);
 		($row4['status_konfirm']>=7 ? $print=true : $print=false);
 	}
-	$sql=mysqli_query($con, "SELECT *
+	$sql=mysql_query("SELECT *
 FROM
     jual
     INNER JOIN pelanggan 
@@ -33,7 +33,7 @@ FROM
     INNER JOIN karyawan 
         ON (jual.id_karyawan = karyawan.id_karyawan)
 WHERE id_jual=$id");
-	$row=mysqli_fetch_array($sql);
+	$row=mysql_fetch_array($sql);
 	$tgl_jt_tempo=date('d-m-Y', strtotime($row['tgl_nota']. ' + ' .$row['tenor']. ' days'));
 	$diskon_nota=$row['diskon_all_persen']/100;
 ?>
@@ -139,7 +139,7 @@ WHERE id_jual=$id");
 				</thead>
 				<tbody>
 				<?php
-$sql=mysqli_query($con, "SELECT
+$sql=mysql_query("SELECT
     barang.nama_barang
     , barang.barcode
     , satuan.nama_satuan
@@ -162,7 +162,11 @@ FROM
     INNER JOIN satuan 
         ON (barang.id_satuan = satuan.id_satuan) WHERE (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier) AND jual_detail.id_jual='$id'");
 $total_jual=0;
+<<<<<<< HEAD
 while($row=mysqli_fetch_array($sql)){
+=======
+while($row=mysql_fetch_array($sql)){
+>>>>>>> d7010b91b8dbe1cb5cbaaa1bcb937bd621074891
 	$diskon1=$row['qty']*$row['harga_jual']*$row['diskon_persen']/100;
 	$tot_set_disk_1=($row['harga_jual']-$diskon1);
 	$diskon2=$row['qty']*($row['harga_jual']-$diskon1)*$row['diskon_persen_2']/100;

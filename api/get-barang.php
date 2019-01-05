@@ -6,9 +6,9 @@ if (isset($_POST['query'])){
 } else {
 	$q="SELECT * FROM barang";
 }
-$sql=mysqli_query($con, $q);
+$sql=mysql_query($q);
 $response["datas"] = array();
-while ($row=mysqli_fetch_array($sql)){
+while ($row=mysql_fetch_array($sql)){
 	$data=array();
 	$data["id_barang"]=$row["id_barang"];
 	$data["kode_barang"]=$row["kode_barang"];

@@ -1,14 +1,14 @@
 <?php
 if (isset($tambah_pembelian_post)){
-	$sql = mysqli_query($con, "SELECT * FROM beli WHERE no_nota_beli='$no_nota_beli'");
-	$c = mysqli_num_rows($sql);
+	$sql = mysql_query("SELECT * FROM beli WHERE no_nota_beli='$no_nota_beli'");
+	$c = mysql_num_rows($sql);
 	if ($c>0){
 		_buat_pesan("Input Gagal. No Nota Beli sudah ada.","red");
 		_direct("?page=pembelian&mode=pembelian");
 	} else {
 		$sql = "INSERT INTO beli VALUES(null,'$no_nota_beli','$tanggal','$id_supplier',null,null,null,null,null,null,0,$diskon_all,$ppn_all)";
-		$q = mysqli_query($con, $sql);
-		$e_id = mysqli_insert_id();
+		$q = mysql_query($sql);
+		$e_id = mysql_insert_id();
 		if ($q){
 			_buat_pesan("Input Berhasil","green");
 		} else {
@@ -18,7 +18,7 @@ if (isset($tambah_pembelian_post)){
 	}
 } else {
 	$sql = "DELETE FROM beli WHERE id_beli NOT IN (SELECT id_beli FROM beli_detail)";
-	$q = mysqli_query($con, $sql);
+	$q = mysql_query($sql);
 }
 ?>
 <!-- page content -->
@@ -93,7 +93,7 @@ if (isset($_GET['dari'])){
 }
 
 if (isset($_GET['cari'])){
-$sql=mysqli_query($con, "SELECT
+$sql=mysql_query("SELECT
     beli.id_beli
     , beli.no_nota_beli
     , beli.tanggal
@@ -119,7 +119,7 @@ FROM
     GROUP BY beli.id_beli
 	ORDER BY beli.id_beli DESC");
 } else {
-$sql=mysqli_query($con, "SELECT
+$sql=mysql_query("SELECT
     beli.id_beli
     , beli.no_nota_beli
     , beli.tanggal
@@ -138,18 +138,18 @@ $val
 ORDER BY beli.id_beli DESC");
 }
 
-while($row=mysqli_fetch_array($sql)){
+while($row=mysql_fetch_array($sql)){
 $id_beli=$row['id_beli'];
-$sql2=mysqli_query($con, "SELECT
+$sql2=mysql_query("SELECT
     ppn_all_persen,SUM(qty * (harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total_beli
 FROM
     beli_detail
     INNER JOIN beli 
         ON (beli_detail.id_beli = beli.id_beli)
 WHERE beli.id_beli=$id_beli");
-$r=mysqli_fetch_array($sql2);
+$r=mysql_fetch_array($sql2);
 $total_beli=$r['total_beli']+($r['total_beli']*$r['ppn_all_persen']/100);
-$sql3=mysqli_query($con, "SELECT
+$sql3=mysql_query("SELECT
     ppn_all_persen,SUM(qty_di_rak * (harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total_datang
 FROM
     beli_detail
@@ -160,7 +160,7 @@ FROM
     LEFT JOIN barang_masuk_rak 
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
 WHERE beli.id_beli=$id_beli");
-$s=mysqli_fetch_array($sql3);
+$s=mysql_fetch_array($sql3);
 $total_datang=$s['total_datang']+($s['total_datang']*$s['ppn_all_persen']/100);
 	echo '			<tr>
 						<td><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '"><div style="min-width:70px">' .date("d-m-Y", strtotime($row['tanggal'])). '</div></a></td>
@@ -202,17 +202,17 @@ $total_datang=$s['total_datang']+($s['total_datang']*$s['ppn_all_persen']/100);
 					<input type="hidden" name="tambah_pembelian_post" value="true">
 					<div class="col-md-12">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-file fa-fw"></i><br><small>No. Nota</small></span>
-						<input id="no_nota" name="no_nota_beli" style="padding: 20px 15px;" type="text" class="form-control" placeholder="No Nota Beli" maxlength="15" required>
+						<span class="input-group-addon"><i class="fa fa-file fa-fw"></i></span>
+						<input id="no_nota" name="no_nota_beli" type="text" class="form-control" placeholder="No Nota Beli" maxlength="15" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-building fa-fw" style="width: 46px;"></i><br><small>Supplier</small></span>
+						<span class="input-group-addon"><i class="fa fa-building fa-fw"></i></span>
 						<select name="id_supplier" class="select2 form-control" required="true">
 							<option value="" disabled selected>-= Pilih Supplier =-</option>
 							<?php 
-								$cust=mysqli_query($con, "SELECT id_supplier, nama_supplier FROM supplier");
-								while($b=mysqli_fetch_array($cust)){
+								$cust=mysql_query("SELECT id_supplier, nama_supplier FROM supplier");
+								while($b=mysql_fetch_array($cust)){
 									echo '<option value="' .$b['id_supplier']. '">' .$b['nama_supplier']. '</option>';
 								}
 							?>
@@ -220,11 +220,11 @@ $total_datang=$s['total_datang']+($s['total_datang']*$s['ppn_all_persen']/100);
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><div style="min-width:90px;text-align:left">Diskon Nota (%)</div></span>
+						<span class="input-group-addon"><div style="min-width:120px;text-align:left">Diskon Nota (%)</div></span>
 						<input id="diskon_all" name="diskon_all" type="text" class="form-control" placeholder="Diskon Nota" value="0" required>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><div style="min-width:102px;text-align:left">PPN (%)</div></span>
+						<span class="input-group-addon"><div style="min-width:120px;text-align:left">PPN (%)</div></span>
 						<input id="ppn_all" name="ppn_all" type="text" class="form-control" placeholder="PPN" value="0" required>
 					</div>
 					</div>

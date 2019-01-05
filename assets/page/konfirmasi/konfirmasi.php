@@ -35,14 +35,14 @@ function getTipe($tipe){
 							</thead>
 							<tbody>
 <?php
-	$sql=mysqli_query($con, "SELECT *,konfirm_owner.id_konfirm_owner
+	$sql=mysql_query("SELECT *,konfirm_owner.id_konfirm_owner
 FROM
     konfirm_owner
     LEFT JOIN konfirm_owner_detail 
         ON (konfirm_owner.id_konfirm_owner = konfirm_owner_detail.id_konfirm_owner)
 WHERE STATUS=0
 ORDER BY konfirm_owner.id_konfirm_owner DESC");
-	while ($row=mysqli_fetch_array($sql)){
+	while ($row=mysql_fetch_array($sql)){
 	echo '<tr>
 				<td><div style="min-width:70px"><a href="' .$row['url']. '&id_konfirm=' .$row['id_konfirm_owner']. '">' .date("d-m-Y",strtotime($row['tgl_konfirm'])). '</div></a></td>
 				<td><div style="min-width:70px"><a href="' .$row['url']. '&id_konfirm=' .$row['id_konfirm_owner']. '">' .getTipe($row['tipe']). '</div></a></td>

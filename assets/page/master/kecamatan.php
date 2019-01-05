@@ -3,7 +3,7 @@ if (isset($tambah_kecamatan_post)){
 	$nama_kec=explode(",",$kecamatan);
 	for ($i=0;$i < count($nama_kec);$i++){
 		$sql = "INSERT INTO kecamatan VALUES(null,'$id_kab','$nama_kec[$i]')";
-		$q = mysqli_query($con, $sql);
+		$q = mysql_query($sql);
 		if ($q){
 			_buat_pesan("Input Berhasil","green");
 		} else {
@@ -13,7 +13,7 @@ if (isset($tambah_kecamatan_post)){
 }
 if (isset($edit_kecamatan_post)){
 	$sql = "UPDATE kecamatan SET nama_kec='$kecamatan' WHERE id_kec=$id_kec";
-	$q = mysqli_query($con, $sql);
+	$q = mysql_query($sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -54,7 +54,7 @@ if (isset($edit_kecamatan_post)){
 				</thead>
 				<tbody>
 <?php
-$sql=mysqli_query($con, "SELECT
+$sql=mysql_query("SELECT
     provinsi.nama_prov
     , kabupaten.nama_kab
     , negara.nama_negara
@@ -70,7 +70,7 @@ FROM
         ON (negara.id_negara = provinsi.id_negara)
 ORDER BY kecamatan.id_kec DESC");
 $i=0;
-while($row=mysqli_fetch_array($sql)){
+while($row=mysql_fetch_array($sql)){
 	$i+=1;
 	echo '			<tr>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_kec']. '">' .$i. '</a></td>
@@ -107,21 +107,21 @@ while($row=mysqli_fetch_array($sql)){
 					<input type="hidden" name="tambah_kecamatan_post" value="true">
 					<div class="form-group col-sm-12">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-flag fa-fw" style="width: 37px;"></i><br><small>Negara</small></span>
-							<input id="add_negara" class="form-control" style="padding: 20px 15px;" placeHolder="Nama Negara" value="" maxlength="40" readonly>
+							<span class="input-group-addon"><i class="fa fa-flag fa-fw"></i></span>
+							<input id="add_negara" class="form-control" placeHolder="Nama Negara" value="" maxlength="40" readonly>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-flag fa-fw" style="width: 37px;"></i><br><small>Prov.</small></span>
-							<input id="add_prov" class="form-control" style="padding: 20px 15px;" placeHolder="Nama Provinsi" value="" maxlength="40" readonly>
+							<span class="input-group-addon"><i class="fa fa-flag fa-fw"></i></span>
+							<input id="add_prov" class="form-control" placeHolder="Nama Provinsi" value="" maxlength="40" readonly>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-flag fa-fw" style="width: 37px;"></i><br><small>Kab.</small></span>
+							<span class="input-group-addon"><i class="fa fa-flag fa-fw"></i></span>
 							<select class="form-control select" id="id_kab" name="id_kab" required>
 								<option value="" disabled selected>Pilih Kabupaten</option>
 							<?php
-								$sql=mysqli_query($con, "SELECT
+								$sql=mysql_query("SELECT
     provinsi.nama_prov
     , kabupaten.nama_kab
     , negara.nama_negara
@@ -136,7 +136,7 @@ FROM
         ON (kabupaten.id_kab = kecamatan.id_kab)
     INNER JOIN negara 
         ON (negara.id_negara = provinsi.id_negara) GROUP BY nama_kab");
-								while ($row=mysqli_fetch_array($sql)){
+								while ($row=mysql_fetch_array($sql)){
 									echo '<option negara="' .$row['nama_negara']. '" prov="' .$row['nama_prov']. '" value="' .$row['id_kab']. '">' .$row['nama_kab']. '</option>';
 								}
 							?>
@@ -144,7 +144,7 @@ FROM
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-tag fa-fw" style="width: 37px;"></i><br><small>Nama</small></span>
+							<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
 							<input id="tags_me" name="kecamatan" class="form-control" value="" required />
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>

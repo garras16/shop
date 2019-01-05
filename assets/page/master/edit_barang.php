@@ -1,6 +1,6 @@
 <?php
 if (isset($edit_barang_post)){
-	$sql=mysqli_query($con, "UPDATE barang SET barcode='$barcode',nama_barang='$nama',satuan='$satuan',no_ijin='$ijin',min_order='$min_order',stok_minimal=$stok_minimal,status='$status' WHERE id_barang='$id'");
+	$sql=mysql_query("UPDATE barang SET barcode='$barcode',nama_barang='$nama',satuan='$satuan',no_ijin='$ijin',min_order='$min_order',stok_minimal=$stok_minimal,status='$status' WHERE id_barang='$id'");
 	if ($sql){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -8,8 +8,8 @@ if (isset($edit_barang_post)){
 	}
 	_direct("index.php?page=master&mode=barang");
 }
-	$sql=mysqli_query($con, "SELECT * FROM barang WHERE id_barang=$id");
-	$row=mysqli_fetch_array($sql);
+	$sql=mysql_query("SELECT * FROM barang WHERE id_barang=$id");
+	$row=mysql_fetch_array($sql);
 ?>
 
 <div class="right_col" role="main">
@@ -39,8 +39,8 @@ if (isset($edit_barang_post)){
 						<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
 						<select class="form-control" id="select_satuan" name="satuan" required>
 						<?php 
-							$brg=mysqli_query($con, "select * from satuan");
-							while($b=mysqli_fetch_array($brg)){
+							$brg=mysql_query("select * from satuan");
+							while($b=mysql_fetch_array($brg)){
 						?>
 						<option value="<?php echo $b['nama_satuan']; ?>" <?php echo ($b['nama_satuan'] == $row['satuan'] ? 'selected' : '') ?> ><?php echo $b['nama_satuan'];?></option>
 						<?php 

@@ -5,10 +5,10 @@ if (isset($edit_histori_kirim_barang_post)){
 	if ($berat_volume=='null') {$berat="null"; $volume="null";}
 	($id_ekspedisi=='null' ? $tipe_kirim='Kirim Sendiri' : $tipe_kirim='Via Ekspedisi');
 	if ($jenis=='DALAM KOTA'){
-		$sql=mysqli_query($con, "UPDATE nota_sudah_cek SET tipe_kirim='$tipe_kirim' WHERE id_jual=$id_jual");
-		$sql=mysqli_query($con, "UPDATE pengiriman SET tanggal_kirim='$tanggal',jenis='DALAM KOTA',id_karyawan=$id_supir,id_ekspedisi=$id_ekspedisi,berat=$berat,volume=$volume,tarif=$tarif WHERE id_pengiriman=$id_pengiriman");
+		$sql=mysql_query("UPDATE nota_sudah_cek SET tipe_kirim='$tipe_kirim' WHERE id_jual=$id_jual");
+		$sql=mysql_query("UPDATE pengiriman SET tanggal_kirim='$tanggal',jenis='DALAM KOTA',id_karyawan=$id_supir,id_ekspedisi=$id_ekspedisi,berat=$berat,volume=$volume,tarif=$tarif WHERE id_pengiriman=$id_pengiriman");
 	} else {
-		$sql=mysqli_query($con, "UPDATE pengiriman SET tanggal_kirim='$tanggal',jenis='LUAR KOTA',id_karyawan=$id_supir,id_ekspedisi=$id_ekspedisi,berat=$berat,volume=$volume,tarif=$tarif WHERE id_pengiriman=$id_pengiriman");
+		$sql=mysql_query("UPDATE pengiriman SET tanggal_kirim='$tanggal',jenis='LUAR KOTA',id_karyawan=$id_supir,id_ekspedisi=$id_ekspedisi,berat=$berat,volume=$volume,tarif=$tarif WHERE id_pengiriman=$id_pengiriman");
 	}
 	_direct("?page=laporan&mode=kirim_barang");
 }
@@ -65,7 +65,7 @@ if (isset($_GET['cari'])){
 				</thead>
 				<tbody>
 <?php
-$sql=mysqli_query($con, "SELECT jual.id_jual,id_pengiriman,invoice,pengiriman.status,pengiriman.jenis,tanggal_kirim,nama_karyawan,nama_ekspedisi,berat,volume,tarif
+$sql=mysql_query("SELECT jual.id_jual,id_pengiriman,invoice,pengiriman.status,pengiriman.jenis,tanggal_kirim,nama_karyawan,nama_ekspedisi,berat,volume,tarif
 FROM
     pengiriman
     INNER JOIN karyawan 
@@ -76,17 +76,17 @@ FROM
         ON (pengiriman.id_jual = jual.id_jual)
 WHERE MONTH(tanggal_kirim)=$bln_sql AND YEAR(tanggal_kirim)=$thn_sql
 ORDER BY id_pengiriman DESC");
-while($row=mysqli_fetch_array($sql)){
+while($row=mysql_fetch_array($sql)){
 if ($row['status']=='1'){$status='SELESAI';} else if($row['status']=='2'){$status='BATAL';} else {$status='';};
 if ($row['jenis']=='LUAR KOTA'){
 	$jenis='CANVASS';
-	$sql2=mysqli_query($con, "SELECT canvass_stock_opname.status
+	$sql2=mysql_query("SELECT canvass_stock_opname.status
 FROM
     canvass_belum_siap
     LEFT JOIN canvass_stock_opname 
         ON (canvass_belum_siap.id_canvass_keluar = canvass_stock_opname.id_canvass_keluar)
 WHERE id_jual=" .$row['id_jual']);
-$row2=mysqli_fetch_array($sql2);
+$row2=mysql_fetch_array($sql2);
 $status_so=$row2['status'];
 } else {
 	$jenis=$row['jenis'];

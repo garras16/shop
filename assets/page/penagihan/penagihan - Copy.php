@@ -1,17 +1,17 @@
 <?php
 $id_karyawan=$_SESSION['id_karyawan'];
 if (isset($buat_penagihan_post)){
-	$sql = mysqli_query($con, "INSERT INTO penagihan VALUES(null,$penagih,'$tanggal','DALAM KOTA',0)");
-	$id_tagih=mysqli_insert_id();
+	$sql = mysql_query("INSERT INTO penagihan VALUES(null,$penagih,'$tanggal','DALAM KOTA',0)");
+	$id_tagih=mysql_insert_id();
 	foreach ($id_jual as $key => $value) {
-		$sql=mysqli_query($con, "INSERT INTO penagihan_detail VALUES(null,$id_tagih,$value,0,0,null)");
+		$sql=mysql_query("INSERT INTO penagihan_detail VALUES(null,$id_tagih,$value,0,0,null)");
 	}
 	_direct("?page=penagihan&mode=dalam_kota");
 }
 if (isset($batal_penagihan_post)){
 	foreach ($id_penagihan as $key => $value) {
-		$sql=mysqli_query($con, "DELETE FROM penagihan WHERE id_penagihan=" .$value);
-		$sql=mysqli_query($con, "DELETE FROM penagihan_detail WHERE id_penagihan=" .$value);
+		$sql=mysql_query("DELETE FROM penagihan WHERE id_penagihan=" .$value);
+		$sql=mysql_query("DELETE FROM penagihan_detail WHERE id_penagihan=" .$value);
 	}
 	_direct("?page=penagihan&mode=dalam_kota");
 }
@@ -45,8 +45,8 @@ if (isset($batal_penagihan_post)){
 								<select class="form-control select2" id="select_karyawan" name="id_karyawan" required>
 									<option value="" disabled selected>Pilih Karyawan</option>
 									<?php
-									$sql=mysqli_query($con, "SELECT * FROM karyawan WHERE status=1");
-									while ($row=mysqli_fetch_array($sql)){
+									$sql=mysql_query("SELECT * FROM karyawan WHERE status=1");
+									while ($row=mysql_fetch_array($sql)){
 										echo '<option value="' .$row['id_karyawan']. '">' .$row['nama_karyawan']. '</option>';
 									}
 									?>
@@ -69,7 +69,7 @@ if (isset($batal_penagihan_post)){
 									</thead>
 									<tbody>
 <?php
-	$sql=mysqli_query($con, "SELECT *
+	$sql=mysql_query("SELECT *
 FROM
     jual
     INNER JOIN pelanggan 
@@ -78,15 +78,15 @@ FROM
         ON (jual.id_karyawan = karyawan.id_karyawan)
 WHERE status_konfirm=2 AND id_jual NOT IN (SELECT id_jual FROM penagihan INNER JOIN penagihan_detail 
     ON (penagihan.id_penagihan=penagihan_detail.id_penagihan) WHERE status_tagih=0)");
-	while ($row=mysqli_fetch_array($sql)){
-		$sql2=mysqli_query($con, "SELECT SUM(qty_ambil*harga) AS total_jual
+	while ($row=mysql_fetch_array($sql)){
+		$sql2=mysql_query("SELECT SUM(qty_ambil*harga) AS total_jual
 			FROM
 				jual_detail
 				INNER JOIN nota_siap_kirim_detail 
 					ON (jual_detail.id_jual_detail = nota_siap_kirim_detail.id_jual_detail)
 			WHERE id_jual=" .$row['id_jual']);
-		$r=mysqli_fetch_array($sql2);
-		$sql3=mysqli_query($con, "SELECT SUM(qty_ambil*harga) AS jumlah_nota
+		$r=mysql_fetch_array($sql2);
+		$sql3=mysql_query("SELECT SUM(qty_ambil*harga) AS jumlah_nota
 FROM
     jual
     INNER JOIN jual_detail 
@@ -94,18 +94,18 @@ FROM
 	INNER JOIN nota_siap_kirim_detail 
 		ON (jual_detail.id_jual_detail = nota_siap_kirim_detail.id_jual_detail)
 WHERE jual.id_pelanggan=" .$row['id_pelanggan']);
-$row3=mysqli_fetch_array($sql3);
+$row3=mysql_fetch_array($sql3);
 $jumlah_nota=$row3['jumlah_nota'];
-		$sql3=mysqli_query($con, "SELECT SUM(jumlah) AS jumlah_bayar
+		$sql3=mysql_query("SELECT SUM(jumlah) AS jumlah_bayar
 FROM
     bayar_nota_jual
     INNER JOIN jual 
         ON (bayar_nota_jual.no_nota_jual = jual.invoice)
 WHERE jual.id_pelanggan=" .$row['id_pelanggan']);
-$row3=mysqli_fetch_array($sql3);
+$row3=mysql_fetch_array($sql3);
 $jumlah_gantung=$jumlah_nota-$row3['jumlah_bayar'];
-$sql4=mysqli_query($con, "SELECT * FROM jual WHERE invoice NOT IN (SELECT no_nota_jual FROM bayar_nota_jual WHERE STATUS=1) AND id_pelanggan=" .$row['id_pelanggan']);
-$jml_nota=format_angka(mysqli_num_rows($sql4));
+$sql4=mysql_query("SELECT * FROM jual WHERE invoice NOT IN (SELECT no_nota_jual FROM bayar_nota_jual WHERE STATUS=1) AND id_pelanggan=" .$row['id_pelanggan']);
+$jml_nota=format_angka(mysql_num_rows($sql4));
 (($row['plafon']-$jumlah_gantung) < $r['total_jual'] ? $style="color:red" : $style="");
 
 		echo '<tr>
@@ -158,7 +158,7 @@ if (isset($_GET['cari'])){
 	$val="status_tagih<>2";
 }
 
-	$sql=mysqli_query($con, "SELECT *,SUM(bayar) AS bayar
+	$sql=mysql_query("SELECT *,SUM(bayar) AS bayar
 FROM
     penagihan
     INNER JOIN karyawan 
@@ -175,15 +175,15 @@ FROM
         ON (jual_detail.id_harga_jual = harga_jual_kredit.id_harga_jual)
 WHERE $val
 GROUP BY penagihan.id_penagihan,jual.id_jual");
-	while ($row=mysqli_fetch_array($sql)){
-	$sql2=mysqli_query($con, "SELECT (qty_ambil*harga) AS total
+	while ($row=mysql_fetch_array($sql)){
+	$sql2=mysql_query("SELECT (qty_ambil*harga) AS total
 FROM
     jual_detail
     INNER JOIN nota_siap_kirim_detail 
         ON (jual_detail.id_jual_detail = nota_siap_kirim_detail.id_jual_detail)
 WHERE id_jual=" .$row['id_jual']);
 $total_jual=0;
-	while ($row2=mysqli_fetch_array($sql2)){
+	while ($row2=mysql_fetch_array($sql2)){
 		$total_jual+=$row2['total'];
 	}
 	$status='';

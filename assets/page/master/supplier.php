@@ -1,7 +1,7 @@
 <?php
 if (isset($tambah_supplier_post)){
 	$sql = "INSERT INTO supplier VALUES(null,'$nama_supplier','$alamat',$id_negara,$id_prov,$id_kab,$id_kec,$id_kel,'$kode_pos','$telepon_supplier','$kontak','$telepon_kontak','$status')";
-	$q = mysqli_query($con, $sql);
+	$q = mysql_query($sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -9,7 +9,7 @@ if (isset($tambah_supplier_post)){
 	}
 }
 if (isset($edit_supplier_post)){
-	$sql=mysqli_query($con, "UPDATE supplier SET nama_supplier='$nama_supplier',alamat='$alamat',id_negara=$id_negara,id_prov=$id_prov,id_kab=$id_kab,id_kec=$id_kec,id_kel=$id_kel,kode_pos='$kode_pos',telepon_supplier='$telepon_supplier',kontakperson='$kontak',telepon_kontak='$telepon_kontak',status='$status' WHERE id_supplier=$id_supplier");
+	$sql=mysql_query("UPDATE supplier SET nama_supplier='$nama_supplier',alamat='$alamat',id_negara=$id_negara,id_prov=$id_prov,id_kab=$id_kab,id_kec=$id_kec,id_kel=$id_kel,kode_pos='$kode_pos',telepon_supplier='$telepon_supplier',kontakperson='$kontak',telepon_kontak='$telepon_kontak',status='$status' WHERE id_supplier=$id_supplier");
 	if ($sql){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -58,7 +58,7 @@ if (isset($edit_supplier_post)){
 				</thead>
 				<tbody>
 <?php
-$sql=mysqli_query($con, "SELECT
+$sql=mysql_query("SELECT
     supplier.id_supplier
     , supplier.nama_supplier
     , supplier.alamat
@@ -91,7 +91,7 @@ FROM
         ON (supplier.id_negara = negara.id_negara)
 ORDER BY supplier.id_supplier DESC");
 $i=0;
-while($row=mysqli_fetch_array($sql)){
+while($row=mysql_fetch_array($sql)){
 $i+=1;
 $status = ($row['status'] == 1 ? 'Aktif' : 'Non Aktif');
 IF ($row['nama_supplier']=='DIRI SENDIRI'){
@@ -156,24 +156,24 @@ echo '			<tr>
 					<div class="form-group">
 						<div class="col-sm-12">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-building fa-fw" style="width:51px;"></i><br><small>Nama</small></span>
-								<input class="form-control" type="text" id="nama" style="padding: 20px 15px;" name="nama_supplier" placeholder="Nama Supplier" maxlength="50" required>
+								<span class="input-group-addon"><i class="fa fa-building fa-fw"></i></span>
+								<input class="form-control" type="text" id="nama" name="nama_supplier" placeholder="Nama Supplier" maxlength="50" required>
 								<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 							</div>
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-map-marker fa-fw" style="width:51px;"></i><br><small>Alamat</small></span>
-								<input name="alamat" type="text" class="form-control" style="padding: 20px 15px;" placeholder="Alamat Supplier" maxlength="200" required>
+								<span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
+								<input name="alamat" type="text" class="form-control" placeholder="Alamat Supplier" maxlength="200" required>
 								<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 							</div>
 						</div>
 						<div class="col-sm-6">
 							<div class="input-group">
-								<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-map-marker fa-fw" style="width:51px;"></i><br><small>Negara</small></span>
+								<span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
 								<select id="select_negara" class="select2 form-control" name="id_negara" required>
 									<option value="" disabled selected>Pilih Negara</option>
 								<?php
-									$sql=mysqli_query($con, "SELECT * FROM negara");
-									while ($row=mysqli_fetch_array($sql)){
+									$sql=mysql_query("SELECT * FROM negara");
+									while ($row=mysql_fetch_array($sql)){
 										echo '<option value="' .$row['id_negara']. '">' .$row['nama_negara']. '</option>';
 									}
 								?>
@@ -183,7 +183,7 @@ echo '			<tr>
 						</div>
 						<div class="col-sm-6">
 							<div class="input-group">
-								<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-map-marker fa-fw" style="width:51px;"></i><br><small>Prov.</small></span>
+								<span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
 								<select id="select_prov" class="select2 form-control" name="id_prov" required>
 									
 								</select>
@@ -192,16 +192,16 @@ echo '			<tr>
 						</div>
 						<div class="col-sm-6">
 							<div class="input-group">
-								<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-map-marker fa-fw" style="width:51px;"></i><br><small>Kab.</small></span>
+								<span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
 								<select id="select_kab" class="select2 form-control" name="id_kab" required>
 									
 								</select>
-								<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-star fa-fw" style="color:red"></i></span>
+								<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 							</div>
 						</div>
 						<div class="col-sm-6">
 							<div class="input-group">
-								<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-map-marker fa-fw" style="width:51px;"></i><br><small>Kec.</small></span>
+								<span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
 								<select id="select_kec" class="select2 form-control" name="id_kec">
 									
 								</select>
@@ -209,7 +209,7 @@ echo '			<tr>
 						</div>
 						<div class="col-sm-6">
 							<div class="input-group">
-								<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-map-marker fa-fw" style="width:51px;"></i><br><small>Kel.</small></span>
+								<span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
 								<select id="select_kel" class="select2 form-control" name="id_kel">
 								
 								</select>
@@ -217,28 +217,28 @@ echo '			<tr>
 						</div>
 						<div class="col-sm-6">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-map-marker fa-fw" style="width:51px;"></i><br><small>Kode Pos</small></span>
-								<input name="kode_pos" type="number" style="padding: 20px 15px;" class="form-control" placeholder="Kode Pos" onKeyPress="if(this.value.length==7) return false;">
+								<span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
+								<input name="kode_pos" type="number" class="form-control" placeholder="Kode Pos" onKeyPress="if(this.value.length==7) return false;">
 							</div>
 						</div>
 						<div class="col-sm-12">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-phone fa-fw" style="width:51px;"></i><br><small>Tlp</small></span>
-								<input name="telepon_supplier" style="padding: 20px 15px;" type="number" class="form-control" placeholder="Telepon Supplier" onKeyPress="if(this.value.length==20) return false;" required>
+								<span class="input-group-addon"><i class="fa fa-phone fa-fw"></i></span>
+								<input name="telepon_supplier" type="number" class="form-control" placeholder="Telepon Supplier" onKeyPress="if(this.value.length==20) return false;" required>
 								<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 							</div>
 						</div>
 						<div class="col-sm-12">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-user fa-fw" style="width:51px;"></i><br><small>Kontak</small></span>
-								<input name="kontak" type="text" class="form-control" style="padding: 20px 15px;" placeholder="Kontak Person" maxlength="50" required>
+								<span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+								<input name="kontak" type="text" class="form-control" placeholder="Kontak Person" maxlength="50" required>
 							</div>
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-phone fa-fw" style="width:51px;"></i><br><small>Telepon</small></span>
-								<input name="telepon_kontak" type="number" class="form-control" style="padding: 20px 15px;" placeholder="Telepon Kontak Person" onKeyPress="if(this.value.length==20) return false;" required>
+								<span class="input-group-addon"><i class="fa fa-phone fa-fw"></i></span>
+								<input name="telepon_kontak" type="number" class="form-control" placeholder="Telepon Kontak Person" onKeyPress="if(this.value.length==20) return false;" required>
 							</div>
 							<div class="input-group">
-								<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-flag fa-fw" style="width:51px;"></i><br><small>Status</small></span>
+								<span class="input-group-addon"><i class="fa fa-flag fa-fw"></i></span>
 								<select class="form-control select" id="select_status" name="status" required>
 									<option value="" disabled selected>Pilih Status</option>
 									<option value="0">NON AKTIF</option>

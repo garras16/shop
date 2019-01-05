@@ -4,17 +4,17 @@ if (isset($tambah_bayar_nota_beli_post)){
 }
 if (isset($_GET['del'])){
 	$del=$_GET['del'];
-	$sql=mysqli_query($con, "SELECT * FROM bayar_nota_beli WHERE id_bayar=$del");
-	$row=mysqli_fetch_array($sql);
+	$sql=mysql_query("SELECT * FROM bayar_nota_beli WHERE id_bayar=$del");
+	$row=mysql_fetch_array($sql);
 	$no_nota_beli=$row['no_nota_beli'];
 	$tgl=$row['tgl_bayar'];
-	$sql=mysqli_query($con, "SELECT * FROM bayar_nota_beli WHERE no_nota_beli='$no_nota_beli' AND tgl_bayar='$tgl'");
-	while ($row=mysqli_fetch_array($sql)){
+	$sql=mysql_query("SELECT * FROM bayar_nota_beli WHERE no_nota_beli='$no_nota_beli' AND tgl_bayar='$tgl'");
+	while ($row=mysql_fetch_array($sql)){
 		$id_bayar[]=$row['id_bayar'];
 	}
 	for ($i=0;$i<count($id_bayar);$i++){
-		$sql=mysqli_query($con, "DELETE FROM bayar_nota_beli_detail WHERE id_bayar=$id_bayar[$i]");
-		$sql=mysqli_query($con, "DELETE FROM bayar_nota_beli WHERE id_bayar=$id_bayar[$i] AND tgl_bayar='$tgl'");
+		$sql=mysql_query("DELETE FROM bayar_nota_beli_detail WHERE id_bayar=$id_bayar[$i]");
+		$sql=mysql_query("DELETE FROM bayar_nota_beli WHERE id_bayar=$id_bayar[$i] AND tgl_bayar='$tgl'");
 	}
 	_direct("?page=pembelian&mode=bayar_nota");
 }
@@ -53,7 +53,7 @@ if (isset($_GET['del'])){
 				</thead>
 				<tbody>
 <?php
-$sql=mysqli_query($con, "SELECT
+$sql=mysql_query("SELECT
     bayar_nota_beli.id_bayar
     , bayar_nota_beli.tgl_bayar
     , bayar_nota_beli.no_nota_beli
@@ -67,7 +67,7 @@ FROM
         ON (bayar_nota_beli.no_nota_beli = beli.no_nota_beli)
     INNER JOIN supplier 
         ON (beli.id_supplier = supplier.id_supplier)");
-while($row=mysqli_fetch_array($sql)){
+while($row=mysql_fetch_array($sql)){
 if ($row['status']=='1'){
 	$status="LUNAS";
 } else if ($row['status']=='1'){
@@ -120,7 +120,7 @@ if ($row['status']=='1'){
 						<select id="select_nota" name="no_nota_beli" class="select2 form-control" required="true">
 							<option value="" disabled selected>-= Pilih Nota Beli =-</option>
 							<?php 
-								$sql=mysqli_query($con, "SELECT 
+								$sql=mysql_query("SELECT 
 	beli.id_beli
     , beli.no_nota_beli
     , supplier.nama_supplier
@@ -130,9 +130,9 @@ FROM
         ON (beli.id_supplier = supplier.id_supplier)
 WHERE no_nota_beli NOT IN (SELECT no_nota_beli FROM bayar_nota_beli)
 ORDER BY id_beli ASC");
-								while($b=mysqli_fetch_array($sql)){
+								while($b=mysql_fetch_array($sql)){
 									$tmp_id_beli=$b['id_beli'];
-									$sql2=mysqli_query($con, "SELECT SUM(harga*barang_masuk_rak.qty_di_rak) AS jumlah
+									$sql2=mysql_query("SELECT SUM(harga*barang_masuk_rak.qty_di_rak) AS jumlah
 										FROM
 											barang_masuk
 											INNER JOIN beli_detail 
@@ -140,7 +140,7 @@ ORDER BY id_beli ASC");
 											INNER JOIN barang_masuk_rak 
 												ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
 									     WHERE id_beli=$tmp_id_beli");
-									$b2=mysqli_fetch_array($sql2);
+									$b2=mysql_fetch_array($sql2);
 									if ($b2['jumlah']!=''){
 										echo '<option data-jumlah="' .$b2['jumlah']. '" value="' .$b['no_nota_beli']. '">' .$b['no_nota_beli']. ' | ' .$b['nama_supplier']. ' | Rp ' .format_uang($b2['jumlah']). '</option>';
 									}

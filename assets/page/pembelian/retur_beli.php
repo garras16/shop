@@ -12,12 +12,12 @@ if (isset($_GET['cari'])){
 	$val="WHERE retur_beli.status=0 OR tgl_retur BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW()";
 }
 if (isset($tambah_retur_beli_post)){
-	$sql=mysqli_query($con, "SELECT COUNT(id_beli) AS cID FROM retur_beli WHERE tgl_retur='" .date('Y-m-d'). "'");
-	$r=mysqli_fetch_array($sql);
+	$sql=mysql_query("SELECT COUNT(id_beli) AS cID FROM retur_beli WHERE tgl_retur='" .date('Y-m-d'). "'");
+	$r=mysql_fetch_array($sql);
 	$no_retur="RB-" .date("ymd"). '-' .sprintf("%03d",$r['cID']+1);
 	$sql = "INSERT INTO retur_beli VALUES(null,'$tanggal','$no_retur',$id_beli,0)";
-	$q = mysqli_query($con, $sql);
-	$last_id = mysqli_insert_id();
+	$q = mysql_query($sql);
+	$last_id = mysql_insert_id();
 	if ($sql){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -25,7 +25,7 @@ if (isset($tambah_retur_beli_post)){
 	}
 	_direct("?page=pembelian&mode=retur_beli_detail&id=" .$last_id);
 } else {
-	$sql = mysqli_query($con, "DELETE FROM retur_beli WHERE id_retur_beli NOT IN (SELECT id_retur_beli FROM retur_beli_detail)");
+	$sql = mysql_query("DELETE FROM retur_beli WHERE id_retur_beli NOT IN (SELECT id_retur_beli FROM retur_beli_detail)");
 }
 ?>
 <!-- page content -->
@@ -69,7 +69,7 @@ if (isset($tambah_retur_beli_post)){
 				</thead>
 				<tbody>
 <?php
-$sql=mysqli_query($con, "SELECT
+$sql=mysql_query("SELECT
     retur_beli.tgl_retur
     , retur_beli.id_retur_beli
     , retur_beli.no_retur_beli
@@ -88,9 +88,9 @@ FROM
 $val
 ORDER BY retur_beli.id_retur_beli DESC");
 
-while($row=mysqli_fetch_array($sql)){
-$sql2=mysqli_query($con, "SELECT SUM(qty * (harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah FROM beli_detail WHERE id_beli=" .$row['id_beli']);
-$r=mysqli_fetch_array($sql2);
+while($row=mysql_fetch_array($sql)){
+$sql2=mysql_query("SELECT SUM(qty * (harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah FROM beli_detail WHERE id_beli=" .$row['id_beli']);
+$r=mysql_fetch_array($sql2);
 $jumlah_beli=$r['jumlah']+($r['jumlah']*$row['ppn_all_persen']/100);//-($r['jumlah']*$row['diskon_all_persen']/100);
 if ($row['status']=='1'){
 	$status="SELESAI";
@@ -137,11 +137,11 @@ if ($row['status']=='1'){
 					<input type="hidden" name="tambah_retur_beli_post" value="true">
 					<div class="col-md-12">
 					<div class="input-group">
-						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-file fa-fw"></i><br><small>Nota Beli</small></span>
+						<span class="input-group-addon"><i class="fa fa-file fa-fw"></i></span>
 						<select name="id_beli" class="select2 form-control" required="true">
 							<option value="" disabled selected>-= Pilih Nota Beli =-</option>
 							<?php 
-								$sql=mysqli_query($con, "SELECT
+								$sql=mysql_query("SELECT
     beli.id_beli
     , beli.no_nota_beli
     , beli.ppn_all_persen
@@ -153,10 +153,10 @@ FROM
         ON (beli.id_supplier = supplier.id_supplier)
 WHERE beli.id_beli NOT IN (SELECT id_beli FROM retur_beli)
 ORDER BY beli.id_beli ASC");
-								while($b=mysqli_fetch_array($sql)){
+								while($b=mysql_fetch_array($sql)){
 									$tmp_id_beli=$b['id_beli'];
-									$sql2=mysqli_query($con, "SELECT SUM(qty * (harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah FROM beli_detail WHERE id_beli=$tmp_id_beli");
-									$b2=mysqli_fetch_array($sql2);
+									$sql2=mysql_query("SELECT SUM(qty * (harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah FROM beli_detail WHERE id_beli=$tmp_id_beli");
+									$b2=mysql_fetch_array($sql2);
 									$jumlah=$b2['jumlah']+($b2['jumlah']*$b['ppn_all_persen']/100)-($b2['jumlah']*$b['diskon_all_persen']/100);
 									echo '<option value="' .$b['id_beli']. '">' .$b['no_nota_beli']. ' | ' .$b['nama_supplier']. ' | Rp ' .format_uang($jumlah). '</option>';
 								}

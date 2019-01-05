@@ -4,7 +4,7 @@ require_once('../../assets/inc/config.php');
 
 $id=$_GET['id'];
 
-$sql=mysqli_query($con, "SELECT
+$sql=mysql_query("SELECT
     supplier.nama_supplier 
 FROM
     barang_supplier
@@ -15,7 +15,7 @@ FROM
 
 echo '<table id="table1" class="table">
 	<tbody>';
-while ($row=mysqli_fetch_array($sql)){
+while ($row=mysql_fetch_array($sql)){
 	echo '<tr><td>' .$row['nama_supplier']. '</td></tr>';
 }
 echo ' </tbody></table>';

@@ -187,11 +187,11 @@ FROM
 WHERE id_jual=$id");
 $total=0;
 while ($row=mysql_fetch_array($sql)){
-	$diskon1=$row['harga_jual']*$row['diskon_persen']/100;
+	$diskon1=$row['qty']*$row['harga_jual']*$row['diskon_persen']/100;
 	$tot_set_disk_1=$row['qty']*($row['harga_jual']-$diskon1);
-	$diskon2=($row['harga_jual']-$diskon1)*$row['diskon_persen_2']/100;
+	$diskon2=$row['qty']*($row['harga_jual']-$diskon1)*$row['diskon_persen_2']/100;
 	$tot_set_disk_2=$row['qty']*($row['harga_jual']-$diskon1-$diskon2);
-	$diskon3=($row['harga_jual']-$diskon1-$diskon2)*$row['diskon_persen_3']/100;
+	$diskon3=$row['qty']*($row['harga_jual']-$diskon1-$diskon2)*$row['diskon_persen_3']/100;
 	$tot_set_disk_3=$row['qty']*($row['harga_jual']-$diskon1-$diskon2-$diskon3);
 $total+=$tot_set_disk_3;
 $st=$tot_set_disk_3;

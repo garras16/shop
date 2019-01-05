@@ -1,7 +1,7 @@
 <?php
 if (isset($tambah_user_post)){
 	$sql = "INSERT INTO users VALUES(null,$id_karyawan,'$posisi','$nama_user','$user_pass',$status)";
-	$q = mysqli_query($con, $sql);
+	$q = mysql_query($sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -11,7 +11,7 @@ if (isset($tambah_user_post)){
 
 if (isset($edit_user_post)){
 	$sql = "UPDATE users SET posisi='$posisi',password='$user_pass',status=$status WHERE id_user='$id_user'";
-	$q = mysqli_query($con, $sql);
+	$q = mysql_query($sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -53,7 +53,7 @@ if (isset($edit_user_post)){
 				</thead>
 				<tbody>
 <?php
-$sql=mysqli_query($con, "SELECT 
+$sql=mysql_query("SELECT 
     karyawan.nama_karyawan
 	, users.posisi
 	, users.id_user
@@ -67,7 +67,7 @@ FROM
     WHERE karyawan.status=1 AND posisi <> 'OWNER'
 	ORDER BY id_user DESC");
 $i=0;
-while($row=mysqli_fetch_array($sql)){
+while($row=mysql_fetch_array($sql)){
 	$i+=1;
 	$status=($row['status']==1 ? 'Aktif' : 'Non Aktif');
 	echo '		<tr>
@@ -106,12 +106,12 @@ while($row=mysqli_fetch_array($sql)){
 					<input type="hidden" name="tambah_user_post" value="true">
 					<div class="col-md-12">
 						<div class="input-group">
-							<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-users fa-fw" style="width:56px;"></i><br><small>ID</small></span>
+							<span class="input-group-addon"><i class="fa fa-users fa-fw"></i></span>
 							<select class="select2 form-control" id="select_karyawan" name="id_karyawan" required>
 								<option value="" disabled selected>Pilih Karyawan</option>
 								<?php 
-									$brg=mysqli_query($con, "SELECT id_karyawan,nama_karyawan FROM karyawan WHERE id_karyawan NOT IN(SELECT id_karyawan FROM users) AND STATUS=1");
-									while($b=mysqli_fetch_array($brg)){
+									$brg=mysql_query("SELECT id_karyawan,nama_karyawan FROM karyawan WHERE id_karyawan NOT IN(SELECT id_karyawan FROM users) AND STATUS=1");
+									while($b=mysql_fetch_array($brg)){
 								?>	
 								<option value="<?php echo $b['id_karyawan']; ?>"><?php echo $b['nama_karyawan'];?></option>
 								<?php 
@@ -121,7 +121,7 @@ while($row=mysqli_fetch_array($sql)){
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-briefcase fa-fw" style="width:56px;"></i><br><small>Posisi</small></span>
+							<span class="input-group-addon"><i class="fa fa-briefcase fa-fw"></i></span>
 							<select class="select2 form-control" id="select_posisi" name="posisi" required>
 								<option value="" disabled selected>Pilih Posisi</option>
 								<option value="DIREKSI">DIREKSI</option>
@@ -135,17 +135,17 @@ while($row=mysqli_fetch_array($sql)){
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-user fa-fw"></i><br><small>Username</small></span>
-							<input class="form-control" type="text" id="nama_user" name="nama_user" style="padding: 20px 15px;" placeholder="Username" maxlength="30" required>
+							<span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+							<input class="form-control" type="text" id="nama_user" name="nama_user" placeholder="Username" maxlength="30" required>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-lock fa-fw"></i><br><small>Password</small></span>
-							<input class="form-control" type="text" id="user_pass" name="user_pass" style="padding: 20px 15px;" placeholder="Password" maxlength="30" required>
+							<span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
+							<input class="form-control" type="text" id="user_pass" name="user_pass" placeholder="Password" maxlength="30" required>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-flag fa-fw" style="width:52px;"></i><br><small>Status</small></span>
+							<span class="input-group-addon"><i class="fa fa-flag fa-fw"></i></span>
 							<select class="form-control select" id="select_status" name="status" required>
 								<option value="" disabled selected>Pilih Status</option>
 								<option value="0">NON AKTIF</option>
@@ -177,17 +177,17 @@ while($row=mysqli_fetch_array($sql)){
 					<input type="hidden" name="id_user" value="">
 					<div class="col-md-12">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-users fa-fw" style="width:56px;"></i><br><small>Nama</small></span>
-							<input class="form-control" id="nama_karyawan" name="nama_karyawan" style="padding: 20px 15px;" placeholder="Nama Karyawan" maxlength="50" readonly>
+							<span class="input-group-addon"><i class="fa fa-users fa-fw"></i></span>
+							<input class="form-control" id="nama_karyawan" name="nama_karyawan" placeholder="Nama Karyawan" maxlength="50" readonly>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-user fa-fw" style="width:52px;"></i><br><small>Username</small></span>
-							<input class="form-control" id="nama_user" name="nama_user" style="padding: 20px 15px;" placeholder="Username" maxlength="30" readonly>
+							<span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+							<input class="form-control" id="nama_user" name="nama_user" placeholder="Username" maxlength="30" readonly>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-briefcase fa-fw" style="width:54px;"></i><br><small>Posisi</small></span>
+							<span class="input-group-addon"><i class="fa fa-briefcase fa-fw"></i></span>
 							<select class="form-control" id="select_posisi" name="posisi" required>
 								<option value="" disabled selected>Pilih Posisi</option>
 								<option value="DIREKSI" <?php echo ($row['']=='DIREKSI' ? ' selected' : '') ?> >DIREKSI</option>
@@ -201,12 +201,12 @@ while($row=mysqli_fetch_array($sql)){
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-lock fa-fw" style="width:53px;"></i><br><small>Password</small></span>
-							<input class="form-control" id="user_pass" name="user_pass" style="padding: 20px 15px;" placeholder="Password" maxlength="30" required>
+							<span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
+							<input class="form-control" id="user_pass" name="user_pass" placeholder="Password" maxlength="30" required>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-flag fa-fw" style="width:53px;"></i><br><small>Status</small></span>
+							<span class="input-group-addon"><i class="fa fa-flag fa-fw"></i></span>
 							<select class="form-control" id="select_status" name="status" required>
 								<option value="" disabled selected>Pilih Status</option>
 								<option value="0">NON AKTIF</option>

@@ -18,9 +18,9 @@ if (isset($_POST['login'])){
 		$user=substr($user,0,count($user)-3);
 		$protection=true;
 	}
-	$sql=mysqli_query($con,"SELECT * FROM users WHERE user='$user' AND password='$pass'");
-	$row=mysqli_fetch_array($sql);
-	if (mysqli_num_rows($sql) > 0){
+	$sql=mysql_query("SELECT * FROM users WHERE user='$user' AND password='$pass'");
+	$row=mysql_fetch_array($sql);
+	if (mysql_num_rows($sql) > 0){
 		$_SESSION['user_shop']=$user;
 		$_SESSION['user']=$user;
 		$_SESSION['posisi']=$row['posisi'];

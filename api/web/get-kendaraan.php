@@ -8,17 +8,17 @@ if (isset($_GET['id'])){
 } else {
 	die();
 }
-$sql=mysqli_query($con, "SELECT * FROM kendaraan WHERE id_kendaraan='$id'");
-$row=mysqli_fetch_array($sql);
+$sql=mysql_query("SELECT * FROM kendaraan WHERE id_kendaraan='$id'");
+$row=mysql_fetch_array($sql);
 ?>
 <input type="hidden" name="id_kendaraan" value="<?php echo $id ?>">
 <div class="input-group">
-	<span class="input-group-addon"><i class="fa fa-car fa-fw" style="width: 48px;"></i><br><small>Nama</small></span>
-	<input class="form-control" name="nama_kendaraan" style="padding: 20px 15px;" placeholder="Nama Kendaraan" value="<?php echo $row['nama_kendaraan'] ?>" maxlength="25" readonly>
+	<span class="input-group-addon"><i class="fa fa-car fa-fw"></i></span>
+	<input class="form-control" name="nama_kendaraan" placeholder="Nama Kendaraan" value="<?php echo $row['nama_kendaraan'] ?>" maxlength="25" readonly>
 	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 </div>
 <div class="input-group">
-	<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-truck fa-fw" style="width: 48px;"></i><br><small>Jenis</small></span>
+	<span class="input-group-addon"><i class="fa fa-truck fa-fw"></i></span>
 	<select class="form-control" id="select_jenis_2" name="jenis_kendaraan" readonly>
 		<option value="" disabled selected>Pilih Jenis</option>
 		<option value="MOBIL" <?php echo ($row['jenis_kendaraan']=='MOBIL' ? ' selected' : '') ?> >MOBIL</option>
@@ -27,12 +27,12 @@ $row=mysqli_fetch_array($sql);
 	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 </div>
 <div class="input-group">
-	<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-check fa-fw" style="width: 48px;"></i><br><small>Varian</small></span>
+	<span class="input-group-addon"><i class="fa fa-check fa-fw"></i></span>
 	<select class="form-control" id="select_varian_2" name="id_varian" readonly>
 		<option value="" disabled selected>Pilih Varian</option>
 		<?php
-			$sql=mysqli_query($con, "SELECT * FROM varian_kendaraan WHERE nama_jenis='" .$row['jenis_kendaraan']. "'");
-			while ($b=mysqli_fetch_array($sql)){
+			$sql=mysql_query("SELECT * FROM varian_kendaraan WHERE nama_jenis='" .$row['jenis_kendaraan']. "'");
+			while ($b=mysql_fetch_array($sql)){
 				echo '<option value="' .$b['id_varian']. '"' .($b['id_varian']==$row['id_varian'] ? ' selected' : ''). '>' .$b['nama_varian']. '</option>';
 			}
 		?>
@@ -56,17 +56,17 @@ $row=mysqli_fetch_array($sql);
 	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 </div>
 <div class="input-group">
-	<span class="input-group-addon"><i class="fa fa-dashboard fa-fw" style="width: 48px;"></i><br><small>KM/L</small></span>
-	<input class="form-control" style="padding: 20px 15px;" id="perbandingan_2" name="perbandingan" placeholder="Perbandingan 1L / KM" value="<?php echo $row['perbandingan'] ?>" readonly>
+	<span class="input-group-addon"><i class="fa fa-dashboard fa-fw"></i></span>
+	<input class="form-control" id="perbandingan_2" name="perbandingan" placeholder="Perbandingan 1L / KM" value="<?php echo $row['perbandingan'] ?>" readonly>
 	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 </div>
 <div class="input-group">
-	<span class="input-group-addon"><i class="fa fa-bar-chart-o fa-fw" style="width: 48px;"></i><br><small>KM Awal</small></span>
-	<input class="form-control" id="km_awal_2" name="km_awal" style="padding: 20px 15px;" placeholder="KM Awal" value="<?php echo $row['km_awal'] ?>" required>
+	<span class="input-group-addon"><i class="fa fa-bar-chart-o fa-fw"></i></span>
+	<input class="form-control" id="km_awal_2" name="km_awal" placeholder="KM Awal" value="<?php echo $row['km_awal'] ?>" required>
 	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 </div>
 <div class="input-group">
-	<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-truck fa-fw" style="width: 48px;"></i><br><small>Status</small></span>
+	<span class="input-group-addon"><i class="fa fa-truck fa-fw"></i></span>
 	<select class="form-control" id="select_status" name="status" required>
 		<option value="" disabled selected>Pilih Status</option>
 		<option value="0" <?php echo ($row['status']=='0' ? ' selected' : '') ?> >NON AKTIF</option>
@@ -75,7 +75,7 @@ $row=mysqli_fetch_array($sql);
 	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 </div>
 <div class="input-group">
-	<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-compass fa-fw"></i><br><small>Canvass</small></span>
+	<span class="input-group-addon"><i class="fa fa-compass fa-fw"></i></span>
 	<select class="form-control select" id="select_canvass" name="canvass" required>
 		<option value="" disabled selected>Mobil Canvass?</option>
 		<option value="0" <?php echo ($row['canvass']=='0' ? ' selected' : '') ?> >TIDAK</option>

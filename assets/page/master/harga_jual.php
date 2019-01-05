@@ -29,9 +29,9 @@
 				</thead>
 				<tbody>
 <?php
-$sql=mysqli_query($con, "SELECT * FROM pelanggan ORDER BY id_pelanggan DESC");
+$sql=mysql_query("SELECT * FROM pelanggan ORDER BY id_pelanggan DESC");
 $i=0;
-while($row=mysqli_fetch_array($sql)){
+while($row=mysql_fetch_array($sql)){
 $i+=1;
 	echo '			<tr>
 						<td><a href="?page=harga_jual&mode=view_detail&id=' .$row['id_pelanggan']. '"><div style="min-width:70px">' .$i. '</div></a></td>

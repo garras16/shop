@@ -16,7 +16,7 @@ $id=$_GET['id'];
 		</thead>
 		<tbody>
 <?php
-$sql=mysqli_query($con, "SELECT
+$sql=mysql_query("SELECT
     barang.nama_barang
     , barang_masuk.id_barang_masuk
     , barang_masuk.qty_datang
@@ -36,11 +36,11 @@ FROM
 WHERE barang.id_barang=$id AND barang.status=1
 GROUP BY barang_masuk.id_barang_masuk");
 $test2="";
-while($row=mysqli_fetch_array($sql)){
+while($row=mysql_fetch_array($sql)){
 $id_barang_masuk=$row['id_barang_masuk'];
 //-----------------------------------------------------------------------------------------
 
-$sql4=mysqli_query($con, "SELECT
+$sql4=mysql_query("SELECT
     SUM(barang_masuk_rak.stok) AS stok
 FROM
     barang_masuk
@@ -55,12 +55,12 @@ FROM
 WHERE barang.id_barang=$id AND barang_masuk_rak.stok>0
 GROUP BY id_rak,expire,tgl_datang");
 $qty_total=0;$count_qty=0;
-while($r=mysqli_fetch_array($sql4)){
+while($r=mysql_fetch_array($sql4)){
 	$qty_total+=$r['stok'];
 	$count_qty+=1;
 }
 //------------------------------------------------------------------------------------------
-	$sql2=mysqli_query($con, "SELECT
+	$sql2=mysql_query("SELECT
     barang.nama_barang
     , gudang.nama_gudang
     , rak.nama_rak
@@ -84,7 +84,7 @@ FROM
         ON (rak.id_gudang = gudang.id_gudang)
 WHERE barang_masuk.id_barang_masuk=$id_barang_masuk AND barang_masuk_rak.stok>0
 GROUP BY barang_masuk_rak.id_rak,expire,tgl_datang");
-	while($r=mysqli_fetch_array($sql2)){
+	while($r=mysql_fetch_array($sql2)){
 		echo '<tr>
 				<td><div style="min-width:70px">' .$r['nama_gudang']. '</div></td>
 				<td><div style="min-width:70px">' .$r['nama_rak']. '</div></td>';

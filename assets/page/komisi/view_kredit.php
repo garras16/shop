@@ -1,12 +1,12 @@
 <?php
 $sql = "SELECT MAX(hari) AS MaxVal FROM komisi_kredit WHERE id_komisi=$id";
-$q = mysqli_fetch_array(mysqli_query($con, $sql));
+$q = mysql_fetch_array(mysql_query($sql));
 $MaxVal = $q['MaxVal'];
 
 if (isset($tambah_komisi_kredit_post)){
 	if ($hari > $MaxVal ){
 		$sql = "INSERT INTO komisi_kredit VALUES(null,$id,$kredit,$hari)";
-		$q = mysqli_query($con, $sql);
+		$q = mysql_query($sql);
 		if ($q){
 			_buat_pesan("Input Berhasil","green");
 		} else {
@@ -19,7 +19,7 @@ if (isset($tambah_komisi_kredit_post)){
 }
 if (isset($edit_komisi_kredit_post)){
 	$sql = "UPDATE komisi_kredit SET kredit=$kredit,hari=$hari WHERE id_komisi_kredit=$id_komisi_kredit";
-	$q = mysqli_query($con, $sql);
+	$q = mysql_query($sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -27,7 +27,7 @@ if (isset($edit_komisi_kredit_post)){
 	}
 	_direct("?page=komisi&mode=view_kredit");
 }
-$sql=mysqli_query($con, "SELECT
+$sql=mysql_query("SELECT
     komisi_kredit.id_komisi_kredit
     , komisi_kredit.id_komisi
     , komisi_kredit.kredit
@@ -41,7 +41,7 @@ FROM
     INNER JOIN karyawan 
         ON (komisi.id_karyawan = karyawan.id_karyawan)
 WHERE komisi_kredit.id_komisi=$id");
-$row=mysqli_fetch_array($sql);
+$row=mysql_fetch_array($sql);
 ?>
 <!-- page content -->
 <div class="right_col" role="main">
@@ -59,9 +59,7 @@ $row=mysqli_fetch_array($sql);
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-			
-			<a class="btn btn-danger" href="javascript:history.back()"><i class="fa fa-arrow-left"></i> Kembali</a><br/><br/>
-			<!--<a class="btn btn-danger" href="?page=komisi&mode=view_detail&id="<?php echo $row['id_karyawan'] ?>""><i class="fa fa-arrow-left"></i> Kembali</a><br/><br/>-->
+			<a class="btn btn-danger" href="?page=komisi&mode=view_detail&id=<?php echo $row['id_karyawan'] ?>"><i class="fa fa-arrow-left"></i> Kembali</a><br/><br/>
 			
 			<div class="input-group">
 				<span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
