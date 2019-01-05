@@ -1,12 +1,12 @@
 <?php
 $sql = "SELECT MAX(target_akhir) AS MaxVal FROM komisi WHERE id_karyawan=$id";
-$q = mysql_fetch_array(mysql_query($sql));
+$q = mysqli_fetch_array(mysqli_query($con, $sql));
 $MaxVal = $q['MaxVal'];
 
 if (isset($tambah_jenjang_post)){
 	if ($target_awal > $MaxVal && $target_akhir > $target_awal){
 		$sql = "INSERT INTO komisi VALUES(null,$id,$target_awal,$target_akhir,$tunai)";
-		$q = mysql_query($sql);
+		$q = mysqli_query($con, $sql);
 		if ($sql){
 			_buat_pesan("Input Berhasil","green");
 		} else {
@@ -20,7 +20,7 @@ if (isset($tambah_jenjang_post)){
 if (isset($edit_jenjang_post)){
 	//if (($target_awal >= $MaxVal) && ($target_akhir > $target_awal)){
 		$sql = "UPDATE komisi SET target_awal=$target_awal,target_akhir=$target_akhir,tunai=$tunai WHERE id_komisi=$id_komisi";
-		$q = mysql_query($sql);
+		$q = mysqli_query($con, $sql);
 		if ($q){
 			$pesan="Input Berhasil";
 			$warna="green";
@@ -34,14 +34,14 @@ if (isset($edit_jenjang_post)){
 	//}
 }
 
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT
 	karyawan.nama_karyawan
 FROM
     komisi
     INNER JOIN karyawan 
         ON (komisi.id_karyawan = karyawan.id_karyawan)
 WHERE komisi.id_karyawan=$id");
-$row=mysql_fetch_array($sql);
+$row=mysqli_fetch_array($sql);
 ?>
 <!-- page content -->
 <div class="right_col" role="main">
@@ -73,8 +73,8 @@ $row=mysql_fetch_array($sql);
 				</thead>
 				<tbody>
 <?php
-$sql=mysql_query("SELECT * FROM komisi WHERE komisi.id_karyawan=$id");
-while ($row=mysql_fetch_array($sql)){
+$sql=mysqli_query($con, "SELECT * FROM komisi WHERE komisi.id_karyawan=$id");
+while ($row=mysqli_fetch_array($sql)){
 echo '	<tr>
 			<td>
 				<div class="btn-group">

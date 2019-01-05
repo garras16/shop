@@ -1,7 +1,7 @@
 <?php
 if (isset($tambah_jabatan_post)){
 	$sql = "INSERT INTO jabatan VALUES(null,'$jabatan',$status)";
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -10,7 +10,7 @@ if (isset($tambah_jabatan_post)){
 }
 if (isset($edit_jabatan_post)){
 	$sql = "UPDATE jabatan SET nama_jabatan='$jabatan',status=$status WHERE id_jabatan=$id_jabatan";
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -49,9 +49,9 @@ if (isset($edit_jabatan_post)){
 				</thead>
 				<tbody>
 <?php
-$sql=mysql_query("SELECT * FROM jabatan ORDER BY id_jabatan DESC");
+$sql=mysqli_query($con, "SELECT * FROM jabatan ORDER BY id_jabatan DESC");
 $i=0;
-while($row=mysql_fetch_array($sql)){
+while($row=mysqli_fetch_array($sql)){
 	$i+=1;
 	$status = ($row['status'] == 1 ? 'Aktif' : 'Non Aktif');
 	echo '			<tr>
@@ -87,12 +87,12 @@ while($row=mysql_fetch_array($sql)){
 					<input type="hidden" name="tambah_jabatan_post" value="true">
 					<div class="form-group col-sm-12">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-							<input class="form-control" type="text" placeHolder="Nama Jabatan" name="jabatan" maxlength="20" required>
+							<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i><br><small>Jabatan</small></span>
+							<input class="form-control" style="padding:20px 15px;" type="text" placeHolder="Nama Jabatan" name="jabatan" maxlength="20" required>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-flag fa-fw"></i></span>
+							<span class="input-group-addon" style="width:68px; padding: 2px 12px;"><i class="fa fa-flag fa-fw"></i><br><small>Status</small></span>
 							<select class="form-control select" id="select_status" name="status" required>
 								<option value="" disabled selected>Pilih Status</option>
 								<option value="0">NON AKTIF</option>

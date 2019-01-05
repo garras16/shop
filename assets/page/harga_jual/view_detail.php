@@ -1,19 +1,19 @@
 <?php
 if (isset($tambah_harga_jual_tunai_post)){
 	$sql = "INSERT INTO harga_jual VALUES(null,'$id_barang_supplier','$id','$harga_jual')";
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 	if ($q){
 		_buat_pesan("Input Berhasil. Sekarang Anda dapat melakukan transaksi pembelian.","green");
 	} else {
 		_buat_pesan("Input Gagal","red");
 	}
 	$tgl = date("Y-m-d");
-	$sql = mysql_query("INSERT INTO hj_tunai_detail VALUES(null,$id_barang_supplier,$id,'$tgl',$harga_jual)");
+	$sql = mysqli_query($con, "INSERT INTO hj_tunai_detail VALUES(null,$id_barang_supplier,$id,'$tgl',$harga_jual)");
 	_direct("?page=harga_jual&mode=view_detail&id=$id");
 }
 
-	$sql=mysql_query("SELECT nama_pelanggan FROM pelanggan WHERE id_pelanggan=$id");
-	$row=mysql_fetch_array($sql);
+	$sql=mysqli_query($con, "SELECT nama_pelanggan FROM pelanggan WHERE id_pelanggan=$id");
+	$row=mysqli_fetch_array($sql);
 	$nama_pelanggan = $row['nama_pelanggan'];
 ?>
 <!-- page content -->
@@ -33,7 +33,7 @@ if (isset($tambah_harga_jual_tunai_post)){
 					</div>
 					<div class="x_content">
 						<div class="col-md-6">
-							<a href="?page=harga_jual"><button class="btn btn-danger"><i class="fa fa-arrow-left"></i> Kembali</button></a><br/><br/>
+							<a href="?page=master&mode=harga_jual"><button class="btn btn-danger"><i class="fa fa-arrow-left"></i> Kembali</button></a><br/><br/>
 						</div>
 						<div class="col md-6 text-right">
 							<a class="btn btn-primary" data-toggle="modal" data-target="#myAHJTModal"><i class="fa fa-plus"></i> Tambah Harga Jual Tunai</a>
@@ -52,7 +52,7 @@ if (isset($tambah_harga_jual_tunai_post)){
 				</thead>
 				<tbody>
 <?php
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT
     harga_jual.id_harga_jual
     , harga_jual.harga_jual
     , supplier.nama_supplier
@@ -72,7 +72,7 @@ FROM
 WHERE 
 	harga_jual.id_pelanggan=$id");
 $i=0;
-while($row=mysql_fetch_array($sql)){
+while($row=mysqli_fetch_array($sql)){
 $i+=1;
 	echo '			<tr>
 						<td>
@@ -121,11 +121,11 @@ $i+=1;
 					<input type="hidden" name="tambah_harga_jual_tunai_post" value="true">
 					<div class="col-md-12">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-bookmark fa-fw"></i></span>
+						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-bookmark fa-fw"></i><br><small>Barang</small></span>
 						<select class="select2 form-control" id="select_barang" name="id_barang_supplier" required>
 							<option value="" disabled selected>Pilih  Barang & Supplier</option>
 <?php 
-$brg=mysql_query("SELECT
+$brg=mysqli_query($con, "SELECT
     barang.nama_barang
     , supplier.nama_supplier
     , barang_supplier.id_barang_supplier
@@ -137,7 +137,7 @@ FROM
         ON (barang_supplier.id_supplier = supplier.id_supplier)
 WHERE
 	id_barang_supplier NOT IN (SELECT id_barang_supplier FROM harga_jual)");
-		while($b=mysql_fetch_array($brg)){
+		while($b=mysqli_fetch_array($brg)){
 ?>	
 							<option value="<?php echo $b['id_barang_supplier']; ?>"><?php echo $b['nama_barang']. ' - ' .$b['nama_supplier'];?></option>
 <?php 
@@ -147,8 +147,8 @@ WHERE
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-money fa-fw"></i></span>
-						<input id="harga_jual" type="text" name="harga_jual" class="form-control" placeholder="Harga Jual Tunai (Rp)" required>
+						<span class="input-group-addon"><i class="fa fa-money fa-fw" style="width: 39px;"></i><br><small>Harga</small></span>
+						<input id="harga_jual" type="text" name="harga_jual" style="padding: 20px 15px;" class="form-control" placeholder="Harga Jual Tunai (Rp)" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					</div>

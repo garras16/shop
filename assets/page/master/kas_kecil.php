@@ -1,7 +1,7 @@
 <?php
 if (isset($tambah_komponen_kas_post)){
 	$sql = "INSERT INTO mst_kas_kecil VALUES(null,'$nama_kas_kecil','$jenis',$status)";
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -11,7 +11,7 @@ if (isset($tambah_komponen_kas_post)){
 }
 if (isset($edit_komponen_kas_post)){
 	$sql = "UPDATE mst_kas_kecil SET nama_kas_kecil='$nama_kas_kecil',jenis='$jenis',status='$status' WHERE id_kas_kecil='$id_kas_kecil'";
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -51,8 +51,8 @@ if (isset($edit_komponen_kas_post)){
 				</thead>
 				<tbody>
 <?php
-$sql=mysql_query("SELECT * FROM mst_kas_kecil ORDER BY id_kas_kecil DESC");
-while($row=mysql_fetch_array($sql)){
+$sql=mysqli_query($con, "SELECT * FROM mst_kas_kecil ORDER BY id_kas_kecil DESC");
+while($row=mysqli_fetch_array($sql)){
 $status=($row['status']=='1' ? 'AKTIF' : 'NON AKTIF');
 	echo '			<tr>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_kas_kecil']. '"><div style="min-width:70px">' .$row['nama_kas_kecil']. '</div></a></td>
@@ -87,12 +87,12 @@ $status=($row['status']=='1' ? 'AKTIF' : 'NON AKTIF');
 					<input type="hidden" name="tambah_komponen_kas_post" value="true">
 					<div class="col-md-12">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-file fa-fw"></i></span>
-							<input class="form-control" type="text" name="nama_kas_kecil" placeholder="Nama Kas Kecil" maxlength="100" required>
+							<span class="input-group-addon"><i class="fa fa-file fa-fw" style="width: 35px;"></i><br><small>Nama</small></span>
+							<input class="form-control" type="text" style="padding: 20px 15px;" name="nama_kas_kecil" placeholder="Nama Kas Kecil" maxlength="100" required>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-archive fa-fw"></i></span>
+							<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-archive fa-fw" style="width: 35px;"></i><br><small>Jenis</small></span>
 							<select class="form-control select" id="select_jenis" name="jenis" required>
 								<option value="" disabled selected>Pilih Jenis</option>
 								<option value="INPUT">KAS MASUK</option>
@@ -101,7 +101,7 @@ $status=($row['status']=='1' ? 'AKTIF' : 'NON AKTIF');
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-archive fa-fw"></i></span>
+							<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-archive fa-fw" style="width: 35px;"></i><br><small>Status</small></span>
 							<select class="form-control select" id="select_status" name="status" required>
 								<option value="" disabled selected>Pilih Status</option>
 								<option value="0">NON AKTIF</option>

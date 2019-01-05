@@ -1,7 +1,7 @@
 <?php
 if (isset($tambah_ekspedisi_post)){
 	$sql = "INSERT INTO ekspedisi VALUES(null,'$nama_ekspedisi','$telepon','$kontakperson','$telepon_kontak',$status)";
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -10,7 +10,7 @@ if (isset($tambah_ekspedisi_post)){
 }
 if (isset($edit_ekspedisi_post)){
 	$sql = "UPDATE ekspedisi SET nama_ekspedisi='$nama_ekspedisi',telepon='$telepon',kontakperson='$kontakperson',telepon_kontak='$telepon_kontak',status=$status WHERE id_ekspedisi='$id_ekspedisi'";
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -52,9 +52,9 @@ if (isset($edit_ekspedisi_post)){
 				</thead>
 				<tbody>
 <?php
-$sql=mysql_query("SELECT * FROM ekspedisi ORDER BY id_ekspedisi DESC");
+$sql=mysqli_query($con, "SELECT * FROM ekspedisi ORDER BY id_ekspedisi DESC");
 $i=0;
-while($row=mysql_fetch_array($sql)){
+while($row=mysqli_fetch_array($sql)){
 $i+=1;
 $status = ($row['status'] == 1 ? 'Aktif' : 'Non Aktif');
 	echo '			<tr>
@@ -93,25 +93,25 @@ $status = ($row['status'] == 1 ? 'Aktif' : 'Non Aktif');
 					<input type="hidden" name="tambah_ekspedisi_post" value="true">
 					<div class="col-md-12">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-truck fa-fw"></i></span>
-						<input class="form-control" type="text" id="nama" name="nama_ekspedisi" placeholder="Nama Ekspedisi" maxlength="50" required>
+						<span class="input-group-addon"><i class="fa fa-truck fa-fw" style="width: 42px;"></i><br><small>Nama</small></span>
+						<input class="form-control" type="text" id="nama" style="padding: 20px 15px;" name="nama_ekspedisi" placeholder="Nama Ekspedisi" maxlength="50" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-phone fa-fw"></i></span>
-						<input name="telepon" type="number" class="form-control" placeholder="Telepon Ekspedisi" onKeyPress="if(this.value.length==20) return false;" required>
+						<span class="input-group-addon"><i class="fa fa-phone fa-fw" style="width: 42px;"></i><br><small>Tlp.</small></span>
+						<input name="telepon" type="number" class="form-control" style="padding: 20px 15px;" placeholder="Telepon Ekspedisi" onKeyPress="if(this.value.length==20) return false;" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-						<input class="form-control" type="text" name="kontakperson" placeholder="Kontak Person" maxlength="50">
+						<span class="input-group-addon"><i class="fa fa-user fa-fw" style="width: 42px;"></i><br><small>Kontak</small></span>
+						<input class="form-control" type="text" name="kontakperson" style="padding: 20px 15px;" placeholder="Kontak Person" maxlength="50">
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-phone fa-fw"></i></span>
-						<input class="form-control" type="number" name="telepon_kontak" placeholder="Telepon Kontak Person" onKeyPress="if(this.value.length==20) return false;">
+						<span class="input-group-addon"><i class="fa fa-phone fa-fw" style="width: 42px;"></i><br><small>Telepon</small></span>
+						<input class="form-control" type="number" name="telepon_kontak" style="padding: 20px 15px;" placeholder="Telepon Kontak Person" onKeyPress="if(this.value.length==20) return false;">
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-flag fa-fw"></i></span>
+						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-flag fa-fw" style="width: 42px;"></i><br><small>Status</small></span>
 						<select class="form-control select" id="select_status" name="status" required>
 							<option value="" disabled selected>Pilih Status</option>
 							<option value="0">NON AKTIF</option>

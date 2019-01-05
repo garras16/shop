@@ -1,6 +1,6 @@
 <?php
-$sql=mysql_query("UPDATE retur_jual SET status=2 WHERE id_retur_jual=$id");
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "UPDATE retur_jual SET status=2 WHERE id_retur_jual=$id");
+$sql=mysqli_query($con, "SELECT
     pelanggan.nama_pelanggan
 	, jual.id_jual
     , jual.invoice
@@ -17,7 +17,7 @@ FROM
 	LEFT JOIN bayar_nota_jual 
         ON (jual.invoice = bayar_nota_jual.no_nota_jual)
 WHERE retur_jual.id_retur_jual=$id");
-$row=mysql_fetch_array($sql);
+$row=mysqli_fetch_array($sql);
 $id_jual=$row['id_jual'];
 $status=$row['status'];
 $status_retur="";
@@ -102,7 +102,7 @@ if ($row['status_bayar']=='1'){
 				</thead>
 				<tbody>
 <?php
-$sql=mysql_query("SELECT *
+$sql=mysqli_query($con, "SELECT *
 FROM
     retur_jual_detail
     INNER JOIN jual_detail 
@@ -118,7 +118,7 @@ FROM
  WHERE retur_jual_detail.id_retur_jual=$id
  GROUP BY retur_jual_detail.id_jual_detail");
 $total_retur=0;
-while($row=mysql_fetch_array($sql)){
+while($row=mysqli_fetch_array($sql)){
 if ($row['qty_masuk']==''){
 	$total_retur+=$row['harga_retur']*$row['qty_retur'];
 	$jml_retur=$row['harga_retur']*$row['qty_retur'];

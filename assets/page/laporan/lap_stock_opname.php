@@ -27,7 +27,7 @@ $id_karyawan=$_SESSION['id_karyawan'];
 							</thead>
 							<tbody>
 <?php
-	$sql=mysql_query("SELECT canvass_keluar.id_canvass_keluar,tgl_lap,tanggal_canvass,nama_kendaraan,plat
+	$sql=mysqli_query($con, "SELECT canvass_keluar.id_canvass_keluar,tgl_lap,tanggal_canvass,nama_kendaraan,plat
 FROM
     lap_stock_opname
     INNER JOIN canvass_keluar 
@@ -36,8 +36,8 @@ FROM
         ON (canvass_keluar.id_mobil = kendaraan.id_kendaraan)
 GROUP BY lap_stock_opname.id_canvass_keluar
 ORDER BY lap_stock_opname.id_canvass_keluar DESC");
-	while ($row=mysql_fetch_array($sql)){
-	$sql2=mysql_query("SELECT nama_karyawan,nama_jabatan
+	while ($row=mysqli_fetch_array($sql)){
+	$sql2=mysqli_query($con, "SELECT nama_karyawan,nama_jabatan
 FROM
     canvass_keluar_karyawan
     INNER JOIN karyawan 
@@ -51,7 +51,7 @@ WHERE id_canvass_keluar=" .$row['id_canvass_keluar']);
 				<td style="vertical-align:middle;text-align:center;"><a href="?page=laporan&mode=lap_stock_opname_2&id=' .$row['id_canvass_keluar']. '"><div style="min-width:70px">' .$row['nama_kendaraan']. '</div></a></td>
 				<td style="vertical-align:middle;text-align:center;"><a href="?page=laporan&mode=lap_stock_opname_2&id=' .$row['id_canvass_keluar']. '"><div style="min-width:70px">' .$row['plat']. '</div></a></td>
 				<td style="vertical-align:middle;text-align:left;"><a href="?page=laporan&mode=lap_stock_opname_2&id=' .$row['id_canvass_keluar']. '"><div style="min-width:70px">';
-	while ($row2=mysql_fetch_array($sql2)){
+	while ($row2=mysqli_fetch_array($sql2)){
 		echo '- ' .$row2['nama_karyawan']. ' (' .$row2['nama_jabatan']. ')<br>';
 	}
 	echo '</div></a></td>

@@ -6,12 +6,12 @@ $id=$_GET['id'];
 $plat=$_GET['plat1']. ' ' .$_GET['plat2']. ' ' .$_GET['plat3'];
 $berlaku = $_GET['berlaku'];
 $sql = "UPDATE kendaraan SET plat='$plat' WHERE id_kendaraan=$id";
-$q = mysql_query($sql);
+$q = mysqli_query($con, $sql);
 if ($q){
 	echo '<span class="badge bg-green">No Pol berhasil disimpan</span>';
 } else {
 	echo '<span class="badge bg-green">No Pol gagal disimpan</span>';
 }
 $sql = "INSERT INTO plat_detail VALUES(null,'$berlaku',$id,'$plat')";
-$q = mysql_query($sql);
+$q = mysqli_query($con, $sql);
 ?>

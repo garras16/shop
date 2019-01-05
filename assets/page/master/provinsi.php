@@ -3,7 +3,7 @@ if (isset($tambah_provinsi_post)){
 	$nama_prov=explode(",",$provinsi);
 	for ($i=0;$i < count($nama_prov);$i++){
 		$sql = "INSERT INTO provinsi VALUES(null,'$id_negara','$nama_prov[$i]')";
-		$q = mysql_query($sql);
+		$q = mysqli_query($con, $sql);
 		if ($q){
 			_buat_pesan("Input Berhasil","green");
 		} else {
@@ -13,7 +13,7 @@ if (isset($tambah_provinsi_post)){
 }
 if (isset($edit_provinsi_post)){
 	$sql = "UPDATE provinsi SET nama_prov='$provinsi' WHERE id_prov=$id_prov";
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -52,7 +52,7 @@ if (isset($edit_provinsi_post)){
 				</thead>
 				<tbody>
 <?php
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT
 	negara.nama_negara
 	, provinsi.id_prov
     , provinsi.nama_prov 
@@ -62,7 +62,7 @@ FROM
         ON (negara.id_negara = provinsi.id_negara)
 ORDER BY provinsi.id_prov DESC");
 $i=0;
-while($row=mysql_fetch_array($sql)){
+while($row=mysqli_fetch_array($sql)){
 	$i+=1;
 	echo '			<tr>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_prov']. '">' .$i. '</a></td>
@@ -97,12 +97,12 @@ while($row=mysql_fetch_array($sql)){
 					<input type="hidden" name="tambah_provinsi_post" value="true">
 					<div class="form-group col-sm-12">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-flag fa-fw"></i></span>
+							<span class="input-group-addon"><i class="fa fa-flag fa-fw"></i><br><small>Negara</small></span>
 							<select class="form-control select" name="id_negara" required>
 								<option value="" disabled selected>Pilih Negara</option>
 							<?php
-								$sql=mysql_query("SELECT * FROM negara");
-								while ($row=mysql_fetch_array($sql)){
+								$sql=mysqli_query($con, "SELECT * FROM negara");
+								while ($row=mysqli_fetch_array($sql)){
 									echo '<option value="' .$row['id_negara']. '">' .$row['nama_negara']. '</option>';
 								}
 							?>
@@ -110,8 +110,8 @@ while($row=mysql_fetch_array($sql)){
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-							<input id="tags_me" class="tags" type="text" data-text="provinsi" class="form-control" placeHolder="Nama Provinsi" name="provinsi" maxlength="40" required>
+							<span class="input-group-addon"><i class="fa fa-tag fa-fw" style="width: 38px;"></i><br><small>Nama</small></span>
+							<input id="tags_me" class="tags" type="text" data-text="provinsi" class="form-control" placeHolder="Nama Provinsi" name="provinsi" maxlength="40">
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<p>Tekan "TAB" atau "koma" untuk menambah provinsi.</p>

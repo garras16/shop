@@ -24,39 +24,39 @@
 					</tr>
 				</thead>
 				<tbody>
-<?php
-$sql=mysql_query("SELECT
-    checkin.tanggal
-    , checkin.jam
-    , checkin.gps
-    , checkin.kota
-    , checkin.akurasi
-    , checkin.mock
-    , checkin.distance
-    , pelanggan.nama_pelanggan
-    , karyawan.nama_karyawan
-FROM
-    checkin
-    INNER JOIN karyawan 
-        ON (checkin.id_karyawan = karyawan.id_karyawan)
-    INNER JOIN pelanggan 
-        ON (checkin.id_pelanggan = pelanggan.id_pelanggan)");
-while($row=mysql_fetch_array($sql)){
-($row['mock']=='1' ? $mock='YA' : $mock='TIDAK');
-	echo '			<tr>
-						<td>' .date("d-m-Y",strtotime($row['tanggal'])). '</td>
-						<td>' .$row['jam']. '</td>
-						<td>' .$row['nama_karyawan']. '</td>
-						<td>' .$row['nama_pelanggan']. '</td>
-						<td>' .$row['gps']. '</td>
-						<td>' .$row['kota']. '</td>
-						<td>' .$row['akurasi']. ' meter</td>
-						<td>' .$mock. '</td>
-						<td>' .format_angka($row['distance']). ' meter</td>
-					</tr>';
-}
-?>
-					
+					<?php
+					$sql=mysqli_query($con, "SELECT
+					    checkin.tanggal
+					    , checkin.jam
+					    , checkin.gps
+					    , checkin.kota
+					    , checkin.akurasi
+					    , checkin.mock
+					    , checkin.distance
+					    , pelanggan.nama_pelanggan
+					    , karyawan.nama_karyawan
+					FROM
+					    checkin
+					    INNER JOIN karyawan 
+					        ON (checkin.id_karyawan = karyawan.id_karyawan)
+					    INNER JOIN pelanggan 
+					        ON (checkin.id_pelanggan = pelanggan.id_pelanggan)");
+		
+					while($row=mysqli_fetch_array($sql)){
+						($row['mock']=='1' ? $mock='YA' : $mock='TIDAK');
+						echo '<tr>
+								<td>' .date("d-m-Y",strtotime($row['tanggal'])). '</td>
+								<td>' .$row['jam']. '</td>
+								<td>' .$row['nama_karyawan']. '</td>
+								<td>' .$row['nama_pelanggan']. '</td>
+								<td>' .$row['gps']. '</td>
+								<td>' .$row['kota']. '</td>
+								<td>' .$row['akurasi']. ' meter</td>
+								<td>' .$mock. '</td>
+								<td>' .format_angka($row['distance']). ' meter</td>
+							</tr>';
+					}
+					?>
 				</tbody>
 			</table>
 			</div>

@@ -1,12 +1,12 @@
 <?php
 if (isset($tambah_barang_post)){
-	$sql = mysql_query("SELECT COUNT(id_barang) AS MaxID FROM barang WHERE kode_barang like '%" .date('ymd'). "%'");
-	$row = mysql_fetch_array($sql);
+	$sql = mysqli_query($con, "SELECT COUNT(id_barang) AS MaxID FROM barang WHERE kode_barang like '%" .date('ymd'). "%'");
+	$row = mysqli_fetch_array($sql);
 	$idx=$row["MaxID"]+1;
 	$num=sprintf('%04d', $idx);
 	$kode=date('ymd'). $num;
 	$sql = "INSERT INTO barang VALUES(null,'$kode','$barcode','$nama',$id_satuan,'$ijin',$min_order,$stok_minimal,$status,$tampil)";
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 	if ($q){
 		_buat_pesan("Input Berhasil. Sekarang Anda dapat menambahkan barang supplier.","green");
 	} else {
@@ -16,7 +16,7 @@ if (isset($tambah_barang_post)){
 }
 if (isset($edit_barang_post)){
 	$sql = "UPDATE barang SET barcode='$barcode',nama_barang='$nama',id_satuan=$id_satuan,no_ijin='$ijin',min_order='$min_order',stok_minimal='$stok_minimal',status='$status',tampil='$tampil' WHERE id_barang=$id_barang";
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -26,7 +26,7 @@ if (isset($edit_barang_post)){
 }
 if (isset($tambah_barang_supplier_post)){
 	$sql = "INSERT INTO barang_supplier VALUES(null,$id_barang,$id_supplier)";
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 	if ($q){
 		_buat_pesan("Input Berhasil. Sekarang Anda dapat menambahkan harga jual.","green");
 	} else {
@@ -36,7 +36,7 @@ if (isset($tambah_barang_supplier_post)){
 }
 if (isset($hapus_barang_supplier_post)){
 	$sql = "DELETE FROM barang_supplier WHERE id_barang=$id_barang AND id_supplier=$id_supplier";
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -87,7 +87,7 @@ if (isset($hapus_barang_supplier_post)){
 				<tbody>
 <?php
 ($_SESSION['protection']=true ? $pro='WHERE tampil=1' : $pro='');
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT
     barang.id_barang
     , barang.kode_barang
     , barang.barcode
@@ -104,11 +104,11 @@ FROM
         ON (barang.id_satuan = satuan.id_satuan) $pro
 ORDER BY barang.id_barang DESC");
 $i=0;
-while($row=mysql_fetch_array($sql)){
+while($row=mysqli_fetch_array($sql)){
 $i+=1;
 $status = ($row['status'] == 1 ? 'Aktif' : 'Non Aktif');
 $tampil = ($row['tampil'] == 1 ? 'Ya' : 'Tidak');
-$sql2=mysql_query("SELECT id_barang FROM barang_supplier WHERE id_barang=" .$row['id_barang']. "");
+$sql2=mysqli_query($con, "SELECT id_barang FROM barang_supplier WHERE id_barang=" .$row['id_barang']. "");
 	echo '			<tr>
 						<td>
 							<div class="btn-group">
@@ -123,7 +123,7 @@ $sql2=mysql_query("SELECT id_barang FROM barang_supplier WHERE id_barang=" .$row
 						<td><a data-toggle="modal" data-target="#editBarangModal" data-id="' .$row['id_barang']. '">' .$row['barcode']. '</a></td>
 						<td><a data-toggle="modal" data-target="#editBarangModal" data-id="' .$row['id_barang']. '">' .$row['nama_barang']. '</a></td>
 						<td><a data-toggle="modal" data-target="#editBarangModal" data-id="' .$row['id_barang']. '">' .$row['nama_satuan']. '</a></td>';
-	if (mysql_num_rows($sql2)>0){
+	if (mysqli_num_rows($sql2)>0){
 		echo '<td><center><a data-toggle="modal" data-target="#mySupplier" data-id="' .$row['id_barang']. '" class="btn btn-primary btn-xs"><i class="fa fa-search-plus"></i> LIHAT</a></center></td>';
 	} else {
 		echo '<td></td>';
@@ -163,22 +163,22 @@ $sql2=mysql_query("SELECT id_barang FROM barang_supplier WHERE id_barang=" .$row
 					<input type="hidden" name="tambah_barang_post" value="true">
 					<div class="form-group col-sm-12">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-bookmark fa-fw"></i></span>
-							<input class="form-control" type="text" id="nama_barang" name="nama_barang" placeholder="Nama Barang" maxlength="100" required>
+							<span class="input-group-addon"><i class="fa fa-bookmark fa-fw" style="width: 55px;"></i><br><small>Nama</small></span>
+							<input class="form-control" style="padding: 20px 15px;" type="text" id="nama_barang" name="nama_barang" placeholder="Nama Barang" maxlength="100" required>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-barcode fa-fw"></i></span>
-							<input class="form-control" type="text" id="barcode" name="barcode" placeholder="Barcode" maxlength="30" required>
+							<span class="input-group-addon"><i class="fa fa-barcode fa-fw" style="width: 55px;"></i><br><small>Barcode</small></span>
+							<input class="form-control" type="text" style="padding: 20px 15px;" id="barcode" name="barcode" placeholder="Barcode" maxlength="30" required>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
+							<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-tag fa-fw" style="width: 55px;"></i><br><small>Satuan</small></span>
 							<select class="select2 form-control" id="select_satuan" name="id_satuan">
 								<option value="" disabled selected>Pilih Satuan</option>
 								<?php 
-									$brg=mysql_query("select * from satuan");
-									while($b=mysql_fetch_array($brg)){
+									$brg=mysqli_query($con, "select * from satuan");
+									while($b=mysqli_fetch_array($brg)){
 								?>	
 								<option value="<?php echo $b['id_satuan']; ?>"><?php echo $b['nama_satuan'];?></option>
 								<?php 
@@ -188,22 +188,22 @@ $sql2=mysql_query("SELECT id_barang FROM barang_supplier WHERE id_barang=" .$row
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-warning fa-fw"></i></span>
-							<input id="min_order" type="text" name="min_order" class="form-control" placeholder="Minimal Jual" maxlength="7" required>
+							<span class="input-group-addon"><i class="fa fa-warning fa-fw" style="width: 55px;"></i><br><small>Min. Jual</small></span>
+							<input id="min_order" type="text" name="min_order" style="padding: 20px 15px;" class="form-control" placeholder="Minimal Jual" maxlength="7" required>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-warning fa-fw"></i></span>
-							<input id="stok_min" type="text" name="stok_minimal" class="form-control" placeholder="Stok Minimal" maxlength="7" required>
+							<span class="input-group-addon"><i class="fa fa-warning fa-fw" style="width: 55px;"></i><br><small>Stok Min.</small></span>
+							<input id="stok_min" type="text" name="stok_minimal" style="padding: 20px 15px;" class="form-control" placeholder="Stok Minimal" maxlength="7" required>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-certificate fa-fw"></i></span>
-							<input id="ijin" type="text" name="ijin" class="form-control" placeholder="No. Ijin" maxlength="25" required>
+							<span class="input-group-addon"><i class="fa fa-certificate fa-fw" style="width: 55px;"></i><br><small>No. Ijin</small></span>
+							<input id="ijin" type="text" name="ijin" style="padding: 20px 15px;" class="form-control" placeholder="No. Ijin" maxlength="25" required>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-flag fa-fw"></i></span>
+							<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-flag fa-fw" style="width: 55px;"></i><br><small>Status</small></span>
 							<select class="form-control select" id="select_status" name="status" required>
 								<option value="" disabled selected>Pilih Status</option>
 								<option value="0">NON AKTIF</option>
@@ -212,7 +212,7 @@ $sql2=mysql_query("SELECT id_barang FROM barang_supplier WHERE id_barang=" .$row
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-flag fa-fw"></i></span>
+							<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-flag fa-fw" style="width: 55px;"></i><br><small>Tampilkan</small></span>
 							<select class="form-control select" id="select_tampil" name="tampil" required>
 								<option value="" disabled selected>Tampilkan ke semua user ?</option>
 								<option value="0">TIDAK</option>

@@ -1,7 +1,7 @@
 <?php
 if (isset($tambah_negara_post)){
 	$sql = "INSERT INTO negara VALUES(null,'$negara')";
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -10,7 +10,7 @@ if (isset($tambah_negara_post)){
 }
 if (isset($edit_negara_post)){
 	$sql = "UPDATE negara SET nama_negara='$negara' WHERE id_negara='$id_negara'";
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -48,9 +48,9 @@ if (isset($edit_negara_post)){
 				</thead>
 				<tbody>
 <?php
-$sql=mysql_query("SELECT * FROM negara ORDER BY id_negara");
+$sql=mysqli_query($con, "SELECT * FROM negara ORDER BY id_negara");
 $i=0;
-while($row=mysql_fetch_array($sql)){
+while($row=mysqli_fetch_array($sql)){
 	$i+=1;
 	echo '			<tr>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_negara']. '">' .$i. '</a></td>
@@ -84,8 +84,8 @@ while($row=mysql_fetch_array($sql)){
 					<input type="hidden" name="tambah_negara_post" value="true">
 					<div class="form-group col-sm-12">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-							<input class="form-control" type="text" placeHolder="Nama Negara" name="negara" maxlength="40" required>
+							<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i><br><small>Nama</small></span>
+							<input class="form-control" type="text" placeHolder="Nama Negara" style="padding: 20px 15px;" name="negara" maxlength="40" required>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 					</div>									

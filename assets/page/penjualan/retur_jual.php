@@ -1,6 +1,6 @@
 <?php
 $sql = "DELETE FROM retur_jual WHERE id_retur_jual NOT IN (SELECT id_retur_jual FROM retur_jual_detail)";
-$q = mysql_query($sql);
+$q = mysqli_query($con, $sql);
 ?>
 <!-- page content -->
 <div class="right_col" role="main">
@@ -50,7 +50,7 @@ if (isset($_GET['dari'])){
 } else {
 	$val="WHERE retur_jual.status <= 2";
 }
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT
     retur_jual.tgl_retur
     , retur_jual.id_retur_jual
     , retur_jual.no_retur_jual
@@ -69,17 +69,17 @@ FROM
         ON (jual.id_karyawan = karyawan.id_karyawan)
 $val
 ORDER BY retur_jual.id_retur_jual DESC");
-while($row=mysql_fetch_array($sql)){
-$sql2=mysql_query("SELECT SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah FROM jual_detail WHERE id_jual=" .$row['id_jual']);
-$r=mysql_fetch_array($sql2);
+while($row=mysqli_fetch_array($sql)){
+$sql2=mysqli_query($con, "SELECT SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah FROM jual_detail WHERE id_jual=" .$row['id_jual']);
+$r=mysqli_fetch_array($sql2);
 $jumlah_jual=$r['jumlah'];
-$sql2=mysql_query("SELECT SUM(qty_retur * harga_retur) AS jumlah
+$sql2=mysqli_query($con, "SELECT SUM(qty_retur * harga_retur) AS jumlah
 FROM
     retur_jual
     INNER JOIN retur_jual_detail 
         ON (retur_jual.id_retur_jual = retur_jual_detail.id_retur_jual)
 WHERE retur_jual.id_retur_jual=" .$row['id_retur_jual']);
-$r=mysql_fetch_array($sql2);
+$r=mysqli_fetch_array($sql2);
 $jumlah_retur=$r['jumlah'];
 if ($row['status']=='1'){
 	$status="SELESAI";

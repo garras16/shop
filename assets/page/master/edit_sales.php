@@ -1,6 +1,6 @@
 <?php
 if (isset($edit_sales_post)){
-	$sql=mysql_query("UPDATE sales SET nama='$nama_sales' WHERE id_sales='$id'");
+	$sql=mysqli_query($con, "UPDATE sales SET nama='$nama_sales' WHERE id_sales='$id'");
 	if ($sql){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -8,8 +8,8 @@ if (isset($edit_sales_post)){
 	}
 	_direct("index.php?page=master&mode=sales");
 }
-	$sql=mysql_query("SELECT * FROM sales WHERE id_sales=$id");
-	$row=mysql_fetch_array($sql);
+	$sql=mysqli_query($con, "SELECT * FROM sales WHERE id_sales=$id");
+	$row=mysqli_fetch_array($sql);
 ?>
 
 <div class="right_col" role="main">

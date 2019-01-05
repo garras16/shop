@@ -42,7 +42,7 @@ if (isset($_GET['dari'])){
 } else {
 	$val="MONTH(beli.tanggal)=MONTH(CURRENT_DATE()) AND YEAR(beli.tanggal)=YEAR(CURRENT_DATE())";
 }
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT
     beli.id_beli
     , beli.no_nota_beli
     , beli.tanggal
@@ -63,7 +63,7 @@ FROM
         ON (barang_masuk.id_beli_detail = beli_detail.id_beli_detail) 
 WHERE $val 
 GROUP BY beli.id_beli");
-while($row=mysql_fetch_array($sql)){
+while($row=mysqli_fetch_array($sql)){
 	echo '			<tr>
 						<td><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '">' .date("d-m-Y", strtotime($row['tanggal'])). '</a></td>
 						<td><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '">' .$row['no_nota_beli']. '</a></td>

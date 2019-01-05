@@ -28,9 +28,9 @@ if (isset($_GET['id_negara'])){
 } else {
 	die();
 }
-$sql=mysql_query("SELECT * FROM $table WHERE $table_id='$id'");
+$sql=mysqli_query($con, "SELECT * FROM $table WHERE $table_id='$id'");
 echo '<option value="" disabled selected>Pilih ' .$table. '</option>';
-while ($row=mysql_fetch_array($sql)){
+while ($row=mysqli_fetch_array($sql)){
 	echo '<option value="' .$row[$row_id]. '">' .$row[$row_nama]. '</option>';
 }
 ?>

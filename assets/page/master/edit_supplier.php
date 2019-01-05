@@ -1,6 +1,6 @@
 <?php
 if (isset($edit_supplier_post)){
-	$sql=mysql_query("UPDATE supplier SET nama_supplier='$nama_supplier',alamat='$alamat',id_negara=$id_negara,id_prov=$id_prov,id_kab=$id_kab,id_kec=$id_kec,id_kel=$id_kel,kode_pos='$kode_pos',telepon_supplier='$telepon_supplier',kontakperson='$kontak',telepon_kontak='$telepon_kontak',status='$status' WHERE id_supplier=$id");
+	$sql=mysqli_query($con,  "UPDATE supplier SET nama_supplier='$nama_supplier',alamat='$alamat',id_negara=$id_negara,id_prov=$id_prov,id_kab=$id_kab,id_kec=$id_kec,id_kel=$id_kel,kode_pos='$kode_pos',telepon_supplier='$telepon_supplier',kontakperson='$kontak',telepon_kontak='$telepon_kontak',status='$status' WHERE id_supplier=$id");
 	if ($sql){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -8,8 +8,8 @@ if (isset($edit_supplier_post)){
 	}
 	_direct("index.php?page=master&mode=supplier");
 }
-	$sql=mysql_query("SELECT * FROM supplier WHERE id_supplier=$id");
-	$row=mysql_fetch_array($sql);
+	$sql=mysqli_query($con,  "SELECT * FROM supplier WHERE id_supplier=$id");
+	$row=mysqli_fet ch_array($sql);
 ?>
 
 <div class="right_col" role="main">
@@ -38,8 +38,8 @@ if (isset($edit_supplier_post)){
 						<select id="select_negara" class="form-control" name="id_negara" required>
 							<option value="" disabled selected>Pilih Negara</option>
 								<?php
-									$sql=mysql_query("SELECT * FROM negara");
-									while ($rows=mysql_fetch_array($sql)){
+									$sql=mysqli_query($con,  "SELECT * FROM negara");
+									while ($rows=mysqli_fetch_array($sql)){
 										echo '<option value="' .$rows['id_negara']. '" ' .($row['id_negara'] == $rows['id_negara'] ? 'selected' : ''). '>' .$rows['nama_negara']. '</option>';
 									}
 								?>
@@ -50,8 +50,8 @@ if (isset($edit_supplier_post)){
 						<select id="select_prov" class="form-control" name="id_prov" required>
 							<option value="" disabled selected>Pilih Provinsi</option>
 								<?php
-									$sql=mysql_query("SELECT * FROM provinsi");
-									while ($rows=mysql_fetch_array($sql)){
+									$sql=mysqli_query($con,  "SELECT * FROM provinsi");
+									while ($rows=mysqli_fetch_array($sql)){
 										echo '<option value="' .$rows['id_prov']. '" ' .($row['id_prov'] == $rows['id_prov'] ? 'selected' : ''). '>' .$rows['nama_prov']. '</option>';
 									}
 								?>
@@ -62,8 +62,8 @@ if (isset($edit_supplier_post)){
 						<select id="select_kab" class="form-control" name="id_kab" required>
 							<option value="" disabled selected>Pilih Kabupaten</option>
 								<?php
-									$sql=mysql_query("SELECT * FROM kabupaten");
-									while ($rows=mysql_fetch_array($sql)){
+									$sql=mysqli_query($con,  "SELECT * FROM kabupaten");
+									while ($rows=mysqli_fetch_array($sql)){
 										echo '<option value="' .$rows['id_kab']. '" ' .($row['id_kab'] == $rows['id_kab'] ? 'selected' : ''). '>' .$rows['nama_kab']. '</option>';
 									}
 								?>
@@ -74,8 +74,8 @@ if (isset($edit_supplier_post)){
 						<select id="select_kec" class="form-control" name="id_kec" required>
 							<option value="" disabled selected>Pilih Kecamatan</option>
 								<?php
-									$sql=mysql_query("SELECT * FROM kecamatan");
-									while ($rows=mysql_fetch_array($sql)){
+									$sql=mysqli_query($con,  "SELECT * FROM kecamatan");
+									while ($rows=mysqli_fetch_array($sql)){
 										echo '<option value="' .$rows['id_kec']. '" ' .($row['id_kec'] == $rows['id_kec'] ? 'selected' : ''). '>' .$rows['nama_kec']. '</option>';
 									}
 								?>
@@ -86,8 +86,8 @@ if (isset($edit_supplier_post)){
 						<select id="select_kel" class="form-control" name="id_kel" required>
 							<option value="" disabled selected>Pilih Kelurahan</option>
 								<?php
-									$sql=mysql_query("SELECT * FROM kelurahan");
-									while ($rows=mysql_fetch_array($sql)){
+									$sql=mysqli_query($con,  "SELECT * FROM kelurahan");
+									while ($rows=mysqli_fetch_array($sql)){
 										echo '<option value="' .$rows['id_kel']. '" ' .($row['id_kel'] == $rows['id_kel'] ? 'selected' : ''). '>' .$rows['nama_kel']. '</option>';
 									}
 								?>

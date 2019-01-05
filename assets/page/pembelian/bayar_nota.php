@@ -4,24 +4,24 @@ if (isset($tambah_bayar_nota_beli_post)){
 }
 if (isset($_GET['del'])){
 	$del=$_GET['del'];
-	$sql=mysql_query("SELECT * FROM bayar_nota_beli WHERE id_bayar=$del");
-	$row=mysql_fetch_array($sql);
+	$sql=mysqli_query($con, "SELECT * FROM bayar_nota_beli WHERE id_bayar=$del");
+	$row=mysqli_fetch_array($sql);
 	$no_nota_beli=$row['no_nota_beli'];
-	$sql=mysql_query("DELETE FROM bayar_nota_beli_detail WHERE id_bayar=$del");
-	$sql=mysql_query("DELETE FROM bayar_nota_beli WHERE id_bayar=$del");
-	$sql=mysql_query("UPDATE bayar_nota_beli SET status=2 WHERE no_nota_beli='$no_nota_beli'");
+	$sql=mysqli_query($con, "DELETE FROM bayar_nota_beli_detail WHERE id_bayar=$del");
+	$sql=mysqli_query($con, "DELETE FROM bayar_nota_beli WHERE id_bayar=$del");
+	$sql=mysqli_query($con, "UPDATE bayar_nota_beli SET status=2 WHERE no_nota_beli='$no_nota_beli'");
 /*	$del=$_GET['del'];
-	$sql=mysql_query("SELECT * FROM bayar_nota_beli WHERE id_bayar=$del");
-	$row=mysql_fetch_array($sql);
+	$sql=mysqli_query($con, "SELECT * FROM bayar_nota_beli WHERE id_bayar=$del");
+	$row=mysqli_fetch_array($sql);
 	$no_nota_beli=$row['no_nota_beli'];
 	$tgl=$row['tgl_bayar'];
-	$sql=mysql_query("SELECT * FROM bayar_nota_beli WHERE no_nota_beli='$no_nota_beli' AND tgl_bayar='$tgl'");
-	while ($row=mysql_fetch_array($sql)){
+	$sql=mysqli_query($con, "SELECT * FROM bayar_nota_beli WHERE no_nota_beli='$no_nota_beli' AND tgl_bayar='$tgl'");
+	while ($row=mysqli_fetch_array($sql)){
 		$id_bayar[]=$row['id_bayar'];
 	}
 	for ($i=0;$i<count($id_bayar);$i++){
-		$sql=mysql_query("DELETE FROM bayar_nota_beli_detail WHERE id_bayar=$id_bayar[$i]");
-		$sql=mysql_query("DELETE FROM bayar_nota_beli WHERE id_bayar=$id_bayar[$i] AND tgl_bayar='$tgl'");
+		$sql=mysqli_query($con, "DELETE FROM bayar_nota_beli_detail WHERE id_bayar=$id_bayar[$i]");
+		$sql=mysqli_query($con, "DELETE FROM bayar_nota_beli WHERE id_bayar=$id_bayar[$i] AND tgl_bayar='$tgl'");
 	}*/
 	_direct("?page=pembelian&mode=bayar_nota");
 }
@@ -75,7 +75,7 @@ if (isset($_GET['dari'])){
 } else {
 	$val="WHERE tgl_bayar > DATE_SUB(now(), INTERVAL 12 MONTH)";
 }
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT
     bayar_nota_beli.id_bayar
     , bayar_nota_beli.tgl_bayar
     , bayar_nota_beli.no_nota_beli
@@ -95,19 +95,19 @@ FROM
         ON (beli.id_supplier = supplier.id_supplier)
 $val
 ORDER BY beli.id_beli DESC");
-while($row=mysql_fetch_array($sql)){
+while($row=mysqli_fetch_array($sql)){
 	$tmp_id_beli=$row['id_beli'];
-	$sql2=mysql_query("SELECT SUM((harga-diskon_rp-diskon_rp_2-diskon_rp_3)*qty) AS jumlah_nota
+	$sql2=mysqli_query($con, "SELECT SUM((harga-diskon_rp-diskon_rp_2-diskon_rp_3)*qty) AS jumlah_nota
 		FROM
 			beli_detail 
 		WHERE id_beli=$tmp_id_beli");
-	$b2=mysql_fetch_array($sql2);
-	$jumlah_nota=$b2['jumlah_nota']-($b2['jumlah_nota']*$row['diskon_all_persen']/100)+($b2['jumlah_nota']*$row['ppn_all_persen']/100);
+	$b2=mysqli_fetch_array($sql2);
+	$jumlah_nota=$b2['jumlah_nota']+($b2['jumlah_nota']*$row['ppn_all_persen']/100)-($b2['jumlah_nota']*$row['diskon_all_persen']/100);
 
 //-----------------------------------------------------------------------------------------	
 	$tmp_nota_beli=$row['no_nota_beli'];
-	$sql3=mysql_query("SELECT SUM(jumlah) AS jumlah_bayar FROM bayar_nota_beli WHERE no_nota_beli='$tmp_nota_beli'");
-	$b3=mysql_fetch_array($sql3);
+	$sql3=mysqli_query($con, "SELECT SUM(jumlah) AS jumlah_bayar FROM bayar_nota_beli WHERE no_nota_beli='$tmp_nota_beli'");
+	$b3=mysqli_fetch_array($sql3);
 	$jumlah_bayar=$b3['jumlah_bayar'];
 //-------------------------------------------------------------------------------------------
 $sisa_nota=$jumlah_nota-$jumlah_bayar;
@@ -160,11 +160,11 @@ if ($row['status']=='1'){
 					<input type="hidden" id="jumlah_bayar" name="jumlah_bayar" value="">
 					<div class="col-md-12">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-file fa-fw"></i></span>
+						<span class="input-group-addon"><i class="fa fa-file fa-fw" style="width: 58px;"></i><br><small>Nota Beli</small></span>
 						<select id="select_nota" name="no_nota_beli" class="select2 form-control" required="true">
 							<option value="" disabled selected>-= No Nota Beli | Nama Supplier | Jumlah Nota (Rp) =-</option>
 							<?php 
-								$sql=mysql_query("SELECT 
+								$sql=mysqli_query($con, "SELECT 
     beli.id_beli
     , beli.no_nota_beli
     , beli.diskon_all_persen
@@ -182,13 +182,13 @@ FROM
         ON (barang_masuk.id_beli_detail = beli_detail.id_beli_detail)
 WHERE bayar_nota_beli.status IS NULL OR bayar_nota_beli.status=2 OR bayar_nota_beli.status=0
 GROUP BY beli.id_beli");
-								while($b=mysql_fetch_array($sql)){
+								while($b=mysqli_fetch_array($sql)){
 									$tmp_id_beli=$b['id_beli'];
-									$sql2=mysql_query("SELECT SUM((harga*qty)-diskon_rp-diskon_rp_2-diskon_rp_3) AS jumlah
+									$sql2=mysqli_query($con, "SELECT SUM((harga*qty)-diskon_rp-diskon_rp_2-diskon_rp_3) AS jumlah
 										FROM
 											beli_detail 
 									     WHERE id_beli=$tmp_id_beli");
-									$b2=mysql_fetch_array($sql2);
+									$b2=mysqli_fetch_array($sql2);
 									$total=$b2['jumlah']+($b2['jumlah']*$b['ppn_all_persen']/100)-($b2['jumlah']*$b['diskon_all_persen']/100);
 									if ($total!=''){
 										echo '<option data-jumlah="' .$total. '" value="' .$b['no_nota_beli']. '">' .$b['no_nota_beli']. ' | ' .$b['nama_supplier']. ' | Rp ' .format_uang($total). '</option>';
@@ -199,7 +199,7 @@ GROUP BY beli.id_beli");
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-money fa-fw"></i></span>
+						<span class="input-group-addon" style="font-size: 12px;"><i class="fa fa-money fa-fw"></i><br><small>Pembayaran</small></span>
 						<select id="jenis" name="jenis" class="select2 form-control" required="true">
 							<option value="" disabled selected>-= Pilih Jenis Bayar =-</option>
 							<option value="Transfer">Transfer</option>

@@ -11,12 +11,12 @@ if (isset($_GET['jenis'])){
 
 ?>
 <div class="input-group">
-	<span class="input-group-addon"><i class="fa fa-credit-card fa-fw"></i></span>
+	<span class="input-group-addon" style="font-size: 12px;"><i class="fa fa-credit-card fa-fw"></i><br><small>Komponen</small></span>
 	<select class="form-control select2" id="select_komponen" name="komponen" required>
 		<option value="" disabled selected>Pilih Komponen</option>
 <?php
-$sql=mysql_query("SELECT * FROM mst_kas_kecil WHERE jenis='$jenis' AND status=1");
-while ($row=mysql_fetch_array($sql)){
+$sql=mysqli_query($con, "SELECT * FROM mst_kas_kecil WHERE jenis='$jenis' AND status=1");
+while ($row=mysqli_fetch_array($sql)){
 	echo '<option value="' .$row['nama_kas_kecil']. '">' .$row['nama_kas_kecil']. '</option>';
 }
 ?>

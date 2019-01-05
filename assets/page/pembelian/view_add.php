@@ -1,6 +1,6 @@
 <?php
 if (isset($tambah_beli_detail_post)){
-	$sql=mysql_query("INSERT INTO beli_detail VALUES(null,$id,$id_barang_supplier,$qty,$harga,0,$diskon_persen_1,$diskon_rp_1,$diskon_persen_2,$diskon_rp_2,$diskon_persen_3,$diskon_rp_3)");
+	$sql=mysqli_query($con, "INSERT INTO beli_detail VALUES(null,$id,$id_barang_supplier,$qty,$harga,0,$diskon_persen_1,$diskon_rp_1,$diskon_persen_2,$diskon_rp_2,$diskon_persen_3,$diskon_rp_3)");
 	if ($sql){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -9,10 +9,10 @@ if (isset($tambah_beli_detail_post)){
 	_direct("?page=pembelian&mode=view_add&id=" .$id);
 }
 if (isset($edit_diskon_nota_beli)){
-	$sql=mysql_query("UPDATE beli SET diskon_all_persen=$diskon_all_persen WHERE id_beli=$id");
+	$sql=mysqli_query($con, "UPDATE beli SET diskon_all_persen=$diskon_all_persen WHERE id_beli=$id");
 	_direct("?page=pembelian&mode=view_add&id=" .$id);
 }
-$sql3=mysql_query("SELECT
+$sql3=mysqli_query($con, "SELECT
     harga,qty_di_rak,diskon_persen,diskon_persen_2,diskon_persen_3,diskon_rp,diskon_rp_2,diskon_rp_3
 FROM
     beli_detail
@@ -24,7 +24,7 @@ FROM
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
 WHERE beli.id_beli=$id");
 $total_datang=0;
-while ($row=mysql_fetch_array($sql3)){
+while ($row=mysqli_fetch_array($sql3)){
 	$diskon1=$row['harga']*$row['diskon_persen']/100;
 	$tot_set_disk_1=$row['qty_di_rak']*($row['harga']-$diskon1);
 	$diskon2=($row['harga']-$diskon1)*$row['diskon_persen_2']/100;
@@ -33,12 +33,12 @@ while ($row=mysql_fetch_array($sql3)){
 	$tot_set_disk_3=$row['qty_di_rak']*($row['harga']-$diskon1-$diskon2-$diskon3);
 	$total_datang+=$tot_set_disk_3;
 }
-$sql2=mysql_query("SELECT diskon_all_persen,ppn_all_persen FROM beli WHERE id_beli=$id");
-$row2=mysql_fetch_array($sql2);
+$sql2=mysqli_query($con, "SELECT diskon_all_persen,ppn_all_persen FROM beli WHERE id_beli=$id");
+$row2=mysqli_fetch_array($sql2);
 $diskon_all_persen=$row2['diskon_all_persen'];
 $ppn_all_persen=$row2['ppn_all_persen'];
-	$sql=mysql_query("SELECT * FROM beli WHERE id_beli=$id");
-	$row=mysql_fetch_array($sql);
+	$sql=mysqli_query($con, "SELECT * FROM beli WHERE id_beli=$id");
+	$row=mysqli_fetch_array($sql);
 	$id_supplier=$row['id_supplier'];
 	$diskon_nota=$row['diskon_all_persen']/100;
 ?>
@@ -80,8 +80,8 @@ $ppn_all_persen=$row2['ppn_all_persen'];
 						<select name="id_pelanggan" class="form-control" disabled>
 							<option value="0" disabled selected>-= Pilih Supplier =-</option>
 							<?php 
-								$cust=mysql_query("SELECT id_supplier, nama_supplier FROM supplier");
-								while($b=mysql_fetch_array($cust)){
+								$cust=mysqli_query($con, "SELECT id_supplier, nama_supplier FROM supplier");
+								while($b=mysqli_fetch_array($cust)){
 									$selected = ($b['id_supplier'] == $row['id_supplier'] ? 'selected' : '');
 									echo '<option value="' .$b['id_supplier']. '" ' .$selected. '>' .$b['nama_supplier']. '</option>';
 								}
@@ -95,8 +95,8 @@ $ppn_all_persen=$row2['ppn_all_persen'];
 						<select name="id_ekspedisi" class="form-control" disabled>
 							<option>-= Pilih Ekspedisi =-</option>
 							<?php 
-								$eks=mysql_query("SELECT id_ekspedisi, nama_ekspedisi FROM ekspedisi");
-								while($b=mysql_fetch_array($eks)){
+								$eks=mysqli_query($con, "SELECT id_ekspedisi, nama_ekspedisi FROM ekspedisi");
+								while($b=mysqli_fetch_array($eks)){
 									$selected = ($b['id_ekspedisi'] == $row['id_ekspedisi'] ? 'selected="selected"' : '');
 									echo '<option value="' .$b['id_ekspedisi']. '" ' .$selected. '>' .$b['nama_ekspedisi']. '</option>';
 								}
@@ -149,7 +149,7 @@ $ppn_all_persen=$row2['ppn_all_persen'];
 				</thead>
 				<tbody>
 				<?php
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT
     beli_detail.id_beli_detail
     , beli_detail.qty
     , beli_detail.harga
@@ -180,7 +180,7 @@ FROM
 $berat=0;
 $volume=0;
 $jumlah=0;
-while($row=mysql_fetch_array($sql)){
+while($row=mysqli_fetch_array($sql)){
 $berat+=$row['berat'];
 $volume+=$row['volume'];
 ($row['tgl_datang']=='' ? $tgl_datang="BELUM LENGKAP" : $tgl_datang=date("d-m-Y", strtotime($row['tgl_datang'])));
@@ -210,7 +210,6 @@ $volume+=$row['volume'];
 						<td><a class="label label-warning" onClick="deleteRow(this,' .$row['id_beli_detail']. ')" ><i class="fa fa-trash"></i> HAPUS</a></td>';
 	echo '			</tr>';
 }
-
 $diskon_all_rp=$jumlah*($diskon_all_persen/100);
 $ppn_all_rp=($jumlah-$diskon_all_rp)*($ppn_all_persen/100);
 $jumlah=$jumlah+$ppn_all_rp-$diskon_all_rp;
@@ -225,28 +224,31 @@ $jumlah=$jumlah+$ppn_all_rp-$diskon_all_rp;
 				</div>
 				<div class="col-md-5 text-right">
 					<div class="input-group">
-						<span class="input-group-addon" style="width:210px;text-align:left;color:#000"><small>Berat Datang (gr)</small></span>
-						<input class="form-control" id="berat_2" name="berat" value="<?php echo format_angka($berat) ?>" readonly style="font-size:10px">
+						<span class="input-group-addon" style="width:160px;text-align:left;color:#000">Berat Datang (gr)</span>
+						<input class="form-control text-right" id="berat_2" name="berat" value="<?php echo format_angka($berat) ?>" readonly>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon" style="width:210px;text-align:left;color:#000"><small>Volume Datang (cm3)</small></span>
-						<input stle="width:256px" class="form-control" id="volume_2" name="volume" value="<?php echo format_angka($volume) ?>" readonly>
+						<span class="input-group-addon" style="width:160px;text-align:left;color:#000">Volume Datang (cm3)</span>
+						<input stle="width:256px" class="form-control text-right" id="volume_2" name="volume" value="<?php echo format_angka($volume) ?>" readonly>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon" style="width:210px;text-align:left;color:#000"><a data-toggle="modal" data-target="#myModal2" style="color:red"><small>Diskon Nota Beli (Rp) <font color="blue">[Ubah]</font></small></a></span>
-						<input class="form-control" id="diskon" name="total" value="<?php echo format_uang($diskon_all_rp) ?>" readonly>
+						<span class="input-group-addon" style="width:160px;text-align:left;color:#000">Diskon Nota Beli (Rp)</span>
+						<input class="form-control text-right" id="diskon" name="total" value="<?php echo format_uang($diskon_all_rp) ?>" readonly>
+						<span class="input-group-btn">
+							<a data-toggle="modal" data-target="#myModal2" class="btn btn-primary"><span class="fa fa-edit"></span></a>
+						</span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon" style="width:210px;text-align:left;color:#000"><small>PPN (Rp)</small></span>
-						<input class="form-control" id="diskon" name="total" value="<?php echo format_uang($ppn_all_rp) ?>" readonly>
+						<span class="input-group-addon" style="width:160px;text-align:left;color:#000">PPN (Rp)</span>
+						<input class="form-control text-right" id="diskon" name="total" value="<?php echo format_uang($ppn_all_rp) ?>" readonly>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon" style="width:210px;text-align:left;color:#000"><small>Total Nota Beli (Rp)</small></span>
-						<input class="form-control" id="total_2" name="total" value="<?php echo format_uang($jumlah) ?>" readonly>
+						<span class="input-group-addon" style="width:160px;text-align:left;color:#000">Total Nota Beli (Rp)</span>
+						<input class="form-control text-right" id="total_2" name="total" value="<?php echo format_uang($jumlah) ?>" readonly>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon" style="width:210px;text-align:left;color:#000"><small>Total Datang (Rp)</small></span>
-						<input class="form-control" id="total_3" name="total" value="<?php echo format_uang($total_datang) ?>" readonly>
+						<span class="input-group-addon" style="width:160px;text-align:left;color:#000">Total Datang (Rp)</span>
+						<input class="form-control text-right" id="total_3" name="total" value="<?php echo format_uang($total_datang) ?>" readonly>
 					</div>
 				</div>
 			</div>
@@ -275,7 +277,7 @@ $jumlah=$jumlah+$ppn_all_rp-$diskon_all_rp;
 						<select id="select_barang" class="form-control select2"  name="id_barang_supplier" required>
 							<option value="" disabled selected>Pilih Barang</option>
 <?php
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT
     barang_supplier.id_barang_supplier
     , barang.nama_barang
 	, satuan.nama_satuan
@@ -288,7 +290,7 @@ FROM
 WHERE 
 	barang_supplier.id_supplier=$id_supplier
 	AND barang.status=1");
-								while($row=mysql_fetch_array($sql)){
+								while($row=mysqli_fetch_array($sql)){
 									echo '<option data-satuan="' .$row['nama_satuan']. '" value="' .$row['id_barang_supplier']. '">' .$row['nama_barang']. '</option>';
 								}
 							?>
@@ -302,7 +304,7 @@ WHERE
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-money fa-fw"></i> Rp.</span>
+						<span class="input-group-addon"><i class="fa fa-money fa-fw"></i></span>
 						<input class="form-control" id="harga_2" name="harga" type="text" placeholder="Harga Modal (Rp)" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>

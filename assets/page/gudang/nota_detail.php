@@ -2,7 +2,7 @@
 date_default_timezone_set('Asia/Jakarta');
 require_once('../../../assets/inc/config.php');
 if (isset($edit_penjualan_post)){
-	$sql=mysql_query("UPDATE jual SET tgl_nota='$tgl_nota',invoice='$invoice',id_pelanggan=$id_pelanggan,id_karyawan=$id_karyawan,keterangan='$keterangan' WHERE id_jual='$id'");
+	$sql=mysqli_query($con, "UPDATE jual SET tgl_nota='$tgl_nota',invoice='$invoice',id_pelanggan=$id_pelanggan,id_karyawan=$id_karyawan,keterangan='$keterangan' WHERE id_jual='$id'");
 	if ($sql){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -19,7 +19,7 @@ if (isset($edit_penjualan_post)){
 						<select class="form-control" id="select_barang" name="id_barang_supplier" required>
 							<option value="" disabled selected>Pilih Ekspedisi</option>
 							<?php
-								$sql=mysql_query("SELECT
+								$sql=mysqli_query($con, "SELECT
     barang_supplier.id_barang_supplier
     , barang.nama_barang
 FROM
@@ -28,7 +28,7 @@ FROM
         ON (barang_supplier.id_barang = barang.id_barang) 
 WHERE 
 	barang_supplier.id_supplier=$id_supplier");
-								while($row=mysql_fetch_array($sql)){
+								while($row=mysqli_fetch_array($sql)){
 									echo '<option value="' .$row['id_barang_supplier']. '">' .$row['nama_barang']. '</option>';
 								}
 							?>

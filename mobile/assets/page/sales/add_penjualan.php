@@ -228,21 +228,20 @@ if ($('#select_jenis').val()=='Kredit'){
 	var qty = $('#qty').val();
 	var tot_seb_diskon = harga * qty;
 	var diskon_persen_1 = Number($('#diskon_persen_1').val());
-	var diskon_rp_1 = qty*harga * (diskon_persen_1/100);
-	var tot_set_disk_1=qty*(harga-diskon_rp_1);
+	var diskon_rp_1 = harga * (diskon_persen_1/100);
+	var tot_set_disk_1=qty * (harga-diskon_rp_1);
 	var diskon_persen_2 = Number($('#diskon_persen_2').val());
-	var diskon_rp_2 = qty*(harga-diskon_rp_1) * (diskon_persen_2/100);
+	var diskon_rp_2 = (harga-diskon_rp_1) * (diskon_persen_2/100);
 	var tot_set_disk_2=qty * (harga-diskon_rp_1-diskon_rp_2);
 	var diskon_persen_3 = Number($('#diskon_persen_3').val());
-	var diskon_rp_3 = qty*(harga-diskon_rp_1-diskon_rp_2) * (diskon_persen_3/100);
+	var diskon_rp_3 = (harga-diskon_rp_1-diskon_rp_2) * (diskon_persen_3/100);
 	var tot_set_disk_3=qty * (harga-diskon_rp_1-diskon_rp_3);
 	var subtotal = tot_set_disk_3;
-	
 	var isi = '<tr id="list">' +
 				'<input type="hidden" name="id_harga_jual[]" value="' + id_harga_jual + '">' +
 				'<input type="hidden" name="harga[]" value="' + harga + '">' +
 				'<input type="hidden" name="qty[]" value="' + qty + '">' +
-				'<input type="hidden" name="diskon_persen_1[]" value="' + Math.round(diskon_persen_1) + '">' +
+				'<input type="hidden" name="diskon_persen_1[]" value="' + diskon_persen_1 + '">' +
 				'<input type="hidden" name="diskon_rp_1[]" value="' + diskon_rp_1 + '">' +
 				'<input type="hidden" name="diskon_persen_2[]" value="' + diskon_persen_2 + '">' +
 				'<input type="hidden" name="diskon_rp_2[]" value="' + diskon_rp_2 + '">' +

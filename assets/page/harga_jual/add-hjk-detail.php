@@ -4,11 +4,11 @@ require_once('../../../assets/inc/config.php');
 require_once('../../../assets/inc/publicfunc.php');
 $id=$_GET['id'];
 $tanggal=date("Y-m-d");
-$sql=mysql_query("SELECT * FROM harga_jual_kredit WHERE id_harga_jual=$id");
-while($row=mysql_fetch_array($sql)){
+$sql=mysqli_query($con, "SELECT * FROM harga_jual_kredit WHERE id_harga_jual=$id");
+while($row=mysqli_fetch_array($sql)){
 	$harga_kredit=$row['harga_kredit'];
 	$hari=$row['hari'];
-	$sql2=mysql_query("INSERT INTO hj_kredit_detail VALUES(null,$id,'$tanggal',$harga_kredit,$hari)");
+	$sql2=mysqli_query($con, "INSERT INTO hj_kredit_detail VALUES(null,$id,'$tanggal',$harga_kredit,$hari)");
 }
-$sql=mysql_query("DELETE FROM harga_jual_kredit WHERE id_harga_jual=$id");
+$sql=mysqli_query($con, "DELETE FROM harga_jual_kredit WHERE id_harga_jual=$id");
 ?>

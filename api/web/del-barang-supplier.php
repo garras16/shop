@@ -9,11 +9,11 @@ $id=$_GET['id'];
 <select class="select2 form-control" id="select_supplier" name="id_supplier" required>
 	<option value="" disabled selected>Pilih Supplier</option>
 	<?php 
-		$brg=mysql_query("SELECT id_supplier,nama_supplier FROM supplier WHERE id_supplier IN (SELECT id_supplier FROM barang_supplier WHERE id_barang=$id)");
-		while($b=mysql_fetch_array($brg)){
+		$brg=mysqli_query($con, "SELECT id_supplier,nama_supplier FROM supplier WHERE id_supplier IN (SELECT id_supplier FROM barang_supplier WHERE id_barang=$id)");
+		while($b=mysqli_fetch_array($brg)){
 			$spl=$b['id_supplier'];
-			$q=mysql_query("SELECT id_barang_supplier FROM barang_supplier WHERE id_barang=$id AND id_supplier=$spl AND id_barang_supplier NOT IN (SELECT id_barang_supplier FROM harga_jual)");
-			if (mysql_num_rows($q)>0){
+			$q=mysqli_query($con, "SELECT id_barang_supplier FROM barang_supplier WHERE id_barang=$id AND id_supplier=$spl AND id_barang_supplier NOT IN (SELECT id_barang_supplier FROM harga_jual)");
+			if (mysqli_num_rows($q)>0){
 				echo '<option value="' .$b['id_supplier']. '">' .$b['nama_supplier']. '</option>';
 			}
 		}

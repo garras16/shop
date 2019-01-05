@@ -1,7 +1,7 @@
 <?php
 if (isset($tambah_input_kas_kecil_post)){
 	$sql = "INSERT INTO kas_kecil VALUES(null,'$tanggal','$komponen','$jenis','$keterangan',$jumlah)";
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -11,7 +11,7 @@ if (isset($tambah_input_kas_kecil_post)){
 }
 if (isset($_GET['del'])){
 	$sql = "DELETE FROM kas_kecil WHERE id_kas_kecil=" .$_GET['del']. "";
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -68,11 +68,11 @@ if (isset($_GET['cari'])){
 	$val="MONTH(tanggal)=$bln_sql AND YEAR(tanggal)=$thn_sql";
 }
 
-$sql=mysql_query("SELECT * FROM kas_kecil WHERE $val AND jenis='KELUAR' ORDER BY id_kas_kecil DESC");
-if (mysql_num_rows($sql)>0) echo '<tr style="background: red">
+$sql=mysqli_query($con, "SELECT * FROM kas_kecil WHERE $val AND jenis='KELUAR' ORDER BY id_kas_kecil DESC");
+if (mysqli_num_rows($sql)>0) echo '<tr style="background: red">
 			<td colspan="6"><font color="white">PENGELUARAN</font></td>
 		</tr>';
-while($row=mysql_fetch_array($sql)){
+while($row=mysqli_fetch_array($sql)){
 $jumlah_keluar+=$row['jumlah'];
 	echo '			<tr>
 						<td><div style="min-width:70px">' .date("d-m-Y", strtotime($row['tanggal'])). '</div></td>
@@ -87,11 +87,11 @@ $jumlah_keluar+=$row['jumlah'];
 	}
 	echo '				</tr>';
 }
-$sql2=mysql_query("SELECT * FROM kas_kecil WHERE $val AND jenis='MASUK' ORDER BY id_kas_kecil DESC");
-if (mysql_num_rows($sql2)>0) echo '<tr style="background: blue">
+$sql2=mysqli_query($con, "SELECT * FROM kas_kecil WHERE $val AND jenis='MASUK' ORDER BY id_kas_kecil DESC");
+if (mysqli_num_rows($sql2)>0) echo '<tr style="background: blue">
 			<td colspan="6"><font color="white">PEMASUKAN</font></td>
 		</tr>';
-while($row=mysql_fetch_array($sql2)){
+while($row=mysqli_fetch_array($sql2)){
 $jumlah_masuk+=$row['jumlah'];
 	echo '			<tr>
 						<td><div style="min-width:70px">' .date("d-m-Y", strtotime($row['tanggal'])). '</div></td>
@@ -106,7 +106,7 @@ $jumlah_masuk+=$row['jumlah'];
 	}
 	echo '			</tr>';
 }
-if (mysql_num_rows($sql)>0 || mysql_num_rows($sql2)>0) {
+if (mysqli_num_rows($sql)>0 || mysqli_num_rows($sql2)>0) {
 	echo '<tr style="background: aqua">
 			<td colspan="2"><b>TOTAL</b></td>
 			<td align="right">' .format_uang($jumlah_masuk). '</td>
@@ -144,12 +144,12 @@ if (mysql_num_rows($sql)>0 || mysql_num_rows($sql2)>0) {
 					<input type="hidden" name="tanggal" value="<?php echo date("Y-m-d") ?>">
 					<div class="col-md-12">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
-						<input class="form-control" placeholder="Tanggal" value="<?php echo date("d-m-Y") ?>" readonly>
+						<span class="input-group-addon"><i class="fa fa-calendar fa-fw" style="width: 50px;"><br><small>Tgl</small></i></span>
+						<input class="form-control" style="padding: 20px 15px;" placeholder="Tanggal" value="<?php echo date("d-m-Y") ?>" readonly>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-barcode fa-fw"></i></span>
+						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-barcode fa-fw" style="width: 50px;"><br><small>Jenis</small></i></span>
 						<select class="form-control select" id="select_jenis" name="jenis" required>
 							<option value="" disabled selected>Pilih Jenis</option>
 							<option value="MASUK">MASUK</option>
@@ -159,7 +159,7 @@ if (mysql_num_rows($sql)>0 || mysql_num_rows($sql2)>0) {
 					</div>
 					<div id="get_komponen">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-credit-card fa-fw"></i></span>
+						<span class="input-group-addon" style="font-size: 12px;"><i class="fa fa-credit-card fa-fw"></i><br><small>Komponen</small></span>
 						<select class="form-control select2" id="select_komponen" name="komponen" required>
 							<option value="" disabled selected>Pilih Komponen</option>
 						</select>
@@ -167,13 +167,13 @@ if (mysql_num_rows($sql)>0 || mysql_num_rows($sql2)>0) {
 					</div>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-dollar fa-fw"></i></span>
-						<input class="form-control" id="jumlah" type="text" name="jumlah" placeholder="Jumlah (Rp)" required>
+						<span class="input-group-addon"><i class="fa fa-dollar fa-fw" style="width: 50px;"></i><br><small>Jml.</small></span>
+						<input class="form-control koma" style="padding: 20px 15px;" id="jumlah" min="1" type="text" name="jumlah" placeholder="Jumlah (Rp)" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-info fa-fw"></i></span>
-						<input class="form-control" type="text" id="keterangan" name="keterangan" placeholder="Keterangan" maxlength="50" required>
+						<span class="input-group-addon"><i class="fa fa-info fa-fw" style="width: 50px;"></i><br><small>Ket.</small></span>
+						<input class="form-control" type="text" id="keterangan" style="padding: 20px 15px;" name="keterangan" placeholder="Keterangan" maxlength="50" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					</div>

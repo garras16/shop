@@ -1,16 +1,16 @@
 <?php
 $id_karyawan=$_SESSION['id_karyawan'];
-	$sql=mysql_query("SELECT *
+	$sql=mysqli_query($con, "SELECT *
 FROM
     canvass_keluar
     LEFT JOIN kendaraan 
         ON (canvass_keluar.id_mobil = kendaraan.id_kendaraan)
 	WHERE id_canvass_keluar=$id");
-	$row=mysql_fetch_array($sql);
+	$row=mysqli_fetch_array($sql);
 	$tgl_canvass=$row['tanggal_canvass'];
 	$nama_mobil=$row['nama_kendaraan'];
 	$plat=$row['plat'];
-	$sql2=mysql_query("SELECT *
+	$sql2=mysqli_query($con, "SELECT *
 FROM
     canvass_keluar_karyawan
     INNER JOIN karyawan 
@@ -18,7 +18,7 @@ FROM
 	INNER JOIN users 
         ON (karyawan.id_karyawan = users.id_karyawan)
 	WHERE id_canvass_keluar=$id");
-	$baris=mysql_num_rows($sql2);
+	$baris=mysqli_num_rows($sql2);
 	if (isset($_GET['direct'])){
 		$url="?page=canvass_keluar&mode=stock_opname";
 	} else {
@@ -46,7 +46,7 @@ FROM
 							<tr><td width="40%">No Pol</td><td>' .$plat. '</td></tr>';
 	
 	echo '					<tr><td rowspan="' .$baris. '">Nama Karyawan</td>';
-	while ($row2=mysql_fetch_array($sql2)){
+	while ($row2=mysqli_fetch_array($sql2)){
 		echo '				<td>- ' .$row2['nama_karyawan']. ' ( ' .$row2['posisi']. ' )</td></tr>';
 	}
 	echo '</tr>';
@@ -66,7 +66,7 @@ FROM
 							</thead>
 							<tbody>
 <?php
-	$sql=mysql_query("SELECT *,SUM(qty_sisa) AS qty_sisa, SUM(qty_cek) AS qty_cek
+	$sql=mysqli_query($con, "SELECT *,SUM(qty_sisa) AS qty_sisa, SUM(qty_cek) AS qty_cek
 FROM
     lap_stock_opname
     INNER JOIN barang 
@@ -75,9 +75,9 @@ FROM
         ON (barang.id_satuan = satuan.id_satuan)
  WHERE id_canvass_keluar=$id
  GROUP BY barang.id_barang");
-	while ($row=mysql_fetch_array($sql)){
-	$sql2=mysql_query("SELECT SUM(stok) AS stok FROM canvass_keluar_barang WHERE id_canvass_keluar=$id AND id_barang=" .$row['id_barang']);
-	$row2=mysql_fetch_array($sql2);
+	while ($row=mysqli_fetch_array($sql)){
+	$sql2=mysqli_query($con, "SELECT SUM(stok) AS stok FROM canvass_keluar_barang WHERE id_canvass_keluar=$id AND id_barang=" .$row['id_barang']);
+	$row2=mysqli_fetch_array($sql2);
 	($row2['stok']==$row['qty_cek'] ? $style="" : $style="color:red;");
 	(($row2['stok']-$row['qty_cek'])==0 ? $send=false : $send=true);
 	echo '<tr>
@@ -88,9 +88,9 @@ FROM
 			</tr>';
 	}	
 	if (isset($_GET['direct'])) {
-		$sql=mysql_query("SELECT * FROM lap_stock_opname WHERE id_canvass_keluar=$id AND selisih <> 0");
-		if (mysql_num_rows($sql)>0){
-			$sql2=mysql_query("INSERT INTO konfirm_owner VALUES(null,'$tanggal','Ada perbedaan antara hasil perhitungan qty stock opname dan qty seharusnya.','canvass_stock_opname',0,'?page=konfirmasi&mode=konfirm_so_canvass&id=$id'')");
+		$sql=mysqli_query($con, "SELECT * FROM lap_stock_opname WHERE id_canvass_keluar=$id AND selisih <> 0");
+		if (mysqli_num_rows($sql)>0){
+			$sql2=mysqli_query($con, "INSERT INTO konfirm_owner VALUES(null,'$tanggal','Ada perbedaan antara hasil perhitungan qty stock opname dan qty seharusnya.','canvass_stock_opname',0,'?page=konfirmasi&mode=konfirm_so_canvass&id=$id'')");
 		}
 	}
 ?>

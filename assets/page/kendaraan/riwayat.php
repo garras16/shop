@@ -26,7 +26,7 @@
 				</thead>
 				<tbody>
 <?php
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT
     kendaraan.nama_kendaraan
     , plat_detail.tanggal
 	, plat_detail.plat
@@ -35,7 +35,7 @@ FROM
     INNER JOIN kendaraan 
         ON (plat_detail.id_kendaraan = kendaraan.id_kendaraan)");
 
-while($row=mysql_fetch_array($sql)){
+while($row=mysqli_fetch_array($sql)){
 	echo '			<tr>
 						<td>' .$row['tanggal']. '</a></td>
 						<td>' .$row['nama_kendaraan']. '</a></td>

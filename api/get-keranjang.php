@@ -3,15 +3,15 @@ date_default_timezone_set('Asia/Jakarta');
 require_once('../assets/inc/config.php');
 require_once('../assets/inc/publicfunc.php');
 $id_session=$_POST['id_session'];
-$sql=mysql_query("SELECT * FROM keranjang WHERE id_session='$id_session'");
+$sql=mysqli_query($con, "SELECT * FROM keranjang WHERE id_session='$id_session'");
 $response["datas"] = array();
-while ($row=mysql_fetch_array($sql)){
+while ($row=mysqli_fetch_array($sql)){
 	$data=array();
 	$data["id_keranjang"]=$row["id_keranjang"];
 	$data["id_produk"]=$row["id_produk"];
 	$id_produk=$row["id_produk"];
-	$sql2=mysql_query("SELECT * FROM barang WHERE id_barang='$id_produk'");
-	$row2=mysql_fetch_array($sql2);
+	$sql2=mysqli_query($con, "SELECT * FROM barang WHERE id_barang='$id_produk'");
+	$row2=mysqli_fetch_array($sql2);
 	$data["nama_barang"]=$row2["nama_barang"];
 	$data["harga"]=$row["harga"];
 	$data["jumlah"]=$row["jumlah"];
@@ -20,9 +20,9 @@ while ($row=mysql_fetch_array($sql)){
 	$response["success"]=1;
 	array_push($response["datas"], $data);
 }
-$sql=mysql_query("SELECT SUM(jumlah*harga) AS total FROM keranjang WHERE id_session='$id_session'");
+$sql=mysqli_query($con, "SELECT SUM(jumlah*harga) AS total FROM keranjang WHERE id_session='$id_session'");
 $response["total_keranjang"] = array();
-$row=mysql_fetch_array($sql);
+$row=mysqli_fetch_array($sql);
 $data=array();
 $data["total_rupiah"]="Rp. " .number_format($row["total"], 0, ",", ".");
 $data["total_data"]=$row["total"];

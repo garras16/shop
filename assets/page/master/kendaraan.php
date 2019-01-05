@@ -1,7 +1,7 @@
 <?php
 if (isset($tambah_kendaraan_post)){
 	$sql = "INSERT INTO kendaraan VALUES(null,'$nama_kendaraan','$jenis_kendaraan',$id_varian,'$no_plat',$perbandingan,$km_awal,$status,$canvass)";
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -11,7 +11,7 @@ if (isset($tambah_kendaraan_post)){
 }
 if (isset($edit_kendaraan_post)){
 	$sql = "UPDATE kendaraan SET nama_kendaraan='$nama_kendaraan',jenis_kendaraan='$jenis_kendaraan',id_varian=$id_varian,plat='$no_plat',perbandingan=$perbandingan,km_awal=$km_awal,status=$status,canvass='$canvass' WHERE id_kendaraan='$id_kendaraan'";
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -60,7 +60,7 @@ if (isset($edit_kendaraan_post)){
 				</thead>
 				<tbody>
 <?php
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT
     kendaraan.id_kendaraan
     , kendaraan.nama_kendaraan
     , kendaraan.jenis_kendaraan
@@ -76,7 +76,7 @@ FROM
         ON (kendaraan.id_varian = varian_kendaraan.id_varian)
 ORDER BY id_kendaraan DESC");
 $i=0;
-while($row=mysql_fetch_array($sql)){
+while($row=mysqli_fetch_array($sql)){
 $i+=1;
 $status = ($row['status'] == 1 ? 'Aktif' : 'Non Aktif');
 $canvass = ($row['canvass'] == 1 ? 'Ya' : 'Tidak');
@@ -119,12 +119,12 @@ $canvass = ($row['canvass'] == 1 ? 'Ya' : 'Tidak');
 					<input type="hidden" name="tambah_kendaraan_post" value="true">
 					<div class="col-md-12">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-car fa-fw"></i></span>
-						<input class="form-control" type="text" name="nama_kendaraan" placeholder="Nama Kendaraan" maxlength="25" required>
+						<span class="input-group-addon"><i class="fa fa-car fa-fw" style="width: 48px;"></i><br><small>Nama</small></span>
+						<input class="form-control" type="text" style="padding: 20px 15px;" name="nama_kendaraan" placeholder="Nama Kendaraan" maxlength="25" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-truck fa-fw"></i></span>
+						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-truck fa-fw" style="width: 48px;"></i><br><small>Jenis</small></span>
 						<select class="form-control select" id="select_jenis" name="jenis_kendaraan" required>
 							<option value="" disabled selected>Pilih Jenis</option>
 							<option value="MOBIL">MOBIL</option>
@@ -133,7 +133,7 @@ $canvass = ($row['canvass'] == 1 ? 'Ya' : 'Tidak');
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-check fa-fw"></i></span>
+						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-check fa-fw" style="width: 48px;"></i><br><small>Varian</small></span>
 						<select class="form-control select" id="select_varian" name="id_varian" required>
 							<option value="" disabled selected>Pilih Varian</option>
 							
@@ -147,17 +147,17 @@ $canvass = ($row['canvass'] == 1 ? 'Ya' : 'Tidak');
 						<input style="width: 40px" type="text" id="plat3" name="no_plat_3" maxlength="3" onKeyPress="if(this.value.length==3) return false;" placeholder="IDX" required>&nbsp;
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-dashboard fa-fw"></i></span>
-						<input class="form-control" type="text" id="perbandingan" name="perbandingan" placeholder="Perbandingan KM / 1 L" required>
+						<span class="input-group-addon"><i class="fa fa-dashboard fa-fw" style="width: 48px;"></i><br><small>KM/L</small></span>
+						<input class="form-control" type="text" style="padding: 20px 15px;" id="perbandingan" name="perbandingan" placeholder="Perbandingan KM / 1 L" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-bar-chart-o fa-fw"></i></span>
-						<input class="form-control" type="text" id="km_awal" name="km_awal" placeholder="KM Awal" required>
+						<span class="input-group-addon"><i class="fa fa-bar-chart-o fa-fw" style="width: 48px;"></i><br><small>KM Awal</small></span>
+						<input class="form-control" type="text" id="km_awal" style="padding: 20px 15px;" name="km_awal" placeholder="KM Awal" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-flag fa-fw"></i></span>
+						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-flag fa-fw" style="width: 48px;"></i><br><small>Status</small></span>
 						<select class="form-control select" id="select_status" name="status" required>
 							<option value="" disabled selected>Pilih Status</option>
 							<option value="0">NON AKTIF</option>
@@ -166,7 +166,7 @@ $canvass = ($row['canvass'] == 1 ? 'Ya' : 'Tidak');
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-compass fa-fw"></i></span>
+						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-compass fa-fw"></i><br><small>Canvass</small></span>
 						<select class="form-control select" id="select_canvass" name="canvass" required>
 							<option value="" disabled selected>Mobil Canvass?</option>
 							<option value="0">TIDAK</option>

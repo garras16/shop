@@ -28,7 +28,7 @@
 				</thead>
 				<tbody>
 				<?php
-$sql=mysql_query("SELECT barang.id_barang,nama_barang,nama_satuan,SUM(stok) AS total
+$sql=mysqli_query($con, "SELECT barang.id_barang,nama_barang,nama_satuan,SUM(stok) AS total
 FROM
     canvass_keluar
     INNER JOIN canvass_keluar_barang 
@@ -39,9 +39,9 @@ FROM
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE canvass_keluar.id_canvass_keluar=$id
 GROUP BY canvass_keluar_barang.id_barang");
-while($row=mysql_fetch_array($sql)){
-$sql2=mysql_query("SELECT SUM(qty_cek) AS qty_cek FROM lap_stock_opname WHERE id_canvass_keluar=$id AND id_barang=" .$row['id_barang']);
-$row2=mysql_fetch_array($sql2);
+while($row=mysqli_fetch_array($sql)){
+$sql2=mysqli_query($con, "SELECT SUM(qty_cek) AS qty_cek FROM lap_stock_opname WHERE id_canvass_keluar=$id AND id_barang=" .$row['id_barang']);
+$row2=mysqli_fetch_array($sql2);
 ($row2['qty_cek']!='' ? $stok=$row2['qty_cek'] : $stok=$row['total']);
 	echo '			<tr>
 						<td><a data-toggle="modal" data-target="#myModal" data-nama="' .$row['nama_barang']. '" data-id="' .$row['id_barang']. '"><div style="min-width:70px">' .$row['nama_barang']. '</div></a></td>

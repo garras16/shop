@@ -293,7 +293,7 @@ harga modal" (beri icon kecil, saat klik muncul notifikasi)				OK
 - semua histori jd riwayat								OK	
 - input diskon (%) 6 digit xxx.xx%
 - ubah data diskon nota beli, jumlah diskon (rp) nya masih error
-- hilangkan border/background di info tambahan di bawah
+- hilangkan border/background di info tambahan di bawah					 	
 - jika angka minus, beri warna merah
 - javascript add_penjualan, format_uang masih error utk koma
 - penjualan ada ppn (boleh kosong / 0)
