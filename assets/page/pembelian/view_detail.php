@@ -384,14 +384,14 @@ WHERE
 					<input type="hidden" id="datang" value="">
 					<div id="add_beli_detail" class="col-md-12">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-shopping-cart fa-fw"></i></span>
-						<input id="qty" name="qty" type="text" class="form-control" placeholder="Qty Beli" required>
+						<span class="input-group-addon"><i class="fa fa-shopping-cart fa-fw" style="width: 34px;"></i><br><small>Qty.</small></span>
+						<input id="qty" name="qty" type="text" class="form-control" style="padding: 20px 15px;" placeholder="Qty Beli" required>
 						<span class="input-group-addon" id="satuan_2"></span>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-dollar fa-fw"></i></span>
-						<input class="form-control" id="harga" name="harga" type="text" placeholder="Harga Modal (Rp)" required>
+						<span class="input-group-addon"><i class="fa fa-dollar fa-fw"></i><br><small>Harga</small></span>
+						<input class="form-control" style="padding: 20px 15px;" id="harga" name="harga" type="text" placeholder="Harga Modal (Rp)" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
