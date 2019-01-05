@@ -17,7 +17,7 @@ if (isset($tambah_retur_beli_post)){
 	$no_retur="RB-" .date("ymd"). '-' .sprintf("%03d",$r['cID']+1);
 	$sql = "INSERT INTO retur_beli VALUES(null,'$tanggal','$no_retur',$id_beli,0)";
 	$q = mysqli_query($con, $sql);
-	$last_id = mysqli_insert_id();
+	$last_id = mysqli_insert_id($con);
 	if ($sql){
 		_buat_pesan("Input Berhasil","green");
 	} else {

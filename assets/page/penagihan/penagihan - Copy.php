@@ -2,7 +2,7 @@
 $id_karyawan=$_SESSION['id_karyawan'];
 if (isset($buat_penagihan_post)){
 	$sql = mysqli_query($con, "INSERT INTO penagihan VALUES(null,$penagih,'$tanggal','DALAM KOTA',0)");
-	$id_tagih=mysqli_insert_id();
+	$id_tagih=mysqli_insert_id($con);
 	foreach ($id_jual as $key => $value) {
 		$sql=mysqli_query($con, "INSERT INTO penagihan_detail VALUES(null,$id_tagih,$value,0,0,null)");
 	}

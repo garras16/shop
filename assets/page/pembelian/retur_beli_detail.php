@@ -9,7 +9,7 @@ if (isset($tambah_retur_beli_detail_post)){
 	}
 	$sql = "INSERT INTO retur_beli_detail VALUES(null,$id,$id_beli_detail,$id_barang_masuk_rak,$qty_retur,$harga_retur,null)";
 	$q = mysqli_query($con, $sql);
-	$e_id = mysqli_insert_id();
+	$e_id = mysqli_insert_id($con);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -25,7 +25,7 @@ if (isset($edit_retur_beli_detail_post)){
 	}
 	$sql = "UPDATE retur_beli_detail SET qty_retur=$qty_retur,harga_retur=$harga_retur WHERE id_retur_beli_detail=$id_retur_beli_detail";
 	$q = mysqli_query($con, $sql);
-	$e_id = mysqli_insert_id();
+	$e_id = mysqli_insert_id($con);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {

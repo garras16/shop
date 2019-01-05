@@ -64,7 +64,7 @@ if (isset($tambah_bayar_nota_jual_post)){
 		} else {
 			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','Retur',$jumlah_bayar_retur,$status,null,null,null,null,null,null,null,null,null)");
 		}
-		$last_id=mysqli_insert_id();
+		$last_id=mysqli_insert_id($con);
 		for ($i=0;$i<count($no_retur)-1;$i++) {
 			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual_detail VALUES(null,$last_id,'$no_retur[$i]')");
 			if ($sql){

@@ -6,7 +6,7 @@ if (isset($tambah_bayar_ekspedisi_post)){
 		$id_bayar_ekspedisi=$row['id_bayar_ekspedisi'];
 	} else {
 		$sql2 = mysqli_query($con, "INSERT INTO bayar_ekspedisi VALUES(null,$id_beli,0)");
-		$id_bayar_ekspedisi=mysqli_insert_id();
+		$id_bayar_ekspedisi=mysqli_insert_id($con);
 	}
 	$sql = mysqli_query($con, "INSERT INTO bayar_ekspedisi_detail VALUES(null,$id_bayar_ekspedisi,'$tanggal',$jumlah_bayar)");
 	if ($sql){

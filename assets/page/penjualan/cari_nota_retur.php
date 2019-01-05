@@ -5,7 +5,7 @@ if (isset($id)){
 	$no_retur="RJ-" .date("ymd"). '-' .sprintf("%03d",$r['cID']+1);
 	$tanggal=date("Y-m-d");
 	$sql = mysqli_query($con, "INSERT INTO retur_jual VALUES(null,'$tanggal','$no_retur',$id,0)");
-	$last_id=mysqli_insert_id();
+	$last_id=mysqli_insert_id($con);
 	_direct("?page=penjualan&mode=retur_jual_detail&id=" .$last_id);
 }
 ?>
