@@ -1,6 +1,6 @@
 <?php
 if (isset($edit_satuan_post)){
-	$sql=mysqli_query($con, "UPDATE satuan SET nama_satuan='$nama_satuan' WHERE id_satuan='$id'");
+	$sql=mysql_query("UPDATE satuan SET nama_satuan='$nama_satuan' WHERE id_satuan='$id'");
 	if ($sql){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -8,8 +8,8 @@ if (isset($edit_satuan_post)){
 	}
 	_direct("index.php?page=master&mode=satuan");
 }
-	$sql=mysqli_query($con, "SELECT * FROM satuan WHERE id_satuan=$id");
-	$row=mysqli_fet ch_array($sql);
+	$sql=mysql_query("SELECT * FROM satuan WHERE id_satuan=$id");
+	$row=mysql_fetch_array($sql);
 ?>
 
 <div class="right_col" role="main">

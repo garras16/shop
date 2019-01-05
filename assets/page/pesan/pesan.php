@@ -22,9 +22,9 @@
 				</thead>
 				<tbody>
 <?php
-$sql=mysqli_query($con, "SELECT * FROM pesan WHERE id_karyawan=" .$_SESSION['id_karyawan']. " ORDER BY id_pesan DESC");
+$sql=mysql_query("SELECT * FROM pesan WHERE id_karyawan=" .$_SESSION['id_karyawan']. " ORDER BY id_pesan DESC");
 $i=0;
-while($row=mysqli_fetch_array($sql)){
+while($row=mysql_fetch_array($sql)){
 $i+=1;
 if ($row['status_pesan']=='0'){$status='BELUM DIBACA'; $style='badge bg-red';}
 if ($row['status_pesan']=='1'){$status='TERBACA'; $style='badge bg-green';}

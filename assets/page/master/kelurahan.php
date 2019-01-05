@@ -3,7 +3,7 @@ if (isset($tambah_kelurahan_post)){
 	$nama_kel=explode(",",$kelurahan);
 	for ($i=0;$i < count($nama_kel);$i++){
 		$sql = "INSERT INTO kelurahan VALUES(null,'$id_kec','$nama_kel[$i]')";
-		$q = mysqli_query($con, $sql);
+		$q = mysql_query($sql);
 		if ($q){
 			_buat_pesan("Input Berhasil","green");
 		} else {
@@ -13,7 +13,7 @@ if (isset($tambah_kelurahan_post)){
 }
 if (isset($edit_kelurahan_post)){
 	$sql = "UPDATE kelurahan SET nama_kel='$kelurahan' WHERE id_kel=$id_kel";
-	$q = mysqli_query($con, $sql);
+	$q = mysql_query($sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -55,7 +55,7 @@ if (isset($edit_kelurahan_post)){
 				</thead>
 				<tbody>
 <?php
-$sql=mysqli_query($con, "SELECT
+$sql=mysql_query("SELECT
     provinsi.nama_prov
     , kabupaten.nama_kab
     , negara.nama_negara
@@ -74,7 +74,7 @@ FROM
         ON (kecamatan.id_kec = kelurahan.id_kec)
 ORDER BY kelurahan.id_kel DESC");
 $i=0;
-while($row=mysqli_fetch_array($sql)){
+while($row=mysql_fetch_array($sql)){
 	$i+=1;
 	echo '			<tr>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_kel']. '">' .$i. '</td>
@@ -112,26 +112,26 @@ while($row=mysqli_fetch_array($sql)){
 					<input type="hidden" name="tambah_kelurahan_post" value="true">
 					<div class="form-group col-sm-12">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-flag fa-fw"></i><br><small>Negara</small></span>
-							<input id="add_negara" class="form-control" style="padding: 20px 15px;" placeHolder="Nama Negara" value="" maxlength="40" readonly>
+							<span class="input-group-addon"><i class="fa fa-flag fa-fw"></i></span>
+							<input id="add_negara" class="form-control" placeHolder="Nama Negara" value="" maxlength="40" readonly>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-flag fa-fw" style="width: 38px;"></i><br><small>Prov.</small></span>
-							<input id="add_prov" class="form-control" style="padding: 20px 15px;" placeHolder="Nama Provinsi" value="" maxlength="40" readonly>
+							<span class="input-group-addon"><i class="fa fa-flag fa-fw"></i></span>
+							<input id="add_prov" class="form-control" placeHolder="Nama Provinsi" value="" maxlength="40" readonly>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-flag fa-fw" style="width: 38px;"></i><br><small>Kab.</small></span>
-							<input id="add_kab" style="padding: 20px 15px;" class="form-control" placeHolder="Nama Kabupaten" value="" maxlength="40" readonly>
+							<span class="input-group-addon"><i class="fa fa-flag fa-fw"></i></span>
+							<input id="add_kab" class="form-control" placeHolder="Nama Kabupaten" value="" maxlength="40" readonly>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-tag fa-fw" style="width: 38px;"></i><br><small>Kec.</small></span>
+							<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
 							<select class="form-control select" id="id_kec" name="id_kec" required>
 								<option value="" disabled selected>Pilih Kecamatan</option>
 							<?php
-								$sql=mysqli_query($con, "SELECT
+								$sql=mysql_query("SELECT
     provinsi.nama_prov
     , kabupaten.nama_kab
     , negara.nama_negara
@@ -148,7 +148,7 @@ FROM
         ON (negara.id_negara = provinsi.id_negara)
     INNER JOIN kelurahan 
         ON (kecamatan.id_kec = kelurahan.id_kec) GROUP BY nama_kec");
-								while ($row=mysqli_fetch_array($sql)){
+								while ($row=mysql_fetch_array($sql)){
 									echo '<option negara="' .$row['nama_negara']. '" prov="' .$row['nama_prov']. '" kab="' .$row['nama_kab']. '" value="' .$row['id_kec']. '">' .$row['nama_kec']. '</option>';
 								}
 							?>
@@ -156,7 +156,7 @@ FROM
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-tag fa-fw" style="width: 38px;"></i><br><small>Nama</small></span>
+							<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
 							<input id="tags_me" name="kelurahan" class="form-control" value="" required />
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>

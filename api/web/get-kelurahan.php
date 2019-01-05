@@ -8,7 +8,7 @@ if (isset($_GET['id'])){
 } else {
 	die();
 }
-$sql=mysqli_query($con, "SELECT
+$sql=mysql_query("SELECT
     provinsi.nama_prov
     , kabupaten.nama_kab
     , negara.nama_negara
@@ -25,31 +25,31 @@ FROM
         ON (negara.id_negara = provinsi.id_negara)
     INNER JOIN kelurahan 
         ON (kecamatan.id_kec = kelurahan.id_kec) WHERE id_kel='$id'");
-$row=mysqli_fetch_array($sql);
+$row=mysql_fetch_array($sql);
 ?>
 <input type="hidden" name="id_kel" value="<?php echo $id ?>">
 <div class="input-group">
-	<span class="input-group-addon"><i class="fa fa-flag fa-fw" style="width: 38px;"></i><br><small>Negara</small></span>
-	<input class="form-control" placeHolder="Nama Negara" style="padding: 20px 15px;" value="<?php echo $row['nama_negara']; ?>" maxlength="40" readonly>
+	<span class="input-group-addon"><i class="fa fa-flag fa-fw"></i></span>
+	<input class="form-control" placeHolder="Nama Negara" value="<?php echo $row['nama_negara']; ?>" maxlength="40" readonly>
 	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 </div>
 <div class="input-group">
-	<span class="input-group-addon"><i class="fa fa-flag fa-fw" style="width: 38px;"></i><br><small>Prov.</small></span>
-	<input class="form-control" placeHolder="Nama Provinsi" style="padding: 20px 15px;" value="<?php echo $row['nama_prov']; ?>" maxlength="40" readonly>
+	<span class="input-group-addon"><i class="fa fa-flag fa-fw"></i></span>
+	<input class="form-control" placeHolder="Nama Provinsi" value="<?php echo $row['nama_prov']; ?>" maxlength="40" readonly>
 	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 </div>
 <div class="input-group">
-	<span class="input-group-addon"><i class="fa fa-flag fa-fw" style="width: 38px;"></i><br><small>Kab.</small></span>
-	<input class="form-control" placeHolder="Nama Kabupaten" style="padding: 20px 15px;" value="<?php echo $row['nama_kab']; ?>" maxlength="40" readonly>
+	<span class="input-group-addon"><i class="fa fa-flag fa-fw"></i></span>
+	<input class="form-control" placeHolder="Nama Kabupaten" value="<?php echo $row['nama_kab']; ?>" maxlength="40" readonly>
 	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 </div>
 <div class="input-group">
-	<span class="input-group-addon"><i class="fa fa-flag fa-fw" style="width: 38px;"></i><br><small>Kec.</small></span>
-	<input class="form-control" placeHolder="Nama Kecamatan" style="padding: 20px 15px;" value="<?php echo $row['nama_kec']; ?>" maxlength="40" readonly>
+	<span class="input-group-addon"><i class="fa fa-flag fa-fw"></i></span>
+	<input class="form-control" placeHolder="Nama Kecamatan" value="<?php echo $row['nama_kec']; ?>" maxlength="40" readonly>
 	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 </div>
 <div class="input-group">
-	<span class="input-group-addon"><i class="fa fa-tag fa-fw" style="width: 38px;"></i><br><small>Nama</small></span>
-	<input class="form-control" placeHolder="Nama Kelurahan" style="padding: 20px 15px;" name="kelurahan" value="<?php echo $row['nama_kel']; ?>" maxlength="40" required>
+	<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
+	<input class="form-control" placeHolder="Nama Kelurahan" name="kelurahan" value="<?php echo $row['nama_kel']; ?>" maxlength="40" required>
 	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 </div>

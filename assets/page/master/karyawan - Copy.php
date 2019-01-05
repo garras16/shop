@@ -1,7 +1,7 @@
 <?php
 if (isset($tambah_karyawan_post)){
 	$sql = "INSERT INTO karyawan VALUES(null,'$nama_karyawan','$barcode','$ktp','$no_hp',$jabatan,$gaji)";
-	$q = mysqli_query($con, $sql);
+	$q = mysql_query($sql);
 	if ($q){
 		$pesan="Input Berhasil";
 		$tipe="success";
@@ -39,13 +39,13 @@ if (isset($tambah_karyawan_post)){
 				</thead>
 				<tbody>
 <?php
-$sql=mysqli_query($con, "SELECT * 
+$sql=mysql_query("SELECT * 
 FROM
     karyawan
     INNER JOIN jabatan 
         ON (karyawan.id_jabatan = jabatan.id_jabatan)");
 $i=0;
-while($row=mysqli_fetch_array($sql)){
+while($row=mysql_fetch_array($sql)){
 $i+=1;
 	echo '			<tr>
 						<td><a href="?page=edit_karyawan&id=' .$row['id_karyawan']. '">' .$i. '</a></td>
@@ -104,7 +104,7 @@ $i+=1;
 						<select class="form-control" id="select_jabatan" name="jabatan" required>
 							<option value="" disabled selected>Pilih Jabatan</option>
 							<?php 
-								$brg=mysqli_query($con, "select * from jabatan");
+								$brg=mysql_query("select * from jabatan");
 								while($b=mysql_fetch_array($brg)){
 							?>	
 							<option value="<?php echo $b['id_jabatan']; ?>"><?php echo $b['nama_jabatan'];?></option>

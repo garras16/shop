@@ -1,6 +1,6 @@
 <?php
 if (isset($tambah_beli_detail_post)){
-	$sql=mysqli_query($con, "INSERT INTO beli_detail VALUES(null,$id,$id_barang_supplier,$qty,$harga,0,$diskon_persen_1,$diskon_rp_1,$diskon_persen_2,$diskon_rp_2,$diskon_persen_3,$diskon_rp_3)");
+	$sql=mysql_query("INSERT INTO beli_detail VALUES(null,$id,$id_barang_supplier,$qty,$harga,0,$diskon_persen_1,$diskon_rp_1,$diskon_persen_2,$diskon_rp_2,$diskon_persen_3,$diskon_rp_3)");
 	if ($sql){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -9,7 +9,7 @@ if (isset($tambah_beli_detail_post)){
 	_direct("?page=pembelian&mode=view_detail&id=" .$id);
 }
 if (isset($edit_beli_detail_post)){
-	$sql=mysqli_query($con, "UPDATE beli_detail SET qty=$qty,harga=$harga,diskon_persen=$diskon_persen_1,diskon_rp=$diskon_rp_1, diskon_persen_2=$diskon_persen_2,diskon_rp_2=$diskon_rp_2, diskon_persen_3=$diskon_persen_3,diskon_rp_3=$diskon_rp_3 WHERE id_beli_detail=$id_beli_detail");
+	$sql=mysql_query("UPDATE beli_detail SET qty=$qty,harga=$harga,diskon_persen=$diskon_persen_1,diskon_rp=$diskon_rp_1, diskon_persen_2=$diskon_persen_2,diskon_rp_2=$diskon_rp_2, diskon_persen_3=$diskon_persen_3,diskon_rp_3=$diskon_rp_3 WHERE id_beli_detail=$id_beli_detail");
 	if ($sql){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -18,10 +18,10 @@ if (isset($edit_beli_detail_post)){
 	_direct("?page=pembelian&mode=view_detail&id=" .$id);
 }
 if (isset($edit_diskon_nota_beli)){
-	$sql=mysqli_query($con, "UPDATE beli SET diskon_all_persen=$diskon_all_persen WHERE id_beli=$id");
+	$sql=mysql_query("UPDATE beli SET diskon_all_persen=$diskon_all_persen WHERE id_beli=$id");
 	_direct("?page=pembelian&mode=view_detail&id=" .$id);
 }
-$sql3=mysqli_query($con, "SELECT
+$sql3=mysql_query("SELECT
     harga,qty_di_rak,diskon_persen,diskon_persen_2,diskon_persen_3,diskon_rp,diskon_rp_2,diskon_rp_3
 FROM
     beli_detail
@@ -33,7 +33,7 @@ FROM
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
 WHERE beli.id_beli=$id");
 $total_datang=0;
-while ($row=mysqli_fetch_array($sql3)){
+while ($row=mysql_fetch_array($sql3)){
 	$diskon1=$row['harga']*$row['diskon_persen']/100;
 	$tot_set_disk_1=$row['qty_di_rak']*($row['harga']-$diskon1);
 	$diskon2=($row['harga']-$diskon1)*$row['diskon_persen_2']/100;
@@ -42,18 +42,19 @@ while ($row=mysqli_fetch_array($sql3)){
 	$tot_set_disk_3=$row['qty_di_rak']*($row['harga']-$diskon1-$diskon2-$diskon3);
 	$total_datang+=$tot_set_disk_3;
 }
-$sql2=mysqli_query($con, "SELECT diskon_all_persen,ppn_all_persen FROM beli WHERE id_beli=$id");
-$row2=mysqli_fetch_array($sql2);
+$sql2=mysql_query("SELECT diskon_all_persen,ppn_all_persen FROM beli WHERE id_beli=$id");
+$row2=mysql_fetch_array($sql2);
 $diskon_all_persen=$row2['diskon_all_persen'];
 $ppn_all_persen=$row2['ppn_all_persen'];
-	$sql=mysqli_query($con, "SELECT *
+
+	$sql=mysql_query("SELECT *
 FROM
     beli
     INNER JOIN supplier 
         ON (beli.id_supplier = supplier.id_supplier)
     LEFT JOIN ekspedisi 
         ON (beli.id_ekspedisi = ekspedisi.id_ekspedisi) WHERE id_beli=$id");
-	$row=mysqli_fetch_array($sql);
+	$row=mysql_fetch_array($sql);
 	$id_supplier=$row['id_supplier'];
 	$diskon_nota=$row['diskon_all_persen']/100;
 ?>
@@ -83,36 +84,36 @@ FROM
 				<input type="hidden" name="edit_pembelian_post" value="true">
 				<div class="form-group">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-calendar fa-fw" style="width: 45px;"></i><br><small>Tgl.</small></span>
-						<input class="form-control" id="tanggal" name="tanggal" type="date" style="padding: 20px 15px;" value="<?php echo $row['tanggal']; ?>" readonly>
+						<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+						<input class="form-control" id="tanggal" name="tanggal" type="date" value="<?php echo $row['tanggal']; ?>" readonly>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>									
 					<div class="input-group">
-						<span class="input-group-addon" style="font-size: 13px;"><i class="fa fa-file fa-fw"></i><br><small>No. Nota</small></span>
-						<input id="no_nota" name="no_nota" style="padding: 20px 15px;" class="form-control" placeholder="No Nota Beli" value="<?php echo $row['no_nota_beli']; ?>" maxlength="15" readonly>
+						<span class="input-group-addon"><i class="fa fa-file fa-fw"></i></span>
+						<input id="no_nota" name="no_nota" class="form-control" placeholder="No Nota Beli" value="<?php echo $row['no_nota_beli']; ?>" maxlength="15" readonly>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-building fa-fw" style="width: 45px;"></i><br><small>Supplier</small></span>
-						<input id="nama_supplier" name="nama_supplier" class="form-control" style="padding: 20px 15px;" placeholder="Nama Supplier" value="<?php echo $row['nama_supplier']; ?>" readonly>
+						<span class="input-group-addon"><i class="fa fa-building fa-fw"></i></span>
+						<input id="nama_supplier" name="nama_supplier" class="form-control" placeholder="Nama Supplier" value="<?php echo $row['nama_supplier']; ?>" readonly>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="clearfix"></div><br/>
 					<div class="input-group">
-						<span class="input-group-addon" style="font-size: 12px;"><i class="fa fa-truck fa-fw" style="width: 45px;"></i><br><small>Ekspedisi</small></span>
-						<input id="nama_ekspedisi" name="nama_ekspedisi" style="padding: 20px 15px;" class="form-control" placeholder="Nama Ekspedisi" value="<?php echo $row['nama_ekspedisi']; ?>" readonly>
+						<span class="input-group-addon"><i class="fa fa-truck fa-fw"></i></span>
+						<input id="nama_ekspedisi" name="nama_ekspedisi" class="form-control" placeholder="Nama Ekspedisi" value="<?php echo $row['nama_ekspedisi']; ?>" readonly>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-balance-scale fa-fw" style="width: 45px;"></i><br><small>Berat</small></span>
-						<input class="form-control" style="padding: 20px 15px;" placeholder="Berat Ekspedisi (gr)" value="<?php echo format_angka($row['berat_ekspedisi']); ?> gr" readonly>
+						<span class="input-group-addon"><i class="fa fa-balance-scale fa-fw"></i></span>
+						<input class="form-control" placeholder="Berat Ekspedisi (gr)" value="<?php echo format_angka($row['berat_ekspedisi']); ?> gr" readonly>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-balance-scale fa-fw" style="width: 45px;"></i><br><small>Vol.</small></span>
-						<input class="form-control" style="padding: 20px 15px;" placeholder="Volume Ekspedisi (cm3)" value="<?php echo format_angka($row['volume_ekspedisi']); ?> cm3" readonly>
+						<span class="input-group-addon"><i class="fa fa-balance-scale fa-fw"></i></span>
+						<input class="form-control" placeholder="Volume Ekspedisi (cm3)" value="<?php echo format_angka($row['volume_ekspedisi']); ?> cm3" readonly>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-money fa-fw" style="width: 45px;"></i><br><small>Tarif</small></span>
-						<input class="form-control" style="padding: 20px 15px;" placeholder="Tarif Ekspedisi (Rp)" value="Rp <?php echo format_uang($row['tarif_ekspedisi']); ?>" readonly>
+						<span class="input-group-addon"><i class="fa fa-money fa-fw"></i></span>
+						<input class="form-control" placeholder="Tarif Ekspedisi (Rp)" value="Rp <?php echo format_uang($row['tarif_ekspedisi']); ?>" readonly>
 					</div>
 				</div>
 			</form>
@@ -153,7 +154,7 @@ FROM
 				</thead>
 				<tbody>
 				<?php
-$sql=mysqli_query($con, "SELECT
+$sql=mysql_query("SELECT
     beli_detail.id_beli_detail
     , beli_detail.qty
     , beli_detail.harga
@@ -189,7 +190,7 @@ GROUP BY
 $berat=0;
 $volume=0;
 $jumlah=0;
-while($row=mysqli_fetch_array($sql)){
+while($row=mysql_fetch_array($sql)){
 $id_beli_detail=$row['id_beli_detail'];
 $berat+=$row['berat'];
 $volume+=$row['volume'];
@@ -197,10 +198,10 @@ $volume+=$row['volume'];
 $val1="";$val2="";
 ($row['qty']!=$row['qty_di_rak'] ? $tgl_datang="BELUM LENGKAP" : $tgl_datang=date("d-m-Y", strtotime($row['tgl_datang'])));
 ($row['qty']!=$row['qty_di_rak'] ? $val="color: red; font-weight:bold" : $val="");
-$sql2=mysqli_query($con, "SELECT * FROM barang_masuk WHERE id_beli_detail=$id_beli_detail");
+$sql2=mysql_query("SELECT * FROM barang_masuk WHERE id_beli_detail=$id_beli_detail");
 	echo '			<tr>
 						<td><div style="min-width:70px; ' .$val. '">' .$row['nama_barang']. '</div></td>';
-	(mysqli_num_rows($sql2) > 0 ? $ada="1" : $ada="0");
+	(mysql_num_rows($sql2) > 0 ? $ada="1" : $ada="0");
 	($row['qty_di_rak']=='' ? $datang='0' : $datang=$row['qty_di_rak']);
 	
 	$diskon1=($row['harga']*$row['diskon_persen']/100);
@@ -217,11 +218,11 @@ $sql2=mysqli_query($con, "SELECT * FROM barang_masuk WHERE id_beli_detail=$id_be
 					<td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '">' .format_angka($row['volume']). '</div></a></td>
 					<td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '">' .format_uang($row['harga']). '</div></a></td>
 					<td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '">' .format_uang($row['qty']*$row['harga']). '</div></a></td>
-					<td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '">' .format_uang($diskon1). '</div></a></td>
+					<td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '">' .format_uang($row['qty']*$diskon1). '</div></a></td>
 					<td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '">' .format_uang($tot_set_disk_1). '</div></a></td>
-					<td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '">' .format_uang($diskon2). '</div></a></td>
+					<td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '">' .format_uang($row['qty']*$diskon2). '</div></a></td>
 					<td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '">' .format_uang($tot_set_disk_2). '</div></a></td>
-					<td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '">' .format_uang($diskon3). '</div></a></td>
+					<td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '">' .format_uang($row['qty']*$diskon3). '</div></a></td>
 					<td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '">' .format_uang($tot_set_disk_3). '</div></a></td>
 					<td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '">' .$tgl_datang. '</div></a></td>
 					<td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '">' .format_angka($row['qty_di_rak']). ' ' .$row['nama_satuan']. '</div></a></td>';
@@ -231,17 +232,17 @@ $sql2=mysqli_query($con, "SELECT * FROM barang_masuk WHERE id_beli_detail=$id_be
 					<td><div style="min-width:70px; ' .$val. '">' .format_angka($row['volume']). '</div></td>
 					<td><div style="min-width:70px; ' .$val. '">' .format_uang($row['harga']). '</div></td>
 					<td><div style="min-width:70px; ' .$val. '">' .format_uang($row['qty']*$row['harga']). '</div></td>
-					<td><div style="min-width:70px; ' .$val. '">' .format_uang($diskon1). '</td>
+					<td><div style="min-width:70px; ' .$val. '">' .format_uang($row['qty']*$diskon1). '</td>
 					<td><div style="min-width:70px; ' .$val. '">' .format_uang($tot_set_disk_1). '</td>
-					<td><div style="min-width:70px; ' .$val. '">' .format_uang($diskon2). '</td>
+					<td><div style="min-width:70px; ' .$val. '">' .format_uang($row['qty']*$diskon2). '</td>
 					<td><div style="min-width:70px; ' .$val. '">' .format_uang($tot_set_disk_2). '</td>
-					<td><div style="min-width:70px; ' .$val. '">' .format_uang($diskon3). '</td>
+					<td><div style="min-width:70px; ' .$val. '">' .format_uang($row['qty']*$diskon3). '</td>
 					<td><div style="min-width:70px; ' .$val. '">' .format_uang($tot_set_disk_3). '</td>
 					<td><div style="min-width:70px; ' .$val. '">' .$tgl_datang. '</div></td>
 					<td><div style="min-width:70px; ' .$val. '">' .format_angka($row['qty_di_rak']). ' ' .$row['nama_satuan']. '</div></td>';
 	}
 	
-	if (mysqli_num_rows($sql2) > 0){
+	if (mysql_num_rows($sql2) > 0){
 		echo '<td></td>';
 	} else {
 		if ($_SESSION['posisi']=="DIREKSI" or $_SESSION['posisi']=="OWNER" OR isset($tambah_pembelian_post)){
@@ -255,6 +256,9 @@ $sql2=mysqli_query($con, "SELECT * FROM barang_masuk WHERE id_beli_detail=$id_be
 $ppn_all_rp=$jumlah*($ppn_all_persen/100);
 $diskon_all_rp=$jumlah*($diskon_all_persen/100);
 $jumlah=$jumlah+$ppn_all_rp;
+$total_datang=$total_datang+($total_datang*($ppn_all_persen/100));
+$total_datang=$total_datang-($total_datang*($diskon_all_persen/100));
+
 ?>
 					
 				</tbody>
@@ -265,28 +269,28 @@ $jumlah=$jumlah+$ppn_all_rp;
 				
 				<div class="col-md-6 text-right">
 					<div class="input-group">
-						<span class="input-group-addon" style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;"><small>Berat Datang (gr)</small></span>
-						<input class="form-control" id="berat_2" name="berat" style="background: #fff; outline: none; border: none;" value="<?php echo format_angka($berat) ?>" readonly>
+						<span class="input-group-addon" style="width:140px;text-align:left;color:#000"><small>Berat Datang (gr)</small></span>
+						<input class="form-control" id="berat_2" name="berat" value="<?php echo format_angka($berat) ?>" readonly style="font-size:12px;border:0;background:#fff;box-shadow:none;-webkit-box-shadow:none">
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon" style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;"><small>Volume Datang (cm3)</small></span>
-						<input class="form-control" id="volume_2" style="background: #fff; outline: none; border: none;" name="volume" value="<?php echo format_angka($volume) ?>" readonly>
+						<span class="input-group-addon" style="width:140px;text-align:left;color:#000"><small>Volume Datang (cm3)</small></span>
+						<input class="form-control" id="volume_2" name="volume" value="<?php echo format_angka($volume) ?>" readonly style="font-size:12px;border:0;background:#fff;box-shadow:none;-webkit-box-shadow:none">
 					</div>
 					<div class="input-group">
-						<span data-toggle="modal" data-target="#myModal3" class="input-group-addon" style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;"><small style="color: red;">Diskon Nota Beli (Rp)</small><a title=""><small style="font-size: 10px; color: blue;"> [UBAH]</small></a></span>
-						<input class="form-control" id="diskon" name="total" style="background: #fff; outline: none; border: none;" value="<?php echo format_uang($diskon_all_rp) ?>" readonly>
+						<span class="input-group-addon" style="width:140px;text-align:left;color:red"><small><a style="color:red" title="Tidak mempengaruhi harga modal. Klik untuk ubah diskon." data-toggle="modal" data-target="#myModal3">Diskon Nota Beli (Rp) <font color="blue"><br>[Ubah]</font></a></small></span>
+						<input class="form-control" id="diskon" name="total" value="<?php echo format_uang($diskon_all_rp) ?>" readonly style="font-size:12px;border:0;background:#fff;box-shadow:none;-webkit-box-shadow:none">
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon" style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;"><small>PPN (Rp)</small></span>
-						<input class="form-control" id="diskon" name="total" style="background: #fff; outline: none; border: none;" value="<?php echo format_uang($ppn_all_rp) ?>" readonly>
+						<span class="input-group-addon" style="width:140px;text-align:left;color:#000"><small>PPN (Rp)</small></span>
+						<input class="form-control" id="diskon" name="total" value="<?php echo format_uang($ppn_all_rp) ?>" readonly style="font-size:12px;border:0;background:#fff;box-shadow:none;-webkit-box-shadow:none">
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon" style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;"><small>Tot. N.Beli Set. Disc & PPN (Rp)</small></span>
-						<input class="form-control" id="total_2" style="background: #fff; outline: none; border: none;" name="total" value="<?php echo format_uang($jumlah) ?>" readonly>
+						<span class="input-group-addon" style="width:140px;text-align:left;color:#000"><small>Tot. N.Beli Set. Disc<br>& PPN (Rp)</small></span>
+						<input class="form-control" id="total_2" name="total" value="<?php echo format_uang($jumlah) ?>" readonly style="font-size:12px;border:0;background:#fff;box-shadow:none;-webkit-box-shadow:none">
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon" style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;"><small>Tot. Datang Set. Disc & PPN (Rp)</small></span>
-						<input class="form-control" id="total_2" style="background: #fff; outline: none; border: none;" name="total" value="<?php echo format_uang($total_datang) ?>" readonly>
+						<span class="input-group-addon" style="width:140px;text-align:left;color:#000"><small>Tot. Datang Set. Disc<br>& PPN (Rp)</small></span>
+						<input class="form-control" id="total_2" name="total" value="<?php echo format_uang($total_datang) ?>" readonly style="font-size:12px;border:0;background:#fff;box-shadow:none;-webkit-box-shadow:none">
 					</div>
 				</div>
 			</div>
@@ -313,11 +317,11 @@ $jumlah=$jumlah+$ppn_all_rp;
 					<input type="hidden" name="tambah_beli_detail_post" value="true">
 					<div id="add_beli_detail" class="col-md-12">
 						<div class="input-group">
-						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-archive fa-fw"></i><br><small>Barang</small></span>
+						<span class="input-group-addon"><i class="fa fa-archive fa-fw"></i></span>
 						<select id="select_barang" class="form-control select2"  name="id_barang_supplier" required>
 							<option value="" disabled selected>Pilih Barang</option>
 <?php
-$sql=mysqli_query($con, "SELECT
+$sql=mysql_query("SELECT
     barang_supplier.id_barang_supplier
     , barang.nama_barang
 	, satuan.nama_satuan
@@ -329,7 +333,7 @@ FROM
 		ON (satuan.id_satuan=barang.id_satuan)
 WHERE 
 	barang_supplier.id_supplier=$id_supplier");
-								while($row=mysqli_fetch_array($sql)){
+								while($row=mysql_fetch_array($sql)){
 									echo '<option data-satuan="' .$row['nama_satuan']. '" value="' .$row['id_barang_supplier']. '">' .$row['nama_barang']. '</option>';
 								}
 							?>
@@ -337,26 +341,26 @@ WHERE
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-shopping-cart fa-fw" style="width: 38px;"></i><br><small>Qty.</small></span>
-						<input id="qty_2" name="qty" type="text" style="padding: 20px 15px;" class="form-control" placeholder="Qty Beli" required>
+						<span class="input-group-addon"><i class="fa fa-shopping-cart fa-fw"></i></span>
+						<input id="qty_2" name="qty" type="text" class="form-control" placeholder="Qty Beli" required>
 						<span class="input-group-addon" id="satuan"></span>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-dollar fa-fw" style="width: 38px;"></i><br><small>Modal</small></span>
-						<input class="form-control" style="padding: 20px 15px;" id="harga_2" name="harga" type="text" placeholder="Harga Modal (Rp)" required>
+						<span class="input-group-addon"><i class="fa fa-dollar fa-fw"></i></span>
+						<input class="form-control" id="harga_2" name="harga" type="text" placeholder="Harga Modal (Rp)" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><div style="min-width:70px;text-align:left">Diskon 1 (%)</div></span>
+						<span class="input-group-addon"><div style="min-width:70px;text-align:left">Diskon Barang 1 (%)</div></span>
 						<input class="form-control" id="diskon_persen_2_1" name="diskon_persen_1" type="text" placeholder="Diskon 1" value="0" required>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><div style="min-width:70px;text-align:left">Diskon 2 (%)</div></span>
+						<span class="input-group-addon"><div style="min-width:70px;text-align:left">Diskon Barang 2 (%)</div></span>
 						<input class="form-control" id="diskon_persen_2_2" name="diskon_persen_2" type="text" placeholder="Diskon 2" value="0" required>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><div style="min-width:70px;text-align:left">Diskon 3 (%)</div></span>
+						<span class="input-group-addon"><div style="min-width:70px;text-align:left">Diskon Barang 3 (%)</div></span>
 						<input class="form-control" id="diskon_persen_2_3" name="diskon_persen_3" type="text" placeholder="Diskon 3" value="0" required>
 					</div>
 					</div>
@@ -384,14 +388,14 @@ WHERE
 					<input type="hidden" id="datang" value="">
 					<div id="add_beli_detail" class="col-md-12">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-shopping-cart fa-fw" style="width: 34px;"></i><br><small>Qty.</small></span>
-						<input id="qty" name="qty" type="text" class="form-control" style="padding: 20px 15px;" placeholder="Qty Beli" required>
+						<span class="input-group-addon"><i class="fa fa-shopping-cart fa-fw"></i></span>
+						<input id="qty" name="qty" type="text" class="form-control" placeholder="Qty Beli" required>
 						<span class="input-group-addon" id="satuan_2"></span>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-dollar fa-fw"></i><br><small>Harga</small></span>
-						<input class="form-control" style="padding: 20px 15px;" id="harga" name="harga" type="text" placeholder="Harga Modal (Rp)" required>
+						<span class="input-group-addon"><i class="fa fa-dollar fa-fw"></i></span>
+						<input class="form-control" id="harga" name="harga" type="text" placeholder="Harga Modal (Rp)" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
@@ -428,20 +432,18 @@ WHERE
 				<form action="" method="post">
 					<input type="hidden" name="edit_diskon_nota_beli" value="true">
 					<div class="input-group">
-						<span class="input-group-addon" style="font-size: 12px;"><i class="fa fa-cut fa-fw"></i><br><small>Disk. Nota</small></span>
-						<input type="number" id="diskon_nota_persen" style="padding: 20px 15px;" name="diskon_all_persen" class="form-control" placeholder="Diskon Nota Beli (%)" title="Diskon Nota Beli (%)" value="<?php echo $diskon_nota*100 ?>" min="0" max="100">
+						<span class="input-group-addon"><i class="fa fa-cut fa-fw"></i></span>
+						<input type="number" id="diskon_nota_persen" name="diskon_all_persen" class="form-control" placeholder="Diskon Nota Beli (%)" title="Diskon Nota Beli (%)" value="<?php echo $diskon_nota*100 ?>" min="0" max="100">
 						<span class="input-group-addon">%</span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-cut fa-fw" style="width: 47px;"></i><br><small>Nominal</small></span>
-						<input id="diskon_nota_rp" class="form-control" style="padding: 20px 15px;" placeholder="Diskon Nota Beli (Rp)" title="Diskon Nota Beli (Rp)" value="<?php echo $diskon_all_rp ?>" readonly>
+						<span class="input-group-addon"><i class="fa fa-cut fa-fw"></i></span>
+						<input id="diskon_nota_rp" class="form-control" placeholder="Diskon Nota Beli (Rp)" title="Diskon Nota Beli (Rp)" value="<?php echo $diskon_all_rp ?>" readonly>
 					</div>
 					<div class="modal-footer">
 						<input type="submit" class="btn btn-primary" value="Simpan">
 					</div>
 				</form>
-
-				<small style="color: red;">* Tidak mempengaruhi harga modal</small>
 			</div>
 		</div>
 	</div>

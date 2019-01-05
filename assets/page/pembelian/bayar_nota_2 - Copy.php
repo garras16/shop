@@ -12,7 +12,7 @@ if (isset($tambah_bayar_nota_beli_post)){
 	}
 
 	if ($jenis !='Retur'){
-		$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','$jenis',$jumlah_bayar,0)");
+		$sql=mysql_query("INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','$jenis',$jumlah_bayar,0)");
 		if ($sql){
 			_buat_pesan("Input Berhasil","green");
 		} else {
@@ -21,10 +21,10 @@ if (isset($tambah_bayar_nota_beli_post)){
 	}
 	
 	if (isset($no_retur)){
-		$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','Retur',$jumlah_bayar_retur,0)");
-		$last_id=mysqli_insert_id();
+		$sql=mysql_query("INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','Retur',$jumlah_bayar_retur,0)");
+		$last_id=mysql_insert_id();
 		for ($i=0;$i<count($no_retur)-1;$i++) {
-			$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli_detail VALUES(null,$last_id,'$no_retur[$i]')");
+			$sql=mysql_query("INSERT INTO bayar_nota_beli_detail VALUES(null,$last_id,'$no_retur[$i]')");
 			if ($sql){
 				_buat_pesan("Input Berhasil","green");
 			} else {
@@ -37,10 +37,10 @@ if (isset($tambah_bayar_nota_beli_post)){
 }
 $no_nota_beli=$_GET['no_nota_beli'];
 $jenis=$_GET['jenis'];
-//$sql=mysqli_query($con, "SELECT no_nota_beli FROM bayar_nota_beli WHERE no_nota_beli='$no_nota_beli'");
-//$c=mysqli_num_rows($sql);
+//$sql=mysql_query("SELECT no_nota_beli FROM bayar_nota_beli WHERE no_nota_beli='$no_nota_beli'");
+//$c=mysql_num_rows($sql);
 //if ($c>0) _direct("?page=pembelian&mode=bayar_nota");
-$sql=mysqli_query($con, "SELECT 
+$sql=mysql_query("SELECT 
 	supplier.id_supplier
     , supplier.nama_supplier
     , beli.tanggal
@@ -57,7 +57,7 @@ FROM
         ON (beli.id_supplier = supplier.id_supplier)
 WHERE beli.no_nota_beli='$no_nota_beli' 
 GROUP BY beli_detail.id_beli");
-$row=mysqli_fetch_array($sql);
+$row=mysql_fetch_array($sql);
 $id_supplier=$row['id_supplier'];
 ?>
 <!-- page content -->
@@ -80,43 +80,43 @@ $id_supplier=$row['id_supplier'];
 						<input type="hidden" name="tambah_bayar_nota_beli_post" value="true">
 						<div class="col-xs-6">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-building fa-fw"></i><br><small>Supplier</small></span>
+								<span class="input-group-addon"><i class="fa fa-building fa-fw"></i></span>
 								<input class="form-control" value="<?php echo $row['nama_supplier']; ?>" title="Nama Supplier" readonly>
 							</div>
 						</div>
 						<div class="col-xs-6">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i><b><small>Tgl. Nota</small></span>
+								<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
 								<input class="form-control" value="<?php echo date("d-m-Y", strtotime($row['tanggal'])); ?>" title="Tanggal Nota Beli" readonly>
 							</div>
 						</div>
 						<div class="col-xs-6">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-file fa-fw"></i><b><small>No. Nota</small></span>
+								<span class="input-group-addon"><i class="fa fa-file fa-fw"></i></span>
 								<input class="form-control" name="no_nota_beli" value="<?php echo $no_nota_beli ?>" title="No Nota Beli" readonly>
 							</div>
 						</div>
 						<div class="col-xs-6">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-money fa-fw"></i><b><small>Total</small></span>
+								<span class="input-group-addon"><i class="fa fa-money fa-fw"></i></span>
 								<input class="form-control" id="total_nota" value="<?php echo $row['total'] ?>" title="Total Nota Beli (Rp)" readonly>
 							</div>
 						</div>
 						<div class="col-xs-6">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-info fa-fw"></i><b><small>Jenis</small></span>
+								<span class="input-group-addon"><i class="fa fa-info fa-fw"></i></span>
 								<input class="form-control" name="jenis" value="<?php echo $jenis ?>" title="Jenis" readonly>
 							</div>
 						</div>
 						<div class="col-xs-6">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-money fa-fw"></i><b><small>Sisa</small></span>
+								<span class="input-group-addon"><i class="fa fa-money fa-fw"></i></span>
 								<input class="form-control" name="sisa_nota" value="" title="Sisa Nota (Rp)" readonly>
 							</div>
 						</div>
 						<div class="col-xs-12">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-money fa-fw"></i><b><small>Jml.</small></span>
+								<span class="input-group-addon"><i class="fa fa-money fa-fw"></i></span>
 <?php
 if ($jenis=='Retur'){
 	echo '						<input class="form-control" id="jumlah_bayar" name="jumlah_bayar" value="0" placeHolder="Jumlah Bayar (Rp)" readonly>';
@@ -141,7 +141,7 @@ if ($jenis=='Retur'){
 							</div>
 							<div class="clearfix"></div><br/>
 <?php
-$sql=mysqli_query($con, "SELECT
+$sql=mysql_query("SELECT
     retur_beli.id_retur_beli
     , retur_beli.no_retur_beli
 FROM
@@ -150,10 +150,10 @@ FROM
         ON (retur_beli.id_beli = beli.id_beli)
 WHERE STATUS=1 AND id_supplier=$id_supplier AND no_retur_beli NOT IN (SELECT no_retur_beli FROM bayar_nota_beli_detail)");
 $c=0;
-	while($b=mysqli_fetch_array($sql)){
+	while($b=mysql_fetch_array($sql)){
 		$tmp_id_retur=$b['id_retur_beli'];
-		$sql2=mysqli_query($con, "SELECT SUM(qty_keluar * harga_retur) AS jumlah FROM retur_beli_detail WHERE id_retur_beli=$tmp_id_retur");
-		$b2=mysqli_fetch_array($sql2);
+		$sql2=mysql_query("SELECT SUM(qty_keluar * harga_retur) AS jumlah FROM retur_beli_detail WHERE id_retur_beli=$tmp_id_retur");
+		$b2=mysql_fetch_array($sql2);
 		if ($b2['jumlah']!=''){
 			$c+=1;
 		}			

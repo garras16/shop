@@ -1,7 +1,7 @@
 <?php
 if (isset($tambah_pelanggan_post)){
 	$sql = "INSERT INTO pelanggan VALUES(null,'$nama_pelanggan','$alamat','$lat','$lng','$telepon_pelanggan','$kontak','$telepon_kontak',$plafon,$barcode,$status,$blacklist)";
-	$q = mysqli_query($con, $sql);
+	$q = mysql_query($sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -9,7 +9,7 @@ if (isset($tambah_pelanggan_post)){
 	}
 }
 if (isset($edit_pelanggan_post)){
-	$sql=mysqli_query($con, "UPDATE pelanggan SET nama_pelanggan='$nama_pelanggan',alamat='$alamat',lat='$lat',lng='$lng',telepon_pelanggan='$telepon_pelanggan',kontakperson='$kontak',telepon_kontak='$telepon_kontak',plafon=$plafon,barcode='$barcode',status=$status,blacklist=$blacklist WHERE id_pelanggan=$id_pelanggan");
+	$sql=mysql_query("UPDATE pelanggan SET nama_pelanggan='$nama_pelanggan',alamat='$alamat',lat='$lat',lng='$lng',telepon_pelanggan='$telepon_pelanggan',kontakperson='$kontak',telepon_kontak='$telepon_kontak',plafon=$plafon,barcode='$barcode',status=$status,blacklist=$blacklist WHERE id_pelanggan=$id_pelanggan");
 	_alert($plafon);
 	if ($sql){
 		_buat_pesan("Input Berhasil","green");
@@ -58,9 +58,9 @@ if (isset($edit_pelanggan_post)){
 				</thead>
 				<tbody>
 <?php
-$sql=mysqli_query($con, "SELECT * FROM pelanggan ORDER BY id_pelanggan DESC");
+$sql=mysql_query("SELECT * FROM pelanggan ORDER BY id_pelanggan DESC");
 $i=0;
-while($row=mysqli_fetch_array($sql)){
+while($row=mysql_fetch_array($sql)){
 $i+=1;
 $status = ($row['status'] == 1 ? 'Aktif' : 'Non Aktif');
 $blacklist = ($row['blacklist'] == 1 ? 'Ya' : 'Tidak');
@@ -106,48 +106,48 @@ $blacklist = ($row['blacklist'] == 1 ? 'Ya' : 'Tidak');
 					<input type="hidden" name="tambah_pelanggan_post" value="true">
 					<div class="col-md-12">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-building fa-fw" style="width:59px;"></i><br><small>Nama</small></span>
-						<input class="form-control" type="text" id="nama" style="padding: 20px 15px;" name="nama_pelanggan" placeholder="Nama Pelanggan" maxlength="50" required>
+						<span class="input-group-addon"><i class="fa fa-building fa-fw"></i></span>
+						<input class="form-control" type="text" id="nama" name="nama_pelanggan" placeholder="Nama Pelanggan" maxlength="50" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-map-marker fa-fw" style="width:59px;"></i><br><small>Alamat</small></span>
-						<input name="alamat" type="text" class="form-control" style="padding: 20px 15px;" placeholder="Alamat" maxlength="100" required>
+						<span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
+						<input name="alamat" type="text" class="form-control" placeholder="Alamat" maxlength="100" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-map-marker fa-fw" style="width:59px;"></i><br><small>Latitude</small></span>
-						<input name="lat" type="text" class="form-control" style="padding: 20px 15px;" placeholder="Latitude" maxlength="50" readonly>
+						<span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
+						<input name="lat" type="text" class="form-control" placeholder="Latitude" maxlength="50" readonly>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-map-marker fa-fw" style="width:59px;"></i><br><small>Longitude</small></span>
-						<input name="lng" type="text" class="form-control" style="padding: 20px 15px;" placeholder="Longitude" maxlength="50" readonly>
+						<span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
+						<input name="lng" type="text" class="form-control" placeholder="Longitude" maxlength="50" readonly>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-phone fa-fw" style="width:59px;"></i><br><small>Telepon</small></span>
-						<input class="form-control" type="number" name="telepon_pelanggan" style="padding: 20px 15px;" placeholder="Telepon Pelanggan" onKeyPress="if(this.value.length==20) return false;" required>
+						<span class="input-group-addon"><i class="fa fa-phone fa-fw"></i></span>
+						<input class="form-control" type="number" name="telepon_pelanggan" placeholder="Telepon Pelanggan" onKeyPress="if(this.value.length==20) return false;" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-user fa-fw"></i><br><small>No. Kontak</small></span>
-						<input name="kontak" type="text" class="form-control" placeholder="Kontak Person" style="padding: 20px 15px;" maxlength="30" required>
+						<span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+						<input name="kontak" type="text" class="form-control" placeholder="Kontak Person" maxlength="30" required>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon" style="padding: 6px 10px;"><i class="fa fa-phone fa-fw" style="width:63px;"></i><br><small>Tlp. Kontak</small></span>
-						<input class="form-control" type="number" name="telepon_kontak" style="padding: 20px 15px;" placeholder="Telepon Kontak Person" onKeyPress="if(this.value.length==20) return false;" required>
+						<span class="input-group-addon"><i class="fa fa-phone fa-fw"></i></span>
+						<input class="form-control" type="number" name="telepon_kontak" placeholder="Telepon Kontak Person" onKeyPress="if(this.value.length==20) return false;" required>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-arrows-v fa-fw" style="width:59px;"></i><br><small>Plafon Rp.</small></span>
-						<input id="plafon" type="text" name="plafon" class="form-control" style="padding: 20px 15px;" placeholder="Plafon (Rp)" required>
+						<span class="input-group-addon"><i class="fa fa-arrows-v fa-fw"></i></span>
+						<input id="plafon" type="text" name="plafon" class="form-control" placeholder="Plafon (Rp)" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-barcode fa-fw"  style="width: 59px;"></i><br><small>Barcode</small></span>
-						<input name="barcode" type="text" class="form-control" style="padding: 20px 15px;" placeholder="Barcode" maxlength="20" required>
+						<span class="input-group-addon"><i class="fa fa-barcode fa-fw"></i></span>
+						<input name="barcode" type="text" class="form-control" placeholder="Barcode" maxlength="20" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-flag fa-fw" style="width: 59px;"></i><br><small>Status</small></span>
+						<span class="input-group-addon"><i class="fa fa-flag fa-fw"></i></span>
 						<select class="form-control select" name="status" required>
 							<option value="" disabled selected>Pilih Status</option>
 							<option value="0">NON AKTIF</option>
@@ -156,7 +156,7 @@ $blacklist = ($row['blacklist'] == 1 ? 'Ya' : 'Tidak');
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-flag fa-fw" style="width: 59px;"></i><br><small>Blacklist</small></span>
+						<span class="input-group-addon"><i class="fa fa-flag fa-fw"></i></span>
 						<select class="form-control select" name="blacklist" required>
 							<option value="" disabled selected>Blacklist ?</option>
 							<option value="0">TIDAK</option>

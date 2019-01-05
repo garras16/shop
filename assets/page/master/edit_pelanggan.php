@@ -1,6 +1,6 @@
 <?php
 if (isset($edit_pelanggan_post)){
-	$sql=mysqli_query($con, "UPDATE pelanggan SET nama_pelanggan='$nama_pelanggan',alamat='$alamat',telepon_pelanggan='$telepon_pelanggan',kontakperson='$kontak',telepon_kontak='$telepon_kontak',plafon=$plafon,barcode='$barcode',status=$status,blacklist=$blacklist WHERE id_pelanggan='$id'");
+	$sql=mysql_query("UPDATE pelanggan SET nama_pelanggan='$nama_pelanggan',alamat='$alamat',telepon_pelanggan='$telepon_pelanggan',kontakperson='$kontak',telepon_kontak='$telepon_kontak',plafon=$plafon,barcode='$barcode',status=$status,blacklist=$blacklist WHERE id_pelanggan='$id'");
 	if ($sql){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -8,8 +8,8 @@ if (isset($edit_pelanggan_post)){
 	}
 	_direct("index.php?page=master&mode=pelanggan");
 }
-	$sql=mysqli_query($con, "SELECT * FROM pelanggan WHERE id_pelanggan=$id");
-	$row=mysqli_fetch_array($sql);
+	$sql=mysql_query("SELECT * FROM pelanggan WHERE id_pelanggan=$id");
+	$row=mysql_fetch_array($sql);
 ?>
 
 <div class="right_col" role="main">

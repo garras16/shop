@@ -1,7 +1,7 @@
 <?php
 $id_karyawan=$_SESSION['id_karyawan'];
 if (isset($edit_lap_stock_opname_post)){
-	$sql=mysqli_query($con, "UPDATE lap_stock_opname SET qty_cek=$qty_cek,selisih=$selisih WHERE id_laporan_stock_opname=$id_laporan_stock_opname");
+	$sql=mysql_query("UPDATE lap_stock_opname SET qty_cek=$qty_cek,selisih=$selisih WHERE id_laporan_stock_opname=$id_laporan_stock_opname");
 	if (isset($_GET['id_konfirm'])){
 		$url="?page=konfirmasi&mode=konfirm_so_canvass&id=" .$id. "&id_konfirm=" .$_GET['id_konfirm'];
 	} else {
@@ -15,33 +15,33 @@ if (isset($edit_lap_stock_opname_post)){
 	_direct($url);
 }
 if (isset($_GET['act']) && $_GET['act']=='tolak'){
-	$sql=mysqli_query($con, "UPDATE canvass_keluar SET status=2 WHERE id_canvass_keluar=$id");
-	$sql=mysqli_query($con, "DELETE FROM lap_stock_opname WHERE id_canvass_keluar=$id");
-	$sql=mysqli_query($con, "DELETE FROM canvass_stock_opname WHERE id_canvass_keluar=$id");
-	$sql=mysqli_query($con, "UPDATE konfirm_owner SET status=1 WHERE id_konfirm_owner=" .$_GET['id_konfirm']);
+	$sql=mysql_query("UPDATE canvass_keluar SET status=2 WHERE id_canvass_keluar=$id");
+	$sql=mysql_query("DELETE FROM lap_stock_opname WHERE id_canvass_keluar=$id");
+	$sql=mysql_query("DELETE FROM canvass_stock_opname WHERE id_canvass_keluar=$id");
+	$sql=mysql_query("UPDATE konfirm_owner SET status=1 WHERE id_konfirm_owner=" .$_GET['id_konfirm']);
 	_direct("?page=konfirmasi&mode=konfirmasi");
 }
 if (isset($_GET['act']) && $_GET['act']=='terima'){
-	$sql=mysqli_query($con, "UPDATE canvass_keluar SET status=3 WHERE id_canvass_keluar=$id");
-	$sql=mysqli_query($con, "UPDATE canvass_stock_opname SET status=1 WHERE id_canvass_keluar=$id");
-	$sql=mysqli_query($con, "UPDATE konfirm_owner SET status=1 WHERE id_konfirm_owner=" .$_GET['id_konfirm']);
-	$sql=mysqli_query($con, "SELECT * FROM lap_stock_opname WHERE id_canvass_keluar=$id AND selisih<>0");
-	while($row=mysqli_fetch_array($sql)){
-		$sql2=mysqli_query($con, "UPDATE lap_stock_opname SET qty_sisa=" .$row['qty_cek']. ",selisih=0 WHERE id_canvass_keluar=$id AND id_barang=" .$row['id_barang']. " AND expire='" .$row['expire']. "'");
+	$sql=mysql_query("UPDATE canvass_keluar SET status=3 WHERE id_canvass_keluar=$id");
+	$sql=mysql_query("UPDATE canvass_stock_opname SET status=1 WHERE id_canvass_keluar=$id");
+	$sql=mysql_query("UPDATE konfirm_owner SET status=1 WHERE id_konfirm_owner=" .$_GET['id_konfirm']);
+	$sql=mysql_query("SELECT * FROM lap_stock_opname WHERE id_canvass_keluar=$id AND selisih<>0");
+	while($row=mysql_fetch_array($sql)){
+		$sql2=mysql_query("UPDATE lap_stock_opname SET qty_sisa=" .$row['qty_cek']. ",selisih=0 WHERE id_canvass_keluar=$id AND id_barang=" .$row['id_barang']. " AND expire='" .$row['expire']. "'");
 	}
 	_direct("?page=konfirmasi&mode=konfirmasi");
 }
-	$sql=mysqli_query($con, "SELECT *
+	$sql=mysql_query("SELECT *
 FROM
     canvass_keluar
     LEFT JOIN kendaraan 
         ON (canvass_keluar.id_mobil = kendaraan.id_kendaraan)
 	WHERE id_canvass_keluar=$id");
-	$row=mysqli_fetch_array($sql);
+	$row=mysql_fetch_array($sql);
 	$tgl_canvass=$row['tanggal_canvass'];
 	$nama_mobil=$row['nama_kendaraan'];
 	$plat=$row['plat'];
-	$sql2=mysqli_query($con, "SELECT *
+	$sql2=mysql_query("SELECT *
 FROM
     canvass_keluar_karyawan
     INNER JOIN karyawan 
@@ -50,11 +50,11 @@ FROM
         ON (karyawan.id_karyawan = users.id_karyawan)
 	WHERE id_canvass_keluar=$id");
 	$baris=mysql_num_rows($sql2);
-	$sql4=mysqli_query($con, "SELECT tgl_lap
+	$sql4=mysql_query("SELECT tgl_lap
 FROM
     lap_stock_opname
  WHERE id_canvass_keluar=$id");
- $row4=mysqli_fetch_array($sql4);
+ $row4=mysql_fetch_array($sql4);
  $tgl_so=$row4['tgl_lap'];
 ?>
 <div class="right_col loading" role="main">
@@ -82,7 +82,7 @@ FROM
 							<tr><td width="40%">No Pol</td><td>' .$plat. '</td></tr>';
 	
 	echo '					<tr><td rowspan="' .$baris. '">Nama Karyawan</td>';
-	while ($row2=mysqli_fetch_array($sql2)){
+	while ($row2=mysql_fetch_array($sql2)){
 		echo '				<td>- ' .$row2['nama_karyawan']. ' ( ' .$row2['posisi']. ' )</td></tr>';
 	}
 	echo '</tr>';
@@ -102,7 +102,7 @@ FROM
 							</thead>
 							<tbody>
 <?php
-	$sql=mysqli_query($con, "SELECT *
+	$sql=mysql_query("SELECT *
 FROM
     lap_stock_opname
     INNER JOIN barang 
@@ -110,7 +110,7 @@ FROM
     INNER JOIN satuan 
         ON (barang.id_satuan = satuan.id_satuan)
  WHERE id_canvass_keluar=$id");
-	while ($row=mysqli_fetch_array($sql)){
+	while ($row=mysql_fetch_array($sql)){
 	($row['qty_sisa']==$row['qty_cek'] ? $style="" : $style="color:red;");
 	($row['selisih']=='0' ? $send=false : $send=true);
 	echo '<tr>

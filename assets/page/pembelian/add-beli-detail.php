@@ -10,7 +10,7 @@ require_once('../../../assets/inc/config.php');
 						<select class="form-control" id="select_barang" name="id_barang_supplier" required>
 							<option value="" disabled selected>Pilih Barang</option>
 							<?php
-								$sql=mysqli_query($con, "SELECT
+								$sql=mysql_query("SELECT
     barang_supplier.id_barang_supplier
     , barang.nama_barang
 FROM
@@ -19,7 +19,7 @@ FROM
         ON (barang_supplier.id_barang = barang.id_barang) 
 WHERE 
 	barang_supplier.id_supplier=$id_supplier");
-								while($row=mysqli_fetch_array($sql)){
+								while($row=mysql_fetch_array($sql)){
 									echo '<option value="' .$row['id_barang_supplier']. '">' .$row['nama_barang']. '</option>';
 								}
 							?>

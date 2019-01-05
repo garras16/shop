@@ -1,7 +1,7 @@
 <?php
 if (isset($tambah_gudang_post)){
 	$sql = "INSERT INTO gudang VALUES(null,'$nama_gudang')";
-	$q = mysqli_query($con, $sql);
+	$q = mysql_query($sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -11,7 +11,7 @@ if (isset($tambah_gudang_post)){
 }
 if (isset($edit_gudang_post)){
 	$sql = "UPDATE gudang SET nama_gudang='$nama_gudang' WHERE id_gudang=$id_gudang";
-	$q = mysqli_query($con, $sql);
+	$q = mysql_query($sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -21,7 +21,7 @@ if (isset($edit_gudang_post)){
 }
 if (isset($tambah_rak_post)){
 	$sql = "INSERT INTO rak VALUES(null,$id_gudang,'$nama_rak')";
-	$q = mysqli_query($con, $sql);
+	$q = mysql_query($sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -31,7 +31,7 @@ if (isset($tambah_rak_post)){
 }
 if (isset($edit_rak_post)){
 	$sql = "UPDATE rak SET id_gudang=$id_gudang, nama_rak='$nama_rak' WHERE id_rak=$id_rak";
-	$q = mysqli_query($con, $sql);
+	$q = mysql_query($sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -73,9 +73,9 @@ if (isset($edit_rak_post)){
 				</thead>
 				<tbody>
 <?php
-$sql=mysqli_query($con, "SELECT * FROM gudang LEFT JOIN rak ON (gudang.id_gudang = rak.id_gudang) ORDER BY rak.id_rak DESC");
+$sql=mysql_query("SELECT * FROM gudang LEFT JOIN rak ON (gudang.id_gudang = rak.id_gudang) ORDER BY rak.id_rak DESC");
 $i=0;
-while($row=mysqli_fetch_array($sql)){
+while($row=mysql_fetch_array($sql)){
 $i+=1;
 	echo '			<tr>
 						<td>' .$i. '</a></td>
@@ -110,8 +110,8 @@ $i+=1;
 					<input type="hidden" name="tambah_gudang_post" value="true">
 					<div class="col-md-12">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-building fa-fw"></i><br><small>Nama</small></span>
-							<input class="form-control" type="text" name="nama_gudang" style="padding: 20px 15px;" placeholder="Nama Gudang" maxlength="20" required>
+							<span class="input-group-addon"><i class="fa fa-building fa-fw"></i></span>
+							<input class="form-control" type="text" name="nama_gudang" placeholder="Nama Gudang" maxlength="20" required>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 					</div>
@@ -137,12 +137,12 @@ $i+=1;
 					<input type="hidden" name="tambah_rak_post" value="true">
 					<div class="col-md-12">
 						<div class="input-group">
-							<span class="input-group-addon" style="padding:2px 12px;"><i class="fa fa-building fa-fw"></i><br><small>Gudang</small></span>
+							<span class="input-group-addon"><i class="fa fa-building fa-fw"></i></span>
 							<select class="form-control select" id="select_gudang" name="id_gudang" required>
 								<option value="" disabled selected>Pilih Gudang</option>
 								<?php
-									$sql=mysqli_query($con, "SELECT * FROM gudang");
-									while($row=mysqli_fetch_array($sql)){
+									$sql=mysql_query("SELECT * FROM gudang");
+									while($row=mysql_fetch_array($sql)){
 										echo '<option value="' .$row['id_gudang']. '">' .$row['nama_gudang']. '</option>';
 									}
 								?>
@@ -150,8 +150,8 @@ $i+=1;
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-archive fa-fw" style="width: 42px;"></i><br><small>Nama</small></span>
-							<input class="form-control" type="text" name="nama_rak" style="padding: 20px 15px;" placeholder="Nama Rak" maxlength="20" required>
+							<span class="input-group-addon"><i class="fa fa-archive fa-fw"></i></span>
+							<input class="form-control" type="text" name="nama_rak" placeholder="Nama Rak" maxlength="20" required>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 					</div>
@@ -178,8 +178,8 @@ $i+=1;
 					<input type="hidden" id="id_gudang" name="id_gudang" value="">
 					<div class="col-md-12">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-building fa-fw"></i><br><small>Nama</small></span>
-							<input class="form-control" id="gudang" name="nama_gudang" style="padding: 20px 15px;" placeholder="Nama Gudang" maxlength="20" required>
+							<span class="input-group-addon"><i class="fa fa-building fa-fw"></i></span>
+							<input class="form-control" id="gudang" name="nama_gudang" placeholder="Nama Gudang" maxlength="20" required>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 					</div>

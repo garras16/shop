@@ -1,7 +1,7 @@
 <?php
 $id_karyawan=$_SESSION['id_karyawan'];
 if (isset($_GET['terima'])){
-	$sql=mysqli_query($con, "UPDATE retur_jual SET status=0 WHERE id_retur_jual=" .$_GET['terima']);
+	$sql=mysql_query("UPDATE retur_jual SET status=0 WHERE id_retur_jual=" .$_GET['terima']);
 	if ($sql){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -10,7 +10,7 @@ if (isset($_GET['terima'])){
 	_direct("?page=penjualan&mode=konfirmasi_admin_retur_jual");
 }
 if (isset($_GET['tolak'])){
-	$sql=mysqli_query($con, "DELETE FROM retur_jual WHERE id_retur_jual=" .$_GET['tolak']);
+	$sql=mysql_query("DELETE FROM retur_jual WHERE id_retur_jual=" .$_GET['tolak']);
 	if ($sql){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -56,41 +56,41 @@ if (isset($_GET['tolak'])){
 							</thead>
 							<tbody>
 <?php
-	$sql=mysqli_query($con, "SELECT * FROM retur_jual WHERE status=9 GROUP BY id_jual ORDER BY tgl_retur DESC");
-	while ($row=mysqli_fetch_array($sql)){
-	$sql2=mysqli_query($con, "SELECT * FROM jual WHERE id_jual=" .$row['id_jual']. " GROUP BY id_jual ORDER BY id_jual DESC");
-	$row2=mysqli_fetch_array($sql2);
+	$sql=mysql_query("SELECT * FROM retur_jual WHERE status=9 GROUP BY id_jual ORDER BY tgl_retur DESC");
+	while ($row=mysql_fetch_array($sql)){
+	$sql2=mysql_query("SELECT * FROM jual WHERE id_jual=" .$row['id_jual']. " GROUP BY id_jual ORDER BY id_jual DESC");
+	$row2=mysql_fetch_array($sql2);
 	$invoice=$row2['invoice'];
 	
-	$sql2=mysqli_query($con, "SELECT nama_pelanggan
+	$sql2=mysql_query("SELECT nama_pelanggan
 FROM
     jual
     INNER JOIN pelanggan 
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
 	WHERE id_jual=" .$row['id_jual']. "");
-	$row2=mysqli_fetch_array($sql2);
+	$row2=mysql_fetch_array($sql2);
 	$nama_pelanggan=$row2['nama_pelanggan'];
 	
-		$sql2=mysqli_query($con, "SELECT SUM(qty_ambil*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total_jual
+		$sql2=mysql_query("SELECT SUM(qty_ambil*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total_jual
 			FROM
 				jual_detail
 				INNER JOIN nota_siap_kirim_detail 
 					ON (jual_detail.id_jual_detail = nota_siap_kirim_detail.id_jual_detail)
 			WHERE id_jual=" .$row['id_jual']);
-		$r=mysqli_fetch_array($sql2);
+		$r=mysql_fetch_array($sql2);
 		$total_jual=$r['total_jual'];
-		$sql2=mysqli_query($con, "SELECT SUM(qty_ambil*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total_jual
+		$sql2=mysql_query("SELECT SUM(qty_ambil*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total_jual
 			FROM
 				jual_detail
 				INNER JOIN canvass_siap_kirim_detail 
 					ON (jual_detail.id_jual_detail = canvass_siap_kirim_detail.id_jual_detail)
 			WHERE id_jual=" .$row['id_jual']);
-		$r=mysqli_fetch_array($sql2);
+		$r=mysql_fetch_array($sql2);
 		$total_jual+=$r['total_jual'];
 		
-		$sql2=mysqli_query($con, "SELECT * FROM retur_jual_detail WHERE id_retur_jual=" .$row['id_retur_jual']);
+		$sql2=mysql_query("SELECT * FROM retur_jual_detail WHERE id_retur_jual=" .$row['id_retur_jual']);
 		$total_retur=0;
-		while ($r=mysqli_fetch_array($sql2)){
+		while ($r=mysql_fetch_array($sql2)){
 			if ($r['qty_masuk']==''){
 				$total_retur+=$r['harga_retur']*$r['qty_retur'];
 			} else {
@@ -98,13 +98,13 @@ FROM
 			}
 		}
 		
-	$sql2=mysqli_query($con, "SELECT status_bayar
+	$sql2=mysql_query("SELECT status_bayar
 FROM
     penagihan
     INNER JOIN penagihan_detail 
         ON (penagihan.id_penagihan = penagihan_detail.id_penagihan)
 WHERE id_jual=" .$row['id_jual']);
-	$r=mysqli_fetch_array($sql2);
+	$r=mysql_fetch_array($sql2);
 	if ($r['status_bayar']=='0') {$status='Belum Bayar'; $color='red';}
 	if ($r['status_bayar']=='1') {$status='Sedang Mengangsur'; $color='red';}
 	if ($r['status_bayar']=='2') {$status='Lunas'; $color='black';}

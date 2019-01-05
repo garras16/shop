@@ -1,23 +1,23 @@
 <?php
 $no_nota_jual=$_GET['no_nota_jual'];
 $jenis=$_GET['jenis'];
-$sql=mysqli_query($con, "SELECT id_jual FROM jual WHERE invoice='$no_nota_jual'");
-$row=mysqli_fetch_array($sql);
+$sql=mysql_query("SELECT id_jual FROM jual WHERE invoice='$no_nota_jual'");
+$row=mysql_fetch_array($sql);
 $id_jual=$row['id_jual'];
 
-	$sql2=mysqli_query($con, "SELECT jumlah FROM nota_sudah_cek WHERE status='2' or status='3' AND id_jual=$id_jual");
-	$b2=mysqli_fetch_array($sql2);
+	$sql2=mysql_query("SELECT jumlah FROM nota_sudah_cek WHERE status='2' or status='3' AND id_jual=$id_jual");
+	$b2=mysql_fetch_array($sql2);
 	$jumlah_nota=$b2['jumlah'];
 
 //-----------------------------------------------------------------------------------------
 
-	$sql3=mysqli_query($con, "SELECT SUM(jumlah) AS jumlah_bayar FROM bayar_nota_jual WHERE no_nota_jual='$no_nota_jual'");
-	$b3=mysqli_fetch_array($sql3);
+	$sql3=mysql_query("SELECT SUM(jumlah) AS jumlah_bayar FROM bayar_nota_jual WHERE no_nota_jual='$no_nota_jual'");
+	$b3=mysql_fetch_array($sql3);
 	$jumlah_bayar_x=$b3['jumlah_bayar'];
 //-------------------------------------------------------------------------------------------
 
-	$sql3=mysqli_query($con, "SELECT SUM(bayar) AS jumlah_bayar FROM penagihan_detail WHERE id_jual=$id_jual");
-	$b3=mysqli_fetch_array($sql3);
+	$sql3=mysql_query("SELECT SUM(bayar) AS jumlah_bayar FROM penagihan_detail WHERE id_jual=$id_jual");
+	$b3=mysql_fetch_array($sql3);
 	$jumlah_bayar_x+=$b3['jumlah_bayar'];
 //-------------------------------------------------------------------------------------------
 
@@ -39,13 +39,13 @@ if (isset($tambah_bayar_nota_jual_post)){
 
 	if ($jenis !='Retur'){
 		($jumlah_bayar==$sisa_nota ? $status=1 : $status=2);
-		$sql=mysqli_query($con, "UPDATE bayar_nota_jual SET status=$status WHERE no_nota_jual='$no_nota_jual'");
+		$sql=mysql_query("UPDATE bayar_nota_jual SET status=$status WHERE no_nota_jual='$no_nota_jual'");
 		if ($jenis =='Transfer'){
-			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','$jenis',$jumlah_bayar,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening',null,null,null)");
+			$sql=mysql_query("INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','$jenis',$jumlah_bayar,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening',null,null,null)");
 		} else if ($jenis =='Giro'){
-			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','$jenis',$jumlah_bayar,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening','$jatuh_tempo','$keterangan',0)");
+			$sql=mysql_query("INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','$jenis',$jumlah_bayar,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening','$jatuh_tempo','$keterangan',0)");
 		} else {
-			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','$jenis',$jumlah_bayar,$status,null,null,null,null,null,null,null,null,null)");
+			$sql=mysql_query("INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','$jenis',$jumlah_bayar,$status,null,null,null,null,null,null,null,null,null)");
 		}
 		if ($sql){
 			_buat_pesan("Input Berhasil","green");
@@ -56,17 +56,17 @@ if (isset($tambah_bayar_nota_jual_post)){
 	
 	if (isset($no_retur)){
 		($jumlah_bayar+$jumlah_bayar_retur==$sisa_nota ? $status=1 : $status=2);
-		$sql=mysqli_query($con, "UPDATE bayar_nota_jual SET status=$status WHERE no_nota_jual='$no_nota_jual'");
+		$sql=mysql_query("UPDATE bayar_nota_jual SET status=$status WHERE no_nota_jual='$no_nota_jual'");
 		if ($jenis =='Transfer'){
-			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','Retur',$jumlah_bayar_retur,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening',null,null)");
+			$sql=mysql_query("INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','Retur',$jumlah_bayar_retur,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening',null,null)");
 		} else if ($jenis =='Giro'){
-			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','Retur',$jumlah_bayar_retur,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening','$jatuh_tempo','$keterangan',0)");
+			$sql=mysql_query("INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','Retur',$jumlah_bayar_retur,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening','$jatuh_tempo','$keterangan',0)");
 		} else {
-			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','Retur',$jumlah_bayar_retur,$status,null,null,null,null,null,null,null,null,null)");
+			$sql=mysql_query("INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','Retur',$jumlah_bayar_retur,$status,null,null,null,null,null,null,null,null,null)");
 		}
-		$last_id=mysqli_insert_id();
+		$last_id=mysql_insert_id();
 		for ($i=0;$i<count($no_retur)-1;$i++) {
-			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual_detail VALUES(null,$last_id,'$no_retur[$i]')");
+			$sql=mysql_query("INSERT INTO bayar_nota_jual_detail VALUES(null,$last_id,'$no_retur[$i]')");
 			if ($sql){
 				_buat_pesan("Input Berhasil","green");
 			} else {
@@ -77,7 +77,7 @@ if (isset($tambah_bayar_nota_jual_post)){
 	_direct("?page=penjualan&mode=bayar_nota");
 	
 }
-$sql=mysqli_query($con, "SELECT *, SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total
+$sql=mysql_query("SELECT *, SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total
 FROM
     jual
     INNER JOIN jual_detail 
@@ -86,7 +86,7 @@ FROM
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
 WHERE jual.invoice='$no_nota_jual' 
 GROUP BY jual_detail.id_jual");
-$row=mysqli_fetch_array($sql);
+$row=mysql_fetch_array($sql);
 $id_pelanggan=$row['id_pelanggan'];
 $id_jual=$row['id_jual'];
 $total_nota=$row['total']-($row['total']*$row['diskon_all_persen']/100);
@@ -110,50 +110,50 @@ $total_nota=$row['total']-($row['total']*$row['diskon_all_persen']/100);
 					<div class="x_content">
 						<form action="" method="post" onsubmit="return valid2();">
 						<input type="hidden" name="tambah_bayar_nota_jual_post" value="true">
-						<div class="col-xs-7">
+						<div class="col-xs-6">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-building fa-fw"></i><br><small>Pelanggan</small></span>
-								<input class="form-control" style="padding: 20px 15px;" value="<?php echo $row['nama_pelanggan']; ?>" title="Nama Pelanggan" readonly>
+								<span class="input-group-addon"><i class="fa fa-building fa-fw"></i></span>
+								<input class="form-control" value="<?php echo $row['nama_pelanggan']; ?>" title="Nama Pelanggan" readonly>
 							</div>
 						</div>
 						<div class="col-xs-6">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i><br><small>Tgl. Nota</small></span>
-								<input class="form-control" style="padding: 20px 15px;" value="<?php echo date("d-m-Y", strtotime($row['tgl_nota'])); ?>" title="Tanggal Nota Jual" readonly>
+								<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+								<input class="form-control" value="<?php echo date("d-m-Y", strtotime($row['tgl_nota'])); ?>" title="Tanggal Nota Jual" readonly>
 							</div>
 						</div>
 						<div class="col-xs-6">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-file fa-fw"></i><br><small>No. Nota Jual</small></span>
-								<input class="form-control" style="padding: 20px 15px;" name="no_nota_jual" value="<?php echo $no_nota_jual ?>" title="No Nota Jual" readonly>
+								<span class="input-group-addon"><i class="fa fa-file fa-fw"></i></span>
+								<input class="form-control" name="no_nota_jual" value="<?php echo $no_nota_jual ?>" title="No Nota Jual" readonly>
 							</div>
 						</div>
 						<div class="col-xs-6">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-money fa-fw"></i><br><small>Ttl. Nota Jual</small></span>
-								<input class="form-control" style="padding: 20px 15px;" id="total_nota" value="<?php echo $total_nota ?>" title="Total Nota Jual (Rp)" readonly>
+								<span class="input-group-addon"><i class="fa fa-money fa-fw"></i></span>
+								<input class="form-control" id="total_nota" value="<?php echo $total_nota ?>" title="Total Nota Jual (Rp)" readonly>
 							</div>
 						</div>
 						<div class="col-xs-6">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-info fa-fw"></i><br><small>Jenis</small></span>
-								<input class="form-control" style="padding: 20px 15px;" id="jenis" name="jenis" value="<?php echo $jenis ?>" title="Jenis" readonly>
+								<span class="input-group-addon"><i class="fa fa-info fa-fw"></i></span>
+								<input class="form-control" id="jenis" name="jenis" value="<?php echo $jenis ?>" title="Jenis" readonly>
 							</div>
 						</div>
 						<div class="col-xs-6">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-money fa-fw"></i><br><small>Sisa</small></span>
-								<input class="form-control" style="padding: 20px 15px;" id="sisa_nota" name="sisa_nota" value="<?php echo $sisa_nota ?>" title="Sisa Nota (Rp)" readonly>
+								<span class="input-group-addon"><i class="fa fa-money fa-fw"></i></span>
+								<input class="form-control" id="sisa_nota" name="sisa_nota" value="<?php echo $sisa_nota ?>" title="Sisa Nota (Rp)" readonly>
 							</div>
 						</div>
 						<div class="col-xs-12">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-money fa-fw"></i><br><small>Jml. Bayar</small></span>
+								<span class="input-group-addon"><i class="fa fa-money fa-fw"></i></span>
 <?php
 if ($jenis=='Retur'){
-	echo '						<input class="form-control" id="jumlah_bayar" style="padding: 20px 15px;" name="jumlah_bayar" value="0" placeHolder="Jumlah Bayar (Rp)" readonly>';
+	echo '						<input class="form-control" id="jumlah_bayar" name="jumlah_bayar" value="0" placeHolder="Jumlah Bayar (Rp)" readonly>';
 } else {
-	echo '						<input class="form-control" id="jumlah_bayar" style="padding: 20px 15px;" name="jumlah_bayar" value=""  autofocus placeHolder="Jumlah Bayar (Rp)" required>
+	echo '						<input class="form-control" id="jumlah_bayar" name="jumlah_bayar" value=""  autofocus placeHolder="Jumlah Bayar (Rp)" required>
 								<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>';
 }
 ?>
@@ -164,36 +164,36 @@ if ($jenis=='Transfer' || $jenis=='Giro'){
 	echo '<div class="col-xs-6">
 			Pengirim :<br>
 			<div class="input-group">
-			<span class="input-group-addon"><i class="fa fa-building fa-fw"></i><br><small>Nama Bank</small></span>
-			<input class="form-control" id="sisa_nota" style="padding: 20px 15px;" name="pengirim_nama_bank" value="" placeHolder="Nama Bank" title="Nama Bank" maxlength="50" required>
+			<span class="input-group-addon"><i class="fa fa-building fa-fw"></i></span>
+			<input class="form-control" id="sisa_nota" name="pengirim_nama_bank" value="" placeHolder="Nama Bank" title="Nama Bank" maxlength="50" required>
 			<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 			</div>
 			<div class="input-group">
-			<span class="input-group-addon"><i class="fa fa-user fa-fw"></i><br><small>Nama Rek.</small></span>
-			<input class="form-control" id="sisa_nota" name="pengirim_nama_rekening" style="padding: 20px 15px;" value="" placeHolder="Nama Rekening" title="Nama Rekening" maxlength="100" required>
+			<span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+			<input class="form-control" id="sisa_nota" name="pengirim_nama_rekening" value="" placeHolder="Nama Rekening" title="Nama Rekening" maxlength="100" required>
 			<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 			</div>
 			<div class="input-group">
-			<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i><br><small>No. Rek.</small></span>
-			<input class="form-control" id="sisa_nota" name="pengirim_no_rekening" value="" style="padding: 20px 15px;" placeHolder="No Rekening" title="No Rekening" maxlength="20" required>
+			<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
+			<input class="form-control" id="sisa_nota" name="pengirim_no_rekening" value="" placeHolder="No Rekening" title="No Rekening" maxlength="20" required>
 			<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 			</div>
 		</div>';
 		echo '<div class="col-xs-6">
 			Penerima :<br>
 			<div class="input-group">
-			<span class="input-group-addon"><i class="fa fa-building fa-fw"></i><br><small>Nama Bank</small></span>
-			<input class="form-control" style="padding: 20px 15px;" id="sisa_nota" name="penerima_nama_bank" value="" placeHolder="Nama Bank" title="Nama Bank" maxlength="50" required>
+			<span class="input-group-addon"><i class="fa fa-building fa-fw"></i></span>
+			<input class="form-control" id="sisa_nota" name="penerima_nama_bank" value="" placeHolder="Nama Bank" title="Nama Bank" maxlength="50" required>
 			<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 			</div>
 			<div class="input-group">
-			<span class="input-group-addon"><i class="fa fa-user fa-fw"></i><br><small>Nama Rek.</small></span>
-			<input class="form-control" id="sisa_nota" style="padding: 20px 15px;" name="penerima_nama_rekening" value="" placeHolder="Nama Rekening" title="Nama Rekening" maxlength="100" required>
+			<span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+			<input class="form-control" id="sisa_nota" name="penerima_nama_rekening" value="" placeHolder="Nama Rekening" title="Nama Rekening" maxlength="100" required>
 			<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 			</div>
 			<div class="input-group">
-			<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i><br><small>No. Rek.</small></span>
-			<input class="form-control" id="sisa_nota" name="penerima_no_rekening" style="padding: 20px 15px;" value="" placeHolder="No Rekening" title="No Rekening" maxlength="20" required>
+			<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
+			<input class="form-control" id="sisa_nota" name="penerima_no_rekening" value="" placeHolder="No Rekening" title="No Rekening" maxlength="20" required>
 			<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 			</div>
 		</div>';
@@ -202,16 +202,16 @@ if ($jenis=='Giro'){
 		echo '<div class="col-xs-6">
 			Giro :
 			<div class="input-group">
-			<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i><br><small>Jth. tempo</small></span>
-			<input class="form-control" id="jatuh_tempo" name="jatuh_tempo" style="padding: 20px 15px;" value="" placeHolder="Tanggal Jatuh Tempo" title="Tanggal Jatuh Tempo" required>
+			<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+			<input class="form-control" id="jatuh_tempo" name="jatuh_tempo" value="" placeHolder="Tanggal Jatuh Tempo" title="Tanggal Jatuh Tempo" required>
 			<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 			</div>
 		</div>';
 		echo '<div class="col-xs-6">
 			&nbsp;
 			<div class="input-group">
-			<span class="input-group-addon"><i class="fa fa-file fa-fw"></i><br><small>Ket.</small></span>
-			<input class="form-control" id="keterangan" name="keterangan" value="" style="padding: 20px 15px;" placeHolder="Keterangan" maxlength="100">
+			<span class="input-group-addon"><i class="fa fa-file fa-fw"></i></span>
+			<input class="form-control" id="keterangan" name="keterangan" value="" placeHolder="Keterangan" maxlength="100">
 			</div>
 		</div>';
 }
@@ -230,7 +230,7 @@ if ($jenis=='Giro'){
 							</div>
 							<div class="clearfix"></div><br/>
 <?php
-$sql=mysqli_query($con, "SELECT
+$sql=mysql_query("SELECT
     retur_jual.id_retur_jual
     , retur_jual.no_retur_jual
 FROM
@@ -239,10 +239,10 @@ FROM
         ON (retur_jual.id_jual = jual.id_jual)
 WHERE status=1 AND id_pelanggan=$id_pelanggan AND no_retur_jual NOT IN (SELECT no_retur_jual FROM bayar_nota_jual_detail)");
 $c=0;
-	while($b=mysqli_fetch_array($sql)){
+	while($b=mysql_fetch_array($sql)){
 		$tmp_id_retur=$b['id_retur_jual'];
-		$sql2=mysqli_query($con, "SELECT SUM(qty_masuk * harga_retur) AS jumlah FROM retur_jual_detail WHERE id_retur_jual=$tmp_id_retur");
-		$b2=mysqli_fetch_array($sql2);
+		$sql2=mysql_query("SELECT SUM(qty_masuk * harga_retur) AS jumlah FROM retur_jual_detail WHERE id_retur_jual=$tmp_id_retur");
+		$b2=mysql_fetch_array($sql2);
 		if ($b2['jumlah']!=''){
 			$c+=1;
 		}			
@@ -352,7 +352,7 @@ function saveThis(){
 	$('#myModal').modal('hide');
 }
 $(document).ready(function(){
-	$('#jumlah_bayar').inputmask('currency', { prefix: "Rp ", allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+	$('#jumlah_bayar').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#total_nota').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#sisa_nota').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#myModal').on('show.bs.modal', function(e){

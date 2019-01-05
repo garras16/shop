@@ -8,17 +8,17 @@ if (isset($_GET['id'])){
 } else {
 	die();
 }
-$sql=mysqli_query($con, "SELECT * FROM jabatan WHERE id_jabatan='$id'");
-$row=mysqli_fetch_array($sql);
+$sql=mysql_query("SELECT * FROM jabatan WHERE id_jabatan='$id'");
+$row=mysql_fetch_array($sql);
 ?>
 <input type="hidden" name="id_jabatan" value="<?php echo $id ?>">
 <div class="input-group">
-	<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i><br><small>Jabatan</small></span>
-	<input class="form-control" placeHolder="Nama Jabatan" name="jabatan" style="padding:20px 15px;" value="<?php echo $row['nama_jabatan']; ?>" maxlength="20" required>
+	<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
+	<input class="form-control" placeHolder="Nama Jabatan" name="jabatan" value="<?php echo $row['nama_jabatan']; ?>" maxlength="20" required>
 	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 </div>
 <div class="input-group">
-	<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-flag fa-fw" style="width:44px;"></i><br><small>Status</small></span>
+	<span class="input-group-addon"><i class="fa fa-flag fa-fw"></i></span>
 	<select class="form-control" id="select_status" name="status" required>
 		<option value="" disabled selected>Pilih Status</option>
 		<option value="0" <?php echo ($row['status']==0 ? 'selected' : '') ?> >NON AKTIF</option>

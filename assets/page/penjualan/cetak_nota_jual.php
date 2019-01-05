@@ -3,37 +3,37 @@
 	require 'vendors/php-barcode/src/BarcodeGeneratorJPG.php';
 	
 $id_karyawan=$_SESSION['id_karyawan'];
-	$sql=mysqli_query($con, "SELECT status_konfirm FROM jual WHERE id_jual=$id");
-	$row=mysqli_fetch_array($sql);
+	$sql=mysql_query("SELECT status_konfirm FROM jual WHERE id_jual=$id");
+	$row=mysql_fetch_array($sql);
 	(($row['status_konfirm']>=0) && ($row['status_konfirm']<=4) ? $dalam_kota=true : $dalam_kota=false); 
 	if ($dalam_kota){
-		$sql=mysqli_query($con, "SELECT * FROM nota_sudah_cek WHERE id_jual=$id");
-		$row=mysqli_fetch_array($sql);
+		$sql=mysql_query("SELECT * FROM nota_sudah_cek WHERE id_jual=$id");
+		$row=mysql_fetch_array($sql);
 		if ($row['status']=='1') {
-			$sql2=mysqli_query($con, "UPDATE nota_sudah_cek SET status='2', tanggal_cetak='" .date("Y-m-d"). "' WHERE id_jual=$id");
+			$sql2=mysql_query("UPDATE nota_sudah_cek SET status='2', tanggal_cetak='" .date("Y-m-d"). "' WHERE id_jual=$id");
 		} else {
-			$sql2=mysqli_query($con, "UPDATE nota_sudah_cek SET tanggal_cetak='" .date("Y-m-d"). "' WHERE id_jual=$id");
+			$sql2=mysql_query("UPDATE nota_sudah_cek SET tanggal_cetak='" .date("Y-m-d"). "' WHERE id_jual=$id");
 		}
 	}
-	$sql=mysqli_query($con, "UPDATE jual SET cetak=1,tgl_cetak='" .date("Y-m-d"). "' WHERE id_jual=$id");
-	$sql=mysqli_query($con, "SELECT *
+	$sql=mysql_query("UPDATE jual SET cetak=1,tgl_cetak='" .date("Y-m-d"). "' WHERE id_jual=$id");
+	$sql=mysql_query("SELECT *
 FROM
     jual
     INNER JOIN pelanggan 
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
 	WHERE id_jual=$id");
-	$row=mysqli_fetch_array($sql);
+	$row=mysql_fetch_array($sql);
 	$no_nota=$row['invoice'];
 	$tgl_nota=$row['tgl_nota'];
 	$nama_pelanggan=$row['nama_pelanggan'];
 	$alamat=$row['alamat'];
 	if ($dalam_kota){
-		$sql5=mysqli_query($con, "SELECT nama_karyawan FROM nota_sudah_cek INNER JOIN karyawan ON (nota_sudah_cek.id_karyawan=karyawan.id_karyawan) WHERE id_jual=$id");
-		$row5=mysqli_fetch_array($sql5);
+		$sql5=mysql_query("SELECT nama_karyawan FROM nota_sudah_cek INNER JOIN karyawan ON (nota_sudah_cek.id_karyawan=karyawan.id_karyawan) WHERE id_jual=$id");
+		$row5=mysql_fetch_array($sql5);
 		$nama_pemeriksa=$row5['nama_karyawan'];
 	} else {
-		$sql5=mysqli_query($con, "SELECT nama_karyawan FROM canvass_siap_kirim INNER JOIN karyawan ON (canvass_siap_kirim.id_karyawan = karyawan.id_karyawan) WHERE id_jual=$id");
-		$row5=mysqli_fetch_array($sql5);
+		$sql5=mysql_query("SELECT nama_karyawan FROM canvass_siap_kirim INNER JOIN karyawan ON (canvass_siap_kirim.id_karyawan = karyawan.id_karyawan) WHERE id_jual=$id");
+		$row5=mysql_fetch_array($sql5);
 		$nama_pemeriksa=$row5['nama_karyawan'];
 	}
 ?>
@@ -117,7 +117,7 @@ $thn=date("Y", strtotime($tgl_nota));
 							</thead>
 							<tbody>
 <?php
-	$sql=mysqli_query($con, "SELECT *
+	$sql=mysql_query("SELECT *
 FROM
     jual
     INNER JOIN jual_detail 
@@ -132,23 +132,23 @@ FROM
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE jual.id_jual=$id");
 $total=0;$diskon=0;
-	while ($row=mysqli_fetch_array($sql)){
+	while ($row=mysql_fetch_array($sql)){
 		if ($row['status_konfirm']>=0 && $row['status_konfirm']<=4){
-		$sql2=mysqli_query($con, "SELECT cek, SUM(qty_ambil) as qty_ambil
+		$sql2=mysql_query("SELECT cek, SUM(qty_ambil) as qty_ambil
 FROM
     nota_siap_kirim
     INNER JOIN nota_siap_kirim_detail 
         ON (nota_siap_kirim.id_nota_siap_kirim = nota_siap_kirim_detail.id_nota_siap_kirim)
 WHERE id_jual_detail=" .$row['id_jual_detail']. "");
 		} else {
-		$sql2=mysqli_query($con, "SELECT cek, SUM(qty_ambil) as qty_ambil
+		$sql2=mysql_query("SELECT cek, SUM(qty_ambil) as qty_ambil
 FROM
     canvass_siap_kirim
     INNER JOIN canvass_siap_kirim_detail 
         ON (canvass_siap_kirim.id_canvass_siap_kirim = canvass_siap_kirim_detail.id_canvass_siap_kirim)
 WHERE id_jual_detail=" .$row['id_jual_detail']. "");
 		}
-		$row2=mysqli_fetch_array($sql2);
+		$row2=mysql_fetch_array($sql2);
 		if ($row2['qty_ambil'] <> ''){
 			$diskon1=$row['harga_jual']*$row['diskon_persen']/100;
 			$tot_set_disk_1=$row['qty']*($row['harga_jual']-$diskon1);
@@ -183,13 +183,13 @@ WHERE id_jual_detail=" .$row['id_jual_detail']. "");
 			<td colspan="5" align="right"><b>Diskon Nota Jual (Rp)</b></td>
 			<td align="right"><b>' .format_uang($diskon). '</b></td>
 		 </tr>';
-	$sql=mysqli_query($con, "SELECT nama_karyawan
+	$sql=mysql_query("SELECT nama_karyawan
 FROM
     pengiriman
     INNER JOIN karyawan 
         ON (pengiriman.id_karyawan = karyawan.id_karyawan)
 	WHERE id_jual=$id");
-	$row=mysqli_fetch_array($sql);
+	$row=mysql_fetch_array($sql);
 	$pengirim=$row['nama_karyawan'];
 ?>
 							</tbody>

@@ -1,5 +1,5 @@
 <?php
-$sql=mysqli_query($con, "DELETE FROM canvass_keluar_barang WHERE qty=0 AND qty_cek=0 AND stok=0");
+$sql=mysql_query("DELETE FROM canvass_keluar_barang WHERE qty=0 AND qty_cek=0 AND stok=0");
 ?>
 <div class="right_col" role="main">
 	<div class="">
@@ -31,7 +31,7 @@ $sql=mysqli_query($con, "DELETE FROM canvass_keluar_barang WHERE qty=0 AND qty_c
 				</thead>
 				<tbody>
 				<?php
-$sql=mysqli_query($con, "SELECT canvass_keluar.id_canvass_keluar,tanggal_canvass,nama_kendaraan,plat,canvass_keluar.status
+$sql=mysql_query("SELECT canvass_keluar.id_canvass_keluar,tanggal_canvass,nama_kendaraan,plat,canvass_keluar.status
 FROM
     canvass_keluar
     INNER JOIN kendaraan 
@@ -44,7 +44,7 @@ WHERE canvass_keluar.status>0 AND canvass_keluar.status<=4
 GROUP BY canvass_keluar.id_canvass_keluar
 HAVING SUM(selisih)<>0 OR canvass_keluar.status<4
 ORDER BY canvass_keluar.id_canvass_keluar DESC");
-while($row=mysqli_fetch_array($sql)){
+while($row=mysql_fetch_array($sql)){
 	echo '			<tr>
 						<td><a href="?page=canvass&mode=stok_barang&id=' .$row['id_canvass_keluar']. '"><div style="min-width:70px">' .date("d-m-Y",strtotime($row['tanggal_canvass'])). '</div></a></td>
 						<td><a href="?page=canvass&mode=stok_barang&id=' .$row['id_canvass_keluar']. '"><div style="min-width:70px">' .$row['nama_kendaraan']. '</div></a></td>

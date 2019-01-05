@@ -4,7 +4,7 @@ if (isset($_GET['act'])){
 	if ($_GET['act']=='1') $act=1;
 	if ($_GET['act']=='2') $act=2;
 	
-	$sql=mysqli_query($con, "UPDATE penagihan_retur_detail SET status_retur=$act WHERE id_penagihan_retur_detail=$id");
+	$sql=mysql_query("UPDATE penagihan_retur_detail SET status_retur=$act WHERE id_penagihan_retur_detail=$id");
 	if ($sql){
 		$pesan="INPUT BERHASIL";
 	} else {
@@ -42,13 +42,13 @@ if (isset($_GET['act'])){
 				</thead>
 				<tbody>
 				<?php
-$sql=mysqli_query($con, "SELECT *
+$sql=mysql_query("SELECT *
 FROM
     penagihan_retur_detail
     INNER JOIN penagihan_detail 
         ON (penagihan_retur_detail.id_penagihan_detail = penagihan_detail.id_penagihan_detail)
 WHERE status_retur=0");
-while($row=mysqli_fetch_array($sql)){
+while($row=mysql_fetch_array($sql)){
 	echo '			<tr>
 						<td>' .date("d-m-Y",strtotime($row['tgl_bayar'])). '</td>
 						<td>' .$row['no_retur_jual']. '</td>

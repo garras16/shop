@@ -8,7 +8,7 @@ if (isset($_GET['id'])){
 } else {
 	die();
 }
-$sql=mysqli_query($con, "SELECT invoice,pengiriman.id_jual,pengiriman.status,tanggal_kirim,pengiriman.jenis,pengiriman.id_karyawan,pengiriman.id_ekspedisi,berat,volume,tarif
+$sql=mysql_query("SELECT invoice,pengiriman.id_jual,pengiriman.status,tanggal_kirim,pengiriman.jenis,pengiriman.id_karyawan,pengiriman.id_ekspedisi,berat,volume,tarif
 FROM
     pengiriman
     INNER JOIN karyawan 
@@ -18,7 +18,7 @@ FROM
     INNER JOIN jual 
         ON (pengiriman.id_jual = jual.id_jual)
 WHERE id_pengiriman=$id");
-$row=mysqli_fetch_array($sql);
+$row=mysql_fetch_array($sql);
 ($row['id_ekspedisi']=='' ? $locked='disabled' : $locked='');
 ($row['jenis']=='LUAR KOTA' ? $lock='disabled' : $lock='');
 if ($row['id_ekspedisi']!=''){
@@ -43,8 +43,8 @@ if ($row['id_ekspedisi']!=''){
 	<select class="form-control select2" id="select_karyawan" name="id_karyawan" required>
 		<option value="" disabled selected>Pilih Karyawan</option>
 <?php
-	$sql2=mysqli_query($con, "SELECT * FROM karyawan WHERE status=1");
-	while ($row2=mysqli_fetch_array($sql2)){
+	$sql2=mysql_query("SELECT * FROM karyawan WHERE status=1");
+	while ($row2=mysql_fetch_array($sql2)){
 		echo '<option value="' .$row2['id_karyawan']. '">' .$row2['nama_karyawan']. '</option>';
 	}
 ?>
@@ -64,8 +64,8 @@ if ($row['id_ekspedisi']!=''){
 	<select class="form-control select2" id="select_ekspedisi" name="id_ekspedisi" <?php echo $lock ?> >
 		<option value="" selected>Kirim Sendiri</option>
 <?php
-	$sql2=mysqli_query($con, "SELECT * FROM ekspedisi WHERE status=1");
-	while ($row2=mysqli_fetch_array($sql2)){
+	$sql2=mysql_query("SELECT * FROM ekspedisi WHERE status=1");
+	while ($row2=mysql_fetch_array($sql2)){
 		echo '<option value="' .$row2['id_ekspedisi']. '">' .$row2['nama_ekspedisi']. '</option>';
 	}
 ?>

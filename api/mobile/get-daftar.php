@@ -12,9 +12,9 @@ FROM beli
 WHERE status_konfirm=0";
 }
 
-$sql=mysqli_query($con, $q);
+$sql=mysql_query($q);
 $response["datas"] = array();
-while ($row=mysqli_fetch_array($sql)){
+while ($row=mysql_fetch_array($sql)){
 	$data=array();
 	$data["id_beli"]=$row["id_beli"];
 	$data["no_nota_beli"]=$row["no_nota_beli"];
