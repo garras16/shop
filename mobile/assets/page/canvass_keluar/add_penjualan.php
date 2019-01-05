@@ -31,7 +31,7 @@ if (isset($tambah_penjualan_post)){
 	}
 	$invoice="NJ-" .date("ymd"). '-' .sprintf("%03d",$CID+1);
 	$sql = mysql_query("INSERT INTO data_nota_jual VALUES(null,'$tanggal','$invoice')");
-	$sql = mysql_query("INSERT INTO jual VALUES(null,'$tanggal','$invoice',$id_pelanggan,$id_karyawan,'$jenis_bayar',$tenor,5,0,null,$diskon_all_persen)");
+	$sql = mysql_query("INSERT INTO jual VALUES(null,'$tanggal','$invoice',$id_pelanggan,$id_karyawan,'$jenis_bayar',$tenor,5,0,null,$diskon_all_persen,$ppn_all_persen)");
 	$id_jual=mysql_insert_id();
 	$id_canvass_keluar[] = implode(',',$id_canvass_keluar);
 	
@@ -68,7 +68,7 @@ if (isset($tambah_penjualan_post)){
 		}
 	}
 	$sql=mysql_query("UPDATE canvass_keluar SET status='2' WHERE id_canvass_keluar=$id_canvass_keluar[0]");
-	_direct("?page=canvass_keluar&mode=menu_penjualan");
+//	_direct("?page=canvass_keluar&mode=menu_penjualan");
 }
 $id_karyawan=$_SESSION['id_karyawan'];
 $sql=mysql_query("SELECT plafon FROM pelanggan WHERE id_pelanggan=" .$_SESSION['id_pelanggan']. "");
@@ -117,6 +117,11 @@ $plafon=$row['plafon'];
 								<div class="input-group">
 									<span class="input-group-addon">Diskon Nota Jual (%)</span>
 									<input type="number" max="100" min="0" class="form-control" id="diskon" name="diskon_all_persen" value="0" required>
+									<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
+								</div>
+								<div class="input-group">
+									<span class="input-group-addon">PPn (%)</span>
+									<input type="number" max="100" min="0" class="form-control" id="ppn" name="ppn_all_persen" value="0" required>
 									<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 								</div>
 								<div class="text-right">
@@ -231,7 +236,7 @@ if ($('#select_jenis').val()=='Kredit'){
 	var min_order = cari_data_add.data('min');
 	var harga = $('#harga_jual').val();
 	var qty = $('#qty').val();
-	var diskon_persen = Number($('#diskon_persen').val());
+	var diskon_persen = Number($('#diskon_persen_1').val());
 	var diskon_persen_2 = Number($('#diskon_persen_2').val());
 	var diskon_persen_3 = Number($('#diskon_persen_3').val());
 	var tot_seb_disk = (qty*harga);
