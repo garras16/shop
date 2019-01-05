@@ -428,7 +428,7 @@ WHERE
 				<form action="" method="post">
 					<input type="hidden" name="edit_diskon_nota_beli" value="true">
 					<div class="input-group">
-						<span class="input-group-addon" style="font-size: 12px;"><i class="fa fa-cut fa-fw"></i><br><small>Disk. Nota</small></span>
+						<span class="input-group-addon" style="font-size: 12px;"><i class="fa fa-cut fa-fw"></i><br><small>Disc. Nota</small></span>
 						<input type="number" id="diskon_nota_persen" min="0" max="100	" style="padding: 20px 15px;" name="diskon_all_persen" class="form-control" placeholder="Diskon Nota Beli (%)" title="Diskon Nota Beli (%)" value="<?php echo $diskon_nota*100 ?>" min="0" max="100">
 						<span class="input-group-addon">%</span>
 					</div>
