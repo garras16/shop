@@ -12,7 +12,7 @@ FROM beli
 WHERE status_konfirm=0";
 }
 
-$sql=mysqli_query($q);
+$sql=mysqli_query($con, $q);
 $response["datas"] = array();
 while ($row=mysqli_fetch_array($sql)){
 	$data=array();
