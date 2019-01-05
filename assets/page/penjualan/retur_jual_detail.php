@@ -310,7 +310,7 @@ if ($status=="1" or $locked){
 					<input type="hidden" name="tambah_retur_jual_detail_post" value="true">
 					<div class="col-md-12">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-file fa-fw"></i><br><small>Barang</small></span>
+						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-file fa-fw"></i><br><small>Barang</small></span>
 						<select id="select_barang" name="id_jual_detail" class="select2 form-control" required="true">
 							<option value="" disabled selected>-= Pilih Barang Retur =-</option>
 							<?php 

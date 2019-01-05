@@ -83,35 +83,35 @@ FROM
 				<input type="hidden" name="edit_pembelian_post" value="true">
 				<div class="form-group">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-calendar fa-fw" style="width: 45px;"></i><br><small>Tgl.</small></span>
+						<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i><br><small>Tgl. Nota</small></span>
 						<input class="form-control" id="tanggal" name="tanggal" type="date" style="padding: 20px 15px;" value="<?php echo $row['tanggal']; ?>" readonly>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>									
 					<div class="input-group">
-						<span class="input-group-addon" style="font-size: 13px;"><i class="fa fa-file fa-fw"></i><br><small>No. Nota</small></span>
+						<span class="input-group-addon" style="font-size: 13px;"><i class="fa fa-file fa-fw" style="width: 49px;"></i><br><small>No. Nota</small></span>
 						<input id="no_nota" name="no_nota" style="padding: 20px 15px;" class="form-control" placeholder="No Nota Beli" value="<?php echo $row['no_nota_beli']; ?>" maxlength="15" readonly>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-building fa-fw" style="width: 45px;"></i><br><small>Supplier</small></span>
+						<span class="input-group-addon"><i class="fa fa-building fa-fw" style="width: 49px;"></i><br><small>Supplier</small></span>
 						<input id="nama_supplier" name="nama_supplier" class="form-control" style="padding: 20px 15px;" placeholder="Nama Supplier" value="<?php echo $row['nama_supplier']; ?>" readonly>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="clearfix"></div><br/>
 					<div class="input-group">
-						<span class="input-group-addon" style="font-size: 12px;"><i class="fa fa-truck fa-fw" style="width: 45px;"></i><br><small>Ekspedisi</small></span>
+						<span class="input-group-addon" style="font-size: 12px;"><i class="fa fa-truck fa-fw" style="width: 49px;"></i><br><small>Ekspedisi</small></span>
 						<input id="nama_ekspedisi" name="nama_ekspedisi" style="padding: 20px 15px;" class="form-control" placeholder="Nama Ekspedisi" value="<?php echo $row['nama_ekspedisi']; ?>" readonly>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-balance-scale fa-fw" style="width: 45px;"></i><br><small>Berat</small></span>
+						<span class="input-group-addon"><i class="fa fa-balance-scale fa-fw" style="width: 49px;"></i><br><small>Berat</small></span>
 						<input class="form-control" style="padding: 20px 15px;" placeholder="Berat Ekspedisi (gr)" value="<?php echo format_angka($row['berat_ekspedisi']); ?> gr" readonly>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-balance-scale fa-fw" style="width: 45px;"></i><br><small>Vol.</small></span>
+						<span class="input-group-addon"><i class="fa fa-balance-scale fa-fw" style="width: 49px;"></i><br><small>Vol.</small></span>
 						<input class="form-control" style="padding: 20px 15px;" placeholder="Volume Ekspedisi (cm3)" value="<?php echo format_angka($row['volume_ekspedisi']); ?> cm3" readonly>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-money fa-fw" style="width: 45px;"></i><br><small>Tarif</small></span>
+						<span class="input-group-addon"><i class="fa fa-money fa-fw" style="width: 49px;"></i><br><small>Tarif</small></span>
 						<input class="form-control" style="padding: 20px 15px;" placeholder="Tarif Ekspedisi (Rp)" value="Rp <?php echo format_uang($row['tarif_ekspedisi']); ?>" readonly>
 					</div>
 				</div>
@@ -349,7 +349,7 @@ WHERE
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><div style="min-width:70px;text-align:left">Diskon 1 (%)</div></span>
-						<input class="form-control" id="diskon_persen_2_1" min="0" max="100" name="diskon_persen_1" type="text" placeholder="Diskon 1" value="0" required>
+						<input class="form-control" id="diskon_persen_2_1" min="0" name="diskon_persen_1" type="text" placeholder="Diskon 1" value="0" required>
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><div style="min-width:70px;text-align:left">Diskon 2 (%)</div></span>
@@ -477,9 +477,9 @@ $(document).ready(function(){
 	$('#qty_2').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#harga_2').inputmask('currency', {prefix: "Rp ", allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#diskon_persen').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-	$('#diskon_persen_2_1').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-	$('#diskon_persen_2_2').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-	$('#diskon_persen_2_3').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+	$('#diskon_persen_2_1').inputmask('currency', {prefix :"", allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+	$('#diskon_persen_2_2').inputmask('currency', {prefix :"",allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+	$('#diskon_persen_2_3').inputmask('currency', {prefix :"",allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#diskon_nota_rp').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$(".select2").select2({
 		placeholderOption: "first",

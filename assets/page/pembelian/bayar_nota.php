@@ -160,7 +160,7 @@ if ($row['status']=='1'){
 					<input type="hidden" id="jumlah_bayar" name="jumlah_bayar" value="">
 					<div class="col-md-12">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-file fa-fw" style="width: 58px;"></i><br><small>Nota Beli</small></span>
+						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-file fa-fw" style="width: 58px;"></i><br><small>Nota Beli</small></span>
 						<select id="select_nota" name="no_nota_beli" class="select2 form-control" required="true">
 							<option value="" disabled selected>-= No Nota Beli | Nama Supplier | Jumlah Nota (Rp) =-</option>
 							<?php 
