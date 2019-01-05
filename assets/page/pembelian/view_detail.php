@@ -262,8 +262,6 @@ $total_datang=$total_datang-($total_datang*($diskon_all_persen/100));
 				</tbody>
 			</table>
 			<div class="col-md-12">
-				<div class="col-md-6">
-				</div>
 				
 				<div class="col-md-6 text-right">
 					<div class="input-group">

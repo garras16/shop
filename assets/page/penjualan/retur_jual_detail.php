@@ -279,8 +279,8 @@ if ($status=="1" or $locked){
 			<div class="col-md-12">
 				<div class="col-md-4 text-right">
 					<div class="input-group">
-						<span class="input-group-addon" style="width:160px;text-align:left;color:#000">Total Jumlah Retur (Rp)</span>
-						<input class="form-control text-right" id="total_retur" name="total_retur" value="<?php echo format_uang($total_retur) ?>" readonly>
+						<span class="input-group-addon" style="width:160px;text-align:left;color:#000;border: none; outline: none;">Total Jumlah Retur (Rp)</span>
+						<input class="form-control text-right" id="total_retur" style="border: none; outline: none;" name="total_retur" value="<?php echo format_uang($total_retur) ?>" readonly>
 					</div>
 				</div>
 			</div>
