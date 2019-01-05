@@ -428,7 +428,7 @@ WHERE
 				<form action="" method="post">
 					<input type="hidden" name="edit_diskon_nota_beli" value="true">
 					<div class="input-group">
-						<span class="input-group-addon" style="font-size: 12px;"><i class="fa fa-cut fa-fw"></i><br><small>Disk. Nota</small></span>
+						<span class="input-group-addon" style="font-size: 12px;"><i class="fa fa-cut fa-fw"></i><br><small>Disc. Nota</small></span>
 						<input type="number" id="diskon_nota_persen" min="0" max="100	" style="padding: 20px 15px;" name="diskon_all_persen" class="form-control" placeholder="Diskon Nota Beli (%)" title="Diskon Nota Beli (%)" value="<?php echo $diskon_nota*100 ?>" min="0" max="100">
 						<span class="input-group-addon">%</span>
 					</div>
@@ -477,9 +477,9 @@ $(document).ready(function(){
 	$('#qty_2').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#harga_2').inputmask('currency', {prefix: "Rp ", allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#diskon_persen').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-	$('#diskon_persen_2_1').inputmask('currency', {prefix :"", allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-	$('#diskon_persen_2_2').inputmask('currency', {prefix :"",allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-	$('#diskon_persen_2_3').inputmask('currency', {prefix :"",allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+	$('#diskon_persen_2_1').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+	$('#diskon_persen_2_2').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+	$('#diskon_persen_2_3').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#diskon_nota_rp').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$(".select2").select2({
 		placeholderOption: "first",
