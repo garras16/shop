@@ -132,7 +132,7 @@ if ($row['status_bayar']=='1'){
 			</div>
 			<div class="col-md-6">
 				<div class="input-group">
-					<span class="input-group-addon"><i class="fa fa-calendar fa-fw" style="width: 68px;"></i><br><small>Tgl.</small></span>
+					<span class="input-group-addon"><i class="fa fa-calendar fa-fw" style="width: 68px;"></i><br><small>Tgl. Retur</small></span>
 					<input class="form-control" id="tgl_retur" name="tgl_retur" style="padding: 20px 15px;" placeholder="Tanggal Retur" title="Tanggal Retur" value="<?php echo date("d-m-Y", strtotime($row['tgl_retur'])) ?>" disabled="disabled" required>
 				</div>
 			</div>
