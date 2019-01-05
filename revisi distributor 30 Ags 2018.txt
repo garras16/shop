@@ -279,7 +279,7 @@ retur jual										OK
 - konfirm admin, tambah nama pelanggan, no nota jual, status bayar,
 jumlah jual, jumlah retur jual								OK	
 
-- penjualan, view detail kasih keterangan font kecil utk semua menu (yg kira2 user
+- penjualan, view detail kasih keterangan font kecil utk semua menu (yg kira2 user	OK	-
 tak paham)											
 - debt collector, tagihan, jika bayar retur tidak dihitung di tagihan_2			OK	-
 - debt collector, tagihan_2 (pembayaran tagihan), portrait				OK	-
@@ -291,10 +291,10 @@ harga modal" (beri icon kecil, saat klik muncul notifikasi)				OK
 
 - konfirmasi admin dipindah ke penjualan (konfirmasi retur jual)			OK	
 - semua histori jd riwayat								OK	
-- input diskon (%) 6 digit xxx.xx%							
-- ubah data diskon nota beli, jumlah diskon (rp) nya masih error
+- input diskon (%) 6 digit xxx.xx%							*	
+- ubah data diskon nota beli, jumlah diskon (rp) nya masih error			*	
 - hilangkan border/background di info tambahan di bawah				 	OK	-
-- jika angka minus, beri warna merah
+- jika angka minus, beri warna merah							*	
 - javascript add_penjualan, format_uang masih error utk koma				OK	-
-- penjualan ada ppn (boleh kosong / 0)							
+- penjualan ada ppn (boleh kosong / 0)							*	
 - penjualan, tampilan info bawah, rata kiri						OK	-
