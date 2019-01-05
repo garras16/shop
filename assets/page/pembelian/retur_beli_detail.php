@@ -323,13 +323,13 @@ WHERE id_beli=$id_beli");
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-shopping-cart fa-fw" style="width: 33px;"></i><br><small>Qty.</small></span>
-						<input id="qty_retur" name="qty_retur" type="tel" class="form-control" placeholder="Qty Retur" min="0" required>
+						<input id="qty_retur" style="padding: 20px 15px;" name="qty_retur" type="tel" class="form-control" placeholder="Qty Retur" min="0" required>
 						<span class="input-group-addon" id="det_satuan"></span>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-dollar fa-fw" style="width: 33px;"></i><br><small>Harga</small></span>
-						<input id="harga_retur" name="harga_retur" type="tel" class="form-control" placeholder="Harga Retur" required>
+						<input id="harga_retur" name="harga_retur" min="0" style="padding: 20px 15px;" type="tel" class="form-control" placeholder="Harga Retur" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					</div>
@@ -436,9 +436,9 @@ function valid2(){
 }
 $(document).ready(function(){
 	$('#qty_retur').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-	$('#harga_retur').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+	$('#harga_retur').inputmask('currency', {prefix: "Rp ", allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#qty_retur_2').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-	$('#harga_retur_2').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+	$('#harga_retur_2').inputmask('currency', {prefix: "Rp ", allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#select_barang').on('change', function(){
 		var stok = $(this).find(":selected").data('stok');
 		var jumlah = $(this).find(":selected").data('jumlah');

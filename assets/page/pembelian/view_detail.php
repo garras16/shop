@@ -338,7 +338,7 @@ WHERE
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-shopping-cart fa-fw" style="width: 38px;"></i><br><small>Qty.</small></span>
-						<input id="qty_2" name="qty" type="text" style="padding: 20px 15px;" class="form-control" placeholder="Qty Beli" required>
+						<input id="qty_2" name="qty" min="0" type="text" style="padding: 20px 15px;" class="form-control" placeholder="Qty Beli" required>
 						<span class="input-group-addon" id="satuan"></span>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
@@ -349,15 +349,15 @@ WHERE
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><div style="min-width:70px;text-align:left">Diskon 1 (%)</div></span>
-						<input class="form-control" id="diskon_persen_2_1" name="diskon_persen_1" type="text" placeholder="Diskon 1" value="0" required>
+						<input class="form-control" id="diskon_persen_2_1" min="0" max="100" name="diskon_persen_1" type="text" placeholder="Diskon 1" value="0" required>
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><div style="min-width:70px;text-align:left">Diskon 2 (%)</div></span>
-						<input class="form-control" id="diskon_persen_2_2" name="diskon_persen_2" type="text" placeholder="Diskon 2" value="0" required>
+						<input class="form-control" id="diskon_persen_2_2" min="0" max="100" name="diskon_persen_2" type="text" placeholder="Diskon 2" value="0" required>
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><div style="min-width:70px;text-align:left">Diskon 3 (%)</div></span>
-						<input class="form-control" id="diskon_persen_2_3" name="diskon_persen_3" type="text" placeholder="Diskon 3" value="0" required>
+						<input class="form-control" id="diskon_persen_2_3" min="0" max="100" name="diskon_persen_3" type="text" placeholder="Diskon 3" value="0" required>
 					</div>
 					</div>
 					<div class="modal-footer">
@@ -473,9 +473,9 @@ $(document).ready(function(){
 	$('#qty').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#berat').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#volume').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-	$('#harga').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+	$('#harga').inputmask('currency', {prefix: "Rp ", allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#qty_2').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-	$('#harga_2').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+	$('#harga_2').inputmask('currency', {prefix: "Rp ", allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#diskon_persen').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#diskon_persen_2_1').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#diskon_persen_2_2').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});

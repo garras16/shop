@@ -222,8 +222,8 @@ $diskon_all_rp=($diskon_nota/100)*$total_jual;
 				<form action="" method="post">
 					<input type="hidden" name="edit_diskon_nota_jual" value="true">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-cut fa-fw"></i></span>
-						<input type="number" id="diskon_nota_persen" name="diskon_all_persen" class="form-control" placeholder="Diskon Nota Jual (%)" title="Diskon Nota Jual (%)" value="<?php echo $diskon_nota*100 ?>" min="0" max="100">
+						<span class="input-group-addon"><i class="fa fa-cut fa-fw" style="width: 40px;"></i><br><small>Diskon</small></span>
+						<input type="text" id="diskon_nota_persen" max="100" min="0" name="diskon_all_persen" style="padding: 20px 15px;" class="form-control" placeholder="Diskon Nota Jual (%)" title="Diskon Nota Jual (%)" value="<?php echo $diskon_nota*100 ?>" min="0" max="100">
 						<span class="input-group-addon">%</span>
 					</div>
 					<div class="input-group">
@@ -244,6 +244,7 @@ $(document).ready(function(){
 	$('#total_jual').inputmask('decimal', {allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, removeMaskOnSubmit: true});
 	$('#diskon_nota').inputmask('decimal', {allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, removeMaskOnSubmit: true});
 	$('#diskon_nota_rp').inputmask('decimal', {allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, removeMaskOnSubmit: true});
+	$('#diskon_nota_persen').inputmask('currency', {prefix: "", allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, removeMaskOnSubmit: true});
 	$('#total_jual').val(<?php echo $total_jual ?>);
 	$('#diskon_nota').val(<?php echo $diskon_nota*$total_jual ?>);
 	$('#myModal').on('show.bs.modal', function(e){

@@ -168,7 +168,7 @@ if (mysqli_num_rows($sql)>0 || mysqli_num_rows($sql2)>0) {
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-dollar fa-fw" style="width: 50px;"></i><br><small>Jml.</small></span>
-						<input class="form-control koma" style="padding: 20px 15px;" id="jumlah" min="1" type="text" name="jumlah" placeholder="Jumlah (Rp)" required>
+						<input class="form-control" style="padding: 20px 15px;" id="jumlah" min="1" type="text" name="jumlah" placeholder="Jumlah (Rp)" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
@@ -197,7 +197,7 @@ function reset(){
 	window.location=url;
 }
 $(document).ready(function(){
-	$('#jumlah').inputmask('decimal', {autoGroup: true, allowMinus: false, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+	$('#jumlah').inputmask('currency', {prefix: "Rp ", autoGroup: true, allowMinus: false, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#select_jenis').on('change', function(){
 		var jenis = $(this).val();
 		$('#get_komponen').load('assets/page/keuangan/get-komponen.php?jenis=' + jenis,function(){
