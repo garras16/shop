@@ -10,7 +10,7 @@ $total=$_POST['total'];
 $keterangan=$_POST['keterangan'];
 $tgl_nota=date("Y/m/d");
 $sql=mysqli_query($con, "INSERT INTO jual (tgl_nota,invoice, customer, sales, total, keterangan) VALUES('$tgl_nota','$invoice','$customer','$sales','$total','$keterangan')");
-$id_jual=mysqli_insert_id();
+$id_jual=mysqli_insert_id($con);
 
 $sql=mysqli_query($con, "SELECT * FROM keranjang WHERE id_session='$id_session'");
 while ($row=mysqli_fetch_array($sql)){
