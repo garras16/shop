@@ -396,15 +396,15 @@ WHERE
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><div style="min-width:18px;text-align:left">Diskon 1 (%)</div></span>
-						<input class="form-control" min="0" max="100" id="diskon_persen_1_1" name="diskon_persen_1" type="text" placeholder="Diskon 1" value="0" required>
+						<input class="form-control" min="0" onchange="handleChange(this)" maxlength="6" max="100" id="diskon_persen_1_1" name="diskon_persen_1" type="text" placeholder="Diskon 1" value="0" required>
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><div style="min-width:18px;text-align:left">Diskon 2 (%)</div></span>
-						<input class="form-control" min="0" max="100" id="diskon_persen_1_2" name="diskon_persen_2" type="text" placeholder="Diskon 2" value="0" required>
+						<input class="form-control" min="0" max="100" id="diskon_persen_1_2" onchange="handleChange(this)" maxlength="6" name="diskon_persen_2" type="text" placeholder="Diskon 2" value="0" required>
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><div style="min-width:18px;text-align:left">Diskon 3 (%)</div></span>
-						<input class="form-control" min="0" max="100" id="diskon_persen_1_3" name="diskon_persen_3" type="text" placeholder="Diskon 3" value="0" required>
+						<input class="form-control" min="0" max="100" id="diskon_persen_1_3" onchange="handleChange(this)" maxlength="6" name="diskon_persen_3" type="text" placeholder="Diskon 3" value="0" required>
 					</div>
 					</div>
 					<div class="modal-footer">
@@ -429,7 +429,7 @@ WHERE
 					<input type="hidden" name="edit_diskon_nota_beli" value="true">
 					<div class="input-group">
 						<span class="input-group-addon" style="font-size: 12px;"><i class="fa fa-cut fa-fw"></i><br><small>Disc. Nota</small></span>
-						<input type="number" id="diskon_nota_persen" min="0" max="100	" style="padding: 20px 15px;" name="diskon_all_persen" class="form-control" placeholder="Diskon Nota Beli (%)" title="Diskon Nota Beli (%)" value="<?php echo $diskon_nota*100 ?>" min="0" max="100">
+						<input type="text" id="diskon_nota_persen" min="0" max="100	" style="padding: 20px 15px;" name="diskon_all_persen" class="form-control" onchange="handleChange(this)" maxlength="6" placeholder="Diskon Nota Beli (%)" title="Diskon Nota Beli (%)" value="<?php echo $diskon_nota*100 ?>" min="0" max="100">
 						<span class="input-group-addon">%</span>
 					</div>
 					<div class="input-group">
@@ -468,6 +468,10 @@ function cek_valid(){
 		return true;
 	}
 }
+function handleChange(input) {
+    if (input.value < 0) input.value = 0;
+    if (input.value > 100) input.value = 100;
+ }
 $(document).ready(function(){
 	$('#ekspedisi').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#qty').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
@@ -514,5 +518,8 @@ $(document).ready(function(){
 		rp=Number($('#diskon_nota_persen').val()/100*<?php echo $jumlah ?>);
 		$('#diskon_nota_rp').val(rp);
 	});
-});
+	$('#diskon_nota_persen').numeric({decimalPlaces: 2, negative:false});
+	$('#diskon_persen_1_1').numeric({decimalPlaces: 2, negative:false});
+	$('#diskon_persen_1_2').numeric({decimalPlaces: 2, negative:false});
+	$('#diskon_persen_1_3').numeric({decimalPlaces: 2, negative:false});});
 </script>
