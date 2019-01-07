@@ -1,18 +1,18 @@
 <?php
 if (isset($checkin_post)){
-	$sql=mysql_query("SELECT * FROM checkin WHERE tanggal='$tanggal' AND id_pelanggan='$id_pelanggan' AND id_karyawan=$id_karyawan");
-	$c=mysql_num_rows($sql);
-	$row=mysql_fetch_array($sql);
+	$sql=mysqli_query($con, "SELECT * FROM checkin WHERE tanggal='$tanggal' AND id_pelanggan='$id_pelanggan' AND id_karyawan=$id_karyawan");
+	$c=mysqli_num_rows($sql);
+	$row=mysqli_fetch_array($sql);
 	$id_checkin=$row['id_checkin'];
 	if ($c==0){
-		$sql=mysql_query("INSERT INTO checkin VALUES(null,'$tanggal','$jam','$barcode',$id_pelanggan,$id_karyawan,'$lokasi_gps','$lokasi_kota',$akurasi,'$mock',$distance)");
+		$sql=mysqli_query($con, "INSERT INTO checkin VALUES(null,'$tanggal','$jam','$barcode',$id_pelanggan,$id_karyawan,'$lokasi_gps','$lokasi_kota',$akurasi,'$mock',$distance)");
 		if ($sql){
 			_buat_pesan("Input Berhasil","green");
 		} else {
 			_buat_pesan("Input Gagal","red");
 		}
 	} else {
-		$sql=mysql_query("UPDATE checkin SET gps='$lokasi_gps',kota='$lokasi_kota',akurasi=$akurasi,mock='$mock',distance=$distance WHERE id_checkin=$id_checkin");
+		$sql=mysqli_query($con, "UPDATE checkin SET gps='$lokasi_gps',kota='$lokasi_kota',akurasi=$akurasi,mock='$mock',distance=$distance WHERE id_checkin=$id_checkin");
 		if ($sql){
 			_buat_pesan("Input Berhasil","green");
 		} else {

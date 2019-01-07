@@ -10,7 +10,7 @@ $id=$_GET['id'];
 	<select class="select2 form-control" id="select_barang" name="id_barang" required>
 		<option value="" disabled selected>Nama Barang | Stok | Harga Jual</option>
 		<?php
-		$sql = mysql_query("SELECT *
+		$sql = mysqli_query($con, "SELECT *
     , SUM(barang_masuk_rak.stok) AS total_stok
 FROM
     barang_masuk_rak
@@ -28,14 +28,14 @@ FROM
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE barang_masuk_rak.stok > 0 AND barang.status=1 AND id_pelanggan=" .$_GET['id']. "
 GROUP BY barang.id_barang");
-	while ($row=mysql_fetch_array($sql)){
-		$sql2=mysql_query("SELECT SUM(qty) as qty
+	while ($row=mysqli_fetch_array($sql)){
+		$sql2=mysqli_query($con, "SELECT SUM(qty) as qty
 FROM
     jual
     INNER JOIN jual_detail 
         ON (jual.id_jual = jual_detail.id_jual)
 WHERE status_konfirm=0 AND id_harga_jual=" .$row['id_harga_jual']. "");
-		$r=mysql_fetch_array($sql2);
+		$r=mysqli_fetch_array($sql2);
 		$total_stok=$row['total_stok']-$r['qty'];
 		
 		if ($total_stok>=$row['stok_minimal']) echo '<option data-harga="'.$row['harga_jual'].'" data-nama="'.$row['nama_barang'].'" data-stok="'.$total_stok.'" data-min="'.$row['min_order'].'" data-satuan="' .$row['nama_satuan']. '" value="' .$row['id_harga_jual']. '">' .$row['nama_barang']. ' | Stok : ' .$total_stok. ' ' .$row['nama_satuan']. ' | Rp.' .format_uang($row['harga_jual']). '</option>';

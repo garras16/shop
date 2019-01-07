@@ -1,6 +1,6 @@
 <?php
 if (isset($checkin_post)){
-	$sql=mysql_query("INSERT INTO beli_detail VALUES(null,$id,$id_barang_supplier,$qty,$harga,0)");
+	$sql=mysqli_query($con, "INSERT INTO beli_detail VALUES(null,$id,$id_barang_supplier,$qty,$harga,0)");
 	if ($sql){
 		$pesan="Input Berhasil";
 		$warna="green";

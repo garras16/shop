@@ -1,7 +1,7 @@
 <?php
 $id_karyawan=$_SESSION['id_karyawan'];
 (isset($_GET['cari_barang']) ? $cari_barang=$_GET['cari_barang'] : $cari_barang="");
-$sql=mysql_query("SELECT tgl_nota,invoice,nama_pelanggan,nama_karyawan,nama_pelanggan,status_konfirm
+$sql=mysqli_query($con, "SELECT tgl_nota,invoice,nama_pelanggan,nama_karyawan,nama_pelanggan,status_konfirm
 FROM
     jual
     INNER JOIN pelanggan 
@@ -9,21 +9,21 @@ FROM
     INNER JOIN karyawan 
         ON (jual.id_karyawan = karyawan.id_karyawan)
 WHERE (status_konfirm=0 or status_konfirm=5) AND id_jual NOT IN (SELECT id_jual FROM jual_detail)");
-if (mysql_num_rows($sql)>0){
+if (mysqli_num_rows($sql)>0){
 	$judul='Ada nota jual yang dihapus secara otomatis karena kosong';
 	$pesan='Berikut nota jual yang dihapus : \r\n\r\n';
 	$tanggal=date("Y-m-d H:i:s");
-	$sql3=mysql_query("SELECT * FROM users WHERE posisi='OWNER'");
-	$row3=mysql_fetch_array($sql3);
+	$sql3=mysqli_query($con, "SELECT * FROM users WHERE posisi='OWNER'");
+	$row3=mysqli_fetch_array($sql3);
 	$id_owner=$row3['id_karyawan'];
-	while ($row=mysql_fetch_array($sql)){
+	while ($row=mysqli_fetch_array($sql)){
 		($row['status_konfirm']==0 ? $tipe='Dalam Kota' : $tipe='Canvass');
 		$pesan.='Tgl Hapus : ' .date("d-m-Y, H:i:s", strtotime($tanggal)). '\r\nTgl Nota : ' .date("d-m-Y",strtotime($row['tgl_nota'])). '\r\nNota Nota Jual : ' .$row['invoice']
 			.'\r\nTipe : ' .$tipe. '\r\nNama Sales : ' .$row['nama_karyawan']. '\r\nNama Pelanggan : ' .$row['nama_pelanggan']. '\r\n\r\n';
 	}
-	$sql2=mysql_query("INSERT INTO pesan VALUES (null,'$tanggal',$id_owner,'$judul','$pesan',0)");
+	$sql2=mysqli_query($con, "INSERT INTO pesan VALUES (null,'$tanggal',$id_owner,'$judul','$pesan',0)");
 }
-$sql=mysql_query("DELETE FROM jual WHERE (status_konfirm=0 or status_konfirm=5) AND id_jual NOT IN (SELECT id_jual FROM jual_detail)");
+$sql=mysqli_query($con, "DELETE FROM jual WHERE (status_konfirm=0 or status_konfirm=5) AND id_jual NOT IN (SELECT id_jual FROM jual_detail)");
 ?>
 <div class="right_col loading" role="main">
 	<div class="">
@@ -72,7 +72,7 @@ if (isset($_GET['dari'])){
 	if (! isset($_GET['cari_barang'])) $val="WHERE id_karyawan=$id_karyawan AND MONTH(tgl_nota)=MONTH(CURRENT_DATE()) AND YEAR(tgl_nota)=YEAR(CURRENT_DATE()) AND status_konfirm>=0 AND status_konfirm<5";
 }
 
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT
     jual.id_jual
 	, jual.tgl_nota
     , jual.invoice
@@ -95,7 +95,7 @@ FROM
 $val
 GROUP BY jual.id_jual
 ORDER BY jual.id_jual DESC");
-while($row=mysql_fetch_array($sql)){
+while($row=mysqli_fetch_array($sql)){
 if ($row['status_konfirm']==0){
 	$status="MENUNGGU";
 } else if ($row['status_konfirm']==1){
@@ -106,22 +106,22 @@ if ($row['status_konfirm']==0){
 	$status="";
 }
 if ($row['jenis_bayar']=='Lunas'){
-	//$sql2=mysql_query("SELECT SUM(qty*(harga_jual-diskon_rp)) AS total_harga
-	$sql2=mysql_query("SELECT SUM(qty*(harga_jual-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total_harga
+	//$sql2=mysqli_query($con, "SELECT SUM(qty*(harga_jual-diskon_rp)) AS total_harga
+	$sql2=mysqli_query($con, "SELECT SUM(qty*(harga_jual-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total_harga
 FROM
     jual_detail
     INNER JOIN harga_jual 
         ON (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
 WHERE id_jual=" .$row['id_jual']);
 } else {
-$sql2=mysql_query("SELECT SUM(qty*(harga_kredit-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total_harga
+$sql2=mysqli_query($con, "SELECT SUM(qty*(harga_kredit-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total_harga
 FROM
     jual_detail
     INNER JOIN harga_jual_kredit 
         ON (jual_detail.id_harga_jual = harga_jual_kredit.id_harga_jual)
 WHERE id_jual=" .$row['id_jual']);
 }
-$r=mysql_fetch_array($sql2);
+$r=mysqli_fetch_array($sql2);
 	echo '			<tr>
 						<td><a href="?page=sales&mode=edit_penjualan&id=' .$row['id_jual']. '"><div style="min-width:70px">' .date("d-m-Y",strtotime($row['tgl_nota'])). '</div></a></td>
 						<td><a href="?page=sales&mode=edit_penjualan&id=' .$row['id_jual']. '"><div style="min-width:70px">' .$row['invoice']. '</div></a></td>
