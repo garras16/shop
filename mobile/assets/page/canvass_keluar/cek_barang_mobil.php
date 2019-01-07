@@ -1,37 +1,37 @@
 <?php
 if (isset($batal_cek_barang_mobil_post)){
 	foreach ($id_canvass_keluar as $key => $value) {
-		$sql = mysql_query("UPDATE canvass_keluar SET status=9 WHERE id_canvass_keluar=$value");
+		$sql = mysqli_query($con, "UPDATE canvass_keluar SET status=9 WHERE id_canvass_keluar=$value");
 	}
 	_direct("?page=canvass_keluar&mode=cek_barang_mobil");
 } elseif (isset($batal_cek_kembali_gudang_post)){
 	foreach ($id_canvass_keluar as $key => $value) {
 		$sql = "UPDATE canvass_keluar SET status=0 WHERE id_canvass_keluar=$value";
-		$q = mysql_query($sql);
-		$sql=mysql_query("SELECT qty,id_barang_masuk_rak FROM canvass_keluar_barang WHERE id_canvass_keluar=$value");
-		while($row=mysql_fetch_array($sql)){
+		$q = mysqli_query($con, $sql);
+		$sql=mysqli_query($con, "SELECT qty,id_barang_masuk_rak FROM canvass_keluar_barang WHERE id_canvass_keluar=$value");
+		while($row=mysqli_fetch_array($sql)){
 			$qty=$row['qty'];
 			$id_barang_masuk_rak=$row['id_barang_masuk_rak'];
-			$sql2=mysql_query("SELECT stok FROM barang_masuk_rak WHERE id_barang_masuk_rak=$id_barang_masuk_rak");
-			$row2=mysql_fetch_array($sql2);
+			$sql2=mysqli_query($con, "SELECT stok FROM barang_masuk_rak WHERE id_barang_masuk_rak=$id_barang_masuk_rak");
+			$row2=mysqli_fetch_array($sql2);
 			$stok=$row2['stok']+$qty;
 			if ($stok<0){
 				tulis_log(date('d-m-Y H:i'). ' Stok minus batal cek_kembali_gudang&id=' .$id);
 				tulis_log('stok=' .$row2['stok']. ' qty=' .$qty);
 				tulis_log("UPDATE barang_masuk_rak SET stok=" .$stok. " WHERE id_barang_masuk_rak=" .$id_barang_masuk_rak);
 			}
-			$sql2=mysql_query("UPDATE barang_masuk_rak SET stok=$stok WHERE id_barang_masuk_rak=$id_barang_masuk_rak");
-			$sql2=mysql_query("UPDATE canvass_keluar_barang SET stok=null,qty_cek=null WHERE id_canvass_keluar=$value AND id_barang_masuk_rak=$id_barang_masuk_rak");
+			$sql2=mysqli_query($con, "UPDATE barang_masuk_rak SET stok=$stok WHERE id_barang_masuk_rak=$id_barang_masuk_rak");
+			$sql2=mysqli_query($con, "UPDATE canvass_keluar_barang SET stok=null,qty_cek=null WHERE id_canvass_keluar=$value AND id_barang_masuk_rak=$id_barang_masuk_rak");
 		}
 	}
 	_direct("?page=canvass_keluar&mode=cek_barang_mobil");
 } else {
-	$sql = mysql_query("DELETE FROM canvass_keluar 
+	$sql = mysqli_query($con, "DELETE FROM canvass_keluar 
 		WHERE id_canvass_keluar NOT IN (SELECT id_canvass_keluar FROM canvass_keluar_barang)
 		OR id_canvass_keluar NOT IN (SELECT id_canvass_keluar FROM canvass_keluar_karyawan)");
-	$sql = mysql_query("DELETE FROM canvass_keluar_karyawan 
+	$sql = mysqli_query($con, "DELETE FROM canvass_keluar_karyawan 
 		WHERE id_canvass_keluar NOT IN (SELECT id_canvass_keluar FROM canvass_keluar)");
-	$sql = mysql_query("DELETE FROM canvass_keluar_barang 
+	$sql = mysqli_query($con, "DELETE FROM canvass_keluar_barang 
 		WHERE id_canvass_keluar NOT IN (SELECT id_canvass_keluar FROM canvass_keluar)");
 }
 ?>
@@ -73,14 +73,14 @@ if (isset($batal_cek_barang_mobil_post)){
 									</thead>
 									<tbody>
 <?php
-	$sql=mysql_query("SELECT *
+	$sql=mysqli_query($con, "SELECT *
 FROM
     canvass_keluar
     INNER JOIN kendaraan 
         ON (canvass_keluar.id_mobil = kendaraan.id_kendaraan)
 WHERE canvass_keluar.status=9
 ORDER BY id_canvass_keluar DESC");
-	while ($row=mysql_fetch_array($sql)){
+	while ($row=mysqli_fetch_array($sql)){
 		echo '<tr>
 				<td align="center"><input style="width: 20px; height: 20px;" type="checkbox" id="id_canvass_keluar" name="id_canvass_keluar[]" value="' .$row['id_canvass_keluar']. '"></td>
 				<td align="center"><a href="?page=canvass_keluar&mode=cek_barang_mobil_2&id=' .$row['id_canvass_keluar']. '"><div style="min-width:70px">' .date("d-m-Y",strtotime($row['tanggal_canvass'])). '</div></a></td>
@@ -130,14 +130,14 @@ if (isset($_GET['cari'])){
 	$val="canvass_keluar.status=1 AND kendaraan.canvass=1";
 }
 
-	$sql=mysql_query("SELECT *
+	$sql=mysqli_query($con, "SELECT *
 FROM
     canvass_keluar
     INNER JOIN kendaraan 
         ON (canvass_keluar.id_mobil = kendaraan.id_kendaraan)
 WHERE $val
 ORDER BY id_canvass_keluar DESC");
-	while ($row=mysql_fetch_array($sql)){
+	while ($row=mysqli_fetch_array($sql)){
 		echo '<tr>
 				<td align="center"><input style="width: 20px; height: 20px;" type="checkbox" id="id_canvass_keluar" name="id_canvass_keluar[]" value="' .$row['id_canvass_keluar']. '"></td>
 				<td align="center"><a href="?page=canvass_keluar&mode=cek_barang_mobil_3&id=' .$row['id_canvass_keluar']. '"><div style="min-width:70px">' .date("d-m-Y",strtotime($row['tanggal_canvass'])). '</div></a></td>

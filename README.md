@@ -1,2 +1,3 @@
 # update mysqli
-folder mobile belum
+folder mobile sampai canvass
+Sisa Collector, driver, gudang, pesan, sales

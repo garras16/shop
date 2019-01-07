@@ -5,7 +5,7 @@
 if (isset($tambah_penjualan_post)){
 /*	$id_harga_jual[] = implode(',',$id_harga_jual);
 	for ($i=0; $i<count($id_harga_jual)-1; $i++) {
-		$sql=mysql_query("SELECT *
+		$sql=mysqli_query($con, "SELECT *
 	FROM
 		harga_jual
 		INNER JOIN barang_supplier 
@@ -13,16 +13,16 @@ if (isset($tambah_penjualan_post)){
 		INNER JOIN barang 
 			ON (barang_supplier.id_barang = barang.id_barang)
 	WHERE id_harga_jual=" .$id_harga_jual[$i]. " AND status=1");
-		if (mysql_num_rows($sql)=='0'){
+		if (mysqli_num_rows($sql)=='0'){
 			_alert("Ada barang non-aktif yang dipilih. Proses digagalkan.");
 			_direct("?page=canvass_keluar&mode=add_penjualan");
 			break 2;
 		}
 	}*/
 	
-	$sql=mysql_query("DELETE FROM data_nota_jual WHERE tgl_nota < '" .date("Y-m-d"). "'");
-	$sql=mysql_query("SELECT MAX(invoice) AS cID FROM data_nota_jual WHERE tgl_nota='" .date('Y-m-d'). "'");
-	$r=mysql_fetch_array($sql);
+	$sql=mysqli_query($con, "DELETE FROM data_nota_jual WHERE tgl_nota < '" .date("Y-m-d"). "'");
+	$sql=mysqli_query($con, "SELECT MAX(invoice) AS cID FROM data_nota_jual WHERE tgl_nota='" .date('Y-m-d'). "'");
+	$r=mysqli_fetch_array($sql);
 	if ($r['cID']==''){
 		$CID=0;
 	} else {
@@ -30,13 +30,13 @@ if (isset($tambah_penjualan_post)){
 		$CID=$CID[2];
 	}
 	$invoice="NJ-" .date("ymd"). '-' .sprintf("%03d",$CID+1);
-	$sql = mysql_query("INSERT INTO data_nota_jual VALUES(null,'$tanggal','$invoice')");
-	$sql = mysql_query("INSERT INTO jual VALUES(null,'$tanggal','$invoice',$id_pelanggan,$id_karyawan,'$jenis_bayar',$tenor,5,0,null,$diskon_all_persen)");
-	$id_jual=mysql_insert_id();
+	$sql = mysqli_query($con, "INSERT INTO data_nota_jual VALUES(null,'$tanggal','$invoice')");
+	$sql = mysqli_query($con, "INSERT INTO jual VALUES(null,'$tanggal','$invoice',$id_pelanggan,$id_karyawan,'$jenis_bayar',$tenor,5,0,null,$diskon_all_persen)");
+	$id_jual=mysqli_insert_id($con);
 	$id_canvass_keluar[] = implode(',',$id_canvass_keluar);
 	
 	$sql = "INSERT INTO canvass_belum_siap VALUES(null,$id_canvass_keluar[0],'$tanggal',$id_jual,'0')";
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 	$id_harga_jual[] = implode(',',$id_harga_jual);
 	$harga[] = implode(',',$harga);
 	$qty[] = implode(',',$qty);
@@ -47,7 +47,7 @@ if (isset($tambah_penjualan_post)){
 	$diskon_persen_3[] = implode(',',$diskon_persen_3);
 	$diskon_rp_3[] = implode(',',$diskon_rp_3);
 	for ($i=0; $i<count($id_harga_jual)-1; $i++) {
-		$sql=mysql_query("SELECT *
+		$sql=mysqli_query($con, "SELECT *
 	FROM
 		harga_jual
 		INNER JOIN barang_supplier 
@@ -55,11 +55,11 @@ if (isset($tambah_penjualan_post)){
 		INNER JOIN barang 
 			ON (barang_supplier.id_barang = barang.id_barang)
 	WHERE id_harga_jual=" .$id_harga_jual[$i]. " AND status=0");
-		if (mysql_num_rows($sql)>0){
+		if (mysqli_num_rows($sql)>0){
 			_alert("Ada barang yang tidak disimpan.");
 		} else {
 			$sql2 = "INSERT INTO jual_detail VALUES(null,$id_jual,$id_harga_jual[$i],$qty[$i],$harga[$i],$diskon_persen_1[$i],$diskon_rp_1[$i],$diskon_persen_2[$i],$diskon_rp_2[$i],$diskon_persen_3[$i],$diskon_rp_3[$i])";
-			$q = mysql_query($sql2);
+			$q = mysqli_query($con, $sql2);
 			if ($q){
 				_buat_pesan("Input Berhasil","green");
 			} else {
@@ -67,12 +67,12 @@ if (isset($tambah_penjualan_post)){
 			}
 		}
 	}
-	$sql=mysql_query("UPDATE canvass_keluar SET status='2' WHERE id_canvass_keluar=$id_canvass_keluar[0]");
+	$sql=mysqli_query($con, "UPDATE canvass_keluar SET status='2' WHERE id_canvass_keluar=$id_canvass_keluar[0]");
 	_direct("?page=canvass_keluar&mode=menu_penjualan");
 }
 $id_karyawan=$_SESSION['id_karyawan'];
-$sql=mysql_query("SELECT plafon FROM pelanggan WHERE id_pelanggan=" .$_SESSION['id_pelanggan']. "");
-$row=mysql_fetch_array($sql);
+$sql=mysqli_query($con, "SELECT plafon FROM pelanggan WHERE id_pelanggan=" .$_SESSION['id_pelanggan']. "");
+$row=mysqli_fetch_array($sql);
 $plafon=$row['plafon'];
 ?>
 <div class="right_col loading" role="main">
@@ -152,8 +152,8 @@ $plafon=$row['plafon'];
 								<div class="clearfix"></div><br/>
 								<div id="info"><b>Info :<br/>
 								<?php
-								$sql2=mysql_query("SELECT * FROM jual WHERE invoice NOT IN (SELECT no_nota_jual FROM bayar_nota_jual WHERE STATUS=1) AND id_pelanggan=" .$_SESSION['id_pelanggan']);
-								echo '* Jumlah Nota Gantung : ' .format_angka(mysql_num_rows($sql2)). ' nota'; ?>
+								$sql2=mysqli_query($con, "SELECT * FROM jual WHERE invoice NOT IN (SELECT no_nota_jual FROM bayar_nota_jual WHERE STATUS=1) AND id_pelanggan=" .$_SESSION['id_pelanggan']);
+								echo '* Jumlah Nota Gantung : ' .format_angka(mysqli_num_rows($sql2)). ' nota'; ?>
 								</b>
 								</div>
 								<div class="clearfix"></div><br/>

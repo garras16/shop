@@ -1,16 +1,16 @@
 <?php
 $id_karyawan=$_SESSION['id_karyawan'];
-	$sql=mysql_query("SELECT *
+	$sql=mysqli_query($con, "SELECT *
 FROM
     canvass_keluar
     LEFT JOIN kendaraan 
         ON (canvass_keluar.id_mobil = kendaraan.id_kendaraan)
 	WHERE id_canvass_keluar=$id");
-	$row=mysql_fetch_array($sql);
+	$row=mysqli_fetch_array($sql);
 	$tgl_canvass=$row['tanggal_canvass'];
 	$nama_mobil=$row['nama_kendaraan'];
 	$plat=$row['plat'];
-	$sql2=mysql_query("SELECT *
+	$sql2=mysqli_query($con, "SELECT *
 FROM
     canvass_keluar_karyawan
     INNER JOIN karyawan 
@@ -18,9 +18,9 @@ FROM
 	INNER JOIN users 
         ON (karyawan.id_karyawan = users.id_karyawan)
 	WHERE id_canvass_keluar=$id");
-	$baris=mysql_num_rows($sql2);
-	$sql3=mysql_query("SELECT * FROM canvass_stock_opname WHERE id_canvass_keluar=$id LIMIT 1");
-	$row3=mysql_fetch_array($sql3);
+	$baris=mysqli_num_rows($sql2);
+	$sql3=mysqli_query($con, "SELECT * FROM canvass_stock_opname WHERE id_canvass_keluar=$id LIMIT 1");
+	$row3=mysqli_fetch_array($sql3);
 	$tanggal_so=$row3['tanggal_so'];
 ?>
 <div class="right_col loading" role="main">
@@ -45,7 +45,7 @@ FROM
 							<tr><td width="40%">No Pol</td><td>' .$plat. '</td></tr>';
 	
 	echo '					<tr><td rowspan="' .$baris. '">Nama Karyawan</td>';
-	while ($row2=mysql_fetch_array($sql2)){
+	while ($row2=mysqli_fetch_array($sql2)){
 		echo '				<td>- ' .$row2['nama_karyawan']. ' ( ' .$row2['posisi']. ' )</td></tr>';
 	}
 	echo '</tr>';
@@ -64,7 +64,7 @@ FROM
 							</thead>
 							<tbody>
 <?php
-	$sql=mysql_query("SELECT barang.id_barang,nama_barang,SUM(qty_cek_2) AS qty_cek_2,nama_satuan
+	$sql=mysqli_query($con, "SELECT barang.id_barang,nama_barang,SUM(qty_cek_2) AS qty_cek_2,nama_satuan
 FROM
     canvass_stock_opname
     INNER JOIN barang 
@@ -73,9 +73,9 @@ FROM
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE id_canvass_keluar=$id
 GROUP BY canvass_stock_opname.id_barang");
-	while ($row=mysql_fetch_array($sql)){
-	$sql2=mysql_query("SELECT SUM(stok) AS stok FROM canvass_keluar_barang WHERE id_canvass_keluar=$id AND id_barang=" .$row['id_barang']);
-	$row2=mysql_fetch_array($sql2);
+	while ($row=mysqli_fetch_array($sql)){
+	$sql2=mysqli_query($con, "SELECT SUM(stok) AS stok FROM canvass_keluar_barang WHERE id_canvass_keluar=$id AND id_barang=" .$row['id_barang']);
+	$row2=mysqli_fetch_array($sql2);
 	($row['qty_cek_2']==$row2['stok'] ? $color='black' : $color='red'); 
 	echo '<tr>
 				<td style="vertical-align:middle;text-align:center;color:' .$color. '">' .$row['nama_barang']. '</td>

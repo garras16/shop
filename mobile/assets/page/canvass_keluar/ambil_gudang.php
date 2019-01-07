@@ -1,8 +1,8 @@
 <?php
 if (isset($tambah_ambil_gudang_mobil_post)){
 	$sql = "INSERT INTO canvass_keluar VALUES(null,'$tanggal','$id_mobil',0)";
-	$q = mysql_query($sql);
-	$id_canvass=mysql_insert_id();
+	$q = mysqli_query($con, $sql);
+	$id_canvass=mysqli_insert_id($con);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 		_direct("?page=canvass_keluar&mode=input_ambil_gudang&id=" .$id_canvass);
@@ -11,12 +11,12 @@ if (isset($tambah_ambil_gudang_mobil_post)){
 		_direct("?page=canvass_keluar&mode=ambil_gudang");
 	}
 } else {
-	$sql = mysql_query("DELETE FROM canvass_keluar 
+	$sql = mysqli_query($con, "DELETE FROM canvass_keluar 
 		WHERE id_canvass_keluar NOT IN (SELECT id_canvass_keluar FROM canvass_keluar_barang)
 		OR id_canvass_keluar NOT IN (SELECT id_canvass_keluar FROM canvass_keluar_karyawan)");
-	$sql = mysql_query("DELETE FROM canvass_keluar_karyawan 
+	$sql = mysqli_query($con, "DELETE FROM canvass_keluar_karyawan 
 		WHERE id_canvass_keluar NOT IN (SELECT id_canvass_keluar FROM canvass_keluar)");
-	$sql = mysql_query("DELETE FROM canvass_keluar_barang 
+	$sql = mysqli_query($con, "DELETE FROM canvass_keluar_barang 
 		WHERE id_canvass_keluar NOT IN (SELECT id_canvass_keluar FROM canvass_keluar)");
 }
 
@@ -50,8 +50,8 @@ if (isset($tambah_ambil_gudang_mobil_post)){
 				</thead>
 				<tbody>
 <?php
-$sql=mysql_query("SELECT * FROM canvass_keluar INNER JOIN kendaraan ON (canvass_keluar.id_mobil = kendaraan.id_kendaraan) WHERE canvass_keluar.status=0 OR canvass_keluar.status=9 ORDER BY id_canvass_keluar DESC");
-while($row=mysql_fetch_array($sql)){
+$sql=mysqli_query($con, "SELECT * FROM canvass_keluar INNER JOIN kendaraan ON (canvass_keluar.id_mobil = kendaraan.id_kendaraan) WHERE canvass_keluar.status=0 OR canvass_keluar.status=9 ORDER BY id_canvass_keluar DESC");
+while($row=mysqli_fetch_array($sql)){
 	echo '			<tr>
 						<td><a href="?page=canvass_keluar&mode=input_ambil_gudang&id=' .$row['id_canvass_keluar']. '"><div style="min-width:70px">' .date("d-m-Y",strtotime($row['tanggal_canvass'])). '</div></a></td>
 						<td><a href="?page=canvass_keluar&mode=input_ambil_gudang&id=' .$row['id_canvass_keluar']. '"><div style="min-width:70px">' .$row['nama_kendaraan']. '</div></a></td>
@@ -90,8 +90,8 @@ while($row=mysql_fetch_array($sql)){
 					<select class="form-control" id="select_mobil" name="id_mobil" required>
 						<option value="" disabled selected>Pilih Mobil Canvass</option>
 						<?php 
-							$sql=mysql_query("SELECT * FROM kendaraan WHERE STATUS=1 AND canvass=1 AND id_kendaraan NOT IN (SELECT id_mobil FROM canvass_keluar WHERE STATUS <> 4)");
-							while($row=mysql_fetch_array($sql)){
+							$sql=mysqli_query($con, "SELECT * FROM kendaraan WHERE STATUS=1 AND canvass=1 AND id_kendaraan NOT IN (SELECT id_mobil FROM canvass_keluar WHERE STATUS <> 4)");
+							while($row=mysqli_fetch_array($sql)){
 						?>	
 							<option value="<?php echo $row['id_kendaraan']; ?>"><?php echo $row['nama_kendaraan']. ' | ' .$row['plat'];?></option>
 						<?php 

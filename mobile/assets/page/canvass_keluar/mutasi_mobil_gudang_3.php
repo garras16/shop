@@ -1,20 +1,20 @@
 <?php
 $id_karyawan=$_SESSION['id_karyawan'];
 if (isset($sukses_mutasi_mobil_gudang_post)){
-	$sql3=mysql_query("UPDATE canvass_keluar SET status=5 WHERE id_canvass_keluar=$id");
+	$sql3=mysqli_query($con, "UPDATE canvass_keluar SET status=5 WHERE id_canvass_keluar=$id");
 	_direct("?page=canvass_keluar&mode=mutasi_mobil_gudang");
 }
-	$sql=mysql_query("SELECT *
+	$sql=mysqli_query($con, "SELECT *
 FROM
     canvass_keluar
     LEFT JOIN kendaraan 
         ON (canvass_keluar.id_mobil = kendaraan.id_kendaraan)
 	WHERE id_canvass_keluar=$id");
-	$row=mysql_fetch_array($sql);
+	$row=mysqli_fetch_array($sql);
 	$tgl_canvass=$row['tanggal_canvass'];
 	$nama_mobil=$row['nama_kendaraan'];
 	$plat=$row['plat'];
-	$sql2=mysql_query("SELECT *
+	$sql2=mysqli_query($con, "SELECT *
 FROM
     canvass_keluar_karyawan
     INNER JOIN karyawan 
@@ -22,7 +22,7 @@ FROM
 	INNER JOIN users 
         ON (karyawan.id_karyawan = users.id_karyawan)
 	WHERE id_canvass_keluar=$id");
-	$baris=mysql_num_rows($sql2);
+	$baris=mysqli_num_rows($sql2);
 ?>
 <div class="right_col loading" role="main">
 	<div class="">
@@ -45,7 +45,7 @@ FROM
 							<tr><td width="40%">No Pol</td><td>' .$plat. '</td></tr>';
 	
 	echo '					<tr><td rowspan="' .$baris. '">Nama Karyawan</td>';
-	while ($row2=mysql_fetch_array($sql2)){
+	while ($row2=mysqli_fetch_array($sql2)){
 		echo '				<td>- ' .$row2['nama_karyawan']. ' ( ' .$row2['posisi']. ' )</td></tr>';
 	}
 	echo '</tr>';
@@ -66,7 +66,7 @@ FROM
 							</thead>
 							<tbody>
 <?php
-	$sql=mysql_query("SELECT *,SUM(qty) as qty, SUM(qty_cek) as qty_cek
+	$sql=mysqli_query($con, "SELECT *,SUM(qty) as qty, SUM(qty_cek) as qty_cek
 FROM
     canvass_keluar_barang
     INNER JOIN barang 
@@ -75,12 +75,12 @@ FROM
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE id_canvass_keluar=$id
 GROUP BY canvass_keluar_barang.id_barang,canvass_keluar_barang.id_rak");
-	while ($row=mysql_fetch_array($sql)){
+	while ($row=mysqli_fetch_array($sql)){
 	($row['qty_cek']==$row['qty'] ? $style="" : $style="color:red;");
 	echo '<tr>
 				<td style="vertical-align:middle;text-align:center;' .$style. '">' .$row['nama_barang']. '</td>
 				<td style="vertical-align:middle;text-align:center;' .$style. '">' .format_angka($row['qty_cek']). ' ' .$row['nama_satuan']. '</td>';
-	$sql2=mysql_query("SELECT SUM(qty_ambil) AS qty_ambil
+	$sql2=mysqli_query($con, "SELECT SUM(qty_ambil) AS qty_ambil
 FROM
     canvass_siap_kirim
     INNER JOIN canvass_siap_kirim_detail 
@@ -92,9 +92,9 @@ FROM
     INNER JOIN barang_supplier 
         ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
 WHERE barang_supplier.id_barang=" .$row['id_barang']. " AND id_canvass_keluar=$id");
-	$row2=mysql_fetch_array($sql2);
-	$sql3=mysql_query("SELECT SUM(qty_cek2) AS qty_cek2 FROM canvass_mutasi_mobil_gudang WHERE id_canvass_keluar=$id AND id_barang=" .$row['id_barang']. "");
-	$row3=mysql_fetch_array($sql3);
+	$row2=mysqli_fetch_array($sql2);
+	$sql3=mysqli_query($con, "SELECT SUM(qty_cek2) AS qty_cek2 FROM canvass_mutasi_mobil_gudang WHERE id_canvass_keluar=$id AND id_barang=" .$row['id_barang']. "");
+	$row3=mysqli_fetch_array($sql3);
 	echo '<td style="vertical-align:middle;text-align:center;' .$style. '" align="center">' .format_angka($row2['qty_ambil']). ' ' .$row['nama_satuan']. '</td>';
 	$qty_sisa=$row['qty_cek']-$row2['qty_ambil'];
 	echo '		<td align="center" style="vertical-align:middle;text-align:center;' .$style. '">' .format_angka($qty_sisa). ' ' .$row['nama_satuan']. '</td>

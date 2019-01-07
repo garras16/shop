@@ -1,8 +1,8 @@
 <?php
-$sql=mysql_query("SELECT * FROM canvass_siap_kirim WHERE id_jual=$id AND status>0");
-(mysql_num_rows($sql)>0 ? $locked=true : $locked=false);
+$sql=mysqli_query($con, "SELECT * FROM canvass_siap_kirim WHERE id_jual=$id AND status>0");
+(mysqli_num_rows($sql)>0 ? $locked=true : $locked=false);
 if (isset($edit_penjualan_post) && !$locked){
-	$sql=mysql_query("SELECT *
+	$sql=mysqli_query($con, "SELECT *
 	FROM
 		harga_jual
 		INNER JOIN barang_supplier 
@@ -10,15 +10,15 @@ if (isset($edit_penjualan_post) && !$locked){
 		INNER JOIN barang 
 			ON (barang_supplier.id_barang = barang.id_barang)
 	WHERE id_harga_jual=" .$id_harga_jual. " AND status=1");
-		if (mysql_num_rows($sql)=='0'){
+		if (mysqli_num_rows($sql)=='0'){
 			_alert("Ada barang yang tidak disimpan.");
 			_direct("?page=canvass_keluar&mode=edit_penjualan");
 			break;
 		} else {
 			$diskon_rp=($diskon_persen_1/100)*$harga;
 			$sql = "INSERT INTO jual_detail VALUES(null,$id,$id_harga_jual,$qty,$harga,$diskon_persen_1,$diskon_rp_1,$diskon_persen_2,$diskon_rp_2,$diskon_persen_3,$diskon_rp_3)";
-			$q = mysql_query($sql);
-			echo mysql_error();
+			$q = mysqli_query($con, $sql);
+			echo mysqli_error();
 			if ($q){
 				_buat_pesan("Input Berhasil","green");
 			} else {
@@ -28,11 +28,11 @@ if (isset($edit_penjualan_post) && !$locked){
 	_direct("?page=canvass_keluar&mode=edit_penjualan&id=$id");
 }
 if (isset($_GET['del']) && !$locked){
-	$sql=mysql_query("SELECT id_karyawan FROM users WHERE posisi='OWNER'");
-	$row=mysql_fetch_array($sql);
+	$sql=mysqli_query($con, "SELECT id_karyawan FROM users WHERE posisi='OWNER'");
+	$row=mysqli_fetch_array($sql);
 	$id_owner=$row['id_karyawan'];
 	
-	$sql=mysql_query("SELECT tgl_nota, invoice, nama_pelanggan, nama_barang, nama_satuan, qty
+	$sql=mysqli_query($con, "SELECT tgl_nota, invoice, nama_pelanggan, nama_barang, nama_satuan, qty
 FROM
     jual
     INNER JOIN jual_detail 
@@ -48,23 +48,23 @@ FROM
     INNER JOIN satuan 
         ON (barang.id_satuan = satuan.id_satuan)
 	WHERE jual_detail.id_jual_detail=" .$_GET['del']);
-	$row=mysql_fetch_array($sql);
+	$row=mysqli_fetch_array($sql);
 	
 	$judul='Ada barang yang dihapus sales.';
 	$pesan='Tipe: Canvass\r\nTgl Nota Jual : ' .date("d-m-Y",strtotime($row['tgl_nota'])). '\r\nNo Nota Jual : ' .$row['invoice']. '\r\nNama Pelanggan : ' .$row['nama_pelanggan']. '\r\n';
 	$pesan.='Nama Sales : ' .$_SESSION['user']. '\r\nNama Barang : ' .$row['nama_barang']. '\r\n\t' .$row['qty']. ' ' .$row['nama_satuan']. '\r\n';
 	$tanggal=date("Y-m-d H:i:s");
-	$sql=mysql_query("INSERT INTO pesan VALUES(null,'$tanggal',$id_owner,'$judul','$pesan',0)");
-	$sql=mysql_query("DELETE FROM jual_detail WHERE id_jual_detail=" .$_GET['del']. "");
-	$sql=mysql_query("DELETE FROM canvass_siap_kirim_detail WHERE id_jual_detail=" .$_GET['del']. "");
+	$sql=mysqli_query($con, "INSERT INTO pesan VALUES(null,'$tanggal',$id_owner,'$judul','$pesan',0)");
+	$sql=mysqli_query($con, "DELETE FROM jual_detail WHERE id_jual_detail=" .$_GET['del']. "");
+	$sql=mysqli_query($con, "DELETE FROM canvass_siap_kirim_detail WHERE id_jual_detail=" .$_GET['del']. "");
 	_direct("?page=canvass_keluar&mode=edit_penjualan&id=$id");
 }
 if (isset($edit_diskon_nota_jual) && !$locked){
-	$sql=mysql_query("UPDATE jual SET diskon_all_persen=$diskon_all_persen WHERE id_jual=$id");
+	$sql=mysqli_query($con, "UPDATE jual SET diskon_all_persen=$diskon_all_persen WHERE id_jual=$id");
 	_direct("?page=canvass_keluar&mode=edit_penjualan&id=$id");
 }
 $id_karyawan=$_SESSION['id_karyawan'];
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT
     jual.id_jual
     , jual.tgl_nota
     , jual.invoice
@@ -79,7 +79,7 @@ FROM
     INNER JOIN pelanggan 
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
 WHERE id_jual=$id");
-$row=mysql_fetch_array($sql);
+$row=mysqli_fetch_array($sql);
 $jenis_bayar=$row['jenis_bayar'];
 $diskon_all_persen=$row['diskon_all_persen'];
 ?>
@@ -159,7 +159,7 @@ $diskon_all_persen=$row['diskon_all_persen'];
 										</thead>
 										<tbody>
 <?php
-	$sql=mysql_query("SELECT
+	$sql=mysqli_query($con, "SELECT
     jual_detail.id_jual_detail
     , jual_detail.id_harga_jual
     , jual_detail.qty
@@ -185,7 +185,7 @@ FROM
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE id_jual=$id");
 $total=0;
-while ($row=mysql_fetch_array($sql)){
+while ($row=mysqli_fetch_array($sql)){
 $total+=$row['qty']*($row['harga_jual']-$row['diskon_rp']-$row['diskon_rp_2']-$row['diskon_rp_3']);
 $tot_seb_disk=($row['qty']*$row['harga_jual']);
 $diskon1=$row['harga_jual']*$row['diskon_persen']/100;

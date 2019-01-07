@@ -57,7 +57,7 @@ if (isset($_GET['pelanggan']) && $_GET['pelanggan']!=''){
 if (!isset($_GET['tanggal']) && !isset($_GET['debt']) && !isset($_GET['pelangan'])){
 	$val="AND status_tagih<>2";
 }
-	$sql=mysql_query("SELECT *
+	$sql=mysqli_query($con, "SELECT *
 FROM
     penagihan
     INNER JOIN karyawan 
@@ -72,25 +72,25 @@ FROM
         ON (jual.id_jual = jual_detail.id_jual)
 WHERE penagihan.id_penagihan>0 $val
 GROUP BY jual.id_jual");
-while ($row=mysql_fetch_array($sql)){
-	$sql2=mysql_query("SELECT (qty_ambil*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total
+while ($row=mysqli_fetch_array($sql)){
+	$sql2=mysqli_query($con, "SELECT (qty_ambil*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total
 FROM
     jual_detail
     INNER JOIN nota_siap_kirim_detail 
         ON (jual_detail.id_jual_detail = nota_siap_kirim_detail.id_jual_detail)
 WHERE id_jual=" .$row['id_jual']);
 $total_jual=0;
-	while ($row2=mysql_fetch_array($sql2)){
+	while ($row2=mysqli_fetch_array($sql2)){
 		$total_jual+=$row2['total'];
 	}
 	
-	$sql2=mysql_query("SELECT nama_karyawan
+	$sql2=mysqli_query($con, "SELECT nama_karyawan
 FROM
     penagihan
 	INNER JOIN karyawan 
         ON (penagihan.id_admin = karyawan.id_karyawan)
 WHERE penagihan.id_penagihan=" .$row['id_penagihan']);
-	$row2=mysql_fetch_array($sql2);
+	$row2=mysqli_fetch_array($sql2);
 	$nama_admin=$row2['nama_karyawan'];
 	
 	$status='';
@@ -110,11 +110,11 @@ WHERE penagihan.id_penagihan=" .$row['id_penagihan']);
 		$color2='black';
 	}
 	
-	$sql3=mysql_query("SELECT nama_karyawan FROM jual INNER JOIN karyawan ON (jual.id_karyawan = karyawan.id_karyawan) WHERE id_jual=" .$row['id_jual']);
-	$row3=mysql_fetch_array($sql3);
+	$sql3=mysqli_query($con, "SELECT nama_karyawan FROM jual INNER JOIN karyawan ON (jual.id_karyawan = karyawan.id_karyawan) WHERE id_jual=" .$row['id_jual']);
+	$row3=mysqli_fetch_array($sql3);
 	$nama_sales=$row3['nama_karyawan'];
-	$sql3=mysql_query("SELECT nama_karyawan FROM pengiriman INNER JOIN karyawan ON (pengiriman.id_karyawan = karyawan.id_karyawan) WHERE id_jual=" .$row['id_jual']);
-	$row3=mysql_fetch_array($sql3);
+	$sql3=mysqli_query($con, "SELECT nama_karyawan FROM pengiriman INNER JOIN karyawan ON (pengiriman.id_karyawan = karyawan.id_karyawan) WHERE id_jual=" .$row['id_jual']);
+	$row3=mysqli_fetch_array($sql3);
 	$nama_driver=$row3['nama_karyawan'];
 	
 	echo '<tr>

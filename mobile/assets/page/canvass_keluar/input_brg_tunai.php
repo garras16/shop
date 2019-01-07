@@ -11,7 +11,7 @@ $id_karyawan=$_SESSION['id_karyawan'];
 	<select class="select2 form-control" id="select_barang" name="id_barang" required>
 		<option value="" disabled selected>Nama Barang | Stok | Harga Jual</option>
 		<?php
-		$sql = mysql_query("SELECT *
+		$sql = mysqli_query($con, "SELECT *
     , SUM(canvass_keluar_barang.stok) AS total_stok
 FROM
     canvass_keluar
@@ -33,9 +33,9 @@ FROM
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE canvass_keluar_barang.qty_cek > 0 AND barang.status=1 AND id_pelanggan=" .$_GET['id']. " AND canvass_keluar_karyawan.id_karyawan=" .$id_karyawan. " AND (canvass_keluar.status=1 OR canvass_keluar.status=2)
 GROUP BY barang.id_barang");
-	while ($row=mysql_fetch_array($sql)){
+	while ($row=mysqli_fetch_array($sql)){
 	// STATUS KONFIRM 5 UNTUK CANVASS YG BLM KONFIRM
-		$sql2=mysql_query("SELECT SUM(qty) as qty
+		$sql2=mysqli_query($con, "SELECT SUM(qty) as qty
 FROM
     jual
 	INNER JOIN canvass_belum_siap 
@@ -43,7 +43,7 @@ FROM
     INNER JOIN jual_detail 
         ON (jual.id_jual = jual_detail.id_jual)
 WHERE status_konfirm=5 AND id_harga_jual=" .$row['id_harga_jual']. "");
-		$r=mysql_fetch_array($sql2);
+		$r=mysqli_fetch_array($sql2);
 		$total_stok=$row['total_stok']-$r['qty'];
 		if ($total_stok>0) echo '<option data-harga="'.$row['harga_jual'].'" data-nama="'.$row['nama_barang'].'" data-stok="'.$total_stok.'" data-min="'.$row['min_order'].'" data-satuan="' .$row['nama_satuan']. '" data-id-canvass="' .$row['id_canvass_keluar']. '" value="' .$row['id_harga_jual']. '">' .$row['nama_barang']. ' | Stok : ' .$total_stok. ' ' .$row['nama_satuan']. ' | Rp.' .format_uang($row['harga_jual']). '</option>';
 	}

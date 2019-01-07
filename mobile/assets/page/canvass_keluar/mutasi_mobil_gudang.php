@@ -2,17 +2,17 @@
 if (isset($batal_mutasi_mobil_gudang_post)){
 	foreach ($id_canvass_keluar as $key => $value) {
 		$sql = "UPDATE canvass_keluar SET status=3 WHERE id_canvass_keluar=$value";
-		$q = mysql_query($sql);
-		$sql=mysql_query("SELECT id_rak,expire,qty_cek2,id_barang_masuk_rak FROM canvass_mutasi_mobil_gudang WHERE id_canvass_keluar=$value");
-		while($row=mysql_fetch_array($sql)){
+		$q = mysqli_query($con, $sql);
+		$sql=mysqli_query($con, "SELECT id_rak,expire,qty_cek2,id_barang_masuk_rak FROM canvass_mutasi_mobil_gudang WHERE id_canvass_keluar=$value");
+		while($row=mysqli_fetch_array($sql)){
 			$qty_cek=$row['qty_cek2'];
 			$id_barang_masuk_rak=$row['id_barang_masuk_rak'];
 			$id_rak=$row['id_rak'];
 			$expire=$row['expire'];
-			$sql2=mysql_query("SELECT id_barang_masuk FROM barang_masuk_rak WHERE id_barang_masuk_rak=$id_barang_masuk_rak");
-			$row2=mysql_fetch_array($sql2);
+			$sql2=mysqli_query($con, "SELECT id_barang_masuk FROM barang_masuk_rak WHERE id_barang_masuk_rak=$id_barang_masuk_rak");
+			$row2=mysqli_fetch_array($sql2);
 			$id_barang_masuk=$row2['id_barang_masuk'];
-			$sql2=mysql_query("DELETE FROM barang_masuk_rak WHERE id_barang_masuk=$id_barang_masuk AND id_rak=$id_rak AND qty_di_rak=0 AND expire='$expire'");
+			$sql2=mysqli_query($con, "DELETE FROM barang_masuk_rak WHERE id_barang_masuk=$id_barang_masuk AND id_rak=$id_rak AND qty_di_rak=0 AND expire='$expire'");
 		}
 	}
 	_direct("?page=canvass_keluar&mode=mutasi_mobil_gudang");
@@ -53,14 +53,14 @@ if (isset($batal_mutasi_mobil_gudang_post)){
 									</thead>
 									<tbody>
 <?php
-	$sql=mysql_query("SELECT *
+	$sql=mysqli_query($con, "SELECT *
 FROM
     canvass_keluar
     INNER JOIN kendaraan 
         ON (canvass_keluar.id_mobil = kendaraan.id_kendaraan)
 WHERE canvass_keluar.status=3
 ORDER BY id_canvass_keluar DESC");
-	while ($row=mysql_fetch_array($sql)){
+	while ($row=mysqli_fetch_array($sql)){
 		echo '<tr>
 				<td align="center"><a href="?page=canvass_keluar&mode=mutasi_mobil_gudang_2&id=' .$row['id_canvass_keluar']. '"><div style="min-width:70px">' .date("d-m-Y",strtotime($row['tanggal_canvass'])). '</div></a></td>
 				<td align="center"><a href="?page=canvass_keluar&mode=mutasi_mobil_gudang_2&id=' .$row['id_canvass_keluar']. '"><div style="min-width:70px">' .$row['nama_kendaraan']. '</div></a></td>
@@ -109,14 +109,14 @@ if (isset($_GET['cari'])){
 	$val="canvass_keluar.status=4";
 }
 
-	$sql=mysql_query("SELECT *
+	$sql=mysqli_query($con, "SELECT *
 FROM
     canvass_keluar
     INNER JOIN kendaraan 
         ON (canvass_keluar.id_mobil = kendaraan.id_kendaraan)
 WHERE $val
 ORDER BY id_canvass_keluar DESC");
-	while ($row=mysql_fetch_array($sql)){
+	while ($row=mysqli_fetch_array($sql)){
 		echo '<tr>
 				<td align="center"><input style="width: 20px; height: 20px;" type="checkbox" id="id_canvass_keluar" name="id_canvass_keluar[]" value="' .$row['id_canvass_keluar']. '"></td>
 				<td align="center"><a href="?page=canvass_keluar&mode=mutasi_mobil_gudang_3&id=' .$row['id_canvass_keluar']. '"><div style="min-width:70px">' .date("d-m-Y",strtotime($row['tanggal_canvass'])). '</div></a></td>

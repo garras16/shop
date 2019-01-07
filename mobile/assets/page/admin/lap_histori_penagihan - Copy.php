@@ -47,7 +47,7 @@ if (isset($_GET['pelanggan']) && $_GET['pelanggan']!=''){
 if (!isset($_GET['tanggal']) && !isset($_GET['debt']) && !isset($_GET['pelangan'])){
 	$val="AND status_tagih<>2";
 }
-	$sql=mysql_query("SELECT *,SUM(bayar) AS bayar
+	$sql=mysqli_query($con, "SELECT *,SUM(bayar) AS bayar
 FROM
     penagihan
     INNER JOIN karyawan 
@@ -61,11 +61,11 @@ FROM
 WHERE penagihan.id_penagihan>0 $val
 GROUP BY penagihan.id_penagihan");
 
-	while ($row=mysql_fetch_array($sql)){
+	while ($row=mysqli_fetch_array($sql)){
 	($row['status_konfirm']>=0 && $row['status_konfirm']<=4 ? $tipe="dalam_kota" : $tipe="canvass");
 	
 	if ($tipe=="dalam_kota"){
-	$sql2=mysql_query("SELECT SUM(qty_ambil*(harga-diskon_rp)) AS total
+	$sql2=mysqli_query($con, "SELECT SUM(qty_ambil*(harga-diskon_rp)) AS total
 FROM
     penagihan
     INNER JOIN penagihan_detail 
@@ -76,7 +76,7 @@ FROM
         ON (jual_detail.id_jual_detail = nota_siap_kirim_detail.id_jual_detail)
 WHERE penagihan.id_penagihan=" .$row['id_penagihan']);
 	} else {
-	$sql2=mysql_query("SELECT SUM(qty_ambil*(harga-diskon_rp)) as total
+	$sql2=mysqli_query($con, "SELECT SUM(qty_ambil*(harga-diskon_rp)) as total
 FROM
     penagihan
     INNER JOIN penagihan_detail 
@@ -88,7 +88,7 @@ FROM
 WHERE penagihan.id_penagihan=" .$row['id_penagihan']);
 	}
 $total_jual=0;
-	while ($row2=mysql_fetch_array($sql2)){
+	while ($row2=mysqli_fetch_array($sql2)){
 		$total_jual+=$row2['total'];
 	}
 	$tgl_jt=date('Y/m/d',strtotime($row["tgl_nota"]. '+' .$row['tenor']. ' days'));
