@@ -221,7 +221,8 @@ $total_datang=$s['total_datang']+($s['total_datang']*$s['ppn_all_persen']/100);
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><div style="min-width:90px;text-align:left">Diskon Nota (%)</div></span>
-						<input id="diskon_all" name="diskon_all" type="text" class="form-control" placeholder="Diskon Nota" value="0" required>
+						<input id="diskon_all" name="diskon_all" maxlength="6" type="text" class="form-control" placeholder="Diskon Nota" value="0" required><br>
+						<label id="error" style="margin: 5px; background: #F00; color: #000; display: block;"></label>
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><div style="min-width:102px;text-align:left">PPN (%)</div></span>
@@ -238,6 +239,9 @@ $total_datang=$s['total_datang']+($s['total_datang']*$s['ppn_all_persen']/100);
 </div>
 
 <script>
+	$(function($) {
+      $('#diskon_all').autoNumeric('init', {  vMax: '100.00' });    
+    });
 function validasi(){
 	var startDate = new Date.parse(get_global_tanggal($('#tgl_dari').val()));
 	var endDate = new Date.parse(get_global_tanggal($('#tgl_sampai').val()));
@@ -257,8 +261,16 @@ function submit(){
 function cari_barang(){
 	window.location="?page=pembelian&mode=pembelian&cari=" + $('#cari').val();
 }
+function checkDec(el){
+	var RE = ^\d*\.?\d{0,2}$
+    if(RE.test(value)){
+       return true;
+    }else{
+       return false;
+    }
+}
 $(document).ready(function(){
-	$('#diskon_all').inputmask('decimal', {autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+	//$('#diskon_all').inputmask('decimal', {autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#diskon_ppn').inputmask('decimal', {autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#myModal').on('show.bs.modal', function(e){
 		var id = $(e.relatedTarget).data('id');
