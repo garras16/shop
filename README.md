@@ -1,3 +1,3 @@
 # update mysqli
 folder mobile finish
-coma 2 dibelakang fix.
+diskon coma 2 dibelakang fix tapi masih tembus 100+.
