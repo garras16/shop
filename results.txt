@@ -1,10 +1,4 @@
 C:\xampp\htdocs\shop\api\add-penjualan.php
-C:\xampp\htdocs\shop\assets\page\ekspedisi\bayar_hutang.php
-C:\xampp\htdocs\shop\assets\page\pembelian\bayar_nota_2 - Copy.php
-C:\xampp\htdocs\shop\assets\page\pembelian\bayar_nota_2.php
-C:\xampp\htdocs\shop\assets\page\pembelian\pembelian.php
-C:\xampp\htdocs\shop\assets\page\pembelian\retur_beli.php
-C:\xampp\htdocs\shop\assets\page\pembelian\retur_beli_detail.php
-C:\xampp\htdocs\shop\assets\page\penagihan\penagihan - Copy.php
-C:\xampp\htdocs\shop\assets\page\penjualan\bayar_nota_2.php
-C:\xampp\htdocs\shop\assets\page\penjualan\cari_nota_retur.php
+C:\xampp\htdocs\shop\mobile\assets\page\canvass_keluar\add_penjualan.php
+C:\xampp\htdocs\shop\mobile\assets\page\sales\add_penjualan - Copy.php
+C:\xampp\htdocs\shop\mobile\assets\page\sales\add_penjualan.php

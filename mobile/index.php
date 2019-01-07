@@ -83,6 +83,7 @@ if (isset($_POST['tambah_penjualan_post'])){
 	$diskon_persen_3=$_POST['diskon_persen_3'];
 	$diskon_rp_3=$_POST['diskon_rp_3'];
 	$diskon_all_persen=$_POST['diskon_all_persen'];
+	$ppn_all_persen=$_POST['ppn_all_persen'];
 	$tenor=$_POST['tenor'];
 	if (isset($_POST['id_canvass_keluar'])) $id_canvass_keluar=$_POST['id_canvass_keluar'];
 }
