@@ -1,11 +1,11 @@
 <?php
 if (isset($id)){
-	$sql=mysql_query("SELECT COUNT(id_jual) AS cID FROM retur_jual WHERE tgl_retur='" .date('Y-m-d'). "'");
-	$r=mysql_fetch_array($sql);
+	$sql=mysqli_query($con, "SELECT COUNT(id_jual) AS cID FROM retur_jual WHERE tgl_retur='" .date('Y-m-d'). "'");
+	$r=mysqli_fetch_array($sql);
 	$no_retur="RJ-" .date("ymd"). '-' .sprintf("%03d",$r['cID']+1);
 	$tanggal=date("Y-m-d");
-	$sql = mysql_query("INSERT INTO retur_jual VALUES(null,'$tanggal','$no_retur',$id,9)");
-	$last_id=mysql_insert_id();
+	$sql = mysqli_query($con, "INSERT INTO retur_jual VALUES(null,'$tanggal','$no_retur',$id,9)");
+	$last_id=mysqli_insert_id($con);
 	_direct("?page=collector&mode=retur_jual_detail&id=" .$last_id);
 }
 ?>
@@ -107,7 +107,7 @@ if ($tgl_kirim!=''){
 }
 $val.=" AND barang.nama_barang LIKE '%" .$barang. "%'";
 
-$sql=mysql_query("SELECT *
+$sql=mysqli_query($con, "SELECT *
 FROM
     jual
     INNER JOIN pelanggan 
@@ -125,15 +125,15 @@ FROM
  WHERE $val  
  GROUP BY jual.id_jual
  ORDER BY jual.id_jual DESC");
-	while ($row=mysql_fetch_array($sql)){
-		$sql2=mysql_query("SELECT nama_karyawan FROM nota_sudah_cek INNER JOIN karyawan ON (nota_sudah_cek.id_karyawan=karyawan.id_karyawan);");
-		$row2=mysql_fetch_array($sql2);
+	while ($row=mysqli_fetch_array($sql)){
+		$sql2=mysqli_query($con, "SELECT nama_karyawan FROM nota_sudah_cek INNER JOIN karyawan ON (nota_sudah_cek.id_karyawan=karyawan.id_karyawan);");
+		$row2=mysqli_fetch_array($sql2);
 		$pemeriksa=$row2['nama_karyawan'];
-		$sql2=mysql_query("SELECT nama_karyawan FROM pengiriman INNER JOIN karyawan ON (pengiriman.id_karyawan=karyawan.id_karyawan);");
-		$row2=mysql_fetch_array($sql2);
+		$sql2=mysqli_query($con, "SELECT nama_karyawan FROM pengiriman INNER JOIN karyawan ON (pengiriman.id_karyawan=karyawan.id_karyawan);");
+		$row2=mysqli_fetch_array($sql2);
 		$pengirim=$row2['nama_karyawan'];
-		$sql2=mysql_query("SELECT status FROM bayar_nota_jual WHERE no_nota_jual='" .$row['invoice']. "'");
-		$row2=mysql_fetch_array($sql2);
+		$sql2=mysqli_query($con, "SELECT status FROM bayar_nota_jual WHERE no_nota_jual='" .$row['invoice']. "'");
+		$row2=mysqli_fetch_array($sql2);
 		if ($row2['status']=='1'){
 			$status_bayar="LUNAS";
 		} else if ($row2['status']=='2'){
@@ -141,8 +141,8 @@ FROM
 		} else {
 			$status_bayar="BELUM TERBAYAR";
 		}
-		$sql2=mysql_query("SELECT status FROM retur_jual WHERE id_jual=" .$row['id_jual']. "");
-		$row2=mysql_fetch_array($sql2);
+		$sql2=mysqli_query($con, "SELECT status FROM retur_jual WHERE id_jual=" .$row['id_jual']. "");
+		$row2=mysqli_fetch_array($sql2);
 		if ($row2['status']=='1'){
 			$status_retur="SELESAI";
 		} else {

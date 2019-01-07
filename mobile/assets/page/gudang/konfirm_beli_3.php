@@ -14,12 +14,12 @@ if (isset($edit_konfirm_beli_3_post)){
 			$volume=$val_berat_volume[$i];
 			$total_volume+=$volume;
 		}
-		$sql = mysql_query("UPDATE barang_masuk SET berat=$berat,volume=$volume WHERE id_beli_detail=$id_beli_detail[$i]");
+		$sql = mysqli_query($con, "UPDATE barang_masuk SET berat=$berat,volume=$volume WHERE id_beli_detail=$id_beli_detail[$i]");
 	}
 	if($tarif<>''){
-		$sql = mysql_query("UPDATE beli SET berat_ekspedisi=$total_berat,volume_ekspedisi=$total_volume,tarif_ekspedisi=$tarif,status_konfirm=1 WHERE id_beli=$id");
+		$sql = mysqli_query($con, "UPDATE beli SET berat_ekspedisi=$total_berat,volume_ekspedisi=$total_volume,tarif_ekspedisi=$tarif,status_konfirm=1 WHERE id_beli=$id");
 	} else {
-		$sql = mysql_query("UPDATE beli SET berat_ekspedisi=$total_berat,volume_ekspedisi=$total_volume WHERE id_beli=$id");
+		$sql = mysqli_query($con, "UPDATE beli SET berat_ekspedisi=$total_berat,volume_ekspedisi=$total_volume WHERE id_beli=$id");
 	}
 	if ($sql){
 		_buat_pesan("Input Berhasil.","green");
@@ -29,7 +29,7 @@ if (isset($edit_konfirm_beli_3_post)){
 	_direct("?page=gudang&mode=konfirm_beli");
 }
 
-$brg=mysql_query("SELECT
+$brg=mysqli_query($con, "SELECT
 	beli.no_nota_beli
 	, beli.tanggal
 	, beli.id_karyawan
@@ -50,7 +50,7 @@ FROM
         ON (beli.id_karyawan = users.id_karyawan)
     LEFT JOIN beli_detail 
         ON (beli_detail.id_beli = beli.id_beli) WHERE beli.id_beli=$id");
-$row=mysql_fetch_array($brg);
+$row=mysqli_fetch_array($brg);
 $status_konfirm=$row['status_konfirm'];
 $total_berat=$row['berat_ekspedisi'];
 $total_volume=$row['volume_ekspedisi'];
@@ -143,7 +143,7 @@ if ($row['user']==null){
 							</thead>
 							<tbody>
 								<?php
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT
     beli_detail.id_beli
     , beli_detail.id_beli_detail
     , beli_detail.status_barang
@@ -174,9 +174,9 @@ GROUP BY beli_detail.id_beli_detail");
 	1 = SELESAI
 	2 = MENUNGGU
 */
-$n=mysql_num_rows($sql);
+$n=mysqli_num_rows($sql);
 $x=0;
-while($row=mysql_fetch_array($sql)){
+while($row=mysqli_fetch_array($sql)){
 /*if ($row['status_barang']==0){
 	$status=''
 } else if ($row['status_barang']==1){

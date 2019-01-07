@@ -11,11 +11,11 @@ if (isset($tambah_setoran_post)){
 	
 	($status_bayar==2 ? $status_nota=2 : $status_nota=0 );
 	if ($status_bayar==2) {
-		$sql = mysql_query("UPDATE penagihan_detail SET bayar=$bayar,status_bayar=$status_bayar,status_nota_kembali=$status_nota,tgl_janji_next=null WHERE id_penagihan_detail=$id_penagihan_detail");
+		$sql = mysqli_query($con, "UPDATE penagihan_detail SET bayar=$bayar,status_bayar=$status_bayar,status_nota_kembali=$status_nota,tgl_janji_next=null WHERE id_penagihan_detail=$id_penagihan_detail");
 	} else {
 		$tgl = explode("/", $tgl_janji_next);
 		$tgl_janji_next = $tgl[2] ."-". $tgl[1] ."-". $tgl[0];
-		$sql = mysql_query("UPDATE penagihan_detail SET bayar=$bayar,status_bayar=$status_bayar,status_nota_kembali=$status_nota,tgl_janji_next='$tgl_janji_next' WHERE id_penagihan_detail=$id_penagihan_detail");
+		$sql = mysqli_query($con, "UPDATE penagihan_detail SET bayar=$bayar,status_bayar=$status_bayar,status_nota_kembali=$status_nota,tgl_janji_next='$tgl_janji_next' WHERE id_penagihan_detail=$id_penagihan_detail");
 	}
 	
 	if ($sql){
@@ -26,7 +26,7 @@ if (isset($tambah_setoran_post)){
 	_direct("?page=collector&mode=tagihan_2&id_pelanggan=" .$id_pelanggan);
 }
 if (isset($_GET['del'])){
-	$sql = mysql_query("UPDATE penagihan_detail SET bayar=0,setor=null,status_bayar=0,tgl_janji_next=null WHERE id_penagihan=" .$_GET['del']. " AND id_jual=" .$_GET['id']);
+	$sql = mysqli_query($con, "UPDATE penagihan_detail SET bayar=0,setor=null,status_bayar=0,tgl_janji_next=null WHERE id_penagihan=" .$_GET['del']. " AND id_jual=" .$_GET['id']);
 	if ($sql){
 		_alert("Input Berhasil.");
 	} else {
@@ -62,7 +62,7 @@ if (isset($_GET['del'])){
 								</thead>
 								<tbody>
 								<?php
-								$sql=mysql_query("SELECT *,SUM(bayar) AS bayar
+								$sql=mysqli_query($con, "SELECT *,SUM(bayar) AS bayar
 FROM
     penagihan
     INNER JOIN penagihan_detail 
@@ -73,9 +73,9 @@ FROM
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
 WHERE penagihan.id_karyawan=$id_karyawan AND pelanggan.id_pelanggan='$id_pelanggan'
 GROUP BY jual.id_jual");
-while ($row=mysql_fetch_array($sql)){
+while ($row=mysqli_fetch_array($sql)){
 
-	$sql2=mysql_query("SELECT jual.id_jual,invoice,tgl_nota,tenor,nama_karyawan,nama_pelanggan, SUM(qty_ambil*(harga-diskon_rp)) AS total
+	$sql2=mysqli_query($con, "SELECT jual.id_jual,invoice,tgl_nota,tenor,nama_karyawan,nama_pelanggan, SUM(qty_ambil*(harga-diskon_rp)) AS total
 FROM
     jual
     INNER JOIN jual_detail 
@@ -88,7 +88,7 @@ FROM
         ON (jual_detail.id_jual_detail = nota_siap_kirim_detail.id_jual_detail)
 WHERE jual.id_jual=" .$row['id_jual']);
 $total_jual=0;
-		while ($row2=mysql_fetch_array($sql2)){
+		while ($row2=mysqli_fetch_array($sql2)){
 			$total_jual+=$row2['total'];
 			$id_jual=$row2['id_jual'];
 			$tgl_nota=$row2['tgl_nota'];
@@ -97,17 +97,17 @@ $total_jual=0;
 			$nama_sales=$row2['nama_karyawan'];
 			$nama_pelanggan=$row2['nama_pelanggan'];
 		}
-	$sql2=mysql_query("SELECT SUM(bayar) AS total_bayar FROM penagihan_detail WHERE id_penagihan=" .$row['id_penagihan']. " AND id_jual=$id_jual");
-	$row2=mysql_fetch_array($sql2);
+	$sql2=mysqli_query($con, "SELECT SUM(bayar) AS total_bayar FROM penagihan_detail WHERE id_penagihan=" .$row['id_penagihan']. " AND id_jual=$id_jual");
+	$row2=mysqli_fetch_array($sql2);
 	$total_bayar=$row2['total_bayar'];
-/*	$sql2=mysql_query("SELECT *
+/*	$sql2=mysqli_query($con, "SELECT *
 FROM
     penagihan
     INNER JOIN penagihan_detail 
         ON (penagihan.id_penagihan = penagihan_detail.id_penagihan)
 WHERE id_karyawan=$id_karyawan
 GROUP BY id_jual");
-	$row=mysql_fetch_array($sql2);*/
+	$row=mysqli_fetch_array($sql2);*/
 		$tgl_jt_tempo=date('Y-m-d', strtotime($tgl_nota. ' + ' .$tenor. ' days'));;
 	echo '								<tr>
 											<td>' .date('d-m-Y',strtotime($tgl_nota)). '</td>

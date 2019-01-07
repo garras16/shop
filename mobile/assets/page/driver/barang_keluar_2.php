@@ -1,29 +1,29 @@
 <?php
 $id_karyawan=$_SESSION['id_karyawan'];
 if (isset($simpan_nota_sudah_cek_post)){
-	$sql = mysql_query("UPDATE nota_sudah_cek SET status='3' WHERE id_nota_sudah_cek=$id");
-	$sql = mysql_query("SELECT id_jual FROM nota_sudah_cek WHERE id_nota_sudah_cek=$id");
-	$row=mysql_fetch_array($sql);
-	$sql = mysql_query("UPDATE jual SET status_konfirm='2' WHERE id_jual=" .$row['id_jual']);
-	$sql = mysql_query("SELECT id_jual FROM pengiriman WHERE id_jual=" .$row['id_jual']);
-	if (mysql_num_rows($sql)>0){
-		$sql2 = mysql_query("UPDATE pengiriman SET status=1,jenis='DALAM KOTA',tanggal_kirim='$tanggal',id_karyawan=$id_karyawan WHERE id_jual=" .$row['id_jual']. "");
+	$sql = mysqli_query($con, "UPDATE nota_sudah_cek SET status='3' WHERE id_nota_sudah_cek=$id");
+	$sql = mysqli_query($con, "SELECT id_jual FROM nota_sudah_cek WHERE id_nota_sudah_cek=$id");
+	$row=mysqli_fetch_array($sql);
+	$sql = mysqli_query($con, "UPDATE jual SET status_konfirm='2' WHERE id_jual=" .$row['id_jual']);
+	$sql = mysqli_query($con, "SELECT id_jual FROM pengiriman WHERE id_jual=" .$row['id_jual']);
+	if (mysqli_num_rows($sql)>0){
+		$sql2 = mysqli_query($con, "UPDATE pengiriman SET status=1,jenis='DALAM KOTA',tanggal_kirim='$tanggal',id_karyawan=$id_karyawan WHERE id_jual=" .$row['id_jual']. "");
 	} else {
-		$sql2 = mysql_query("INSERT INTO pengiriman VALUES(null, " .$row['id_jual']. ", 1, '$tanggal',$id_karyawan,null,null,null,null,'DALAM KOTA')");
+		$sql2 = mysqli_query($con, "INSERT INTO pengiriman VALUES(null, " .$row['id_jual']. ", 1, '$tanggal',$id_karyawan,null,null,null,null,'DALAM KOTA')");
 	}
-	$sql=mysql_query("SELECT * FROM checkin WHERE tanggal='$tanggal' AND id_pelanggan='$id_pelanggan' AND id_karyawan=$id_karyawan");
-	$c=mysql_num_rows($sql);
-	$row=mysql_fetch_array($sql);
+	$sql=mysqli_query($con, "SELECT * FROM checkin WHERE tanggal='$tanggal' AND id_pelanggan='$id_pelanggan' AND id_karyawan=$id_karyawan");
+	$c=mysqli_num_rows($sql);
+	$row=mysqli_fetch_array($sql);
 	$id_checkin=$row['id_checkin'];
 	if ($c==0){
-		$sql=mysql_query("INSERT INTO checkin VALUES(null,'$tanggal','$jam','$barcode',$id_pelanggan,$id_karyawan,'$lokasi_gps','$lokasi_kota',$akurasi,'$mock',$distance)");
+		$sql=mysqli_query($con, "INSERT INTO checkin VALUES(null,'$tanggal','$jam','$barcode',$id_pelanggan,$id_karyawan,'$lokasi_gps','$lokasi_kota',$akurasi,'$mock',$distance)");
 		if ($sql){
 			_buat_pesan("Input Berhasil","green");
 		} else {
 			_buat_pesan("Input Gagal","red");
 		}
 	} else {
-		$sql=mysql_query("UPDATE checkin SET gps='$lokasi_gps',kota='$lokasi_kota',akurasi=$akurasi,mock='$mock',distance=$distance WHERE id_checkin=$id_checkin");
+		$sql=mysqli_query($con, "UPDATE checkin SET gps='$lokasi_gps',kota='$lokasi_kota',akurasi=$akurasi,mock='$mock',distance=$distance WHERE id_checkin=$id_checkin");
 		if ($sql){
 			_buat_pesan("Input Berhasil","green");
 		} else {
@@ -54,10 +54,10 @@ $selesai=false;
 					<table class="table table-bordered table-striped">
 						<tbody>
 <?php
-	$sql=mysql_query("SELECT id_jual FROM nota_sudah_cek WHERE id_nota_sudah_cek=$id");
-	$row=mysql_fetch_array($sql);
+	$sql=mysqli_query($con, "SELECT id_jual FROM nota_sudah_cek WHERE id_nota_sudah_cek=$id");
+	$row=mysqli_fetch_array($sql);
 	$id_jual=$row['id_jual'];
-	$sql2=mysql_query("SELECT
+	$sql2=mysqli_query($con, "SELECT
     jual.id_jual
 	, jual.tgl_nota
     , jual.invoice
@@ -73,7 +73,7 @@ FROM
         ON (jual.id_karyawan = karyawan.id_karyawan)
 WHERE jual.id_jual=" .$id_jual. "
 GROUP BY jual.id_jual");
-$row=mysql_fetch_array($sql2);
+$row=mysqli_fetch_array($sql2);
 echo '<tr><td width="30%">Tgl. Nota Jual</td><td>' .date("d-m-Y", strtotime($row['tgl_nota'])). '</td></tr>
 		<tr><td width="30%">Nama Sales</td><td>' .$row['nama_karyawan']. '</td></th>
 		<tr><td width="30%">No Nota Jual</td><td>' .$row['invoice']. '</td></tr>
@@ -110,7 +110,7 @@ echo '<tr><td width="30%">Tgl. Nota Jual</td><td>' .date("d-m-Y", strtotime($row
 				</thead>
 				<tbody>
 				<?php
-				$sql=mysql_query("SELECT jual_detail.id_jual_detail,nama_barang, nama_satuan, SUM(qty_ambil) AS jumlah, harga, diskon_rp, diskon_rp_2, diskon_rp_3
+				$sql=mysqli_query($con, "SELECT jual_detail.id_jual_detail,nama_barang, nama_satuan, SUM(qty_ambil) AS jumlah, harga, diskon_rp, diskon_rp_2, diskon_rp_3
 FROM
     jual_detail
     INNER JOIN harga_jual 
@@ -126,7 +126,7 @@ FROM
  WHERE id_jual=$id_jual
  GROUP BY jual_detail.id_jual_detail");
 				$total=0;
-				while ($row=mysql_fetch_array($sql)){
+				while ($row=mysqli_fetch_array($sql)){
 					$total+=($row['harga']-$row['diskon_rp']-$row['diskon_rp_2']-$row['diskon_rp_3'])*$row['jumlah'];
 					echo '<tr>
 							<td>' .$row['nama_barang']. '</td>

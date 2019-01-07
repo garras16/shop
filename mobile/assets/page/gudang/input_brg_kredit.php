@@ -9,7 +9,7 @@ require_once('../../../assets/inc/publicfunc.php');
 	<select class="select2 form-control" id="select_barang" name="id_barang" required>
 		<option value="" disabled selected>Nama Barang | Stok | Harga Jual Kredit</option>
 		<?php
-		$sql = mysql_query("SELECT DISTINCT(hari)
+		$sql = mysqli_query($con, "SELECT DISTINCT(hari)
 FROM
     barang_masuk_rak
     INNER JOIN barang_masuk 
@@ -28,13 +28,13 @@ FROM
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE barang_masuk_rak.stok > 0 AND id_pelanggan=" .$_GET['id']. "
 GROUP BY id_harga_jual_kredit");
-	while ($row=mysql_fetch_array($sql)){
+	while ($row=mysqli_fetch_array($sql)){
 		if ($_GET['tenor']<$row['hari']) {
 			$tenor=$row['hari'];
 			break;
 		}
 	}
-		$sql = mysql_query("SELECT *
+		$sql = mysqli_query($con, "SELECT *
     , SUM(barang_masuk_rak.stok) AS total_stok
 FROM
     barang_masuk_rak
@@ -54,16 +54,16 @@ FROM
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE barang_masuk_rak.stok > 0 AND id_pelanggan=" .$_GET['id']. " AND hari>" .$_GET['tenor']. " AND hari <= $tenor
 GROUP BY id_harga_jual_kredit");
-	while ($row=mysql_fetch_array($sql)){
-		$sql2 = mysql_query("SELECT * FROM harga_jual_kredit WHERE id_harga_jual=" .$row['id_harga_jual']. " AND hari>=" .$_GET['tenor']. "");
-		$r=mysql_fetch_array($sql2);
-		$sql3=mysql_query("SELECT SUM(qty) as qty
+	while ($row=mysqli_fetch_array($sql)){
+		$sql2 = mysqli_query($con, "SELECT * FROM harga_jual_kredit WHERE id_harga_jual=" .$row['id_harga_jual']. " AND hari>=" .$_GET['tenor']. "");
+		$r=mysqli_fetch_array($sql2);
+		$sql3=mysqli_query($con, "SELECT SUM(qty) as qty
 FROM
     jual
     INNER JOIN jual_detail 
         ON (jual.id_jual = jual_detail.id_jual)
 WHERE status_konfirm=0 AND id_harga_jual=" .$row['id_harga_jual']. "");
-		$r3=mysql_fetch_array($sql3);
+		$r3=mysqli_fetch_array($sql3);
 		$total_stok=$row['total_stok']-$r3['qty'];
 			if ($total_stok>=$row['stok_minimal']) echo '<option data-harga="'.$r['harga_kredit'].'" data-tenor="'.$r['hari'].'" data-nama="'.$row['nama_barang'].'" data-stok="'.$total_stok.'" data-min="'.$row['min_order'].'" data-satuan="'.$row['nama_satuan'].'" value="' .$row['id_harga_jual']. '">' .$row['nama_barang']. ' | Stok : ' .$total_stok. ' | Rp. ' .format_uang($r['harga_kredit']). '</option>';
 	}

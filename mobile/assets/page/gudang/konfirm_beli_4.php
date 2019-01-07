@@ -1,7 +1,7 @@
 <?php
 if (isset($edit_konfirm_beli_4_post)){
 	$sql = "INSERT INTO barang_masuk VALUES(null,$id,'$tanggal',$qty_datang,null,null,1)";
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 	_direct("?page=gudang&mode=konfirm_beli_5&id=$id");
 }
 
@@ -12,13 +12,13 @@ FROM
     INNER JOIN beli_detail 
         ON (barang_masuk.id_beli_detail = beli_detail.id_beli_detail)
 WHERE beli_detail.id_beli_detail=$id AND barang_masuk.edit=1";
-$q = mysql_query($sql);
-$r=mysql_num_rows($q);
+$q = mysqli_query($con, $sql);
+$r=mysqli_num_rows($q);
 if ($r>0){
 	_direct("?page=gudang&mode=konfirm_beli_5&id=$id");
 }
 
-$sql = mysql_query("SELECT
+$sql = mysqli_query($con, "SELECT
     beli_detail.id_beli_detail
 	, beli_detail.id_beli
     , beli_detail.qty
@@ -34,12 +34,12 @@ FROM
 WHERE beli_detail.id_beli_detail=$id
 ORDER BY barang_masuk.id_barang_masuk ASC");
 $qty2=0;
-if (mysql_num_rows($sql)=='0'){
+if (mysqli_num_rows($sql)=='0'){
 	_alert("Barang sudah dihapus. Proses digagalkan.");
 	_direct("?page=gudang&mode=konfirm_beli");
 	break 2;
 }
-while ($r=mysql_fetch_array($sql)){
+while ($r=mysqli_fetch_array($sql)){
 $qty1=$r['qty'];
 $id_barang_masuk=$r['id_barang_masuk'];
 $qty_datang=$r['qty_datang'];
@@ -52,8 +52,8 @@ if ($id_barang_masuk==''){
 	$qty3=0;
 } else {
 	$sql = "SELECT SUM(qty_di_rak) AS qty_di_rak FROM barang_masuk_rak WHERE id_barang_masuk=$id_barang_masuk";
-	$q = mysql_query($sql);
-	$r=mysql_fetch_array($q);
+	$q = mysqli_query($con, $sql);
+	$r=mysqli_fetch_array($q);
 	$qty3=$r['qty_di_rak'];
 }
 $x=$qty1-$qty2;
@@ -73,8 +73,8 @@ FROM
     INNER JOIN satuan 
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE id_beli_detail=$id";
-$q = mysql_query($sql);
-$r=mysql_fetch_array($q);
+$q = mysqli_query($con, $sql);
+$r=mysqli_fetch_array($q);
 ?>
 
 <div class="right_col loading" role="main">

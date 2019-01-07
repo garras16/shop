@@ -1,7 +1,7 @@
 <?php
 $sql = "SELECT id_beli, qty FROM beli_detail WHERE id_beli_detail=$id";
-$q = mysql_query($sql);
-$r=mysql_fetch_array($q);
+$q = mysqli_query($con, $sql);
+$r=mysqli_fetch_array($q);
 $qty1=$r['qty'];
 $id_beli=$r['id_beli'];
 
@@ -11,14 +11,14 @@ if (isset($_GET['id_barang_masuk'])){
 } else {
 	$sql = "SELECT id_barang_masuk, qty_datang FROM barang_masuk WHERE id_beli_detail=$id AND edit=1 ORDER BY id_barang_masuk ASC";
 }
-$q = mysql_query($sql);
-$r=mysql_fetch_array($q);
+$q = mysqli_query($con, $sql);
+$r=mysqli_fetch_array($q);
 $qty_datang=$r['qty_datang'];
 if (!isset($_GET['id_barang_masuk'])) $id_barang_masuk=$r['id_barang_masuk'];
 
 $sql = "SELECT SUM(qty_di_rak) AS qty_di_rak FROM barang_masuk_rak WHERE id_barang_masuk=$id_barang_masuk";
-$q = mysql_query($sql);
-$r=mysql_fetch_array($q);
+$q = mysqli_query($con, $sql);
+$r=mysqli_fetch_array($q);
 $qty2=$r['qty_di_rak'];
 if ($qty2=='') $qty2=0;
 $x=$qty_datang-$qty2;
@@ -29,24 +29,24 @@ FROM
     barang_masuk_rak
     INNER JOIN barang_masuk 
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk) WHERE id_beli_detail=$id";
-$q = mysql_query($sql);
-$r=mysql_fetch_array($q);
+$q = mysqli_query($con, $sql);
+$r=mysqli_fetch_array($q);
 
 if ($qty1==$r['qty_di_rak']){
 	$sql = "UPDATE beli_detail SET status_barang=1 WHERE id_beli_detail=$id";
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 } else {
 	$sql = "UPDATE beli_detail SET status_barang=2 WHERE id_beli_detail=$id";
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 }
 
 //--------------------------------------------------
 $sql = "SELECT id_beli, status_barang FROM beli_detail WHERE id_beli=$id_beli";
-$q = mysql_query($sql);
-$jml_baris=mysql_num_rows($q);
+$q = mysqli_query($con, $sql);
+$jml_baris=mysqli_num_rows($q);
 $baris_sukses=0;
 $baris_pending=0;
-while ($r=mysql_fetch_array($q)){
+while ($r=mysqli_fetch_array($q)){
 	if ($r['status_barang']==1) $baris_sukses+=1;
 	if ($r['status_barang']==2) $baris_pending+=1;
 }
@@ -57,7 +57,7 @@ if ($baris_sukses==$jml_baris){
 	$status_konfirm=2;
 }
 $sql = "UPDATE beli SET status_konfirm=$status_konfirm WHERE id_beli=$id_beli";
-$q = mysql_query($sql);
+$q = mysqli_query($con, $sql);
 
 //--------------------------------------------------
 if ($qty1==$qty2){
@@ -66,7 +66,7 @@ if ($qty1==$qty2){
 }
 if ($qty_datang==$qty2){
 	$sql = "UPDATE barang_masuk SET edit=0 WHERE id_barang_masuk=$id_barang_masuk";
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 //	_clearHistory();
 //	_direct("?page=gudang&mode=konfirm_beli_5&id=" .$id);
 	_direct("?page=gudang&mode=konfirm_beli_3&id=" .$id_beli);
@@ -82,7 +82,7 @@ ORDER BY barang_masuk.id_barang_masuk ASC";
 	$valx="WHERE beli_detail.id_beli_detail=$id AND barang_masuk.edit=1
 ORDER BY barang_masuk.id_barang_masuk ASC";
 }
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT
     beli_detail.id_beli_detail
     , beli_detail.qty
     , satuan.nama_satuan
@@ -102,7 +102,7 @@ FROM
     LEFT JOIN barang_masuk_rak 
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
 $valx");
-$row=mysql_fetch_array($sql);
+$row=mysqli_fetch_array($sql);
 $nama_satuan=$row['nama_satuan'];
 if (isset($_GET['id_barang_masuk'])){
 	$id_barang_masuk=$_GET['id_barang_masuk'];

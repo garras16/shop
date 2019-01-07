@@ -18,7 +18,7 @@ require_once('../../../assets/inc/config.php');
 	</thead>
 	<tbody>
 <?php
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT
     barang_masuk.tgl_datang
     , barang_masuk.edit
     , barang_masuk.qty_datang
@@ -47,11 +47,11 @@ FROM
     INNER JOIN satuan 
         ON (barang.id_satuan = satuan.id_satuan) WHERE barang_masuk.id_beli_detail=$id AND barang_masuk_rak.stok>0");
 $test='';
-while($row=mysql_fetch_array($sql)){
+while($row=mysqli_fetch_array($sql)){
 $id_barang_masuk=$row['id_barang_masuk'];
 $val3="";
 if ($row['edit']=='1') $val3="color: red; font-weight:bold";
-$sql2=mysql_query("SELECT
+$sql2=mysqli_query($con, "SELECT
     barang_masuk.qty_datang
     , barang_masuk_rak.stok
 FROM
@@ -59,7 +59,7 @@ FROM
     INNER JOIN barang_masuk 
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
 WHERE barang_masuk.id_barang_masuk=$id_barang_masuk AND barang_masuk_rak.stok>0");
-$r=mysql_num_rows($sql2);
+$r=mysqli_num_rows($sql2);
 	echo '			<tr>
 						<td><div style="min-width:70px; ' .$val3. '">' .$row['nama_gudang']. '</div></td>
 						<td><div style="min-width:70px; ' .$val3. '">' .$row['nama_rak']. '</div></td>';

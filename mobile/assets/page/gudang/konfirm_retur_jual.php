@@ -42,7 +42,7 @@ if (isset($_GET['dari'])){
 } else {
 	$val="MONTH(tgl_retur)=MONTH(CURRENT_DATE()) AND YEAR(tgl_retur)=YEAR(CURRENT_DATE())";
 }
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT
     retur_jual.tgl_retur
     , retur_jual.id_retur_jual
     , retur_jual.no_retur_jual
@@ -58,9 +58,9 @@ FROM
         ON (jual.id_pelanggan = pelanggan.id_pelanggan) 
 WHERE $val AND retur_jual.status=0
 ORDER BY id_retur_jual DESC");
-while($row=mysql_fetch_array($sql)){
-$sql2=mysql_query("SELECT SUM(qty * (harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah FROM jual_detail WHERE id_jual=" .$row['id_jual']);
-$r=mysql_fetch_array($sql2);
+while($row=mysqli_fetch_array($sql)){
+$sql2=mysqli_query($con, "SELECT SUM(qty * (harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah FROM jual_detail WHERE id_jual=" .$row['id_jual']);
+$r=mysqli_fetch_array($sql2);
 if ($row['status']==0){
 	$status="";
 } else if ($row['status']==1){

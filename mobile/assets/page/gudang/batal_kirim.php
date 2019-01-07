@@ -23,7 +23,7 @@
 				</thead>
 				<tbody>
 				<?php
-$sql=mysql_query("SELECT *
+$sql=mysqli_query($con, "SELECT *
 FROM
     batal_kirim
     INNER JOIN jual 
@@ -31,7 +31,7 @@ FROM
     INNER JOIN karyawan 
         ON (batal_kirim.id_karyawan = karyawan.id_karyawan) WHERE batal_kirim.status=0
 ORDER BY id_batal_kirim DESC");
-while($row=mysql_fetch_array($sql)){
+while($row=mysqli_fetch_array($sql)){
 	echo '			<tr>
 						<td><a href="?page=gudang&mode=batal_kirim_2&id=' .$row['id_jual']. '"><div style="min-width:70px">' .date("d-m-Y",strtotime($row['tanggal'])). '</div></a></td>
 						<td><a href="?page=gudang&mode=batal_kirim_2&id=' .$row['id_jual']. '"><div style="min-width:70px">' .$row['nama_karyawan']. '</div></a></td>

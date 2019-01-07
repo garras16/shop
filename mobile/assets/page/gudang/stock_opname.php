@@ -47,8 +47,8 @@ if (isset($_GET['dari'])){
 	$val="MONTH(tanggal_so)=MONTH(CURRENT_DATE()) AND YEAR(tanggal_so)=YEAR(CURRENT_DATE()) ORDER BY id_so DESC";
 }
 
-$sql=mysql_query("SELECT * FROM stock_opname WHERE $val");
-while($row=mysql_fetch_array($sql)){
+$sql=mysqli_query($con, "SELECT * FROM stock_opname WHERE $val");
+while($row=mysqli_fetch_array($sql)){
 if ($row['status_so']==0){
 	$status="";	$url="stock_opname_2";
 } else if ($row['status_so']==1){

@@ -3,8 +3,8 @@ $id_karyawan=$_SESSION['id_karyawan'];
 $nama_user=$_SESSION['user'];
 if (!isset($_GET['id'])){
 	$tgl=date("Y-m-d");
-	$sql=mysql_query("INSERT INTO stock_opname VALUES(null,'$tgl',0,$id_karyawan)");
-	$id=mysql_insert_id();
+	$sql=mysqli_query($con, "INSERT INTO stock_opname VALUES(null,'$tgl',0,$id_karyawan)");
+	$id=mysqli_insert_id($con);
 	_direct("?page=gudang&mode=stock_opname_2&id=" .$id);
 }
 ?>

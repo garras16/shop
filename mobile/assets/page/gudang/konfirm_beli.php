@@ -50,7 +50,7 @@ if (isset($_GET['dari'])){
 	$val="MONTH(tanggal)=MONTH(CURRENT_DATE()) AND YEAR(tanggal)=YEAR(CURRENT_DATE()) ORDER BY id_beli DESC";
 }
 
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT
     beli.id_beli
     , beli.no_nota_beli
     , beli.tanggal
@@ -62,7 +62,7 @@ FROM
         ON (beli.id_ekspedisi = ekspedisi.id_ekspedisi) 
 WHERE $val");
 $i=0;
-while($row=mysql_fetch_array($sql)){
+while($row=mysqli_fetch_array($sql)){
 $i+=1;
 if ($row['status_konfirm']==0){
 	$status="";

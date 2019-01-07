@@ -1,7 +1,7 @@
 <?php
 if (isset($tambah_gudang_jual_detail)){
 	$sql = "INSERT INTO jual_detail VALUES(null,$id,$id_harga_jual,$qty,$harga,0,0)";
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -11,23 +11,23 @@ if (isset($tambah_gudang_jual_detail)){
 }
 if (isset($_GET['del'])){
 	$sql = "DELETE FROM jual_detail WHERE id_jual_detail=" .$_GET['del'];
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
 		_buat_pesan("Input Gagal","red");
 	}
-	$sql=mysql_query("DELETE FROM nota_siap_kirim_detail WHERE id_jual_detail=" .$_GET['del']. "");
-	$sql = mysql_query("SELECT * FROM jual_detail WHERE id_jual=" .$id. "");
-	if (mysql_num_rows($sql)>0){
+	$sql=mysqli_query($con, "DELETE FROM nota_siap_kirim_detail WHERE id_jual_detail=" .$_GET['del']. "");
+	$sql = mysqli_query($con, "SELECT * FROM jual_detail WHERE id_jual=" .$id. "");
+	if (mysqli_num_rows($sql)>0){
 		_direct("?page=gudang&mode=edit_jual_detail&id=" .$id);
 	} else {
-		$sql = mysql_query("DELETE FROM jual WHERE id_jual=" .$id. "");
+		$sql = mysqli_query($con, "DELETE FROM jual WHERE id_jual=" .$id. "");
 		_direct("?page=gudang&mode=konfirm_jual");
 	}
 }
 $id_karyawan=$_SESSION['id_karyawan'];
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT
     jual.id_jual
     , jual.tgl_nota
     , jual.invoice
@@ -41,7 +41,7 @@ FROM
     INNER JOIN pelanggan 
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
 WHERE id_jual=$id");
-$row=mysql_fetch_array($sql);
+$row=mysqli_fetch_array($sql);
 $jenis_bayar=$row['jenis_bayar'];
 ?>
 <div class="right_col loading" role="main">
@@ -105,7 +105,7 @@ $jenis_bayar=$row['jenis_bayar'];
 										</thead>
 										<tbody>
 <?php
-	$sql=mysql_query("SELECT
+	$sql=mysqli_query($con, "SELECT
     jual_detail.id_harga_jual
     , jual_detail.id_jual_detail
     , jual_detail.qty
@@ -128,11 +128,11 @@ FROM
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE id_jual=$id");
 $total=0;
-while ($row=mysql_fetch_array($sql)){
+while ($row=mysqli_fetch_array($sql)){
 $total+=$row['qty']*($row['harga_jual']-$row['diskon_rp']-$row['diskon_rp_2']-$row['diskon_rp_3']);
 $st=$row['qty']*($row['harga_jual']-$row['diskon_rp']-$row['diskon_rp_2']-$row['diskon_rp_3']);
-$sql5=mysql_query("SELECT * FROM nota_siap_kirim_detail WHERE id_jual_detail=" .$row['id_jual_detail']. "");
-$x=mysql_num_rows($sql5);
+$sql5=mysqli_query($con, "SELECT * FROM nota_siap_kirim_detail WHERE id_jual_detail=" .$row['id_jual_detail']. "");
+$x=mysqli_num_rows($sql5);
 	echo '<tr id="list">
 			<input type="hidden" name="id_harga_jual[]" value="' .$row['id_harga_jual']. '">
 			<input type="hidden" name="qty[]" value="' .$row['qty']. '">

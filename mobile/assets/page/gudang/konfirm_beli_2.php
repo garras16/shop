@@ -1,7 +1,7 @@
 <?php
 if (isset($edit_konfirm_beli_2_post)){
 	$sql = "UPDATE beli SET id_karyawan=$id_karyawan,id_ekspedisi=$id_ekspedisi WHERE id_beli=$id";
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 	if ($q){
 		$pesan="Input Berhasil";
 		$warna="green";
@@ -11,7 +11,7 @@ if (isset($edit_konfirm_beli_2_post)){
 		$warna="red";
 	}
 }
-$brg=mysql_query("SELECT
+$brg=mysqli_query($con, "SELECT
 	beli.no_nota_beli
 	, beli.tanggal
 	, beli.id_karyawan
@@ -28,7 +28,7 @@ FROM
         ON (beli.id_karyawan = users.id_karyawan)
     LEFT JOIN beli_detail 
         ON (beli_detail.id_beli = beli.id_beli) WHERE beli.id_beli=$id");
-$row=mysql_fetch_array($brg);
+$row=mysqli_fetch_array($brg);
 if ($row['id_ekspedisi']!=null){
 	_direct("?page=gudang&mode=konfirm_beli_3&id=" .$id);
 }
@@ -85,8 +85,8 @@ if ($row['user']==null){
 							<select class="select2 form-control" id="select_ekspedisi" name="id_ekspedisi" required>
 								<option value="" disabled selected>Pilih Ekspedisi</option>
 								<?php 
-									$brg=mysql_query("SELECT * FROM ekspedisi");
-									while($b=mysql_fetch_array($brg)){
+									$brg=mysqli_query($con, "SELECT * FROM ekspedisi");
+									while($b=mysqli_fetch_array($brg)){
 								?>	
 								<option value="<?php echo $b['id_ekspedisi']; ?>"><?php echo $b['nama_ekspedisi'];?></option>
 								<?php 
