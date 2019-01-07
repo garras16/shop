@@ -291,7 +291,7 @@ harga modal" (beri icon kecil, saat klik muncul notifikasi)				OK
 
 - konfirmasi admin dipindah ke penjualan (konfirmasi retur jual)			OK	
 - semua histori jd riwayat								OK	
-- input diskon (%) 6 digit xxx.xx%							?	-
+- input diskon (%) 6 digit xxx.xx%							OK	-
 - ubah data diskon nota beli, jumlah diskon (rp) nya masih error			*	
 - hilangkan border/background di info tambahan di bawah				 	OK	-
 - jika angka minus, beri warna merah							*	
