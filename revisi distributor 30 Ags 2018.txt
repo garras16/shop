@@ -199,7 +199,7 @@ berikutnya jadi merah									OK
 bayar_nota_jual
 - tambah view sisa piutang								OK	
 
-admin app, penagihan, id_jual tidak boleh sama (tanpa notif)				OK		
+admin app, penagihan, id_jual tidak boleh sama (tanpa notif)				OK
 penagihan_2, tambah nama driver diantara nama sales dan debt collector			OK	
 
 debt collector app
