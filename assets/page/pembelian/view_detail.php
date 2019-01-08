@@ -194,14 +194,11 @@ while($row=mysqli_fetch_array($sql)){
 $id_beli_detail=$row['id_beli_detail'];
 $berat+=$row['berat'];
 $volume+=$row['volume'];
-$merah = "color: red;";
 $val1="";$val2="";
 ($row['qty']!=$row['qty_di_rak'] ? $tgl_datang="BELUM LENGKAP" : $tgl_datang=date("d-m-Y", strtotime($row['tgl_datang'])));
 ($row['qty']!=$row['qty_di_rak'] ? $val="font-weight:bold" : $val="");
 $sql2=mysqli_query($con, "SELECT * FROM barang_masuk WHERE id_beli_detail=$id_beli_detail");
-	echo '			<tr>
-						<td><div style="min-width:70px; ' .$val. '">' .$row['nama_barang']. '</div></td>';
-	(mysqli_num_rows($sql2) > 0 ? $ada="1" : $ada="0");
+(mysqli_num_rows($sql2) > 0 ? $ada="1" : $ada="0");
 	($row['qty_di_rak']=='' ? $datang='0' : $datang=$row['qty_di_rak']);
 	
 	$diskon1=($row['harga']*$row['diskon_persen']/100);
@@ -211,8 +208,15 @@ $sql2=mysqli_query($con, "SELECT * FROM barang_masuk WHERE id_beli_detail=$id_be
 	$diskon3=($row['harga']-$diskon1-$diskon2)*$row['diskon_persen_3']/100;
 	$tot_set_disk_3=$row['qty'] * ($row['harga']-$diskon1-$diskon2-$diskon3);
 	$jumlah+=$tot_set_disk_3;
+	if($tot_set_disk_1 < 0 || $tot_set_disk_2 < 0 || $tot_set_disk_3 < 0) {
+			$val = $val."; color: red;";
+	}else{
+		$val = $val."; color: black;";
+	}
+	echo '			<tr>
+						<td><div style="min-width:70px; ' .$val. '">' .$row['nama_barang']. '</div></td>';
 	
-	if ($_SESSION['posisi']=="DIREKSI" or $_SESSION['posisi']=="OWNER" OR isset($tambah_pembelian_post)){
+		if ($_SESSION['posisi']=="DIREKSI" or $_SESSION['posisi']=="OWNER" OR isset($tambah_pembelian_post)){
 		echo '		<td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '">' .format_angka($row['qty']). ' ' .$row['nama_satuan']. '</div></a></td>
 					<td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '">' .format_angka($row['berat']). '</div></a></td>
 					<td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '">' .format_angka($row['volume']). '</div></a></td>
