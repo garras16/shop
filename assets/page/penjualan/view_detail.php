@@ -170,18 +170,23 @@ while($row=mysqli_fetch_array($sql)){
 	$diskon3=$row['qty']*($row['harga_jual']-$diskon1-$diskon2)*$row['diskon_persen_3']/100;
 	$tot_set_disk_3=($row['harga_jual']-$diskon1-$diskon2-$diskon3);
 	$total_jual+=$tot_set_disk_3;
+	if($tot_set_disk_1 < 0 || $tot_set_disk_2 < 0 || $tot_set_disk_3 < 0) {
+		$val = "color: red;";
+	}else{
+		$val = "color: black;";
+	}
 	echo '			<tr>
-						<td>' .$row['barcode']. '</td>
-						<td>' .$row['nama_barang']. '</td>
-						<td>' .$row['qty']. ' ' .$row['nama_satuan']. '</td>
-						<td>' .format_uang($row['harga_jual']). '</td>
-						<td>' .format_uang($row['qty']*$row['harga_jual']). '</td>
-						<td>' .format_uang($diskon1). '</td>
-						<td>' .format_uang($tot_set_disk_1). '</td>
-						<td>' .format_uang($diskon2). '</td>
-						<td>' .format_uang($tot_set_disk_2). '</td>
-						<td>' .format_uang($diskon3). '</td>
-						<td>' .format_uang($tot_set_disk_3). '</td>
+						<td style="'.$val.'">' .$row['barcode']. '</td>
+						<td style="'.$val.'">' .$row['nama_barang']. '</td>
+						<td style="'.$val.'">' .$row['qty']. ' ' .$row['nama_satuan']. '</td>
+						<td style="'.$val.'">' .format_uang($row['harga_jual']). '</td>
+						<td style="'.$val.'">' .format_uang($row['qty']*$row['harga_jual']). '</td>
+						<td style="'.$val.'">' .format_uang($diskon1). '</td>
+						<td style="'.$val.'">' .format_uang($tot_set_disk_1). '</td>
+						<td style="'.$val.'">' .format_uang($diskon2). '</td>
+						<td style="'.$val.'">' .format_uang($tot_set_disk_2). '</td>
+						<td style="'.$val.'">' .format_uang($diskon3). '</td>
+						<td style="'.$val.'">' .format_uang($tot_set_disk_3). '</td>
 					</tr>';
 }
 $diskon_all_rp=($diskon_nota/100)*$total_jual;
