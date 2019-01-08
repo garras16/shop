@@ -67,20 +67,20 @@ $status=$row['status'];
 					</div>
 					<div class="x_content">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-building fa-fw"></i></span>
-							<input class="form-control" id="supplier" name="supplier" placeholder="Nama Supplier" title="Nama Supplier" value="<?php echo $row['nama_supplier'] ?>" disabled="disabled" required>
+							<span class="input-group-addon"><i class="fa fa-building fa-fw" style="width: 78px;"></i><br><small>Supplier</small></span>
+							<input class="form-control" id="supplier" name="supplier" placeholder="Nama Supplier" style="padding: 20px 15px;" title="Nama Supplier" value="<?php echo $row['nama_supplier'] ?>" disabled="disabled" required>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-file fa-fw"></i></span>
-							<input class="form-control" id="no_nota_beli" name="no_nota_beli" placeholder="No Nota Beli" title="No Nota Beli" value="<?php echo $row['no_nota_beli'] ?>" disabled="disabled" required>
+							<span class="input-group-addon"><i class="fa fa-file fa-fw" style="width: 78px;"></i><br><small>No. Nota Beli</small></span>
+							<input class="form-control" id="no_nota_beli" style="padding: 20px 15px;" name="no_nota_beli" placeholder="No Nota Beli" title="No Nota Beli" value="<?php echo $row['no_nota_beli'] ?>" disabled="disabled" required>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-file-excel fa-fw"></i></span>
-							<input class="form-control" id="no_nota_retur" name="no_nota_retur" placeholder="No Nota Retur" title="No Nota Retur" value="<?php echo $row['no_retur_beli'] ?>" disabled="disabled" required>
+							<span class="input-group-addon"><i class="fa fa-file-excel fa-fw" style="width: 78px;"></i><br><small>No. Nota Retur</small></span>
+							<input class="form-control" id="no_nota_retur" name="no_nota_retur" style="padding: 20px 15px;" placeholder="No Nota Retur" title="No Nota Retur" value="<?php echo $row['no_retur_beli'] ?>" disabled="disabled" required>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
-							<input class="form-control" id="tgl_retur" name="tgl_retur" placeholder="Tanggal Retur" title="Tanggal Retur" value="<?php echo date("d-m-Y", strtotime($row['tgl_retur'])) ?>" disabled="disabled" required>
+							<span class="input-group-addon"><i class="fa fa-calendar fa-fw" style="width: 78px;"></i><br><small>Tgl. Retur</small></span>
+							<input class="form-control" id="tgl_retur" style="padding: 20px 15px;" name="tgl_retur" placeholder="Tanggal Retur" title="Tanggal Retur" value="<?php echo date("d-m-Y", strtotime($row['tgl_retur'])) ?>" disabled="disabled" required>
 						</div>
 				<?php
 				if ($status!="1"){

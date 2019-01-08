@@ -7,7 +7,7 @@ $id=$_GET['id'];
 $id_karyawan=$_SESSION['id_karyawan'];
 ?>
 <div class="input-group">
-	<span class="input-group-addon"><i class="fa fa-file fa-fw"></i></span>
+	<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-file fa-fw" style="width: 46px;"></i><br><small>Barang</small></span>
 	<select class="select2 form-control" id="select_barang_2" name="id_barang" required>
 		<option value="" disabled selected>Nama Barang | Stok | Harga Jual Kredit</option>
 		<?php
@@ -85,29 +85,29 @@ WHERE status_konfirm=5 AND id_harga_jual=" .$row['id_harga_jual']. "");
 	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 </div>
 <div class="input-group">
-	<span class="input-group-addon"><i class="fa fa-tags fa-fw"></i></span>
-	<input class="form-control" data-min="" type="tel" id="qty" name="qty" value="" autocomplete="off" placeHolder="Qty"  required>
+	<span class="input-group-addon"><i class="fa fa-tags fa-fw" style="width: 46px;"></i><br><small>Qty</small></span>
+	<input class="form-control" data-min="" type="tel" id="qty" style="padding: 20px 15px;" name="qty" value="" autocomplete="off" placeHolder="Qty"  required>
 	<span id="sat" class="input-group-addon"></span>
 	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 </div>
 <div class="input-group">
-	<span class="input-group-addon"><i class="fa fa-money fa-fw"></i></span>
-	<input class="form-control" id="harga_jual" name="harga_jual" value="" autocomplete="off" placeHolder="Harga Jual"  readonly required>
+	<span class="input-group-addon"><i class="fa fa-money fa-fw" style="width: 46px;"></i><br><small>Harga</small></span>
+	<input class="form-control" style="padding: 20px 15px;" id="harga_jual" name="harga_jual" value="" autocomplete="off" placeHolder="Harga Jual"  readonly required>
 	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 </div>
 <div class="input-group">
-	<span class="input-group-addon"><i class="fa fa-cut fa-fw"></i></span>
-	<input class="form-control" type="tel" id="diskon_persen_1" name="diskon_persen_1" value="" autocomplete="off" placeHolder="Diskon Barang 1 (%)" required>
+	<span class="input-group-addon"><i class="fa fa-cut fa-fw"></i><br><small>Diskon 1</small></span>
+	<input class="form-control" type="tel" id="diskon_persen_1" style="padding: 20px 15px;" name="diskon_persen_1" value="" autocomplete="off" placeHolder="Diskon Barang 1 (%)" required>
 	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 </div>
 <div class="input-group">
-	<span class="input-group-addon"><i class="fa fa-cut fa-fw"></i></span>
-	<input class="form-control" type="tel" id="diskon_persen_2" name="diskon_persen_2" value="" autocomplete="off" placeHolder="Diskon Barang 2 (%)" required>
+	<span class="input-group-addon"><i class="fa fa-cut fa-fw"></i><br><small>Diskon 2</small></span>
+	<input class="form-control" type="tel" id="diskon_persen_2" style="padding: 20px 15px;" name="diskon_persen_2" value="" autocomplete="off" placeHolder="Diskon Barang 2 (%)" required>
 	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 </div>
 <div class="input-group">
-	<span class="input-group-addon"><i class="fa fa-cut fa-fw"></i></span>
-	<input class="form-control" type="tel" id="diskon_persen_3" name="diskon_persen_3" value="" autocomplete="off" placeHolder="Diskon Barang 3 (%)" required>
+	<span class="input-group-addon"><i class="fa fa-cut fa-fw"></i><br><small>Diskon 3</small></span>
+	<input class="form-control" type="tel" id="diskon_persen_3" name="diskon_persen_3" style="padding: 20px 15px;" value="" autocomplete="off" placeHolder="Diskon Barang 3 (%)" required>
 	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 </div>
 <input type="hidden" id="tenor" name="tenor" value="" required>

@@ -6,7 +6,7 @@ require_once('../../../assets/inc/publicfunc.php');
 $id=$_GET['id'];
 ?>
 <div class="input-group">
-	<span class="input-group-addon"><i class="fa fa-file fa-fw"></i></span>
+	<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-file fa-fw"></i><br><small>Barang</small></span>
 	<select class="select2 form-control" id="select_barang" name="id_barang" required>
 		<option value="" disabled selected>Nama Barang | Stok | Harga</option>
 		<?php
@@ -44,14 +44,14 @@ WHERE status_konfirm=0 AND id_harga_jual=" .$row['id_harga_jual']. "");
 	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 </div>
 <div class="input-group">
-	<span class="input-group-addon"><i class="fa fa-tags fa-fw"></i></span>
-	<input class="form-control" data-min="" type="tel" id="qty" name="qty" value="" autocomplete="off" placeHolder="Qty" required>
+	<span class="input-group-addon"><i class="fa fa-tags fa-fw" style="width: 38px"></i><br><small>Qty</small></span>
+	<input class="form-control" data-min="" type="tel" id="qty" style="padding: 20px 15px;" name="qty" value="" autocomplete="off" placeHolder="Qty" required>
 	<span class="input-group-addon" id="satuan"></span>
 	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 </div>
 <div class="input-group">
-	<span class="input-group-addon"><i class="fa fa-dollar fa-fw"></i></span>
-	<input class="form-control" id="harga_jual" name="harga_jual" value="" autocomplete="off" placeHolder="Harga Jual" readonly required>
+	<span class="input-group-addon"><i class="fa fa-dollar fa-fw" style="width: 38px"></i><br><small>Harga</small></span>
+	<input class="form-control" id="harga_jual" name="harga_jual" style="padding: 20px 15px;" value="" autocomplete="off" placeHolder="Harga Jual" readonly required>
 	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 </div>
 <input type="hidden" name="tambah_gudang_jual_detail" value="true">

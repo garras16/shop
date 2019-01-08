@@ -1,7 +1,7 @@
 <?php
-//$_SESSION['id_pelanggan']='1';
-//$_SESSION['nama_pelanggan']='TOKO ANGIN RIBUT';
-//$_SESSION['id_karyawan']=1;
+$_SESSION['id_pelanggan']='1';
+$_SESSION['nama_pelanggan']='TOKO ANGIN RIBUT';
+$_SESSION['id_karyawan']=1;
 if (isset($tambah_penjualan_post)){
 /*	$id_harga_jual[] = implode(',',$id_harga_jual);
 	for ($i=0; $i<count($id_harga_jual)-1; $i++) {
@@ -30,15 +30,14 @@ if (isset($tambah_penjualan_post)){
 		$CID=$CID[2];
 	}
 	$invoice="NJ-" .date("ymd"). '-' .sprintf("%03d",$CID+1);
-<<<<<<< HEAD
+
 	$sql = mysqli_query($con, "INSERT INTO data_nota_jual VALUES(null,'$tanggal','$invoice')");
 	$sql = mysqli_query($con, "INSERT INTO jual VALUES(null,'$tanggal','$invoice',$id_pelanggan,$id_karyawan,'$jenis_bayar',$tenor,5,0,null,$diskon_all_persen)");
 	$id_jual=mysqli_insert_id($con);
-=======
+
 	$sql = mysql_query("INSERT INTO data_nota_jual VALUES(null,'$tanggal','$invoice')");
 	$sql = mysql_query("INSERT INTO jual VALUES(null,'$tanggal','$invoice',$id_pelanggan,$id_karyawan,'$jenis_bayar',$tenor,5,0,null,$diskon_all_persen,$ppn_all_persen)");
 	$id_jual=mysql_insert_id();
->>>>>>> 9b7943bfe222914de3a2f27b498ef38c56815bee
 	$id_canvass_keluar[] = implode(',',$id_canvass_keluar);
 	
 	$sql = "INSERT INTO canvass_belum_siap VALUES(null,$id_canvass_keluar[0],'$tanggal',$id_jual,'0')";
@@ -97,17 +96,17 @@ $plafon=$row['plafon'];
 								<div id="toko"></div>
 								<input type="hidden" id="id_pelanggan" name="id_pelanggan" value="<?php echo $_SESSION['id_pelanggan'] ?>">
 								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-building fa-fw"></i></span>
-									<input id="nama_pelanggan" name="nama_pelanggan" title="Nama Pelanggan" type="text" class="form-control" placeholder="Nama Toko" value="<?php echo $_SESSION['nama_pelanggan'] ?>" readonly required>
+									<span class="input-group-addon"><i class="fa fa-building fa-fw" style="width: 66px;"></i><br><small>Pelanggan</small></span>
+									<input id="nama_pelanggan" name="nama_pelanggan" style="padding: 20px 15px;" title="Nama Pelanggan" type="text" class="form-control" placeholder="Nama Toko" value="<?php echo $_SESSION['nama_pelanggan'] ?>" readonly required>
 									<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 								</div>
 								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
-									<input id="tanggal" name="tanggal" title="Tanggal" type="text" class="form-control" placeholder="Tanggal" value="<?php echo date('d-m-Y') ?>" readonly>
+									<span class="input-group-addon"><i class="fa fa-calendar fa-fw" style="width: 66px;"></i><br><small>Tgl</small></span>
+									<input id="tanggal" style="padding: 20px 15px;" name="tanggal" title="Tanggal" type="text" class="form-control" placeholder="Tanggal" value="<?php echo date('d-m-Y') ?>" readonly>
 									<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 								</div>
 								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-dollar fa-fw"></i></span>
+									<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-dollar fa-fw"></i><br><small>Pembayaran</small></span>
 									<select class="form-control" id="select_jenis" required>
 										<option value="" disabled selected>Pilih Jenis Bayar</option>
 										<option value="Lunas">Lunas</option>
@@ -116,8 +115,8 @@ $plafon=$row['plafon'];
 									<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 								</div>
 								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-tags fa-fw"></i> (hari)</span>
-									<input id="tenor" name="tenor" title="Tenor" type="text" class="form-control" placeholder="Tenor" value="">
+									<span class="input-group-addon"><i class="fa fa-tags fa-fw" style="width: 66px;"></i><br><small>Tenor (hari)</small></span>
+									<input id="tenor" name="tenor" title="Tenor" type="text" style="padding: 20px 15px;" class="form-control" placeholder="Tenor" value="">
 									<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 								</div>
 								<div class="input-group">

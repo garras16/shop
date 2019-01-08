@@ -60,28 +60,28 @@ if ($row['user']==null){
 						<form action="" method="post">
 						<input type="hidden" name="edit_konfirm_beli_2_post" value="true">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-tags fa-fw"></i></span>
-							<input class="form-control" id="no_nota_beli" type="text" name="no_nota_beli" placeholder="No Nota Beli" value="<?php echo $row['no_nota_beli'] ?>" maxlength="50" readonly>
+							<span class="input-group-addon"><i class="fa fa-tags fa-fw" style="width: 51px;"></i><br><small>No. Nota</small></span>
+							<input class="form-control" id="no_nota_beli" type="text" name="no_nota_beli" style="padding: 20px 15px;" placeholder="No Nota Beli" value="<?php echo $row['no_nota_beli'] ?>" maxlength="50" readonly>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
-							<input class="form-control" id="tanggal" name="tanggal" placeholder="Tanggal Nota Beli" value="<?php echo date("d-m-Y",strtotime($row['tanggal'])) ?>" maxlength="50" readonly>
+							<span class="input-group-addon"><i class="fa fa-calendar fa-fw" style="width: 51px;"></i><br><small>Tgl. Nota</small></span>
+							<input class="form-control" id="tanggal" name="tanggal" placeholder="Tanggal Nota Beli" style="padding: 20px 15px;" value="<?php echo date("d-m-Y",strtotime($row['tanggal'])) ?>" maxlength="50" readonly>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-building fa-fw"></i></span>
-							<input class="form-control" id="supplier" type="text" name="supplier" placeholder="Supplier" value="<?php echo $row['nama_supplier'] ?>" maxlength="50" readonly>
+							<span class="input-group-addon"><i class="fa fa-building fa-fw" style="width: 51px;"></i><br><small>Supplier</small></span>
+							<input class="form-control" id="supplier" type="text" name="supplier" placeholder="Supplier" style="padding: 20px 15px;" value="<?php echo $row['nama_supplier'] ?>" maxlength="50" readonly>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+							<span class="input-group-addon"><i class="fa fa-user fa-fw" style="width: 51px;"></i><br><small>Penerima</small></span>
 							<input type="hidden" name="id_karyawan" value="<?php echo $id_user ?>">
-							<input class="form-control" id="penerima" type="text" name="penerima" placeholder="Penerima Barang" value="<?php echo $user ?>" maxlength="50" readonly>
+							<input class="form-control" id="penerima" style="padding: 20px 15px;" type="text" name="penerima" placeholder="Penerima Barang" value="<?php echo $user ?>" maxlength="50" readonly>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-truck fa-fw"></i></span>
+							<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-truck fa-fw"></i><br><small>Ekspedisi</small></span>
 							<select class="select2 form-control" id="select_ekspedisi" name="id_ekspedisi" required>
 								<option value="" disabled selected>Pilih Ekspedisi</option>
 								<?php 

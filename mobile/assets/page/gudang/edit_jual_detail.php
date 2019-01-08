@@ -58,22 +58,22 @@ $jenis_bayar=$row['jenis_bayar'];
 								<input type="hidden" id="jenis_bayar" name="jenis_bayar" value="<?php echo $jenis_bayar ?>">
 								<input type="hidden" id="id_pelanggan" name="id_pelanggan" value="<?php echo $row['id_pelanggan'] ?>">
 								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
-									<input id="tanggal" name="tanggal" title="Tanggal Nota Jual" type="text" class="form-control" placeholder="Tanggal" value="<?php echo $row['tgl_nota'] ?>" readonly>
+									<span class="input-group-addon"><i class="fa fa-calendar fa-fw" style="width: 67px;"></i><br><small>Tgl Nota</small></span>
+									<input id="tanggal" name="tanggal" title="Tanggal Nota Jual" type="text" style="padding: 20px 15px;" class="form-control" placeholder="Tanggal" value="<?php echo $row['tgl_nota'] ?>" readonly>
 									<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 								</div>
 								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-building fa-fw"></i></span>
-									<input id="nama_pelanggan" name="nama_pelanggan" title="Nama Pelanggan" type="text" class="form-control" placeholder="Nama Toko" value="<?php echo $row['nama_pelanggan'] ?>" readonly>
+									<span class="input-group-addon"><i class="fa fa-building fa-fw" style="width: 67px;"></i><br><small>Pelanggan</small></span>
+									<input id="nama_pelanggan" name="nama_pelanggan" title="Nama Pelanggan" type="text" style="padding: 20px 15px;" class="form-control" placeholder="Nama Toko" value="<?php echo $row['nama_pelanggan'] ?>" readonly>
 									<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 								</div>
 								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-file fa-fw"></i></span>
-									<input id="invoice" name="invoice" title="No Nota Jual" type="text" class="form-control" placeholder="Invoice" value="<?php echo $row['invoice'] ?>" readonly>
+									<span class="input-group-addon"><i class="fa fa-file fa-fw" style="width: 67px;"></i><br><small>No. Nota</small></span>
+									<input id="invoice" style="padding: 20px 15px;" name="invoice" title="No Nota Jual" type="text" class="form-control" placeholder="Invoice" value="<?php echo $row['invoice'] ?>" readonly>
 									<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 								</div>
 								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-dollar fa-fw"></i></span>
+									<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-dollar fa-fw" style="width: 67px;"></i><br><small>Pembayaran</small></span>
 									<select class="select2 form-control" id="select_jenis" disabled required>
 										<option value="" disabled selected>Pilih Jenis Bayar</option>
 										<option value="Lunas">Lunas</option>
@@ -83,8 +83,8 @@ $jenis_bayar=$row['jenis_bayar'];
 								</div>
 								<input id="tenor" name="tenor" type="hidden" value="<?php echo $row['tenor'] ?>" >
 								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-tags fa-fw"></i></span>
-									<input id="tenor_view" name="tenor_view" title="Tenor" type="text" class="form-control" placeholder="Tenor" value="<?php echo $row['tenor'] ?> hari" readonly>
+									<span class="input-group-addon"><i class="fa fa-tags fa-fw" style="width: 67px;"></i><br><small>Tenor</small></span>
+									<input id="tenor_view" name="tenor_view" style="padding: 20px 15px;" title="Tenor" type="text" class="form-control" placeholder="Tenor" value="<?php echo $row['tenor'] ?> hari" readonly>
 									<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 								</div>
 								<div class="text-right">

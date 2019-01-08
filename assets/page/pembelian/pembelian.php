@@ -274,7 +274,7 @@ $(document).ready(function(){
 			$('#harian_2').inputmask('decimal', {autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 			$('#lembur_2').inputmask('decimal', {autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 		});
-	})
+	});
 
 	$('#tgl_dari').daterangepicker({
 		locale: {

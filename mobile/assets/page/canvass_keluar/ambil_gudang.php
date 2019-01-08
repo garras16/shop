@@ -86,7 +86,7 @@ while($row=mysqli_fetch_array($sql)){
 				<form method="post" action="">
 				<input type="hidden" name="tambah_ambil_gudang_mobil_post" value="true">
 				<div class="input-group">
-					<span class="input-group-addon"><i class="fa fa-truck fa-fw"></i></span>
+					<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-truck fa-fw"></i><br><small>Mobil</small></span>
 					<select class="form-control" id="select_mobil" name="id_mobil" required>
 						<option value="" disabled selected>Pilih Mobil Canvass</option>
 						<?php 

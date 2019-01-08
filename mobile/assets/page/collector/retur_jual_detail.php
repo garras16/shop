@@ -114,40 +114,40 @@ if ($row['status_bayar']=='1'){
 					</div>
 			<div class="col-md-6">
 				<div class="input-group">
-					<span class="input-group-addon"><i class="fa fa-building fa-fw"></i></span>
-					<input class="form-control" id="pelanggan" name="pelanggan" placeholder="Nama Pelanggan" title="Nama Pelanggan" value="<?php echo $row['nama_pelanggan'] ?>" disabled="disabled" required>
+					<span class="input-group-addon"><i class="fa fa-building fa-fw" style="width: 75px;"></i><br><small>Pelanggan</small></span>
+					<input class="form-control" id="pelanggan" name="pelanggan" style="padding: 20px 15px;" placeholder="Nama Pelanggan" title="Nama Pelanggan" value="<?php echo $row['nama_pelanggan'] ?>" disabled="disabled" required>
 				</div>
 			</div>
 			<div class="col-md-6">
 				<div class="input-group">
-					<span class="input-group-addon"><i class="fa fa-file fa-fw"></i></span>
-					<input class="form-control" id="no_nota_jual" name="no_nota_jual" placeholder="No Nota Jual" title="No Nota Jual" value="<?php echo $row['invoice'] ?>" disabled="disabled" required>
+					<span class="input-group-addon"><i class="fa fa-file fa-fw" style="width: 75px;"></i><br><small>No. Nota</small></span>
+					<input class="form-control" style="padding: 20px 15px;" id="no_nota_jual" name="no_nota_jual" placeholder="No Nota Jual" title="No Nota Jual" value="<?php echo $row['invoice'] ?>" disabled="disabled" required>
 				</div>
 			</div>
 			<div class="col-md-6">
 				<div class="input-group">
-					<span class="input-group-addon"><i class="fa fa-file-excel fa-fw"></i></span>
-					<input class="form-control" id="no_nota_retur" name="no_nota_retur" placeholder="No Nota Retur Jual" title="No Nota Retur Jual" value="<?php echo $row['no_retur_jual'] ?>" disabled="disabled" required>
+					<span class="input-group-addon"><i class="fa fa-file-excel fa-fw" style="width: 75px;"></i><br><small>No. Retur Jual</small></span>
+					<input class="form-control" id="no_nota_retur" name="no_nota_retur" placeholder="No Nota Retur Jual" style="padding: 20px 15px;" title="No Nota Retur Jual" value="<?php echo $row['no_retur_jual'] ?>" disabled="disabled" required>
 				</div>
 			</div>
 			<div class="col-md-6">
 				<div class="input-group">
-					<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
-					<input class="form-control" id="tgl_retur" name="tgl_retur" placeholder="Tanggal Retur" title="Tanggal Retur" value="<?php echo date("d-m-Y", strtotime($row['tgl_retur'])) ?>" disabled="disabled" required>
+					<span class="input-group-addon"><i class="fa fa-calendar fa-fw" style="width: 75px;"></i><br><small>Tgl. Retur</small></span>
+					<input class="form-control" id="tgl_retur" name="tgl_retur" placeholder="Tanggal Retur" style="padding: 20px 15px;" title="Tanggal Retur" value="<?php echo date("d-m-Y", strtotime($row['tgl_retur'])) ?>" disabled="disabled" required>
 				</div>
 			</div>
 			<div class="col-md-6">
 				<div class="input-group">
-					<span class="input-group-addon"><i class="fa fa-tags fa-fw"></i></span>
+					<span class="input-group-addon"><i class="fa fa-tags fa-fw" style="width: 75px;"></i><br><small>Stat. Bayar</small></span>
 					<?php if ($row['status_bayar']=='2') echo '<a data-toggle="modal" data-target="#myModal3">'; ?>
-					<input class="form-control" id="status_bayar" name="status_bayar" placeholder="Status Bayar" title="Status Bayar" value="<?php echo $status_bayar ?>" readonly required>
+					<input class="form-control" id="status_bayar" name="status_bayar" style="padding: 20px 15px;" placeholder="Status Bayar" title="Status Bayar" value="<?php echo $status_bayar ?>" readonly required>
 					<?php if ($row['status_bayar']=='2') echo '</a>'; ?>
 				</div>
 			</div>
 			<div class="col-md-6">
 				<div class="input-group">
-					<span class="input-group-addon"><i class="fa fa-bookmark fa-fw"></i></span>
-					<input class="form-control" id="status_retur" name="status_retur" placeholder="Status Retur" title="Status Retur" value="<?php echo $status_retur ?>" disabled="disabled" required>
+					<span class="input-group-addon"><i class="fa fa-bookmark fa-fw" style="width: 75px;"></i><br><small>Stat. Retur</small></span>
+					<input class="form-control" id="status_retur" name="status_retur" style="padding: 20px 15px;" placeholder="Status Retur" title="Status Retur" value="<?php echo $status_retur ?>" disabled="disabled" required>
 				</div>
 			</div>
 			<div class="clearfix"></div>
@@ -288,7 +288,7 @@ if ($status=="1" or $locked){
 					<input type="hidden" name="tambah_retur_jual_detail_post" value="true">
 					<div class="col-md-12">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-file fa-fw"></i></span>
+						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-file fa-fw"></i><br><small>Barang</small></span>
 						<select id="select_barang" name="id_jual_detail" class="select2 form-control" required="true">
 							<option value="" disabled selected>-= Pilih Barang Retur =-</option>
 							<?php 
@@ -312,14 +312,14 @@ WHERE id_jual=$id_jual");
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-shopping-cart fa-fw"></i></span>
-						<input id="qty_retur" name="qty_retur" type="tel" class="form-control" placeholder="Qty Retur" min="0" required>
+						<span class="input-group-addon"><i class="fa fa-shopping-cart fa-fw" style="width: 38px;"></i><br><small>Qty</small></span>
+						<input id="qty_retur" name="qty_retur" style="padding: 20px 15px;" type="tel" class="form-control" placeholder="Qty Retur" min="0" required>
 						<span class="input-group-addon" id="det_satuan"></span>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-dollar fa-fw"></i></span>
-						<input id="harga_retur" name="harga_retur" type="tel" class="form-control" placeholder="Harga Retur" required>
+						<span class="input-group-addon"><i class="fa fa-dollar fa-fw" style="width: 38px;"></i><br><small>Harga</small></span>
+						<input id="harga_retur" name="harga_retur" style="padding: 20px 15px;" type="tel" class="form-control" placeholder="Harga Retur" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					</div>
@@ -346,7 +346,7 @@ WHERE id_jual=$id_jual");
 					<input type="hidden" id="id_retur_jual_detail" name="id_retur_jual_detail" value="">
 					<div class="col-md-12">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-file fa-fw"></i></span>
+						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-file fa-fw"></i><br><small>Barang</small></span>
 						<select id="select_barang_2" class="select2 form-control" disabled required="true">
 							<option value="" disabled selected>-= Pilih Barang Retur =-</option>
 							<?php 
@@ -376,14 +376,14 @@ WHERE id_jual=$id_jual");
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-shopping-cart fa-fw"></i></span>
-						<input id="qty_retur_2" name="qty_retur" type="tel" class="form-control" placeholder="Qty Retur" min="0" required>
+						<span class="input-group-addon"><i class="fa fa-shopping-cart fa-fw" style="width: 38px;"></i><br><small>Qty</small></span>
+						<input id="qty_retur_2" style="padding: 20px 15px;" name="qty_retur" type="tel" class="form-control" placeholder="Qty Retur" min="0" required>
 						<span class="input-group-addon" id="det_satuan_2"></span>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-dollar fa-fw"></i></span>
-						<input id="harga_retur_2" name="harga_retur" type="tel" class="form-control" placeholder="Harga Retur" required>
+						<span class="input-group-addon"><i class="fa fa-dollar fa-fw" style="width: 38px;"></i><br><small>Harga</small></span>
+						<input id="harga_retur_2" name="harga_retur" type="tel" class="form-control" style="padding: 20px 15px;" placeholder="Harga Retur" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					</div>

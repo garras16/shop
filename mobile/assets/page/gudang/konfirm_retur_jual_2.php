@@ -47,20 +47,20 @@ $status=$row['status'];
 					</div>
 					<div class="x_content">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-building fa-fw"></i></span>
-							<input class="form-control" id="pelanggan" name="pelanggan" placeholder="Nama Pelanggan" title="Nama Pelanggan" value="<?php echo $row['nama_pelanggan'] ?>" disabled="disabled" required>
+							<span class="input-group-addon"><i class="fa fa-building fa-fw" style="width: 78px;"></i><br><small>Pelanggan</small></span>
+							<input class="form-control" id="pelanggan" name="pelanggan"  style="padding: 20px 15px;"placeholder="Nama Pelanggan" title="Nama Pelanggan" value="<?php echo $row['nama_pelanggan'] ?>" disabled="disabled" required>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-file fa-fw"></i></span>
-							<input class="form-control" id="no_nota_jual" name="no_nota_jual" placeholder="No Nota Jual" title="No Nota Jual" value="<?php echo $row['invoice'] ?>" disabled="disabled" required>
+							<span class="input-group-addon"><i class="fa fa-file fa-fw" style="width: 78px;"></i><br><small>No. Nota Jual</small></span>
+							<input class="form-control" id="no_nota_jual" name="no_nota_jual" style="padding: 20px 15px;" placeholder="No Nota Jual" title="No Nota Jual" value="<?php echo $row['invoice'] ?>" disabled="disabled" required>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-file-excel fa-fw"></i></span>
-							<input class="form-control" id="no_nota_retur" name="no_nota_retur" placeholder="No Nota Retur" title="No Nota Retur" value="<?php echo $row['no_retur_jual'] ?>" disabled="disabled" required>
+							<span class="input-group-addon"><i class="fa fa-file-excel fa-fw" style="width: 78px;"></i><br><small>No. Nota Retur</small></span>
+							<input class="form-control" id="no_nota_retur" name="no_nota_retur" style="padding: 20px 15px;" placeholder="No Nota Retur" title="No Nota Retur" value="<?php echo $row['no_retur_jual'] ?>" disabled="disabled" required>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
-							<input class="form-control" id="tgl_retur" name="tgl_retur" placeholder="Tanggal Retur" title="Tanggal Retur" value="<?php echo date("d-m-Y", strtotime($row['tgl_retur'])) ?>" disabled="disabled" required>
+							<span class="input-group-addon"><i class="fa fa-calendar fa-fw" style="width: 78px;"></i><br><small>Tgl. Retur</small></span>
+							<input class="form-control" id="tgl_retur" name="tgl_retur" style="padding: 20px 15px;" placeholder="Tanggal Retur" title="Tanggal Retur" value="<?php echo date("d-m-Y", strtotime($row['tgl_retur'])) ?>" disabled="disabled" required>
 						</div>
 				<?php
 				if ($status!="1"){
@@ -107,7 +107,7 @@ FROM
         ON (rak.id_gudang = gudang.id_gudang)
  WHERE retur_jual_detail.id_retur_jual=$id
  GROUP BY retur_jual_detail.id_jual_detail");
- echo mysqli_error();
+ echo mysqli_error($con);
 while($row=mysqli_fetch_array($sql)){
 ($row['qty_masuk']=='' ? $qty_masuk='' : $qty_masuk=$row['qty_masuk']. ' ' .$row['nama_satuan']);
 	echo '			<tr>

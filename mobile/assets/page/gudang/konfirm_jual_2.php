@@ -4,14 +4,12 @@ $sql=mysqli_query($con, "SELECT * FROM jual WHERE id_jual=$id");
 if (mysqli_num_rows($sql)=='0'){
 	_alert("Nota Jual sudah dihapus. Proses dibatalkan.");
 	_direct("?page=gudang&mode=konfirm_jual");
-	break;
 }
 if (isset($buat_nota_siap_kirim_post)){
 	$sql=mysqli_query($con, "SELECT * FROM jual_detail WHERE id_jual_detail=$id_jual_detail");
 	if (mysqli_num_rows($sql)=='0'){
 		_alert("Barang sudah dihapus. Proses dibatalkan.");
 		_direct("?page=gudang&mode=konfirm_jual_2&id=$id");
-		break;
 	}
 	$sql=mysqli_query($con, "SELECT *
 FROM
@@ -26,7 +24,6 @@ FROM
 	if (mysqli_num_rows($sql)>0){
 		_alert("Input gagal karena barang sudah tidak aktif.");
 		_direct("?page=gudang&mode=konfirm_jual_2&id=$id");
-		break;
 	}
 	$tgl = explode("/", $expire);
 	$expire = $tgl[2] ."-". $tgl[1] ."-". $tgl[0];
