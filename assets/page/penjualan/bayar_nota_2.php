@@ -110,37 +110,37 @@ $total_nota=$row['total']-($row['total']*$row['diskon_all_persen']/100);
 					<div class="x_content">
 						<form action="" method="post" onsubmit="return valid2();">
 						<input type="hidden" name="tambah_bayar_nota_jual_post" value="true">
-						<div class="col-xs-7">
+						<div class="col-md-6">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-building fa-fw"></i><br><small>Pelanggan</small></span>
 								<input class="form-control" style="padding: 20px 15px;" value="<?php echo $row['nama_pelanggan']; ?>" title="Nama Pelanggan" readonly>
 							</div>
 						</div>
-						<div class="col-xs-6">
+						<div class="col-md-6">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i><br><small>Tgl. Nota</small></span>
 								<input class="form-control" style="padding: 20px 15px;" value="<?php echo date("d-m-Y", strtotime($row['tgl_nota'])); ?>" title="Tanggal Nota Jual" readonly>
 							</div>
 						</div>
-						<div class="col-xs-6">
+						<div class="col-md-6">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-file fa-fw"></i><br><small>No. Nota Jual</small></span>
 								<input class="form-control" style="padding: 20px 15px;" name="no_nota_jual" value="<?php echo $no_nota_jual ?>" title="No Nota Jual" readonly>
 							</div>
 						</div>
-						<div class="col-xs-6">
+						<div class="col-md-6">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-money fa-fw"></i><br><small>Ttl. Nota Jual</small></span>
 								<input class="form-control" style="padding: 20px 15px;" id="total_nota" value="<?php echo $total_nota ?>" title="Total Nota Jual (Rp)" readonly>
 							</div>
 						</div>
-						<div class="col-xs-6">
+						<div class="col-md-6">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-info fa-fw"></i><br><small>Jenis</small></span>
 								<input class="form-control" style="padding: 20px 15px;" id="jenis" name="jenis" value="<?php echo $jenis ?>" title="Jenis" readonly>
 							</div>
 						</div>
-						<div class="col-xs-6">
+						<div class="col-md-6">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-money fa-fw"></i><br><small>Sisa</small></span>
 								<input class="form-control" style="padding: 20px 15px;" id="sisa_nota" name="sisa_nota" value="<?php echo $sisa_nota ?>" title="Sisa Nota (Rp)" readonly>
@@ -161,7 +161,7 @@ if ($jenis=='Retur'){
 						</div>
 						<?php
 if ($jenis=='Transfer' || $jenis=='Giro'){
-	echo '<div class="col-xs-6">
+	echo '<div class="col-md-6">
 			Pengirim :<br>
 			<div class="input-group">
 			<span class="input-group-addon"><i class="fa fa-building fa-fw"></i><br><small>Nama Bank</small></span>
@@ -179,7 +179,7 @@ if ($jenis=='Transfer' || $jenis=='Giro'){
 			<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 			</div>
 		</div>';
-		echo '<div class="col-xs-6">
+		echo '<div class="col-md-6">
 			Penerima :<br>
 			<div class="input-group">
 			<span class="input-group-addon"><i class="fa fa-building fa-fw"></i><br><small>Nama Bank</small></span>
@@ -199,7 +199,7 @@ if ($jenis=='Transfer' || $jenis=='Giro'){
 		</div>';
 }
 if ($jenis=='Giro'){
-		echo '<div class="col-xs-6">
+		echo '<div class="col-md-6">
 			Giro :
 			<div class="input-group">
 			<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i><br><small>Jth. tempo</small></span>
@@ -207,7 +207,7 @@ if ($jenis=='Giro'){
 			<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 			</div>
 		</div>';
-		echo '<div class="col-xs-6">
+		echo '<div class="col-md-6">
 			&nbsp;
 			<div class="input-group">
 			<span class="input-group-addon"><i class="fa fa-file fa-fw"></i><br><small>Ket.</small></span>

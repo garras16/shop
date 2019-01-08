@@ -4,7 +4,7 @@ if (isset($_GET['act'])){
 	if ($_GET['act']=='1') $act=1;
 	if ($_GET['act']=='2') $act=2;
 	
-	$sql=mysqli_query($con, "UPDATE penagihan_retur_detail SET status_retur=$act WHERE id_penagihan_retur_detail=$id");
+	$sql=mysqli_query($con, "UPDATE bayar_nota_jual SET status_giro=$act WHERE id_bayar=$id");
 	if ($sql){
 		$pesan="INPUT BERHASIL";
 	} else {
@@ -34,9 +34,11 @@ if (isset($_GET['act'])){
 				<table id="table1" class="table table-bordered table-striped table-responsive">
 				<thead>
 					<tr>
-						<th>Tanggal Retur Jual</th>
-						<th>No Retur Jual</th>
-						<th>Jumlah Retur (Rp)</th>
+						<th>Tanggal Nota Jual</th>
+						<th>No Nota Jual</th>
+						<th>Nama Pelanggan</th>
+						<th>Tgl Jatuh Tempo</th>
+						<th>Status Giro</th>
 						<th></th>
 					</tr>
 				</thead>
@@ -44,18 +46,30 @@ if (isset($_GET['act'])){
 				<?php
 $sql=mysqli_query($con, "SELECT *
 FROM
-    penagihan_retur_detail
-    INNER JOIN penagihan_detail 
-        ON (penagihan_retur_detail.id_penagihan_detail = penagihan_detail.id_penagihan_detail)
-WHERE status_retur=0");
+    bayar_nota_jual
+    INNER JOIN jual 
+        ON (bayar_nota_jual.no_nota_jual = jual.invoice)
+    INNER JOIN pelanggan 
+        ON (jual.id_pelanggan = pelanggan.id_pelanggan)
+WHERE jenis='Giro' AND tgl_bayar BETWEEN NOW() - INTERVAL 30 DAY AND NOW()");
 while($row=mysqli_fetch_array($sql)){
+//STATUS GIRO:
+if ($row['status_giro']==0) $status_giro='GANTUNG';
+if ($row['status_giro']==1) $status_giro='TERIMA';
+if ($row['status_giro']==2) $status_giro='TOLAK';
 	echo '			<tr>
-						<td>' .date("d-m-Y",strtotime($row['tgl_bayar'])). '</td>
-						<td>' .$row['no_retur_jual']. '</td>
-						<td>' .format_uang($row['jumlah_retur']). '</td>
-						<td><a href="?page=penjualan&mode=pencairan_giro&id=' .$row['id_penagihan_retur_detail']. '&act=1" class="btn btn-primary btn-xs"><i class="fa fa-check"></i> Cair</a>
-						<a href="?page=penjualan&mode=pencairan_giro&id=' .$row['id_penagihan_retur_detail']. '&act=2" class="btn btn-danger btn-xs"><i class="fa fa-times"></i> Tolak</a></td>
-					</tr>';
+						<td>' .date("d-m-Y",strtotime($row['tgl_nota'])). '</td>
+						<td>' .$row['no_nota_jual']. '</td>
+						<td>' .$row['nama_pelanggan']. '</td>
+						<td>' .date("d-m-Y",strtotime($row['jatuh_tempo'])). '</td>
+						<td>' .$status_giro. '</td>';
+if ($row['status_giro']==0){
+	echo '				<td><a href="?page=penjualan&mode=pencairan_giro&id=' .$row['id_bayar']. '&act=1" class="btn btn-primary btn-xs"><i class="fa fa-times"></i> Terima</a>
+						<a href="?page=penjualan&mode=pencairan_giro&id=' .$row['id_bayar']. '&act=2" class="btn btn-danger btn-xs"><i class="fa fa-times"></i> Tolak</a></td>';
+} else {
+	echo '				<td></td>';
+}
+echo '				</tr>';
 }
 ?>
 					
