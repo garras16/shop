@@ -60,7 +60,6 @@
 	<!-- Custom Theme Scripts -->
     <script src="js/custom.min.js"></script>
     <script src="js/shop.js"></script>
-    <script src="vendors/autoNumberic/autoNumeric.js"></script>
     <script src="vendors/numeric/numeric.js"></script>
 	</body>
   
