@@ -7,7 +7,7 @@ if (!isset($_GET['id'])) die();
 $barcode=$_GET['id'];
 $id_rak=$_GET['rak'];
 $id_canvass=$_GET['canvass'];
-$sql = mysql_query("SELECT *
+$sql = mysqli_query($con, "SELECT *
     , SUM(barang_masuk_rak.stok) AS total_stok
 FROM
     barang_masuk_rak
@@ -23,7 +23,7 @@ FROM
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE barang_masuk_rak.stok > 0 AND barang_masuk_rak.id_rak=$id_rak AND barang.barcode='$barcode' AND barang.status=1 
 GROUP BY barang.id_barang, barang_masuk_rak.expire");
-	if (mysql_num_rows($sql)=='0') die();
+	if (mysqli_num_rows($sql)=='0') die();
 	
 ?>
 <input type="hidden" id="id_barang_masuk_rak" name="id_barang_masuk_rak" value="">
@@ -35,10 +35,10 @@ GROUP BY barang.id_barang, barang_masuk_rak.expire");
 	<select class="form-control" id="select_barang" name="id_barang" required>
 		<option value="" disabled selected>Nama Barang | Stok | Exp.</option>
 	<?php
-		while ($row=mysql_fetch_array($sql)){
-			$sql2=mysql_query("SELECT SUM(qty) AS qty FROM canvass_keluar_barang
+		while ($row=mysqli_fetch_array($sql)){
+			$sql2=mysqli_query($con, "SELECT SUM(qty) AS qty FROM canvass_keluar_barang
 WHERE id_barang=" .$row['id_barang']. " AND id_rak=" .$row['id_rak']. " AND expire='" .$row['expire']. "' AND stok IS NULL");
-			$r=mysql_fetch_array($sql2);
+			$r=mysqli_fetch_array($sql2);
 			$total_stok=$row['total_stok']-$r['qty'];
 			if ($total_stok>=$row['stok_minimal']) echo '<option data-nama="'.$row['nama_barang'].'" data-stok="'.$total_stok.'" data-min="'.$row['min_order'].'" data-id-bmr="'.$row['id_barang_masuk_rak'].'" data-expire="'.$row['expire'].'" data-satuan="' .$row['nama_satuan']. '" value="' .$row['id_barang']. '">' .$row['nama_barang']. ' | Stok : ' .$total_stok. ' ' .$row['nama_satuan']. ' | ' .date("d-m-Y",strtotime($row['expire'])). '</option>';
 		}

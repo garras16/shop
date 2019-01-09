@@ -7,7 +7,7 @@ $sales=$_POST['sales'];
 $kota=$_POST['kota'];
 $barcode=$_POST['barcode'];
 $nama_customer=$_POST['nama'];
-$sql=mysql_query("INSERT INTO checkin (tanggal, barcode, customer, sales, gps, kota) VALUES('$tanggal','$barcode','$nama_customer','$sales','$gps','$kota')");
+$sql=mysqli_query($con, "INSERT INTO checkin (tanggal, barcode, customer, sales, gps, kota) VALUES('$tanggal','$barcode','$nama_customer','$sales','$gps','$kota')");
 if ($sql) {
 	echo "sukses";
 } else {

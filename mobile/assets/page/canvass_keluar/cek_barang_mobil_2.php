@@ -3,24 +3,24 @@ $id_karyawan=$_SESSION['id_karyawan'];
 if (isset($tambah_cek_barang_mobil_post)){
 	$tgl = explode("/", $expire);
 	$expire = $tgl[2] ."-". $tgl[1] ."-". $tgl[0];
-	$sql=mysql_query("SELECT *,SUM(qty) as qty FROM canvass_keluar_barang WHERE id_canvass_keluar=$id AND id_barang=$id_barang AND expire='$expire' AND qty_cek IS NULL HAVING SUM(qty)>=$qty_cek");
-	if (mysql_num_rows($sql)>0){
-		$sql=mysql_query("SELECT * FROM canvass_keluar_barang WHERE id_canvass_keluar=$id AND id_barang=$id_barang AND expire='$expire' AND qty_cek IS NULL");
+	$sql=mysqli_query($con, "SELECT *,SUM(qty) as qty FROM canvass_keluar_barang WHERE id_canvass_keluar=$id AND id_barang=$id_barang AND expire='$expire' AND qty_cek IS NULL HAVING SUM(qty)>=$qty_cek");
+	if (mysqli_num_rows($sql)>0){
+		$sql=mysqli_query($con, "SELECT * FROM canvass_keluar_barang WHERE id_canvass_keluar=$id AND id_barang=$id_barang AND expire='$expire' AND qty_cek IS NULL");
 		$total_qty_ambil=0;
 		$tmp_qty_ambil=$qty_cek;
-		while ($row=mysql_fetch_array($sql)){
+		while ($row=mysqli_fetch_array($sql)){
 			$id_canvass_keluar_barang=$row['id_canvass_keluar_barang'];
 			$id_barang_masuk_rak=$row['id_barang_masuk_rak'];
 			$stok=$row['qty'];
 			if ($total_qty_ambil==$qty_cek) break;
 			if ($tmp_qty_ambil>=$stok){
 				$qty_ambil=$stok;
-				$sql2=mysql_query("UPDATE canvass_keluar_barang SET qty_cek=$qty_ambil,stok=$qty_ambil WHERE id_canvass_keluar_barang=$id_canvass_keluar_barang");
+				$sql2=mysqli_query($con, "UPDATE canvass_keluar_barang SET qty_cek=$qty_ambil,stok=$qty_ambil WHERE id_canvass_keluar_barang=$id_canvass_keluar_barang");
 				$total_qty_ambil+=$stok;
 				$tmp_qty_ambil-=$stok;
 			} else {
 				$qty_ambil=$tmp_qty_ambil;
-				$sql2=mysql_query("UPDATE canvass_keluar_barang SET qty_cek=$tmp_qty_ambil,stok=$tmp_qty_ambil WHERE id_canvass_keluar_barang=$id_canvass_keluar_barang");
+				$sql2=mysqli_query($con, "UPDATE canvass_keluar_barang SET qty_cek=$tmp_qty_ambil,stok=$tmp_qty_ambil WHERE id_canvass_keluar_barang=$id_canvass_keluar_barang");
 				$total_qty_ambil+=$tmp_qty_ambil;
 				$tmp_qty_ambil-=$stok;
 			}
@@ -31,38 +31,38 @@ if (isset($tambah_cek_barang_mobil_post)){
 	_direct("?page=canvass_keluar&mode=cek_barang_mobil_2&id=$id");
 }
 if (isset($_GET['del'])){
-	$sql=mysql_query("UPDATE canvass_keluar_barang SET qty_cek=null,stok=null WHERE id_canvass_keluar=$id AND id_barang=" .$_GET['del']. "");
+	$sql=mysqli_query($con, "UPDATE canvass_keluar_barang SET qty_cek=null,stok=null WHERE id_canvass_keluar=$id AND id_barang=" .$_GET['del']. "");
 	_direct("?page=canvass_keluar&mode=cek_barang_mobil_2&id=$id");
 }
 if (isset($selesai_cek_barang_mobil_post)){
 	for ($i=0; $i<count($id_barang);$i++){
-		$sql=mysql_query("SELECT * FROM canvass_keluar_barang WHERE id_canvass_keluar=$id AND id_barang=$id_barang[$i] HAVING SUM(qty_cek)=$qty_cek[$i]");
-		if (mysql_num_rows($sql)==0){
+		$sql=mysqli_query($con, "SELECT * FROM canvass_keluar_barang WHERE id_canvass_keluar=$id AND id_barang=$id_barang[$i] HAVING SUM(qty_cek)=$qty_cek[$i]");
+		if (mysqli_num_rows($sql)==0){
 			_alert("Ada perubahan jumlah barang.");
 			break;
 		}
 	}
-	$sql=mysql_query("SELECT * FROM canvass_keluar_barang WHERE id_canvass_keluar=$id AND qty_cek IS NULL");
-	if (mysql_num_rows($sql)>0) {
+	$sql=mysqli_query($con, "SELECT * FROM canvass_keluar_barang WHERE id_canvass_keluar=$id AND qty_cek IS NULL");
+	if (mysqli_num_rows($sql)>0) {
 		_alert("Masih ada barang yang belum discan");
 	} else {
-		$sql=mysql_query("UPDATE canvass_keluar SET status='1' WHERE id_canvass_keluar=$id");
+		$sql=mysqli_query($con, "UPDATE canvass_keluar SET status='1' WHERE id_canvass_keluar=$id");
 		_direct("?page=canvass_keluar&mode=cek_barang_mobil");
 	}
 }
 
-	$sql=mysql_query("SELECT *,canvass_keluar.status
+	$sql=mysqli_query($con, "SELECT *,canvass_keluar.status
 FROM
     canvass_keluar
     LEFT JOIN kendaraan 
         ON (canvass_keluar.id_mobil = kendaraan.id_kendaraan)
 	WHERE id_canvass_keluar=$id");
-	$row=mysql_fetch_array($sql);
+	$row=mysqli_fetch_array($sql);
 	$tgl_canvass=$row['tanggal_canvass'];
 	$nama_mobil=$row['nama_kendaraan'];
 	$plat=$row['plat'];
 	$status=$row['status'];
-	$sql2=mysql_query("SELECT *
+	$sql2=mysqli_query($con, "SELECT *
 FROM
     canvass_keluar_karyawan
     INNER JOIN karyawan 
@@ -70,9 +70,9 @@ FROM
 	INNER JOIN users 
         ON (karyawan.id_karyawan = users.id_karyawan)
 	WHERE id_canvass_keluar=$id");
-	$baris=mysql_num_rows($sql2);
-	$sql=mysql_query("SELECT * FROM canvass_keluar_barang WHERE id_canvass_keluar=$id AND qty_cek IS NULL");
-	(mysql_num_rows($sql)>0 ? $locked=true : $locked=false);
+	$baris=mysqli_num_rows($sql2);
+	$sql=mysqli_query($con, "SELECT * FROM canvass_keluar_barang WHERE id_canvass_keluar=$id AND qty_cek IS NULL");
+	(mysqli_num_rows($sql)>0 ? $locked=true : $locked=false);
 ?>
 <div class="right_col loading" role="main">
 	<div class="">
@@ -95,7 +95,7 @@ FROM
 							<tr><td width="40%">No Pol</td><td>' .$plat. '</td></tr>';
 	
 	echo '					<tr><td rowspan="' .$baris. '">Nama Karyawan</td>';
-	while ($row2=mysql_fetch_array($sql2)){
+	while ($row2=mysqli_fetch_array($sql2)){
 		echo '				<td>- ' .$row2['nama_karyawan']. ' ( ' .$row2['posisi']. ' )</td></tr>';
 	}
 	echo '</tr>';
@@ -118,7 +118,7 @@ FROM
 							</thead>
 							<tbody>
 <?php
-	$sql=mysql_query("SELECT *,SUM(qty) as qty, SUM(qty_cek) as qty_cek
+	$sql=mysqli_query($con, "SELECT *,SUM(qty) as qty, SUM(qty_cek) as qty_cek
 FROM
     canvass_keluar_barang
     INNER JOIN barang 
@@ -132,7 +132,7 @@ FROM
 WHERE id_canvass_keluar=$id
 GROUP BY canvass_keluar_barang.id_barang,canvass_keluar_barang.id_rak");
 $CEK_VALID=0;
-	while ($row=mysql_fetch_array($sql)){
+	while ($row=mysqli_fetch_array($sql)){
 	($row['qty_cek']==$row['qty'] ? $style="" : $style="color:red;");
 	echo '<tr>
 				<td style="vertical-align:middle;text-align:center;' .$style. '">' .$row['nama_barang']. '</td>';
@@ -166,8 +166,8 @@ echo '		</tr>';
 						<form method="post">
 							<input type="hidden" name="selesai_cek_barang_mobil_post" value="true">
 						<?php
-							$sql=mysql_query("SELECT id_barang, SUM(qty_cek) AS qty_cek FROM canvass_keluar_barang WHERE id_canvass_keluar=$id GROUP BY id_barang,id_rak");
-							while ($row=mysql_fetch_array($sql)){
+							$sql=mysqli_query($con, "SELECT id_barang, SUM(qty_cek) AS qty_cek FROM canvass_keluar_barang WHERE id_canvass_keluar=$id GROUP BY id_barang,id_rak");
+							while ($row=mysqli_fetch_array($sql)){
 								echo '<input type="hidden" name="id_barang[]" value="' .$row['id_barang']. '">';
 								echo '<input type="hidden" name="qty_cek[]" value="' .$row['qty_cek']. '">';
 							}

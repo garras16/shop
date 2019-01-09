@@ -5,15 +5,15 @@ require_once('../../../assets/inc/config.php');
 require_once('../../../assets/inc/publicfunc.php');
 if (!isset($_GET['id'])) die();
 $barcode=$_GET['id'];
-$sql = mysql_query("SELECT * 
+$sql = mysqli_query($con, "SELECT * 
 FROM
     gudang
     INNER JOIN rak 
         ON (gudang.id_gudang = rak.id_gudang) WHERE nama_rak='$barcode'");
-if (mysql_num_rows($sql)=='0'){
+if (mysqli_num_rows($sql)=='0'){
 	die();
 } else {
-	$row=mysql_fetch_array($sql);
+	$row=mysqli_fetch_array($sql);
 }
 ?>
 <input type="hidden" id="id_rak" name="id_rak" value="<?php echo $row['id_rak'] ?>" >

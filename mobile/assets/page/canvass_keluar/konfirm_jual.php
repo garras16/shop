@@ -2,22 +2,22 @@
 $id_karyawan=$_SESSION['id_karyawan'];
 if (isset($batal_canvass_cek_barang_post)){
 	foreach ($id_canvass_siap_kirim as $key => $value) {
-		$sql = mysql_query("UPDATE canvass_siap_kirim SET status='0' WHERE id_canvass_siap_kirim=$value");
-		$sql = mysql_query("SELECT id_canvass_keluar FROM canvass_siap_kirim WHERE id_canvass_siap_kirim=$value");
-		$row=mysql_fetch_array($sql);
+		$sql = mysqli_query($con, "UPDATE canvass_siap_kirim SET status='0' WHERE id_canvass_siap_kirim=$value");
+		$sql = mysqli_query($con, "SELECT id_canvass_keluar FROM canvass_siap_kirim WHERE id_canvass_siap_kirim=$value");
+		$row=mysqli_fetch_array($sql);
 		$id_canvass_keluar=$row['id_canvass_keluar'];
-		$sql=mysql_query("SELECT qty_ambil,id_barang_masuk_rak FROM canvass_siap_kirim_detail WHERE id_canvass_siap_kirim=$value");
-		while($row=mysql_fetch_array($sql)){
+		$sql=mysqli_query($con, "SELECT qty_ambil,id_barang_masuk_rak FROM canvass_siap_kirim_detail WHERE id_canvass_siap_kirim=$value");
+		while($row=mysqli_fetch_array($sql)){
 			$qty_ambil=$row['qty_ambil'];
 			$id_barang_masuk_rak=$row['id_barang_masuk_rak'];
-			$sql2=mysql_query("SELECT stok FROM canvass_keluar_barang WHERE id_canvass_keluar=$id_canvass_keluar AND id_barang_masuk_rak=$id_barang_masuk_rak");
-			$row2=mysql_fetch_array($sql2);
+			$sql2=mysqli_query($con, "SELECT stok FROM canvass_keluar_barang WHERE id_canvass_keluar=$id_canvass_keluar AND id_barang_masuk_rak=$id_barang_masuk_rak");
+			$row2=mysqli_fetch_array($sql2);
 			$stok=$row2['stok']+$qty_ambil;
-			$sql2=mysql_query("UPDATE canvass_keluar_barang SET stok=$stok WHERE id_barang_masuk_rak=$id_barang_masuk_rak");
+			$sql2=mysqli_query($con, "UPDATE canvass_keluar_barang SET stok=$stok WHERE id_barang_masuk_rak=$id_barang_masuk_rak");
 		}
-		$sql=mysql_query("SELECT id_jual FROM canvass_siap_kirim WHERE id_canvass_siap_kirim=$value");
-		while($row=mysql_fetch_array($sql)){
-			$sql2=mysql_query("UPDATE jual SET status_konfirm=5 WHERE id_jual=" .$row['id_jual']. "");
+		$sql=mysqli_query($con, "SELECT id_jual FROM canvass_siap_kirim WHERE id_canvass_siap_kirim=$value");
+		while($row=mysqli_fetch_array($sql)){
+			$sql2=mysqli_query($con, "UPDATE jual SET status_konfirm=5 WHERE id_jual=" .$row['id_jual']. "");
 		}
 	}
 	_direct("?page=canvass_keluar&mode=konfirm_jual");
@@ -64,14 +64,14 @@ if (isset($batal_canvass_cek_barang_post)){
 									</thead>
 									<tbody>
 <?php
-	$sql=mysql_query("SELECT *
+	$sql=mysqli_query($con, "SELECT *
 FROM
     canvass_keluar_karyawan
     INNER JOIN canvass_belum_siap 
         ON (canvass_keluar_karyawan.id_canvass_keluar = canvass_belum_siap.id_canvass_keluar)
 WHERE canvass_keluar_karyawan.id_karyawan=" .$id_karyawan);
-	while ($row=mysql_fetch_array($sql)){
-	$sql2=mysql_query("SELECT *
+	while ($row=mysqli_fetch_array($sql)){
+	$sql2=mysqli_query($con, "SELECT *
 FROM
     jual 
     INNER JOIN pelanggan 
@@ -81,9 +81,9 @@ FROM
 WHERE id_jual NOT IN (SELECT id_jual FROM canvass_siap_kirim
 WHERE status='1' OR status='2' OR status='3') AND id_jual=" .$row['id_jual']. " AND status_konfirm=5
 ORDER BY id_jual DESC");
-	while ($row2=mysql_fetch_array($sql2)){
+	while ($row2=mysqli_fetch_array($sql2)){
 		if ($row2['jenis_bayar']=='Lunas'){
-				$sql3=mysql_query("SELECT SUM((qty*harga_jual)-diskon_rp-diskon_rp_2-diskon_rp_3) AS total_harga
+				$sql3=mysqli_query($con, "SELECT SUM((qty*harga_jual)-diskon_rp-diskon_rp_2-diskon_rp_3) AS total_harga
 			FROM
 				jual_detail
 				INNER JOIN harga_jual 
@@ -94,7 +94,7 @@ ORDER BY id_jual DESC");
 					ON (barang_supplier.id_barang = barang.id_barang)
 			WHERE id_jual=" .$row2['id_jual']. " AND barang.status=1");
 		} else {
-			$sql3=mysql_query("SELECT SUM((qty*harga_kredit)-diskon_rp-diskon_rp_2-diskon_rp_3) AS total_harga
+			$sql3=mysqli_query($con, "SELECT SUM((qty*harga_kredit)-diskon_rp-diskon_rp_2-diskon_rp_3) AS total_harga
 			FROM
 				jual_detail
 				INNER JOIN harga_jual 
@@ -107,8 +107,8 @@ ORDER BY id_jual DESC");
 					ON (barang_supplier.id_barang = barang.id_barang)
 			WHERE id_jual=" .$row2['id_jual']. " AND barang.status=1");
 		}
-		$r=mysql_fetch_array($sql3);
-		$sql4=mysql_query("SELECT SUM((qty*harga)-diskon_rp-diskon_rp_2-diskon_rp_3) AS jumlah_nota
+		$r=mysqli_fetch_array($sql3);
+		$sql4=mysqli_query($con, "SELECT SUM((qty*harga)-diskon_rp-diskon_rp_2-diskon_rp_3) AS jumlah_nota
 FROM
     jual
     INNER JOIN jual_detail 
@@ -120,18 +120,18 @@ FROM
 	INNER JOIN barang 
 		ON (barang_supplier.id_barang = barang.id_barang)
 WHERE jual.id_pelanggan=" .$row2['id_pelanggan']. " AND barang.status=1");
-$row4=mysql_fetch_array($sql4);
+$row4=mysqli_fetch_array($sql4);
 $jumlah_nota=$row4['jumlah_nota'];
-		$sql4=mysql_query("SELECT SUM(jumlah) AS jumlah_bayar
+		$sql4=mysqli_query($con, "SELECT SUM(jumlah) AS jumlah_bayar
 FROM
     bayar_nota_jual
     INNER JOIN jual 
         ON (bayar_nota_jual.no_nota_jual = jual.invoice)
 WHERE jual.id_pelanggan=" .$row2['id_pelanggan']);
-$row4=mysql_fetch_array($sql4);
+$row4=mysqli_fetch_array($sql4);
 $jumlah_gantung=$jumlah_nota-$row4['jumlah_bayar'];
-$sql5=mysql_query("SELECT * FROM jual WHERE invoice NOT IN (SELECT no_nota_jual FROM bayar_nota_jual WHERE STATUS=1) AND id_pelanggan=" .$row2['id_pelanggan']);
-$jml_nota=format_angka(mysql_num_rows($sql5));
+$sql5=mysqli_query($con, "SELECT * FROM jual WHERE invoice NOT IN (SELECT no_nota_jual FROM bayar_nota_jual WHERE STATUS=1) AND id_pelanggan=" .$row2['id_pelanggan']);
+$jml_nota=format_angka(mysqli_num_rows($sql5));
 (($row2['plafon']-$jumlah_gantung) < $jumlah_gantung ? $style="color:red" : $style="");
 		echo '<tr>
 				<td align="center"><a style="' .$style. '" href="?page=canvass_keluar&mode=konfirm_jual_2&id=' .$row2['id_jual']. '"><div style="min-width:70px">' .date("d-m-Y",strtotime($row2['tgl_nota'])). '</div></a></td>
@@ -196,7 +196,7 @@ if (isset($_GET['cari'])){
 	$val="canvass_siap_kirim.status='1'";
 }
 
-	$sql=mysql_query("SELECT *,SUM(qty_ambil*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) as total_harga
+	$sql=mysqli_query($con, "SELECT *,SUM(qty_ambil*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) as total_harga
 FROM
     jual
     INNER JOIN canvass_siap_kirim 
@@ -212,29 +212,29 @@ FROM
 WHERE $val
 GROUP BY jual.id_jual
 ORDER BY jual.id_jual DESC");
-	while ($row=mysql_fetch_array($sql)){
+	while ($row=mysqli_fetch_array($sql)){
 		if ($row['id_jual']!=''){
-			$sql3=mysql_query("SELECT SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah_nota
+			$sql3=mysqli_query($con, "SELECT SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah_nota
 	FROM
 		jual
 		INNER JOIN jual_detail 
 			ON (jual.id_jual = jual_detail.id_jual)
 	WHERE jual.id_pelanggan=" .$row['id_pelanggan']);
-	$row3=mysql_fetch_array($sql3);
+	$row3=mysqli_fetch_array($sql3);
 	$jumlah_nota=$row3['jumlah_nota'];
-			$sql3=mysql_query("SELECT SUM(jumlah) AS jumlah_bayar
+			$sql3=mysqli_query($con, "SELECT SUM(jumlah) AS jumlah_bayar
 	FROM
 		bayar_nota_jual
 		INNER JOIN jual 
 			ON (bayar_nota_jual.no_nota_jual = jual.invoice)
 	WHERE jual.id_pelanggan=" .$row['id_pelanggan']);
-	$row3=mysql_fetch_array($sql3);
+	$row3=mysqli_fetch_array($sql3);
 	$jumlah_gantung=$jumlah_nota-$row3['jumlah_bayar'];
-	$sql4=mysql_query("SELECT * FROM jual WHERE invoice NOT IN (SELECT no_nota_jual FROM bayar_nota_jual WHERE STATUS=1) AND id_pelanggan=" .$row['id_pelanggan']);
-	$jml_nota=format_angka(mysql_num_rows($sql4));
+	$sql4=mysqli_query($con, "SELECT * FROM jual WHERE invoice NOT IN (SELECT no_nota_jual FROM bayar_nota_jual WHERE STATUS=1) AND id_pelanggan=" .$row['id_pelanggan']);
+	$jml_nota=format_angka(mysqli_num_rows($sql4));
 	(($row['plafon']-$jumlah_gantung) < $row['total_harga'] ? $style="color:red" : $style="");
-	$sql4=mysql_query("SELECT nama_karyawan as nama_siap FROM canvass_siap_kirim INNER JOIN karyawan ON (canvass_siap_kirim.id_karyawan=karyawan.id_karyawan)");
-	$row4=mysql_fetch_array($sql4);
+	$sql4=mysqli_query($con, "SELECT nama_karyawan as nama_siap FROM canvass_siap_kirim INNER JOIN karyawan ON (canvass_siap_kirim.id_karyawan=karyawan.id_karyawan)");
+	$row4=mysqli_fetch_array($sql4);
 		echo '<tr>
 				<td align="center"><input style="width: 20px; height: 20px;" type="checkbox" id="id_canvass_siap_kirim" name="id_canvass_siap_kirim[]" value="' .$row['id_canvass_siap_kirim']. '"></td>
 				<td align="center"><a href="?page=canvass_keluar&mode=konfirm_jual_3&id=' .$row['id_jual']. '"><div style="min-width:70px">' .date("d-m-Y",strtotime($row['tgl_nota'])). '</div></a></td>

@@ -3,27 +3,27 @@ $id_jual=$_GET['id_jual'];
 $id_penagihan_detail=$_GET['id_p_detail'];
 $jenis=$_GET['jenis'];
 
-	$sql=mysql_query("SELECT invoice,id_pelanggan FROM jual WHERE id_jual=$id_jual");
-	$b=mysql_fetch_array($sql);
+	$sql=mysqli_query($con, "SELECT invoice,id_pelanggan FROM jual WHERE id_jual=$id_jual");
+	$b=mysqli_fetch_array($sql);
 	$no_nota_jual=$b['invoice'];
 	$id_pelanggan=$b['id_pelanggan'];
-	$sql=mysql_query("SELECT id_penagihan FROM penagihan_detail WHERE id_penagihan_detail=$id_penagihan_detail");
-	$b=mysql_fetch_array($sql);
+	$sql=mysqli_query($con, "SELECT id_penagihan FROM penagihan_detail WHERE id_penagihan_detail=$id_penagihan_detail");
+	$b=mysqli_fetch_array($sql);
 	$id_penagihan=$b['id_penagihan'];
 	
-	$sql2=mysql_query("SELECT jumlah FROM nota_sudah_cek WHERE (status='2' or status='3') AND id_jual=$id_jual");
-	$b2=mysql_fetch_array($sql2);
+	$sql2=mysqli_query($con, "SELECT jumlah FROM nota_sudah_cek WHERE (status='2' or status='3') AND id_jual=$id_jual");
+	$b2=mysqli_fetch_array($sql2);
 	$jumlah_nota=$b2['jumlah'];
 
 //-----------------------------------------------------------------------------------------
 
-	$sql3=mysql_query("SELECT SUM(jumlah) AS jumlah_bayar FROM bayar_nota_jual WHERE no_nota_jual='$no_nota_jual'");
-	$b3=mysql_fetch_array($sql3);
+	$sql3=mysqli_query($con, "SELECT SUM(jumlah) AS jumlah_bayar FROM bayar_nota_jual WHERE no_nota_jual='$no_nota_jual'");
+	$b3=mysqli_fetch_array($sql3);
 	$jumlah_bayar_x=$b3['jumlah_bayar'];
 //-------------------------------------------------------------------------------------------
 
-	$sql3=mysql_query("SELECT SUM(bayar) AS jumlah_bayar FROM penagihan_detail WHERE id_jual=$id_jual");
-	$b3=mysql_fetch_array($sql3);
+	$sql3=mysqli_query($con, "SELECT SUM(bayar) AS jumlah_bayar FROM penagihan_detail WHERE id_jual=$id_jual");
+	$b3=mysqli_fetch_array($sql3);
 	$jumlah_bayar_x+=$b3['jumlah_bayar'];
 //-------------------------------------------------------------------------------------------
 
@@ -60,13 +60,13 @@ if (isset($tambah_bayar_tagih_nota_jual_post)){
 		if ($jumlah_bayar=='0') $status=0;
 		
 		$tgl=date("Y-m-d");
-		$sql=mysql_query("UPDATE penagihan_detail SET status_bayar=$status WHERE id_jual=$id_jual");
+		$sql=mysqli_query($con, "UPDATE penagihan_detail SET status_bayar=$status WHERE id_jual=$id_jual");
 		if ($jenis =='Transfer'){
-			$sql=mysql_query("UPDATE penagihan_detail SET bayar=$jumlah_bayar,tgl_bayar='$tgl',tgl_janji_next=$tgl_janji_next,pengirim_bank='$pengirim_nama_bank',pengirim_nama='$pengirim_nama_rekening',pengirim_no='$pengirim_no_rekening',penerima_bank='$penerima_nama_bank',penerima_nama='$penerima_nama_rekening',penerima_no='$penerima_no_rekening',keterangan='$keterangan',jenis='$jenis' WHERE id_penagihan_detail=$id_penagihan_detail");
+			$sql=mysqli_query($con, "UPDATE penagihan_detail SET bayar=$jumlah_bayar,tgl_bayar='$tgl',tgl_janji_next=$tgl_janji_next,pengirim_bank='$pengirim_nama_bank',pengirim_nama='$pengirim_nama_rekening',pengirim_no='$pengirim_no_rekening',penerima_bank='$penerima_nama_bank',penerima_nama='$penerima_nama_rekening',penerima_no='$penerima_no_rekening',keterangan='$keterangan',jenis='$jenis' WHERE id_penagihan_detail=$id_penagihan_detail");
 		} else if ($jenis =='Giro'){
-			$sql=mysql_query("UPDATE penagihan_detail SET bayar=$jumlah_bayar,tgl_bayar='$tgl',tgl_janji_next=$tgl_janji_next,pengirim_bank='$pengirim_nama_bank',pengirim_nama='$pengirim_nama_rekening',pengirim_no='$pengirim_no_rekening',penerima_bank='$penerima_nama_bank',penerima_nama='$penerima_nama_rekening',penerima_no='$penerima_no_rekening',keterangan='$keterangan',jatuh_tempo='$jatuh_tempo',jenis='$jenis' WHERE id_penagihan_detail=$id_penagihan_detail");
+			$sql=mysqli_query($con, "UPDATE penagihan_detail SET bayar=$jumlah_bayar,tgl_bayar='$tgl',tgl_janji_next=$tgl_janji_next,pengirim_bank='$pengirim_nama_bank',pengirim_nama='$pengirim_nama_rekening',pengirim_no='$pengirim_no_rekening',penerima_bank='$penerima_nama_bank',penerima_nama='$penerima_nama_rekening',penerima_no='$penerima_no_rekening',keterangan='$keterangan',jatuh_tempo='$jatuh_tempo',jenis='$jenis' WHERE id_penagihan_detail=$id_penagihan_detail");
 		} else if ($jenis =='Tunai'){
-			$sql=mysql_query("UPDATE penagihan_detail SET bayar=$jumlah_bayar,tgl_bayar='$tgl',tgl_janji_next=$tgl_janji_next,keterangan='$keterangan',jenis='$jenis' WHERE id_penagihan_detail=$id_penagihan_detail");
+			$sql=mysqli_query($con, "UPDATE penagihan_detail SET bayar=$jumlah_bayar,tgl_bayar='$tgl',tgl_janji_next=$tgl_janji_next,keterangan='$keterangan',jenis='$jenis' WHERE id_penagihan_detail=$id_penagihan_detail");
 		}
 		if ($sql){
 			_buat_pesan("Input Berhasil","green");
@@ -79,12 +79,12 @@ if (isset($tambah_bayar_tagih_nota_jual_post)){
 		$tgl=date("Y-m-d");
 		($jumlah_bayar+$jumlah_bayar_retur==$sisa_nota ? $status=1 : $status=2);
 		if ($jumlah_bayar+$jumlah_bayar_retur=='0') $status=0;
-		$sql=mysql_query("UPDATE penagihan SET status=$status WHERE id_jual=$id_jual");
+		$sql=mysqli_query($con, "UPDATE penagihan SET status=$status WHERE id_jual=$id_jual");
 		if ($jenis =='Retur'){
-			$sql=mysql_query("UPDATE penagihan_detail SET tgl_bayar='$tgl',tgl_janji_next=$tgl_janji_next,keterangan='$keterangan',jenis='$jenis' WHERE id_penagihan_detail=$id_penagihan_detail");
+			$sql=mysqli_query($con, "UPDATE penagihan_detail SET tgl_bayar='$tgl',tgl_janji_next=$tgl_janji_next,keterangan='$keterangan',jenis='$jenis' WHERE id_penagihan_detail=$id_penagihan_detail");
 		}
 		for ($i=0;$i<count($no_retur)-1;$i++) {
-			$sql=mysql_query("INSERT INTO penagihan_retur_detail VALUES(null,$id_penagihan_detail,'$no_retur[$i]',$jumlah_bayar_retur,0)");
+			$sql=mysqli_query($con, "INSERT INTO penagihan_retur_detail VALUES(null,$id_penagihan_detail,'$no_retur[$i]',$jumlah_bayar_retur,0)");
 			if ($sql){
 				_buat_pesan("Input Berhasil","green");
 			} else {
@@ -95,7 +95,7 @@ if (isset($tambah_bayar_tagih_nota_jual_post)){
 	_direct("?page=collector&mode=tagihan_2&id_pelanggan=" .$id_pelanggan);
 	
 }
-$sql=mysql_query("SELECT *, SUM((harga-diskon_rp-diskon_rp_2-diskon_rp_3)*nota_siap_kirim_detail.qty_ambil) AS total1, SUM((harga-diskon_rp-diskon_rp_2-diskon_rp_3)*canvass_siap_kirim_detail.qty_ambil) AS total2
+$sql=mysqli_query($con, "SELECT *, SUM((harga-diskon_rp-diskon_rp_2-diskon_rp_3)*nota_siap_kirim_detail.qty_ambil) AS total1, SUM((harga-diskon_rp-diskon_rp_2-diskon_rp_3)*canvass_siap_kirim_detail.qty_ambil) AS total2
 FROM
     jual
     INNER JOIN jual_detail 
@@ -107,7 +107,7 @@ FROM
     INNER JOIN pelanggan 
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
 WHERE jual.invoice='$no_nota_jual'");
-$row=mysql_fetch_array($sql);
+$row=mysqli_fetch_array($sql);
 $id_pelanggan=$row['id_pelanggan'];
 $id_jual=$row['id_jual'];
 ($row['total2']>0 ? $total_piutang=$row['total2'] : $total_piutang=$row['total1']);
@@ -248,7 +248,7 @@ echo '<div class="col-xs-12">
 							</div>
 							<div class="clearfix"></div><br/>
 <?php
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT
     retur_jual.id_retur_jual
     , retur_jual.no_retur_jual
 FROM
@@ -257,10 +257,10 @@ FROM
         ON (retur_jual.id_jual = jual.id_jual)
 WHERE status=1 AND id_pelanggan=$id_pelanggan AND no_retur_jual NOT IN (SELECT no_retur_jual FROM bayar_nota_jual_detail)");
 $c=0;
-	while($b=mysql_fetch_array($sql)){
+	while($b=mysqli_fetch_array($sql)){
 		$tmp_id_retur=$b['id_retur_jual'];
-		$sql2=mysql_query("SELECT SUM(qty_masuk * harga_retur) AS jumlah FROM retur_jual_detail WHERE id_retur_jual=$tmp_id_retur");
-		$b2=mysql_fetch_array($sql2);
+		$sql2=mysqli_query($con, "SELECT SUM(qty_masuk * harga_retur) AS jumlah FROM retur_jual_detail WHERE id_retur_jual=$tmp_id_retur");
+		$b2=mysqli_fetch_array($sql2);
 		if ($b2['jumlah']!=''){
 			$c+=1;
 		}			

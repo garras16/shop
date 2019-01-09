@@ -1,10 +1,10 @@
 <?php
 if (isset($buat_nota_siap_kirim_post)){
-	$sql=mysql_query("INSERT INTO nota_siap_kirim VALUES(null,'$tanggal',$id,'0')");
-	$sql=mysql_query("SELECT * FROM nota_siap_kirim WHERE id_jual=$id");
-	$row=mysql_fetch_array($sql);
+	$sql=mysqli_query($con, "INSERT INTO nota_siap_kirim VALUES(null,'$tanggal',$id,'0')");
+	$sql=mysqli_query($con, "SELECT * FROM nota_siap_kirim WHERE id_jual=$id");
+	$row=mysqli_fetch_array($sql);
 	$id_nota_siap_kirim=$row['id_nota_siap_kirim'];
-	$sql=mysql_query("SELECT *
+	$sql=mysqli_query($con, "SELECT *
 FROM
     barang_supplier
     INNER JOIN barang 
@@ -24,18 +24,18 @@ GROUP BY barang_masuk_rak.id_rak,barang_masuk_rak.expire
 ORDER BY expire, nama_gudang, nama_rak, tgl_datang");
 	$total_qty_ambil=0;
 	$tmp_qty_ambil=$qty_ambil;
-	while ($row=mysql_fetch_array($sql)){
+	while ($row=mysqli_fetch_array($sql)){
 		$id_barang_masuk_rak=$row['id_barang_masuk_rak'];
 		$stok=$row['stok'];
 		if ($tmp_qty_ambil>=$stok){
 			if ($total_qty_ambil<=$qty_ambil){
-				$sql2=mysql_query("INSERT INTO nota_siap_kirim_detail VALUES(null,$id_nota_siap_kirim,$id_jual_detail,$id_barang_masuk_rak,$stok)");
+				$sql2=mysqli_query($con, "INSERT INTO nota_siap_kirim_detail VALUES(null,$id_nota_siap_kirim,$id_jual_detail,$id_barang_masuk_rak,$stok)");
 				$total_qty_ambil+=$stok;
 				$tmp_qty_ambil-=$stok;
 			}
 		} else {
 			if ($total_qty_ambil<$qty_ambil){
-				$sql2=mysql_query("INSERT INTO nota_siap_kirim_detail VALUES(null,$id_nota_siap_kirim,$id_jual_detail,$id_barang_masuk_rak,$tmp_qty_ambil)");
+				$sql2=mysqli_query($con, "INSERT INTO nota_siap_kirim_detail VALUES(null,$id_nota_siap_kirim,$id_jual_detail,$id_barang_masuk_rak,$tmp_qty_ambil)");
 				$total_qty_ambil+=$tmp_qty_ambil;
 				$tmp_qty_ambil-=$stok;
 			}
@@ -44,22 +44,22 @@ ORDER BY expire, nama_gudang, nama_rak, tgl_datang");
 	_direct("?page=gudang&mode=konfirm_jual_2&id=$id");
 }
 if (isset($_GET['del'])){
-	$sql=mysql_query("DELETE FROM nota_siap_kirim_detail WHERE id_jual_detail=" .$_GET['del']. "");
+	$sql=mysqli_query($con, "DELETE FROM nota_siap_kirim_detail WHERE id_jual_detail=" .$_GET['del']. "");
 	_direct("?page=gudang&mode=konfirm_jual_2&id=$id");
 }
 if (isset($selesai_nota_siap_kirim_post)){
-	$sql=mysql_query("SELECT * FROM nota_siap_kirim INNER JOIN nota_siap_kirim_detail 
+	$sql=mysqli_query($con, "SELECT * FROM nota_siap_kirim INNER JOIN nota_siap_kirim_detail 
 		ON (nota_siap_kirim.id_nota_siap_kirim = nota_siap_kirim_detail.id_nota_siap_kirim) WHERE id_jual=$id");
-	while ($row=mysql_fetch_array($sql)){
-		$sql2=mysql_query("SELECT * FROM barang_masuk_rak WHERE id_barang_masuk_rak=" .$row['id_barang_masuk_rak']. "");
-		$row2=mysql_fetch_array($sql2);
+	while ($row=mysqli_fetch_array($sql)){
+		$sql2=mysqli_query($con, "SELECT * FROM barang_masuk_rak WHERE id_barang_masuk_rak=" .$row['id_barang_masuk_rak']. "");
+		$row2=mysqli_fetch_array($sql2);
 		$stok=$row2['stok']-$row['qty_ambil'];
-		$sql2=mysql_query("UPDATE barang_masuk_rak SET stok=$stok WHERE id_barang_masuk_rak=" .$row['id_barang_masuk_rak']. "");
+		$sql2=mysqli_query($con, "UPDATE barang_masuk_rak SET stok=$stok WHERE id_barang_masuk_rak=" .$row['id_barang_masuk_rak']. "");
 	}
-	$sql=mysql_query("UPDATE nota_siap_kirim SET status='1' WHERE id_jual=$id");
+	$sql=mysqli_query($con, "UPDATE nota_siap_kirim SET status='1' WHERE id_jual=$id");
 	_direct("?page=gudang&mode=konfirm_jual");
 }
-	$sql=mysql_query("SELECT *
+	$sql=mysqli_query($con, "SELECT *
 FROM
     jual
     INNER JOIN pelanggan 
@@ -67,7 +67,7 @@ FROM
     INNER JOIN karyawan 
         ON (jual.id_karyawan = karyawan.id_karyawan)
 	WHERE id_jual=$id");
-	$row=mysql_fetch_array($sql);
+	$row=mysqli_fetch_array($sql);
 	$no_nota=$row['invoice'];
 	$tgl_nota=$row['tgl_nota'];
 	$nama_pelanggan=$row['nama_pelanggan'];
@@ -120,7 +120,7 @@ FROM
 							</thead>
 							<tbody>
 <?php
-	$sql=mysql_query("SELECT *
+	$sql=mysqli_query($con, "SELECT *
 FROM
     jual_detail
     INNER JOIN harga_jual 
@@ -132,8 +132,8 @@ FROM
 	INNER JOIN satuan 
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE id_jual=$id");
-	while ($row=mysql_fetch_array($sql)){
-	$sql2=mysql_query("SELECT *, SUM(stok) as stok
+	while ($row=mysqli_fetch_array($sql)){
+	$sql2=mysqli_query($con, "SELECT *, SUM(stok) as stok
 FROM
     barang_supplier
     INNER JOIN barang 
@@ -151,25 +151,25 @@ FROM
 WHERE barang.id_barang=" .$row['id_barang']. "
 GROUP BY barang_masuk_rak.id_rak, barang_masuk_rak.expire 
 ORDER BY expire, nama_gudang, nama_rak, tgl_datang");
-$n=mysql_num_rows($sql2);
+$n=mysqli_num_rows($sql2);
 echo '<tr>
 				<td style="vertical-align:middle;text-align:center" rowspan="' .$n. '">' .$row['nama_barang']. '</td>
 				<td style="vertical-align:middle;text-align:center" rowspan="' .$n. '">' .$row['qty']. '</td>
 				<td style="vertical-align:middle;text-align:center" rowspan="' .$n. '">' .$row['nama_satuan']. '</td>
 				<td style="vertical-align:middle;text-align:center" rowspan="' .$n. '">' .format_uang($row['harga']). '</td>
 				<td style="vertical-align:middle;text-align:center" rowspan="' .$n. '">' .format_uang($row['harga']*$row['qty']). '</td>';
-	while ($row2=mysql_fetch_array($sql2)){	
+	while ($row2=mysqli_fetch_array($sql2)){	
 	echo '		<td align="center">' .$row2['stok']. '</td>
 				<td align="center">' .$row2['nama_gudang']. '</td>
 				<td align="center">' .$row2['nama_rak']. '</td>
 				<td align="center">' .date("d-m-Y",strtotime($row2['expire'])). '</td>';
-	$sql3=mysql_query("SELECT id_nota_siap_kirim_detail, qty_ambil
+	$sql3=mysqli_query($con, "SELECT id_nota_siap_kirim_detail, qty_ambil
 FROM
     nota_siap_kirim
     INNER JOIN nota_siap_kirim_detail 
         ON (nota_siap_kirim.id_nota_siap_kirim = nota_siap_kirim_detail.id_nota_siap_kirim)
 WHERE id_jual_detail=" .$row['id_jual_detail']. " AND id_barang_masuk_rak=" .$row2['id_barang_masuk_rak']. "");
-	while($row3=mysql_fetch_array($sql3)){
+	while($row3=mysqli_fetch_array($sql3)){
 if ($row3['qty_ambil']==''){
 	echo '		<td align="center"><a data-toggle="modal" data-target="#myModal" data-rak="' .$row2['nama_rak']. '" data-barcode="' .$row['barcode']. '" data-id-barang="' .$row['id_barang']. '" data-stok="' .$row2['stok']. '" data-satuan="' .$row['nama_satuan']. '" data-id-jd="' .$row['id_jual_detail']. '" data-id-bmr="' .$row2['id_barang_masuk_rak']. '" class="btn btn-primary btn-xs"><i class="fa fa-barcode"></i> Scan</a></td>
 				<td></td>';

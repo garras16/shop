@@ -21,7 +21,7 @@ if (isset($_GET['dari'])){
 	$val="MONTH(tanggal)=MONTH(CURRENT_DATE()) AND YEAR(tanggal)=YEAR(CURRENT_DATE())";
 }
 
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT
     beli.id_beli
     , beli.no_nota_beli
     , beli.tanggal
@@ -32,7 +32,7 @@ FROM
 	LEFT JOIN ekspedisi 
         ON (beli.id_ekspedisi = ekspedisi.id_ekspedisi) 
 WHERE $val");
-while($row=mysql_fetch_array($sql)){
+while($row=mysqli_fetch_array($sql)){
 if ($row['status_konfirm']==0){
 	$status="";
 } else if ($row['status_konfirm']==1){

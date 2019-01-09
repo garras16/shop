@@ -197,7 +197,7 @@ $total_datang=$s['total_datang']+($s['total_datang']*$s['ppn_all_persen']/100);
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><div style="min-width:50px">&times;</div></button>
 				<h4 class="modal-title">Tambah Nota Pembelian</h4>
 			</div>
-			<div class="modal-body">				
+			<div class="modal-body">
 				<form action="" method="post">
 					<input type="hidden" name="tambah_pembelian_post" value="true">
 					<div class="col-md-12">
@@ -221,11 +221,11 @@ $total_datang=$s['total_datang']+($s['total_datang']*$s['ppn_all_persen']/100);
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><div style="min-width:90px;text-align:left">Diskon Nota (%)</div></span>
-						<input id="diskon_all" name="diskon_all" type="text" class="form-control" placeholder="Diskon Nota" value="0" required>
+						<input id="diskon_all" onchange="handleChange(this)" maxlength="6" name="diskon_all" type="text" class="form-control" placeholder="Diskon Nota" value="0" required><br>
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><div style="min-width:102px;text-align:left">PPN (%)</div></span>
-						<input id="ppn_all" name="ppn_all" type="text" class="form-control" placeholder="PPN" value="0" required>
+						<input id="ppn_all" onchange="handleChange(this)" maxlength="6" name="ppn_all" type="text" class="form-control" placeholder="PPN" value="0" required>
 					</div>
 					</div>
 					<div class="modal-footer">
@@ -238,6 +238,9 @@ $total_datang=$s['total_datang']+($s['total_datang']*$s['ppn_all_persen']/100);
 </div>
 
 <script>
+/*$(function($) {
+      
+});*/
 function validasi(){
 	var startDate = new Date.parse(get_global_tanggal($('#tgl_dari').val()));
 	var endDate = new Date.parse(get_global_tanggal($('#tgl_sampai').val()));
@@ -257,8 +260,12 @@ function submit(){
 function cari_barang(){
 	window.location="?page=pembelian&mode=pembelian&cari=" + $('#cari').val();
 }
+function handleChange(input) {
+    if (input.value < 0) input.value = 0;
+    if (input.value > 100) input.value = 100;
+ }
 $(document).ready(function(){
-	$('#diskon_all').inputmask('decimal', {autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+	//$('#diskon_all').inputmask('decimal', {autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});x
 	$('#diskon_ppn').inputmask('decimal', {autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#myModal').on('show.bs.modal', function(e){
 		var id = $(e.relatedTarget).data('id');
@@ -267,8 +274,8 @@ $(document).ready(function(){
 			$('#harian_2').inputmask('decimal', {autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 			$('#lembur_2').inputmask('decimal', {autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 		});
-	})
-	var now = new Date();
+	});
+
 	$('#tgl_dari').daterangepicker({
 		locale: {
 			format: 'DD-MM-YYYY'
@@ -287,5 +294,8 @@ $(document).ready(function(){
 	$("#tgl_sampai").on('change', function(){
 		validasi();
 	});
+
+	$('#diskon_all').numeric({decimalPlaces: 2, negative:false});
+	$('#ppn_all').numeric({decimalPlaces: 2, negative:false});
 });
 </script>

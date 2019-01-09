@@ -1,23 +1,23 @@
 <?php
 if (isset($_GET['del'])){
 	$id_b_masuk_rak=$_GET['del'];
-	$sql=mysql_query("SELECT id_barang_masuk FROM barang_masuk_rak WHERE id_barang_masuk_rak=$id_b_masuk_rak");
-	$r=mysql_fetch_array($sql);
+	$sql=mysqli_query($con, "SELECT id_barang_masuk FROM barang_masuk_rak WHERE id_barang_masuk_rak=$id_b_masuk_rak");
+	$r=mysqli_fetch_array($sql);
 	$id_b_masuk=$r['id_barang_masuk'];
 	$sql="DELETE FROM barang_masuk_rak WHERE id_barang_masuk_rak=$id_b_masuk_rak";
-	$q=mysql_query($sql);
-	if ($q) $sql=mysql_query("UPDATE barang_masuk SET edit=1 WHERE id_barang_masuk=$id_b_masuk");
+	$q=mysqli_query($con, $sql);
+	if ($q) $sql=mysqli_query($con, "UPDATE barang_masuk SET edit=1 WHERE id_barang_masuk=$id_b_masuk");
 	
-	$sql=mysql_query("SELECT * FROM barang_masuk_rak WHERE id_barang_masuk=$id_b_masuk");
-	if (mysql_num_rows($sql)==0){
+	$sql=mysqli_query($con, "SELECT * FROM barang_masuk_rak WHERE id_barang_masuk=$id_b_masuk");
+	if (mysqli_num_rows($sql)==0){
 		$sql2="DELETE FROM barang_masuk WHERE id_barang_masuk=$id_b_masuk";
-		$q2=mysql_query($sql2);
+		$q2=mysqli_query($con, $sql2);
 	}
 }
 if (isset($_GET['del_qty_datang'])){
 	$id_barang_masuk=$_GET['del_qty_datang'];
-	$sql=mysql_query("DELETE FROM barang_masuk_rak WHERE id_barang_masuk=$id_barang_masuk");
-	$sql=mysql_query("DELETE FROM barang_masuk WHERE id_barang_masuk=$id_barang_masuk");
+	$sql=mysqli_query($con, "DELETE FROM barang_masuk_rak WHERE id_barang_masuk=$id_barang_masuk");
+	$sql=mysqli_query($con, "DELETE FROM barang_masuk WHERE id_barang_masuk=$id_barang_masuk");
 }
 if (isset($edit_konfirm_beli_5_post)){
 	$sql = "SELECT
@@ -32,8 +32,8 @@ FROM
     LEFT JOIN barang_masuk_rak 
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
 	WHERE beli_detail.id_beli_detail=$id";
-	$q = mysql_query($sql);
-	$r=mysql_fetch_array($q);
+	$q = mysqli_query($con, $sql);
+	$r=mysqli_fetch_array($q);
 	$qty1=$r['qty'];
 	($r['qty_di_rak']=='' ? $qty2=0 : $qty2=$r['qty_di_rak']);
 	if ($qty1 >= $qty2+$qty_di_rak){
@@ -41,7 +41,7 @@ FROM
 		$expire=$tgl[2]. '/' .$tgl[1]. '/' .$tgl[0];
 		$expire=date("Y-m-d", strtotime($expire));
 		$sql = "INSERT INTO barang_masuk_rak VALUES(null,$id_barang_masuk,$qty_di_rak,$id_rak,'$expire',0)";
-		$q = mysql_query($sql);
+		$q = mysqli_query($con, $sql);
 		if ($q){
 			$pesan="Input Berhasil";
 			$warna="green";
@@ -135,7 +135,7 @@ if (! isset($_GET['id_barang_masuk'])){
 							</thead>
 							<tbody>
 								<?php
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT
     barang_masuk.id_barang_masuk
     , barang_masuk.edit
     , barang_masuk.tgl_datang
@@ -166,9 +166,9 @@ FROM
 WHERE barang_masuk.id_beli_detail=$id
 ORDER BY barang_masuk_rak.id_barang_masuk");
 $test='';
-while($row=mysql_fetch_array($sql)){
+while($row=mysqli_fetch_array($sql)){
 $id_barang_masuk_query=$row['id_barang_masuk'];
-$sql2=mysql_query("SELECT
+$sql2=mysqli_query($con, "SELECT
 	barang_masuk.id_barang_masuk
     , barang_masuk.qty_datang
     , barang_masuk_rak.qty_di_rak
@@ -177,7 +177,7 @@ FROM
     INNER JOIN barang_masuk 
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
 WHERE barang_masuk.id_barang_masuk=$id_barang_masuk_query");
-$r=mysql_num_rows($sql2);
+$r=mysqli_num_rows($sql2);
 $val=""; $val2=""; $val3="";
 if ($row['edit']=='1') $val3="color: red; font-weight:bold";
 if ($row['id_barang_masuk']==$id_barang_masuk) $val="font-color: black; background-color: yellow;";
@@ -196,7 +196,7 @@ if ($row['id_barang_masuk']==$id_barang_masuk) $val="font-color: black; backgrou
 					</tr>';
 }
 //untuk qty_datang tanpa rak
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT
     barang_masuk.id_barang_masuk
     , beli_detail.id_beli
     , barang_masuk.tgl_datang
@@ -215,8 +215,8 @@ FROM
 	LEFT JOIN barang_masuk_rak 
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
 WHERE barang_masuk.id_beli_detail=$id AND barang_masuk_rak.id_barang_masuk IS NULL AND edit=1");
-if (mysql_num_rows($sql)>0){
-	$row=mysql_fetch_array($sql);
+if (mysqli_num_rows($sql)>0){
+	$row=mysqli_fetch_array($sql);
 	echo '			<tr>
 						<td style="vertical-align:middle"><div style="min-width:70px; color: red; font-weight:bold">' .date("d-m-Y", strtotime($row['tgl_datang'])). '</div></td>
 						<td style="vertical-align:middle"><div style="min-width:70px; color: red; font-weight:bold"></div></td>

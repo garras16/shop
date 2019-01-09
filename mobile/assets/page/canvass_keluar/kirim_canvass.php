@@ -2,15 +2,15 @@
 $id_karyawan=$_SESSION['id_karyawan'];
 if (isset($_GET['del'])){
 	$sql = "UPDATE canvass_siap_kirim SET status='0' WHERE id_canvass_siap_kirim=" .$_GET['del']. "";
-		$q = mysql_query($sql);
-		$sql=mysql_query("SELECT qty_ambil,id_barang_masuk_rak FROM canvass_siap_kirim_detail WHERE id_canvass_siap_kirim=" .$_GET['del']. "");
-		while($row=mysql_fetch_array($sql)){
+		$q = mysqli_query($con, $sql);
+		$sql=mysqli_query($con, "SELECT qty_ambil,id_barang_masuk_rak FROM canvass_siap_kirim_detail WHERE id_canvass_siap_kirim=" .$_GET['del']. "");
+		while($row=mysqli_fetch_array($sql)){
 			$qty_ambil=$row['qty_ambil'];
 			$id_barang_masuk_rak=$row['id_barang_masuk_rak'];
-			$sql2=mysql_query("SELECT stok FROM canvass_keluar_barang WHERE id_barang_masuk_rak=$id_barang_masuk_rak");
-			$row2=mysql_fetch_array($sql2);
+			$sql2=mysqli_query($con, "SELECT stok FROM canvass_keluar_barang WHERE id_barang_masuk_rak=$id_barang_masuk_rak");
+			$row2=mysqli_fetch_array($sql2);
 			$stok=$row2['stok']+$qty_ambil;
-			$sql2=mysql_query("UPDATE canvass_keluar_barang SET stok=$stok WHERE id_barang_masuk_rak=$id_barang_masuk_rak");
+			$sql2=mysqli_query($con, "UPDATE canvass_keluar_barang SET stok=$stok WHERE id_barang_masuk_rak=$id_barang_masuk_rak");
 		}
 	_direct("?page=canvass_keluar&mode=kirim_canvass");
 }
@@ -47,7 +47,7 @@ if (isset($_GET['del'])){
 				</thead>
 				<tbody>
 <?php
-$sql=mysql_query("SELECT *, SUM((harga-diskon_rp-diskon_rp_2-diskon_rp_3)*qty_ambil) AS jml_jual
+$sql=mysqli_query($con, "SELECT *, SUM((harga-diskon_rp-diskon_rp_2-diskon_rp_3)*qty_ambil) AS jml_jual
 FROM
     canvass_siap_kirim
     INNER JOIN canvass_siap_kirim_detail 
@@ -57,9 +57,9 @@ FROM
 WHERE status='1'
 GROUP BY canvass_siap_kirim.id_jual
 ORDER BY canvass_siap_kirim.id_jual DESC");
-while ($row=mysql_fetch_array($sql)){
+while ($row=mysqli_fetch_array($sql)){
 	if ($row['jml_jual']=='') break;
-	$sql2=mysql_query("SELECT
+	$sql2=mysqli_query($con, "SELECT
     jual.id_jual
 	, jual.tgl_nota
     , jual.invoice
@@ -83,7 +83,7 @@ FROM
         ON (barang_supplier.id_barang = barang.id_barang) 
 WHERE jual.id_jual=" .$row['id_jual']. "
 GROUP BY jual.id_jual");
-	while ($row2=mysql_fetch_array($sql2)){
+	while ($row2=mysqli_fetch_array($sql2)){
 	echo '		<td><a href="?page=canvass_keluar&mode=kirim_canvass_2&id=' .$row['id_canvass_siap_kirim']. '"><div style="min-width:70px">' .date("d-m-Y", strtotime($row2['tgl_nota'])). '</div></a></td>
 				<td><a href="?page=canvass_keluar&mode=kirim_canvass_2&id=' .$row['id_canvass_siap_kirim']. '"><div style="min-width:70px">' .$row2['invoice']. '</div></a></td>
 				<td><a href="?page=canvass_keluar&mode=kirim_canvass_2&id=' .$row['id_canvass_siap_kirim']. '"><div style="min-width:70px">' .$row2['nama_karyawan']. '</div></a></td>

@@ -1,6 +1,6 @@
 <?php
 $id_karyawan=$_SESSION['id_karyawan'];
-	$sql=mysql_query("SELECT *
+	$sql=mysqli_query($con, "SELECT *
 FROM
     jual
     INNER JOIN pelanggan 
@@ -8,7 +8,7 @@ FROM
     INNER JOIN karyawan 
         ON (jual.id_karyawan = karyawan.id_karyawan)
 	WHERE id_jual=$id");
-	$row=mysql_fetch_array($sql);
+	$row=mysqli_fetch_array($sql);
 	$no_nota=$row['invoice'];
 	$tgl_nota=$row['tgl_nota'];
 	$nama_pelanggan=$row['nama_pelanggan'];
@@ -18,25 +18,25 @@ FROM
 	$plafon=$row['plafon'];
 	$barang_expire=false;
 	$selesai=false;
-	$sql3=mysql_query("SELECT SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah_nota
+	$sql3=mysqli_query($con, "SELECT SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah_nota
 FROM
     jual
     INNER JOIN jual_detail 
         ON (jual.id_jual = jual_detail.id_jual)
 WHERE jual.id_pelanggan=" .$row['id_pelanggan']);
-$row3=mysql_fetch_array($sql3);
+$row3=mysqli_fetch_array($sql3);
 $jumlah_nota=$row3['jumlah_nota'];
-		$sql3=mysql_query("SELECT SUM(jumlah) AS jumlah_bayar
+		$sql3=mysqli_query($con, "SELECT SUM(jumlah) AS jumlah_bayar
 FROM
     bayar_nota_jual
     INNER JOIN jual 
         ON (bayar_nota_jual.no_nota_jual = jual.invoice)
 WHERE jual.id_pelanggan=" .$row['id_pelanggan']);
-$row3=mysql_fetch_array($sql3);
+$row3=mysqli_fetch_array($sql3);
 $jumlah_gantung=$jumlah_nota-$row3['jumlah_bayar'];
 if ($jumlah_gantung>$plafon) _alert("Nota sudah melebihi plafon");
-$sql4=mysql_query("SELECT * FROM jual WHERE invoice NOT IN (SELECT no_nota_jual FROM bayar_nota_jual WHERE STATUS=1) AND id_pelanggan=" .$row['id_pelanggan']);
-$jml_nota=format_angka(mysql_num_rows($sql4));
+$sql4=mysqli_query($con, "SELECT * FROM jual WHERE invoice NOT IN (SELECT no_nota_jual FROM bayar_nota_jual WHERE STATUS=1) AND id_pelanggan=" .$row['id_pelanggan']);
+$jml_nota=format_angka(mysqli_num_rows($sql4));
 $sisa_plafon=$plafon-$jumlah_gantung;
 ($sisa_plafon<0 ? $style="color:red" : $style="");
 ?>
@@ -87,7 +87,7 @@ $sisa_plafon=$plafon-$jumlah_gantung;
 							</thead>
 							<tbody>
 <?php
-	$sql=mysql_query("SELECT *
+	$sql=mysqli_query($con, "SELECT *
 FROM
     jual_detail
     INNER JOIN harga_jual 
@@ -100,17 +100,17 @@ FROM
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE id_jual=$id AND barang.status=1");
 $total=0;$total_=0;
-	while ($row=mysql_fetch_array($sql)){
-	$sql4=mysql_query("SELECT SUM(qty_ambil) AS qty_ambil
+	while ($row=mysqli_fetch_array($sql)){
+	$sql4=mysqli_query($con, "SELECT SUM(qty_ambil) AS qty_ambil
 		FROM
 			canvass_siap_kirim
 			INNER JOIN canvass_siap_kirim_detail 
 				ON (canvass_siap_kirim.id_canvass_siap_kirim = canvass_siap_kirim_detail.id_canvass_siap_kirim)
 		WHERE id_jual_detail=" .$row['id_jual_detail']. "");
-	$row4=mysql_fetch_array($sql4);
+	$row4=mysqli_fetch_array($sql4);
 	$total_ambil=$row4['qty_ambil'];
 	($total_ambil!=$row['qty'] ? $color="color:red" : $color="");
-	$sql2=mysql_query("SELECT *, SUM(stok) as stok
+	$sql2=mysqli_query($con, "SELECT *, SUM(stok) as stok
 FROM
     canvass_belum_siap
     INNER JOIN canvass_keluar_barang 
@@ -125,14 +125,14 @@ WHERE canvass_keluar_barang.id_barang=" .$row['id_barang']. " AND id_jual=" .$ro
 				<td style="vertical-align:middle;text-align:center;' .$color. '">' .format_uang($row['diskon_rp_2']). '</td>
 				<td style="vertical-align:middle;text-align:center;' .$color. '">' .format_uang($row['diskon_rp_3']). '</td>
 				<td style="vertical-align:middle;text-align:center;' .$color. '">' .format_uang(($row['harga']-$row['diskon_rp']-$row['diskon_rp_2']-$row['diskon_rp_3'])*$row['qty']). '</td>';
-	while ($row2=mysql_fetch_array($sql2)){
-		$sql3=mysql_query("SELECT id_canvass_siap_kirim_detail, SUM(qty_ambil) AS qty_ambil
+	while ($row2=mysqli_fetch_array($sql2)){
+		$sql3=mysqli_query($con, "SELECT id_canvass_siap_kirim_detail, SUM(qty_ambil) AS qty_ambil
 		FROM
 			canvass_siap_kirim
 			INNER JOIN canvass_siap_kirim_detail 
 				ON (canvass_siap_kirim.id_canvass_siap_kirim = canvass_siap_kirim_detail.id_canvass_siap_kirim)
 		WHERE id_jual_detail=" .$row['id_jual_detail']. "");
-		$row3=mysql_fetch_array($sql3);
+		$row3=mysqli_fetch_array($sql3);
 		
 		echo '		<td align="center" style="' .$color. '">' .format_angka($row2['stok']). ' ' .$row['nama_satuan']. '</td>';
 		

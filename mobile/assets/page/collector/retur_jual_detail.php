@@ -1,23 +1,23 @@
 <?php
-$sql=mysql_query("SELECT * FROM retur_jual_detail WHERE id_retur_jual=$id AND qty_masuk IS NOT NULL");
-(mysql_num_rows($sql)>0 ? $locked=true : $locked=false);
+$sql=mysqli_query($con, "SELECT * FROM retur_jual_detail WHERE id_retur_jual=$id AND qty_masuk IS NOT NULL");
+(mysqli_num_rows($sql)>0 ? $locked=true : $locked=false);
 if (isset($tambah_retur_jual_detail_post)){
 	if ($locked) {
 		_buat_pesan("Input Gagal. Barang sudah diproses di gudang.","red");
 		_direct("?page=collector&mode=retur_jual_detail&id=$id");
 		return;
 	}
-	$sql = mysql_query("SELECT * FROM retur_jual_detail WHERE id_retur_jual=$id AND id_jual_detail=$id_jual_detail");
-	if (mysql_num_rows($sql)==0){
-		$sql2 = mysql_query("SELECT SUM(qty_retur) AS qty_retur FROM retur_jual_detail WHERE id_jual_detail=$id_jual_detail");
-		$row2=mysql_fetch_array($sql2);
+	$sql = mysqli_query($con, "SELECT * FROM retur_jual_detail WHERE id_retur_jual=$id AND id_jual_detail=$id_jual_detail");
+	if (mysqli_num_rows($sql)==0){
+		$sql2 = mysqli_query($con, "SELECT SUM(qty_retur) AS qty_retur FROM retur_jual_detail WHERE id_jual_detail=$id_jual_detail");
+		$row2=mysqli_fetch_array($sql2);
 		$total_qty_retur=$row2['qty_retur'];
-		$sql2 = mysql_query("SELECT SUM(qty_ambil) AS qty_ambil FROM nota_siap_kirim_detail WHERE id_jual_detail=$id_jual_detail");
-		$row2=mysql_fetch_array($sql2);
+		$sql2 = mysqli_query($con, "SELECT SUM(qty_ambil) AS qty_ambil FROM nota_siap_kirim_detail WHERE id_jual_detail=$id_jual_detail");
+		$row2=mysqli_fetch_array($sql2);
 		$total_qty_ambil=$row2['qty_ambil'];
 		if ($total_qty_retur+$qty_retur <= $total_qty_ambil){
 			$sql = "INSERT INTO retur_jual_detail VALUES(null,$id,$id_jual_detail,$qty_retur,$harga_retur,null,null,null,null)";
-			$q = mysql_query($sql);
+			$q = mysqli_query($con, $sql);
 			if ($q){
 				_buat_pesan("Input Berhasil","green");
 			} else {
@@ -38,7 +38,7 @@ if (isset($edit_retur_jual_detail_post)){
 		return;
 	}
 	$sql = "UPDATE retur_jual_detail SET qty_retur=$qty_retur,harga_retur=$harga_retur WHERE id_retur_jual_detail=$id_retur_jual_detail";
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -53,7 +53,7 @@ if (isset($_GET['del'])){
 		return;
 	}
 	$sql = "DELETE FROM retur_jual_detail WHERE id_retur_jual_detail=" .$_GET['del'];
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 	if ($q){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -61,7 +61,7 @@ if (isset($_GET['del'])){
 	}
 	_direct("?page=collector&mode=retur_jual_detail&id=$id");
 }
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT
     pelanggan.nama_pelanggan
 	, jual.id_jual
     , jual.invoice
@@ -78,7 +78,7 @@ FROM
 	LEFT JOIN bayar_nota_jual 
         ON (jual.invoice = bayar_nota_jual.no_nota_jual)
 WHERE retur_jual.id_retur_jual=$id");
-$row=mysql_fetch_array($sql);
+$row=mysqli_fetch_array($sql);
 $id_jual=$row['id_jual'];
 $no_nota_jual=$row['invoice'];
 $status=$row['status'];
@@ -114,40 +114,40 @@ if ($row['status_bayar']=='1'){
 					</div>
 			<div class="col-md-6">
 				<div class="input-group">
-					<span class="input-group-addon"><i class="fa fa-building fa-fw"></i></span>
-					<input class="form-control" id="pelanggan" name="pelanggan" placeholder="Nama Pelanggan" title="Nama Pelanggan" value="<?php echo $row['nama_pelanggan'] ?>" disabled="disabled" required>
+					<span class="input-group-addon"><i class="fa fa-building fa-fw" style="width: 75px;"></i><br><small>Pelanggan</small></span>
+					<input class="form-control" id="pelanggan" name="pelanggan" style="padding: 20px 15px;" placeholder="Nama Pelanggan" title="Nama Pelanggan" value="<?php echo $row['nama_pelanggan'] ?>" disabled="disabled" required>
 				</div>
 			</div>
 			<div class="col-md-6">
 				<div class="input-group">
-					<span class="input-group-addon"><i class="fa fa-file fa-fw"></i></span>
-					<input class="form-control" id="no_nota_jual" name="no_nota_jual" placeholder="No Nota Jual" title="No Nota Jual" value="<?php echo $row['invoice'] ?>" disabled="disabled" required>
+					<span class="input-group-addon"><i class="fa fa-file fa-fw" style="width: 75px;"></i><br><small>No. Nota</small></span>
+					<input class="form-control" style="padding: 20px 15px;" id="no_nota_jual" name="no_nota_jual" placeholder="No Nota Jual" title="No Nota Jual" value="<?php echo $row['invoice'] ?>" disabled="disabled" required>
 				</div>
 			</div>
 			<div class="col-md-6">
 				<div class="input-group">
-					<span class="input-group-addon"><i class="fa fa-file-excel fa-fw"></i></span>
-					<input class="form-control" id="no_nota_retur" name="no_nota_retur" placeholder="No Nota Retur Jual" title="No Nota Retur Jual" value="<?php echo $row['no_retur_jual'] ?>" disabled="disabled" required>
+					<span class="input-group-addon"><i class="fa fa-file-excel fa-fw" style="width: 75px;"></i><br><small>No. Retur Jual</small></span>
+					<input class="form-control" id="no_nota_retur" name="no_nota_retur" placeholder="No Nota Retur Jual" style="padding: 20px 15px;" title="No Nota Retur Jual" value="<?php echo $row['no_retur_jual'] ?>" disabled="disabled" required>
 				</div>
 			</div>
 			<div class="col-md-6">
 				<div class="input-group">
-					<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
-					<input class="form-control" id="tgl_retur" name="tgl_retur" placeholder="Tanggal Retur" title="Tanggal Retur" value="<?php echo date("d-m-Y", strtotime($row['tgl_retur'])) ?>" disabled="disabled" required>
+					<span class="input-group-addon"><i class="fa fa-calendar fa-fw" style="width: 75px;"></i><br><small>Tgl. Retur</small></span>
+					<input class="form-control" id="tgl_retur" name="tgl_retur" placeholder="Tanggal Retur" style="padding: 20px 15px;" title="Tanggal Retur" value="<?php echo date("d-m-Y", strtotime($row['tgl_retur'])) ?>" disabled="disabled" required>
 				</div>
 			</div>
 			<div class="col-md-6">
 				<div class="input-group">
-					<span class="input-group-addon"><i class="fa fa-tags fa-fw"></i></span>
+					<span class="input-group-addon"><i class="fa fa-tags fa-fw" style="width: 75px;"></i><br><small>Stat. Bayar</small></span>
 					<?php if ($row['status_bayar']=='2') echo '<a data-toggle="modal" data-target="#myModal3">'; ?>
-					<input class="form-control" id="status_bayar" name="status_bayar" placeholder="Status Bayar" title="Status Bayar" value="<?php echo $status_bayar ?>" readonly required>
+					<input class="form-control" id="status_bayar" name="status_bayar" style="padding: 20px 15px;" placeholder="Status Bayar" title="Status Bayar" value="<?php echo $status_bayar ?>" readonly required>
 					<?php if ($row['status_bayar']=='2') echo '</a>'; ?>
 				</div>
 			</div>
 			<div class="col-md-6">
 				<div class="input-group">
-					<span class="input-group-addon"><i class="fa fa-bookmark fa-fw"></i></span>
-					<input class="form-control" id="status_retur" name="status_retur" placeholder="Status Retur" title="Status Retur" value="<?php echo $status_retur ?>" disabled="disabled" required>
+					<span class="input-group-addon"><i class="fa fa-bookmark fa-fw" style="width: 75px;"></i><br><small>Stat. Retur</small></span>
+					<input class="form-control" id="status_retur" name="status_retur" style="padding: 20px 15px;" placeholder="Status Retur" title="Status Retur" value="<?php echo $status_retur ?>" disabled="disabled" required>
 				</div>
 			</div>
 			<div class="clearfix"></div>
@@ -182,7 +182,7 @@ if ($row['status_bayar']=='1'){
 				</thead>
 				<tbody>
 <?php
-$sql=mysql_query("SELECT *, SUM(qty_ambil) AS qty
+$sql=mysqli_query($con, "SELECT *, SUM(qty_ambil) AS qty
 FROM
     jual_detail
     LEFT JOIN retur_jual_detail 
@@ -200,7 +200,7 @@ FROM
  WHERE retur_jual_detail.id_retur_jual=$id AND cek=1
  GROUP BY retur_jual_detail.id_jual_detail");
 $total_retur=0;
-while($row=mysql_fetch_array($sql)){
+while($row=mysqli_fetch_array($sql)){
 if ($row['qty_masuk']==''){
 	$total_retur+=$row['harga_retur']*$row['qty_retur'];
 	$jml_retur=$row['harga_retur']*$row['qty_retur'];
@@ -288,11 +288,11 @@ if ($status=="1" or $locked){
 					<input type="hidden" name="tambah_retur_jual_detail_post" value="true">
 					<div class="col-md-12">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-file fa-fw"></i></span>
+						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-file fa-fw"></i><br><small>Barang</small></span>
 						<select id="select_barang" name="id_jual_detail" class="select2 form-control" required="true">
 							<option value="" disabled selected>-= Pilih Barang Retur =-</option>
 							<?php 
-								$cust=mysql_query("SELECT *
+								$cust=mysqli_query($con, "SELECT *
 FROM
     jual_detail
     INNER JOIN harga_jual 
@@ -304,7 +304,7 @@ FROM
     INNER JOIN satuan 
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE id_jual=$id_jual");
-								while($b=mysql_fetch_array($cust)){
+								while($b=mysqli_fetch_array($cust)){
 									echo '<option data-qty-jual="' .$b['qty']. '" data-satuan="' .$b['nama_satuan']. '" value="' .$b['id_jual_detail']. '">' .$b['nama_barang']. ' | Qty Jual : ' .$b['qty']. ' ' .$b['nama_satuan']. '</option>';
 								}
 							?>
@@ -312,14 +312,14 @@ WHERE id_jual=$id_jual");
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-shopping-cart fa-fw"></i></span>
-						<input id="qty_retur" name="qty_retur" type="tel" class="form-control" placeholder="Qty Retur" min="0" required>
+						<span class="input-group-addon"><i class="fa fa-shopping-cart fa-fw" style="width: 38px;"></i><br><small>Qty</small></span>
+						<input id="qty_retur" name="qty_retur" style="padding: 20px 15px;" type="tel" class="form-control" placeholder="Qty Retur" min="0" required>
 						<span class="input-group-addon" id="det_satuan"></span>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-dollar fa-fw"></i></span>
-						<input id="harga_retur" name="harga_retur" type="tel" class="form-control" placeholder="Harga Retur" required>
+						<span class="input-group-addon"><i class="fa fa-dollar fa-fw" style="width: 38px;"></i><br><small>Harga</small></span>
+						<input id="harga_retur" name="harga_retur" style="padding: 20px 15px;" type="tel" class="form-control" placeholder="Harga Retur" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					</div>
@@ -346,11 +346,11 @@ WHERE id_jual=$id_jual");
 					<input type="hidden" id="id_retur_jual_detail" name="id_retur_jual_detail" value="">
 					<div class="col-md-12">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-file fa-fw"></i></span>
+						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-file fa-fw"></i><br><small>Barang</small></span>
 						<select id="select_barang_2" class="select2 form-control" disabled required="true">
 							<option value="" disabled selected>-= Pilih Barang Retur =-</option>
 							<?php 
-								$cust=mysql_query("SELECT 
+								$cust=mysqli_query($con, "SELECT 
     barang.nama_barang
 	, jual_detail.qty
     , satuan.nama_satuan
@@ -368,7 +368,7 @@ FROM
     INNER JOIN satuan 
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE id_jual=$id_jual");
-								while($b=mysql_fetch_array($cust)){
+								while($b=mysqli_fetch_array($cust)){
 									echo '<option data-qty-jual="' .$b['qty']. '" data-satuan="' .$b['nama_satuan']. '" data-id-rjd="' .$b['id_retur_jual_detail']. '" value="' .$b['id_retur_jual_detail']. '">' .$b['nama_barang']. ' | Qty Jual : ' .$b['qty']. ' ' .$b['nama_satuan']. '</option>';
 								}
 							?>
@@ -376,14 +376,14 @@ WHERE id_jual=$id_jual");
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-shopping-cart fa-fw"></i></span>
-						<input id="qty_retur_2" name="qty_retur" type="tel" class="form-control" placeholder="Qty Retur" min="0" required>
+						<span class="input-group-addon"><i class="fa fa-shopping-cart fa-fw" style="width: 38px;"></i><br><small>Qty</small></span>
+						<input id="qty_retur_2" style="padding: 20px 15px;" name="qty_retur" type="tel" class="form-control" placeholder="Qty Retur" min="0" required>
 						<span class="input-group-addon" id="det_satuan_2"></span>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-dollar fa-fw"></i></span>
-						<input id="harga_retur_2" name="harga_retur" type="tel" class="form-control" placeholder="Harga Retur" required>
+						<span class="input-group-addon"><i class="fa fa-dollar fa-fw" style="width: 38px;"></i><br><small>Harga</small></span>
+						<input id="harga_retur_2" name="harga_retur" type="tel" class="form-control" style="padding: 20px 15px;" placeholder="Harga Retur" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					</div>
@@ -406,8 +406,8 @@ WHERE id_jual=$id_jual");
 			</div>
 			<div class="modal-body">
 				<?php
-					$sql2=mysql_query("SELECT jumlah FROM nota_sudah_cek WHERE status='2' AND id_jual=$id_jual");
-					$b2=mysql_fetch_array($sql2);
+					$sql2=mysqli_query($con, "SELECT jumlah FROM nota_sudah_cek WHERE status='2' AND id_jual=$id_jual");
+					$b2=mysqli_fetch_array($sql2);
 					$jumlah_nota=$b2['jumlah'];
 				?>
 				<div class="input-group">
@@ -424,9 +424,9 @@ WHERE id_jual=$id_jual");
 					</thead>
 					<tbody>
 						<?php 
-							$sql=mysql_query("SELECT * FROM bayar_nota_jual WHERE no_nota_jual='$no_nota_jual'");
+							$sql=mysqli_query($con, "SELECT * FROM bayar_nota_jual WHERE no_nota_jual='$no_nota_jual'");
 							$total_bayar=0;
-							while($row=mysql_fetch_array($sql)){
+							while($row=mysqli_fetch_array($sql)){
 								$total_bayar+=$row['jumlah'];
 								echo '<tr>
 										<td align="center">' .date("d-m-Y",strtotime($row['tgl_bayar'])). '</td>

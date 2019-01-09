@@ -8,7 +8,7 @@ if (isset($edit_konfirm_beli_4_post)){
 		$volume=$val_berat_volume;
 	}
 	$sql = "INSERT INTO barang_masuk VALUES(null,$id,'$tanggal',$qty_datang,$berat,$volume)";
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 	_direct("?page=gudang&mode=konfirm_beli_5_edit&id=$id");
 }
 
@@ -33,9 +33,9 @@ FROM
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
 WHERE beli_detail.id_beli_detail=$id
 ORDER BY barang_masuk.id_barang_masuk ASC";
-$q = mysql_query($sql);
+$q = mysqli_query($con, $sql);
 $qty2=0;
-while ($r=mysql_fetch_array($q)){
+while ($r=mysqli_fetch_array($q)){
 $qty1=$r['qty'];
 $id_barang_masuk=$r['id_barang_masuk'];
 $qty_datang=$r['qty_datang'];
@@ -47,8 +47,8 @@ if ($id_barang_masuk==''){
 	$qty3=0;
 } else {
 	$sql = "SELECT SUM(qty_di_rak) AS qty_di_rak FROM barang_masuk_rak WHERE id_barang_masuk=$id_barang_masuk";
-	$q = mysql_query($sql);
-	$r=mysql_fetch_array($q);
+	$q = mysqli_query($con, $sql);
+	$r=mysqli_fetch_array($q);
 	$qty3=$r['qty_di_rak'];
 }
 $x=$qty1-$qty2;
@@ -68,8 +68,8 @@ FROM
     INNER JOIN satuan 
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE id_beli_detail=$id";
-$q = mysql_query($sql);
-$r=mysql_fetch_array($q);
+$q = mysqli_query($con, $sql);
+$r=mysqli_fetch_array($q);
 ?>
 
 <div class="right_col loading" role="main">

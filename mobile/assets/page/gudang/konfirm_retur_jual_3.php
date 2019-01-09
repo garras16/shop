@@ -4,7 +4,7 @@ if (isset($edit_konfirm_retur_jual_3_post)){
 	$tgl = explode("/", $expire);
 	$expire = $tgl[2] ."-". $tgl[1] ."-". $tgl[0];
 	$expire=date("Y-m-d", strtotime($expire));
-	$sql=mysql_query("SELECT *
+	$sql=mysqli_query($con, "SELECT *
 FROM
     nota_siap_kirim
     INNER JOIN nota_siap_kirim_detail 
@@ -12,21 +12,21 @@ FROM
     INNER JOIN barang_masuk_rak 
         ON (nota_siap_kirim_detail.id_barang_masuk_rak = barang_masuk_rak.id_barang_masuk_rak)
 WHERE nota_siap_kirim.status='1' AND nota_siap_kirim_detail.id_jual_detail=$id_jual_detail LIMIT 1");
-	$row=mysql_fetch_array($sql);
+	$row=mysqli_fetch_array($sql);
 	$id_barang_masuk=$row['id_barang_masuk'];
-	$sql=mysql_query("SELECT id_bmr FROM retur_jual_detail WHERE id_retur_jual_detail=$id");
-	$row=mysql_fetch_array($sql);
+	$sql=mysqli_query($con, "SELECT id_bmr FROM retur_jual_detail WHERE id_retur_jual_detail=$id");
+	$row=mysqli_fetch_array($sql);
 	$id_bmr=$row['id_bmr'];
 	if ($id_bmr==''){
-		$sql=mysql_query("INSERT INTO barang_masuk_rak VALUES(null,$id_barang_masuk,0,$id_rak,'$expire',$qty_masuk)");
-		$id_barang_masuk_rak=mysql_insert_id();
-		$sql=mysql_query("UPDATE retur_jual_detail SET id_rak=$id_rak, expire='$expire', qty_masuk=$qty_masuk, id_bmr=$id_barang_masuk_rak WHERE id_retur_jual_detail=$id");
+		$sql=mysqli_query($con, "INSERT INTO barang_masuk_rak VALUES(null,$id_barang_masuk,0,$id_rak,'$expire',$qty_masuk)");
+		$id_barang_masuk_rak=mysqli_insert_id($con);
+		$sql=mysqli_query($con, "UPDATE retur_jual_detail SET id_rak=$id_rak, expire='$expire', qty_masuk=$qty_masuk, id_bmr=$id_barang_masuk_rak WHERE id_retur_jual_detail=$id");
 	} else {
-		$sql=mysql_query("UPDATE retur_jual_detail SET id_rak=$id_rak, expire='$expire', qty_masuk=$qty_masuk WHERE id_retur_jual_detail=$id");
+		$sql=mysqli_query($con, "UPDATE retur_jual_detail SET id_rak=$id_rak, expire='$expire', qty_masuk=$qty_masuk WHERE id_retur_jual_detail=$id");
 	}
 	$scan=false;
 }
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT
     retur_jual_detail.id_retur_jual_detail
     , retur_jual_detail.id_retur_jual
     , retur_jual_detail.id_jual_detail
@@ -53,7 +53,7 @@ FROM
     LEFT JOIN gudang 
         ON (rak.id_gudang = gudang.id_gudang)
 WHERE id_retur_jual_detail=$id");
-$row=mysql_fetch_array($sql);
+$row=mysqli_fetch_array($sql);
 if ($row['qty_retur']==''){
 	_alert("Retur detail mungkin sudah dihapus. Kembali ke menu sebelumnya.");
 	_direct("?page=gudang&mode=konfirm_retur_jual");

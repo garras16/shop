@@ -44,7 +44,7 @@ if (isset($_GET['dari'])){
 	$val="MONTH(tgl_retur)=MONTH(CURRENT_DATE()) AND YEAR(tgl_retur)=YEAR(CURRENT_DATE())";
 }
 
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT
     retur_beli.tgl_retur
     , retur_beli.id_retur_beli
     , retur_beli.no_retur_beli
@@ -61,9 +61,9 @@ FROM
         ON (beli.id_supplier = supplier.id_supplier) 
 WHERE $val
 ORDER BY id_retur_beli DESC");
-while($row=mysql_fetch_array($sql)){
-$sql2=mysql_query("SELECT SUM(qty * (harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah FROM beli_detail WHERE id_beli=" .$row['id_beli']. "");
-$r=mysql_fetch_array($sql2);
+while($row=mysqli_fetch_array($sql)){
+$sql2=mysqli_query($con, "SELECT SUM(qty * (harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah FROM beli_detail WHERE id_beli=" .$row['id_beli']. "");
+$r=mysqli_fetch_array($sql2);
 $total_beli=$r['jumlah']+($row['ppn_all_persen']*$r['jumlah']/100);
 if ($row['status']==0){
 	$status="";

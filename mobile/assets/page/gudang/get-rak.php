@@ -1,13 +1,13 @@
 <?php
 $id=$_GET['id'];
 require_once('../../../assets/inc/config.php');
-$sql=mysql_query("SELECT * 
+$sql=mysqli_query($con, "SELECT * 
 FROM
     gudang
     INNER JOIN rak 
         ON (gudang.id_gudang = rak.id_gudang) WHERE nama_rak='$id'");
-if (mysql_num_rows($sql) > 0 ){
-$r=mysql_fetch_array($sql);
+if (mysqli_num_rows($sql) > 0 ){
+$r=mysqli_fetch_array($sql);
 ?>
 	<input type="hidden" name="id_gudang" value="<?php echo $r['id_gudang'] ?>" >
 	<input type="hidden" name="id_rak" value="<?php echo $r['id_rak'] ?>" >

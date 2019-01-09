@@ -1,15 +1,15 @@
 <?php
 if (isset($edit_setoran_post)){
-	$sql = mysql_query("SELECT status_bayar FROM penagihan_detail WHERE id_penagihan_detail=$id_penagihan_detail");
-	$row=mysql_fetch_array($sql);
+	$sql = mysqli_query($con, "SELECT status_bayar FROM penagihan_detail WHERE id_penagihan_detail=$id_penagihan_detail");
+	$row=mysqli_fetch_array($sql);
 	($row['status_bayar']==2 ? $status_nota=2 : $status_nota=1);
 	if ($setor=='') $setor=0;
 	if ($tgl_janji_next==''){
-		$sql = mysql_query("UPDATE penagihan_detail SET setor=$setor,status_nota_kembali=$status_nota,tgl_janji_next=null WHERE id_penagihan_detail=$id_penagihan_detail");
+		$sql = mysqli_query($con, "UPDATE penagihan_detail SET setor=$setor,status_nota_kembali=$status_nota,tgl_janji_next=null WHERE id_penagihan_detail=$id_penagihan_detail");
 	} else {
 		$tgl = explode("/", $tgl_janji_next);
 		$tgl_janji_next = $tgl[2] ."-". $tgl[1] ."-". $tgl[0];
-		$sql = mysql_query("UPDATE penagihan_detail SET setor=$setor,status_nota_kembali=$status_nota,tgl_janji_next='$tgl_janji_next' WHERE id_penagihan_detail=$id_penagihan_detail");
+		$sql = mysqli_query($con, "UPDATE penagihan_detail SET setor=$setor,status_nota_kembali=$status_nota,tgl_janji_next='$tgl_janji_next' WHERE id_penagihan_detail=$id_penagihan_detail");
 	}
 	
 	if ($sql){
@@ -20,7 +20,7 @@ if (isset($edit_setoran_post)){
 	_direct("?page=admin&mode=setoran");
 }
 if (isset($_GET['del'])){
-	$sql = mysql_query("UPDATE penagihan_detail SET setor=0,status_nota_kembali=0,tgl_janji_next=null WHERE id_penagihan_detail=" .$_GET['del']);
+	$sql = mysqli_query($con, "UPDATE penagihan_detail SET setor=0,status_nota_kembali=0,tgl_janji_next=null WHERE id_penagihan_detail=" .$_GET['del']);
 	if ($sql){
 		_buat_pesan("Input Berhasil.","green");
 	} else {
@@ -69,7 +69,7 @@ $thn_sql="YEAR(CURRENT_DATE())";
 				</thead>
 				<tbody>
 <?php
-$sql=mysql_query("SELECT *, SUM(bayar) as bayar
+$sql=mysqli_query($con, "SELECT *, SUM(bayar) as bayar
 FROM
     penagihan
     INNER JOIN karyawan 
@@ -84,34 +84,34 @@ FROM
         ON (jual.id_jual = jual_detail.id_jual)
 WHERE penagihan.status_tagih <>2
 GROUP BY jual.id_jual");
-while ($row=mysql_fetch_array($sql)){
-	$sql2=mysql_query("SELECT SUM(bayar) as bayar
+while ($row=mysqli_fetch_array($sql)){
+	$sql2=mysqli_query($con, "SELECT SUM(bayar) as bayar
 FROM
     penagihan
     INNER JOIN penagihan_detail 
         ON (penagihan.id_penagihan = penagihan_detail.id_penagihan)
 WHERE id_jual=" .$row['id_jual']);
-	$row2=mysql_fetch_array($sql2);
+	$row2=mysqli_fetch_array($sql2);
 	$total_bayar=$row2['bayar'];
 	$total_jual=0;
 if ($row['status_konfirm']>=5){
-	$sql2=mysql_query("SELECT (qty_ambil*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total
+	$sql2=mysqli_query($con, "SELECT (qty_ambil*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total
 FROM
     jual_detail
     INNER JOIN canvass_siap_kirim_detail 
         ON (jual_detail.id_jual_detail = canvass_siap_kirim_detail.id_jual_detail)
 WHERE id_jual=" .$row['id_jual']);
-	while ($row2=mysql_fetch_array($sql2)){
+	while ($row2=mysqli_fetch_array($sql2)){
 		$total_jual+=$row2['total'];
 	}
 } else {
-	$sql2=mysql_query("SELECT (qty_ambil*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total
+	$sql2=mysqli_query($con, "SELECT (qty_ambil*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total
 FROM
     jual_detail
     INNER JOIN nota_siap_kirim_detail 
         ON (jual_detail.id_jual_detail = nota_siap_kirim_detail.id_jual_detail)
 WHERE id_jual=" .$row['id_jual']);
-	while ($row2=mysql_fetch_array($sql2)){
+	while ($row2=mysqli_fetch_array($sql2)){
 		$total_jual+=$row2['total'];
 	}
 }

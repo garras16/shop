@@ -5,8 +5,8 @@ $id_rak=$_GET['rak'];
 if (isset($tambah_stock_opname_gudang)){
 	$tgl = explode("/", $expire);
 	$expire = $tgl[2] ."-". $tgl[1] ."-". $tgl[0];
-	$sql=mysql_query("UPDATE stock_opname SET status_so=2 WHERE id_so=$id");
-/*	$sql=mysql_query("SELECT *
+	$sql=mysqli_query($con, "UPDATE stock_opname SET status_so=2 WHERE id_so=$id");
+/*	$sql=mysqli_query($con, "SELECT *
 FROM
     barang_masuk_rak
     INNER JOIN barang_masuk 
@@ -18,37 +18,37 @@ FROM
     INNER JOIN barang 
         ON (barang_supplier.id_barang = barang.id_barang)
 WHERE barang.id_barang=$id_barang AND expire='$expire' AND id_rak=$id_rak AND stok>0 HAVING SUM(stok)>=$qty_cek");
-	if (mysql_num_rows($sql)>0){
-		$row=mysql_fetch_array($sql);*/
-		$sql2=mysql_query("INSERT INTO stock_opname_detail VALUES(null,$id,$id_barang,$id_rak,'$expire',$qty_cek)");
+	if (mysqli_num_rows($sql)>0){
+		$row=mysqli_fetch_array($sql);*/
+		$sql2=mysqli_query($con, "INSERT INTO stock_opname_detail VALUES(null,$id,$id_barang,$id_rak,'$expire',$qty_cek)");
 /*	} else {
 		_alert("Input Salah. Silakan input kembali.");
 	}*/
 	_direct("?page=gudang&mode=stock_opname_3&id=$id&rak=$id_rak");
 }
 if (isset($_GET['del'])){
-	$sql=mysql_query("SELECT * FROM stock_opname_detail WHERE id_so_detail=" .$_GET['del']);
-	$row=mysql_fetch_array($sql);
-	$sql2=mysql_query("DELETE FROM stock_opname_detail WHERE id_so=$id AND id_barang=" .$row['id_barang']. " AND id_rak=" .$row['id_rak']. " AND expire='" .$row['expire']. "'");
+	$sql=mysqli_query($con, "SELECT * FROM stock_opname_detail WHERE id_so_detail=" .$_GET['del']);
+	$row=mysqli_fetch_array($sql);
+	$sql2=mysqli_query($con, "DELETE FROM stock_opname_detail WHERE id_so=$id AND id_barang=" .$row['id_barang']. " AND id_rak=" .$row['id_rak']. " AND expire='" .$row['expire']. "'");
 	_direct("?page=gudang&mode=stock_opname_3&id=$id&rak=$id_rak");
 }
 if (isset($selesai_stock_opname_gudang)){
-	$sql=mysql_query("UPDATE stock_opname SET status_so=1 WHERE id_so=$id");
+	$sql=mysqli_query($con, "UPDATE stock_opname SET status_so=1 WHERE id_so=$id");
 	_direct("?page=gudang&mode=stock_opname_4&id=$id&rak=$id_rak");
 }
-$sql=mysql_query("SELECT *
+$sql=mysqli_query($con, "SELECT *
 FROM
     stock_opname
     INNER JOIN karyawan 
         ON (stock_opname.id_karyawan = karyawan.id_karyawan)
 	WHERE id_so=$id");
-	$row=mysql_fetch_array($sql);
+	$row=mysqli_fetch_array($sql);
 	$tgl_so=$row['tanggal_so'];
 	$nama=$row['nama_karyawan'];
 	$status_so=$row['status_so'];
 	
-	$sql=mysql_query("SELECT * FROM rak INNER JOIN gudang ON (rak.id_gudang = gudang.id_gudang) WHERE rak.id_rak=$id_rak");
-	$row=mysql_fetch_array($sql);
+	$sql=mysqli_query($con, "SELECT * FROM rak INNER JOIN gudang ON (rak.id_gudang = gudang.id_gudang) WHERE rak.id_rak=$id_rak");
+	$row=mysqli_fetch_array($sql);
 	$nama_gudang=$row['nama_gudang'];
 	$nama_rak=$row['nama_rak'];
 ?>
@@ -88,7 +88,7 @@ FROM
 							</thead>
 							<tbody>
 <?php
-	$sql=mysql_query("SELECT *,SUM(stok) AS stok
+	$sql=mysqli_query($con, "SELECT *,SUM(stok) AS stok
 FROM
     barang_masuk_rak
     INNER JOIN barang_masuk 
@@ -103,19 +103,19 @@ FROM
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE stok>0 AND barang_masuk_rak.id_rak=$id_rak AND barang.status=1
 GROUP BY barang.id_barang");
-	while ($row=mysql_fetch_array($sql)){
-	$sql2=mysql_query("SELECT *,SUM(jumlah_barang) as jumlah_barang
+	while ($row=mysqli_fetch_array($sql)){
+	$sql2=mysqli_query($con, "SELECT *,SUM(jumlah_barang) as jumlah_barang
 FROM
     stock_opname_detail
     INNER JOIN barang 
         ON (stock_opname_detail.id_barang = barang.id_barang)
 WHERE stock_opname_detail.id_barang=" .$row['id_barang']. "	AND id_so=$id AND stock_opname_detail.id_rak=$id_rak
 GROUP BY stock_opname_detail.id_barang,stock_opname_detail.id_rak,stock_opname_detail.expire");
-	(mysql_num_rows($sql2)=='0' ? $n='1' : $n=mysql_num_rows($sql2));
+	(mysqli_num_rows($sql2)=='0' ? $n='1' : $n=mysqli_num_rows($sql2));
 	echo '<tr>
 				<td rowspan="'.$n.'" style="vertical-align:middle;text-align:center;">' .$row['nama_barang']. '</td>';
 	$detail=false;
-	while ($row2=mysql_fetch_array($sql2)){
+	while ($row2=mysqli_fetch_array($sql2)){
 		$detail=true;
 		echo '	<td style="vertical-align:middle;text-align:center" align="center">' .date("d-m-Y",strtotime($row2['expire'])). '</td>
 				<td style="vertical-align:middle;text-align:center" align="center">' .format_angka($row2['jumlah_barang']). ' ' .$row['nama_satuan']. '</td>

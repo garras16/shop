@@ -1,11 +1,11 @@
 <?php
-//$_SESSION['id_pelanggan']='1';
-//$_SESSION['nama_pelanggan']='TOKO ANGIN RIBUT';
-//$_SESSION['id_karyawan']=1;
+$_SESSION['id_pelanggan']='1';
+$_SESSION['nama_pelanggan']='TOKO ANGIN RIBUT';
+$_SESSION['id_karyawan']=1;
 if (isset($tambah_penjualan_post)){
 /*	$id_harga_jual[] = implode(',',$id_harga_jual);
 	for ($i=0; $i<count($id_harga_jual)-1; $i++) {
-		$sql=mysql_query("SELECT *
+		$sql=mysqli_query($con, "SELECT *
 	FROM
 		harga_jual
 		INNER JOIN barang_supplier 
@@ -13,16 +13,16 @@ if (isset($tambah_penjualan_post)){
 		INNER JOIN barang 
 			ON (barang_supplier.id_barang = barang.id_barang)
 	WHERE id_harga_jual=" .$id_harga_jual[$i]. " AND status=1");
-		if (mysql_num_rows($sql)=='0'){
+		if (mysqli_num_rows($sql)=='0'){
 			_alert("Ada barang non-aktif yang dipilih. Proses digagalkan.");
 			_direct("?page=canvass_keluar&mode=add_penjualan");
 			break 2;
 		}
 	}*/
 	
-	$sql=mysql_query("DELETE FROM data_nota_jual WHERE tgl_nota < '" .date("Y-m-d"). "'");
-	$sql=mysql_query("SELECT MAX(invoice) AS cID FROM data_nota_jual WHERE tgl_nota='" .date('Y-m-d'). "'");
-	$r=mysql_fetch_array($sql);
+	$sql=mysqli_query($con, "DELETE FROM data_nota_jual WHERE tgl_nota < '" .date("Y-m-d"). "'");
+	$sql=mysqli_query($con, "SELECT MAX(invoice) AS cID FROM data_nota_jual WHERE tgl_nota='" .date('Y-m-d'). "'");
+	$r=mysqli_fetch_array($sql);
 	if ($r['cID']==''){
 		$CID=0;
 	} else {
@@ -30,13 +30,18 @@ if (isset($tambah_penjualan_post)){
 		$CID=$CID[2];
 	}
 	$invoice="NJ-" .date("ymd"). '-' .sprintf("%03d",$CID+1);
+
+	$sql = mysqli_query($con, "INSERT INTO data_nota_jual VALUES(null,'$tanggal','$invoice')");
+	$sql = mysqli_query($con, "INSERT INTO jual VALUES(null,'$tanggal','$invoice',$id_pelanggan,$id_karyawan,'$jenis_bayar',$tenor,5,0,null,$diskon_all_persen)");
+	$id_jual=mysqli_insert_id($con);
+
 	$sql = mysql_query("INSERT INTO data_nota_jual VALUES(null,'$tanggal','$invoice')");
 	$sql = mysql_query("INSERT INTO jual VALUES(null,'$tanggal','$invoice',$id_pelanggan,$id_karyawan,'$jenis_bayar',$tenor,5,0,null,$diskon_all_persen,$ppn_all_persen)");
 	$id_jual=mysql_insert_id();
 	$id_canvass_keluar[] = implode(',',$id_canvass_keluar);
 	
 	$sql = "INSERT INTO canvass_belum_siap VALUES(null,$id_canvass_keluar[0],'$tanggal',$id_jual,'0')";
-	$q = mysql_query($sql);
+	$q = mysqli_query($con, $sql);
 	$id_harga_jual[] = implode(',',$id_harga_jual);
 	$harga[] = implode(',',$harga);
 	$qty[] = implode(',',$qty);
@@ -47,7 +52,7 @@ if (isset($tambah_penjualan_post)){
 	$diskon_persen_3[] = implode(',',$diskon_persen_3);
 	$diskon_rp_3[] = implode(',',$diskon_rp_3);
 	for ($i=0; $i<count($id_harga_jual)-1; $i++) {
-		$sql=mysql_query("SELECT *
+		$sql=mysqli_query($con, "SELECT *
 	FROM
 		harga_jual
 		INNER JOIN barang_supplier 
@@ -55,11 +60,11 @@ if (isset($tambah_penjualan_post)){
 		INNER JOIN barang 
 			ON (barang_supplier.id_barang = barang.id_barang)
 	WHERE id_harga_jual=" .$id_harga_jual[$i]. " AND status=0");
-		if (mysql_num_rows($sql)>0){
+		if (mysqli_num_rows($sql)>0){
 			_alert("Ada barang yang tidak disimpan.");
 		} else {
 			$sql2 = "INSERT INTO jual_detail VALUES(null,$id_jual,$id_harga_jual[$i],$qty[$i],$harga[$i],$diskon_persen_1[$i],$diskon_rp_1[$i],$diskon_persen_2[$i],$diskon_rp_2[$i],$diskon_persen_3[$i],$diskon_rp_3[$i])";
-			$q = mysql_query($sql2);
+			$q = mysqli_query($con, $sql2);
 			if ($q){
 				_buat_pesan("Input Berhasil","green");
 			} else {
@@ -67,12 +72,12 @@ if (isset($tambah_penjualan_post)){
 			}
 		}
 	}
-	$sql=mysql_query("UPDATE canvass_keluar SET status='2' WHERE id_canvass_keluar=$id_canvass_keluar[0]");
+	$sql=mysqli_query($con, "UPDATE canvass_keluar SET status='2' WHERE id_canvass_keluar=$id_canvass_keluar[0]");
 	_direct("?page=canvass_keluar&mode=menu_penjualan");
 }
 $id_karyawan=$_SESSION['id_karyawan'];
-$sql=mysql_query("SELECT plafon FROM pelanggan WHERE id_pelanggan=" .$_SESSION['id_pelanggan']. "");
-$row=mysql_fetch_array($sql);
+$sql=mysqli_query($con, "SELECT plafon FROM pelanggan WHERE id_pelanggan=" .$_SESSION['id_pelanggan']. "");
+$row=mysqli_fetch_array($sql);
 $plafon=$row['plafon'];
 ?>
 <div class="right_col loading" role="main">
@@ -91,17 +96,17 @@ $plafon=$row['plafon'];
 								<div id="toko"></div>
 								<input type="hidden" id="id_pelanggan" name="id_pelanggan" value="<?php echo $_SESSION['id_pelanggan'] ?>">
 								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-building fa-fw"></i></span>
-									<input id="nama_pelanggan" name="nama_pelanggan" title="Nama Pelanggan" type="text" class="form-control" placeholder="Nama Toko" value="<?php echo $_SESSION['nama_pelanggan'] ?>" readonly required>
+									<span class="input-group-addon"><i class="fa fa-building fa-fw" style="width: 66px;"></i><br><small>Pelanggan</small></span>
+									<input id="nama_pelanggan" name="nama_pelanggan" style="padding: 20px 15px;" title="Nama Pelanggan" type="text" class="form-control" placeholder="Nama Toko" value="<?php echo $_SESSION['nama_pelanggan'] ?>" readonly required>
 									<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 								</div>
 								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
-									<input id="tanggal" name="tanggal" title="Tanggal" type="text" class="form-control" placeholder="Tanggal" value="<?php echo date('d-m-Y') ?>" readonly>
+									<span class="input-group-addon"><i class="fa fa-calendar fa-fw" style="width: 66px;"></i><br><small>Tgl</small></span>
+									<input id="tanggal" style="padding: 20px 15px;" name="tanggal" title="Tanggal" type="text" class="form-control" placeholder="Tanggal" value="<?php echo date('d-m-Y') ?>" readonly>
 									<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 								</div>
 								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-dollar fa-fw"></i></span>
+									<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-dollar fa-fw"></i><br><small>Pembayaran</small></span>
 									<select class="form-control" id="select_jenis" required>
 										<option value="" disabled selected>Pilih Jenis Bayar</option>
 										<option value="Lunas">Lunas</option>
@@ -110,8 +115,8 @@ $plafon=$row['plafon'];
 									<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 								</div>
 								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-tags fa-fw"></i> (hari)</span>
-									<input id="tenor" name="tenor" title="Tenor" type="text" class="form-control" placeholder="Tenor" value="">
+									<span class="input-group-addon"><i class="fa fa-tags fa-fw" style="width: 66px;"></i><br><small>Tenor (hari)</small></span>
+									<input id="tenor" name="tenor" title="Tenor" type="text" style="padding: 20px 15px;" class="form-control" placeholder="Tenor" value="">
 									<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 								</div>
 								<div class="input-group">
@@ -157,8 +162,8 @@ $plafon=$row['plafon'];
 								<div class="clearfix"></div><br/>
 								<div id="info"><b>Info :<br/>
 								<?php
-								$sql2=mysql_query("SELECT * FROM jual WHERE invoice NOT IN (SELECT no_nota_jual FROM bayar_nota_jual WHERE STATUS=1) AND id_pelanggan=" .$_SESSION['id_pelanggan']);
-								echo '* Jumlah Nota Gantung : ' .format_angka(mysql_num_rows($sql2)). ' nota'; ?>
+								$sql2=mysqli_query($con, "SELECT * FROM jual WHERE invoice NOT IN (SELECT no_nota_jual FROM bayar_nota_jual WHERE STATUS=1) AND id_pelanggan=" .$_SESSION['id_pelanggan']);
+								echo '* Jumlah Nota Gantung : ' .format_angka(mysqli_num_rows($sql2)). ' nota'; ?>
 								</b>
 								</div>
 								<div class="clearfix"></div><br/>

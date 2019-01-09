@@ -1,19 +1,17 @@
 <?php
 $id_karyawan=$_SESSION['id_karyawan'];
-$sql=mysql_query("SELECT * FROM jual WHERE id_jual=$id");
-if (mysql_num_rows($sql)=='0'){
+$sql=mysqli_query($con, "SELECT * FROM jual WHERE id_jual=$id");
+if (mysqli_num_rows($sql)=='0'){
 	_alert("Nota Jual sudah dihapus. Proses dibatalkan.");
 	_direct("?page=gudang&mode=konfirm_jual");
-	break;
 }
 if (isset($buat_nota_siap_kirim_post)){
-	$sql=mysql_query("SELECT * FROM jual_detail WHERE id_jual_detail=$id_jual_detail");
-	if (mysql_num_rows($sql)=='0'){
+	$sql=mysqli_query($con, "SELECT * FROM jual_detail WHERE id_jual_detail=$id_jual_detail");
+	if (mysqli_num_rows($sql)=='0'){
 		_alert("Barang sudah dihapus. Proses dibatalkan.");
 		_direct("?page=gudang&mode=konfirm_jual_2&id=$id");
-		break;
 	}
-	$sql=mysql_query("SELECT *
+	$sql=mysqli_query($con, "SELECT *
 FROM
     jual_detail
     INNER JOIN harga_jual 
@@ -23,18 +21,17 @@ FROM
     INNER JOIN barang 
         ON (barang_supplier.id_barang = barang.id_barang)
  WHERE id_jual_detail=$id_jual_detail AND barang.status=0");
-	if (mysql_num_rows($sql)>0){
+	if (mysqli_num_rows($sql)>0){
 		_alert("Input gagal karena barang sudah tidak aktif.");
 		_direct("?page=gudang&mode=konfirm_jual_2&id=$id");
-		break;
 	}
 	$tgl = explode("/", $expire);
 	$expire = $tgl[2] ."-". $tgl[1] ."-". $tgl[0];
-	$sql=mysql_query("INSERT INTO nota_siap_kirim VALUES(null,'$tanggal',$id,'0',$id_karyawan)");
-	$sql=mysql_query("SELECT * FROM nota_siap_kirim WHERE id_jual=$id");
-	$row=mysql_fetch_array($sql);
+	$sql=mysqli_query($con, "INSERT INTO nota_siap_kirim VALUES(null,'$tanggal',$id,'0',$id_karyawan)");
+	$sql=mysqli_query($con, "SELECT * FROM nota_siap_kirim WHERE id_jual=$id");
+	$row=mysqli_fetch_array($sql);
 	$id_nota_siap_kirim=$row['id_nota_siap_kirim'];
-	$sql=mysql_query("SELECT *
+	$sql=mysqli_query($con, "SELECT *
 FROM
     barang_supplier
     INNER JOIN barang 
@@ -52,21 +49,21 @@ FROM
 WHERE barang.id_barang=" .$id_barang. " AND barang_masuk_rak.id_rak=" .$id_rak. " AND barang.status=1 AND expire='" .$expire. "' AND barang.status=1
 ORDER BY expire, nama_gudang, nama_rak, tgl_datang");
 
-	if (mysql_num_rows($sql)>0){
+	if (mysqli_num_rows($sql)>0){
 		$total_qty_ambil=0;
 		$tmp_qty_ambil=$qty_ambil;
-		while ($row=mysql_fetch_array($sql)){
+		while ($row=mysqli_fetch_array($sql)){
 			$id_barang_masuk_rak=$row['id_barang_masuk_rak'];
 			$stok=$row['stok'];
 			if ($tmp_qty_ambil>=$stok){
 				if ($total_qty_ambil<=$qty_ambil && $stok > 0){
-					$sql2=mysql_query("INSERT INTO nota_siap_kirim_detail VALUES(null,$id_nota_siap_kirim,$id_jual_detail,$id_barang_masuk_rak,$stok,'$expire',$id_rak,0)");
+					$sql2=mysqli_query($con, "INSERT INTO nota_siap_kirim_detail VALUES(null,$id_nota_siap_kirim,$id_jual_detail,$id_barang_masuk_rak,$stok,'$expire',$id_rak,0)");
 					$total_qty_ambil+=$stok;
 					$tmp_qty_ambil-=$stok;
 				}
 			} else {
 				if ($total_qty_ambil<$qty_ambil && $stok > 0){
-					$sql2=mysql_query("INSERT INTO nota_siap_kirim_detail VALUES(null,$id_nota_siap_kirim,$id_jual_detail,$id_barang_masuk_rak,$tmp_qty_ambil,'$expire',$id_rak,0)");
+					$sql2=mysqli_query($con, "INSERT INTO nota_siap_kirim_detail VALUES(null,$id_nota_siap_kirim,$id_jual_detail,$id_barang_masuk_rak,$tmp_qty_ambil,'$expire',$id_rak,0)");
 					$total_qty_ambil+=$tmp_qty_ambil;
 					$tmp_qty_ambil-=$stok;
 				}
@@ -78,17 +75,17 @@ ORDER BY expire, nama_gudang, nama_rak, tgl_datang");
 	_direct("?page=gudang&mode=konfirm_jual_2&id=$id");
 }
 if (isset($_GET['del'])){
-	$sql=mysql_query("SELECT * FROM nota_siap_kirim_detail WHERE id_nota_siap_kirim_detail=" .$_GET['del']. "");
-	$row=mysql_fetch_array($sql);
+	$sql=mysqli_query($con, "SELECT * FROM nota_siap_kirim_detail WHERE id_nota_siap_kirim_detail=" .$_GET['del']. "");
+	$row=mysqli_fetch_array($sql);
 	$id_jual_detail=$row['id_jual_detail'];
 	$id_rak=$row['id_rak'];
 	$expire=$row['expire'];
-	$sql=mysql_query("DELETE FROM nota_siap_kirim_detail
+	$sql=mysqli_query($con, "DELETE FROM nota_siap_kirim_detail
 		WHERE id_jual_detail=$id_jual_detail AND id_rak=$id_rak AND expire='$expire'");
 	_direct("?page=gudang&mode=konfirm_jual_2&id=$id");
 }
 if (isset($selesai_nota_siap_kirim_post)){
-	$sql=mysql_query("SELECT *,SUM(qty_ambil) AS qty_ambil
+	$sql=mysqli_query($con, "SELECT *,SUM(qty_ambil) AS qty_ambil
 FROM
     nota_siap_kirim
     INNER JOIN nota_siap_kirim_detail 
@@ -105,9 +102,9 @@ FROM
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE nota_siap_kirim.id_jual=$id AND barang.status=0
 GROUP BY barang.id_barang");
-if (mysql_num_rows($sql)>0){
-	$sql2=mysql_query("SELECT * FROM jual INNER JOIN pelanggan ON (jual.id_pelanggan = pelanggan.id_pelanggan) WHERE id_jual=$id");
-	$row2=mysql_fetch_array($sql2);
+if (mysqli_num_rows($sql)>0){
+	$sql2=mysqli_query($con, "SELECT * FROM jual INNER JOIN pelanggan ON (jual.id_pelanggan = pelanggan.id_pelanggan) WHERE id_jual=$id");
+	$row2=mysqli_fetch_array($sql2);
 	$id_sales=$row2['id_karyawan'];
 	$pelanggan=$row2['nama_pelanggan'];
 	$invoice=$row2['invoice'];
@@ -115,42 +112,42 @@ if (mysql_num_rows($sql)>0){
 	$judul='Ada barang yang tidak disimpan karena non aktif';
 	$pesan='Nama Toko : ' .$pelanggan. '\r\nNo Nota Jual : ' .$invoice. '\r\nTipe: Dalam Kota\r\n\r\n';
 	
-	while ($row=mysql_fetch_array($sql)){
+	while ($row=mysqli_fetch_array($sql)){
 		$pesan.=$row['nama_barang']. '\r\n\t' .$row['qty_ambil']. ' ' .$row['nama_satuan']. '\r\n' ;
 	}
-	$sql2=mysql_query("INSERT INTO pesan VALUES (null,'$tanggal',$id_sales,'$judul','$pesan',0)");
-	$sql2=mysql_query("DELETE FROM nota_siap_kirim_detail WHERE id_jual_detail=" .$row['id_jual_detail']);
+	$sql2=mysqli_query($con, "INSERT INTO pesan VALUES (null,'$tanggal',$id_sales,'$judul','$pesan',0)");
+	$sql2=mysqli_query($con, "DELETE FROM nota_siap_kirim_detail WHERE id_jual_detail=" .$row['id_jual_detail']);
 	_alert("Ada barang yang tidak disimpan karena non aktif");
 }
-	$sql=mysql_query("SELECT * FROM nota_siap_kirim INNER JOIN nota_siap_kirim_detail 
+	$sql=mysqli_query($con, "SELECT * FROM nota_siap_kirim INNER JOIN nota_siap_kirim_detail 
 		ON (nota_siap_kirim.id_nota_siap_kirim = nota_siap_kirim_detail.id_nota_siap_kirim) WHERE id_jual=$id");
-	while ($row=mysql_fetch_array($sql)){
-		$sql2=mysql_query("SELECT * FROM barang_masuk_rak WHERE id_barang_masuk_rak=" .$row['id_barang_masuk_rak']. "");
-		$row2=mysql_fetch_array($sql2);
+	while ($row=mysqli_fetch_array($sql)){
+		$sql2=mysqli_query($con, "SELECT * FROM barang_masuk_rak WHERE id_barang_masuk_rak=" .$row['id_barang_masuk_rak']. "");
+		$row2=mysqli_fetch_array($sql2);
 		$stok=$row2['stok']-$row['qty_ambil'];
 		if ($stok<0){
 			tulis_log(date('d-m-Y H:i'). ' Stok minus selesai nota siap kirim konfirm_jual_2 id_jual=' .$id. '\r\n');
 			tulis_log('stok=' .$row2['stok']. ' qty_ambil=' .$row['qty_ambil']. '\r\n');
 			tulis_log("UPDATE barang_masuk_rak SET stok=" .$stok. " WHERE id_barang_masuk_rak=" .$id_barang_masuk_rak. '\r\n');
 		}
-		$sql2=mysql_query("UPDATE barang_masuk_rak SET stok=$stok WHERE id_barang_masuk_rak=" .$row['id_barang_masuk_rak']. "");
+		$sql2=mysqli_query($con, "UPDATE barang_masuk_rak SET stok=$stok WHERE id_barang_masuk_rak=" .$row['id_barang_masuk_rak']. "");
 	}
-	$sql=mysql_query("UPDATE nota_siap_kirim SET status='1' WHERE id_jual=$id");
-	$sql=mysql_query("UPDATE jual SET status_konfirm=1 WHERE id_jual=$id");
+	$sql=mysqli_query($con, "UPDATE nota_siap_kirim SET status='1' WHERE id_jual=$id");
+	$sql=mysqli_query($con, "UPDATE jual SET status_konfirm=1 WHERE id_jual=$id");
 	_direct("?page=gudang&mode=konfirm_jual");
 }
 
-$sql=mysql_query("SELECT *
+$sql=mysqli_query($con, "SELECT *
 FROM
     nota_siap_kirim
     INNER JOIN nota_siap_kirim_detail 
         ON (nota_siap_kirim.id_nota_siap_kirim = nota_siap_kirim_detail.id_nota_siap_kirim)
 WHERE id_jual=$id");
-if (mysql_num_rows($sql)=='0'){
-	$sql2=mysql_query("DELETE FROM nota_siap_kirim WHERE id_jual=$id");
+if (mysqli_num_rows($sql)=='0'){
+	$sql2=mysqli_query($con, "DELETE FROM nota_siap_kirim WHERE id_jual=$id");
 }
 
-	$sql=mysql_query("SELECT *
+	$sql=mysqli_query($con, "SELECT *
 FROM
     jual
     INNER JOIN pelanggan 
@@ -158,7 +155,7 @@ FROM
     INNER JOIN karyawan 
         ON (jual.id_karyawan = karyawan.id_karyawan)
 	WHERE id_jual=$id");
-	$row=mysql_fetch_array($sql);
+	$row=mysqli_fetch_array($sql);
 	$no_nota=$row['invoice'];
 	$tgl_nota=$row['tgl_nota'];
 	$nama_pelanggan=$row['nama_pelanggan'];
@@ -168,26 +165,26 @@ FROM
 	$plafon=$row['plafon'];
 	$barang_expire=false;
 	$selesai=false;
-	$sql3=mysql_query("SELECT SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah_nota
+	$sql3=mysqli_query($con, "SELECT SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah_nota
 FROM
     jual
     INNER JOIN jual_detail 
         ON (jual.id_jual = jual_detail.id_jual)
 WHERE jual.id_pelanggan=" .$row['id_pelanggan']);
-$row3=mysql_fetch_array($sql3);
+$row3=mysqli_fetch_array($sql3);
 $jumlah_nota=$row3['jumlah_nota'];
-		$sql3=mysql_query("SELECT SUM(jumlah) AS jumlah_bayar
+		$sql3=mysqli_query($con, "SELECT SUM(jumlah) AS jumlah_bayar
 FROM
     bayar_nota_jual
     INNER JOIN jual 
         ON (bayar_nota_jual.no_nota_jual = jual.invoice)
 WHERE jual.id_pelanggan=" .$row['id_pelanggan']);
-$row3=mysql_fetch_array($sql3);
+$row3=mysqli_fetch_array($sql3);
 $jumlah_gantung=$jumlah_nota-$row3['jumlah_bayar'];
 if ($jumlah_gantung>$plafon) _alert("Nota sudah melebihi plafon");
-$sql4=mysql_query("SELECT * FROM jual WHERE invoice NOT IN (SELECT no_nota_jual FROM bayar_nota_jual WHERE STATUS=1) AND id_pelanggan=" .$row['id_pelanggan']);
-$jml_nota=format_angka(mysql_num_rows($sql4));
-($plafon-$jumlah_gantung>0 ? $style="" : $style="color:red");
+$sql4=mysqli_query($con, "SELECT * FROM jual WHERE invoice NOT IN (SELECT no_nota_jual FROM bayar_nota_jual WHERE STATUS=1) AND id_pelanggan=" .$row['id_pelanggan']);
+$jml_nota=format_angka(mysqli_num_rows($sql4));
+($plafon-$jumlah_gantung>0 ? $style="color: black;" : $style="color:red;");
 ?>
 <div class="right_col loading" role="main">
 	<div class="">
@@ -246,7 +243,7 @@ $jml_nota=format_angka(mysql_num_rows($sql4));
 							</thead>
 							<tbody>
 <?php
-	$sql=mysql_query("SELECT *
+	$sql=mysqli_query($con, "SELECT *
 FROM
     jual_detail
     INNER JOIN harga_jual 
@@ -259,17 +256,22 @@ FROM
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE id_jual=$id AND barang.status=1");
 $total=0;$total_=0;
-	while ($row=mysql_fetch_array($sql)){
-	$sql4=mysql_query("SELECT SUM(qty_ambil) AS qty_ambil
+	while ($row=mysqli_fetch_array($sql)){
+	$sql4=mysqli_query($con, "SELECT SUM(qty_ambil) AS qty_ambil
 		FROM
 			nota_siap_kirim
 			INNER JOIN nota_siap_kirim_detail 
 				ON (nota_siap_kirim.id_nota_siap_kirim = nota_siap_kirim_detail.id_nota_siap_kirim)
 		WHERE id_jual_detail=" .$row['id_jual_detail']. "");
-	$row4=mysql_fetch_array($sql4);
+	$row4=mysqli_fetch_array($sql4);
 	$total_ambil=$row4['qty_ambil'];
 	($total_ambil!=$row['qty'] ? $color="color:red" : $color="");
-	$sql2=mysql_query("SELECT *, SUM(stok) as stok
+	if($row['diskon_rp'] < 0 || $row['diskon_rp_2'] < 0 || $row['diskon_rp_3'] < 0) {
+		$color="color: red;";
+	}else{
+		$color="color:black";
+	}
+	$sql2=mysqli_query($con, "SELECT *, SUM(stok) as stok
 FROM
     barang_supplier
     INNER JOIN barang 
@@ -287,7 +289,7 @@ FROM
 WHERE barang.id_barang=" .$row['id_barang']. " AND barang.status=1 AND stok>0
 GROUP BY barang_masuk_rak.id_rak, barang_masuk_rak.expire 
 ORDER BY expire, nama_gudang, nama_rak, tgl_datang");
-	(mysql_num_rows($sql2)==0 ? $n=1 : $n=mysql_num_rows($sql2));
+	(mysqli_num_rows($sql2)==0 ? $n=1 : $n=mysqli_num_rows($sql2));
 	$total+=($row['harga']-$row['diskon_rp']-$row['diskon_rp_2']-$row['diskon_rp_3'])*$row['qty'];
 	echo '<tr>
 				<td style="vertical-align:middle;text-align:center;' .$color. '" rowspan="' .$n. '">' .$row['nama_barang']. '</td>
@@ -298,19 +300,19 @@ ORDER BY expire, nama_gudang, nama_rak, tgl_datang");
 				<td style="vertical-align:middle;text-align:center;' .$color. '" rowspan="' .$n. '">' .format_uang($row['diskon_rp_3']). '</td>
 				<td style="vertical-align:middle;text-align:center;' .$color. '" rowspan="' .$n. '">' .format_uang(($row['harga']-$row['diskon_rp']-$row['diskon_rp_2']-$row['diskon_rp_3'])*$row['qty']). '</td>';
 	
-	while ($row2=mysql_fetch_array($sql2)){
-		$sql3=mysql_query("SELECT id_nota_siap_kirim_detail, SUM(qty_ambil) AS qty_ambil
+	while ($row2=mysqli_fetch_array($sql2)){
+		$sql3=mysqli_query($con, "SELECT id_nota_siap_kirim_detail, SUM(qty_ambil) AS qty_ambil
 		FROM
 			nota_siap_kirim
 			INNER JOIN nota_siap_kirim_detail 
 				ON (nota_siap_kirim.id_nota_siap_kirim = nota_siap_kirim_detail.id_nota_siap_kirim)
 		WHERE id_jual_detail=" .$row['id_jual_detail']. " AND id_rak=" .$row2['id_rak']. " AND expire='" .$row2['expire']. "'");
-		$row3=mysql_fetch_array($sql3);
+		$row3=mysqli_fetch_array($sql3);
 		$expire=strtotime($row2['expire']);
 		$now=strtotime(date("Y-m-d"));
 		$days=ceil(($expire-$now)/86400);
 		
-		if ($row2['stok']==0 && mysql_num_rows($sql2)>1) {
+		if ($row2['stok']==0 && mysqli_num_rows($sql2)>1) {
 			break;
 		}
 		if ($days<1) $barang_expire=true;

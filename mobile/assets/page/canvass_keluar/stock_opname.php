@@ -2,7 +2,7 @@
 if (isset($batal_canvass_stock_opname)){
 	foreach ($id_canvass_keluar as $key => $value) {
 		$sql = "UPDATE canvass_keluar SET status=2 WHERE id_canvass_keluar=$value";
-		$q = mysql_query($sql);
+		$q = mysqli_query($con, $sql);
 	}
 	_direct("?page=canvass_keluar&mode=stock_opname");
 }
@@ -42,14 +42,14 @@ if (isset($batal_canvass_stock_opname)){
 									</thead>
 									<tbody>
 <?php
-	$sql=mysql_query("SELECT *
+	$sql=mysqli_query($con, "SELECT *
 FROM
     canvass_keluar
     INNER JOIN kendaraan 
         ON (canvass_keluar.id_mobil = kendaraan.id_kendaraan)
 WHERE canvass_keluar.status=1 OR canvass_keluar.status=2
 ORDER BY id_canvass_keluar DESC");
-	while ($row=mysql_fetch_array($sql)){
+	while ($row=mysqli_fetch_array($sql)){
 		echo '<tr>
 				<td align="center"><a href="?page=canvass_keluar&mode=stock_opname_2&id=' .$row['id_canvass_keluar']. '"><div style="min-width:70px">' .date("d-m-Y",strtotime($row['tanggal_canvass'])). '</div></a></td>
 				<td align="center"><a href="?page=canvass_keluar&mode=stock_opname_2&id=' .$row['id_canvass_keluar']. '"><div style="min-width:70px">' .$row['nama_kendaraan']. '</div></a></td>
@@ -101,16 +101,16 @@ if (isset($_GET['cari'])){
 	$val="canvass_keluar.status=3";
 }
 
-	$sql=mysql_query("SELECT *
+	$sql=mysqli_query($con, "SELECT *
 FROM
     canvass_keluar
     INNER JOIN kendaraan 
         ON (canvass_keluar.id_mobil = kendaraan.id_kendaraan)
 WHERE $val
 ORDER BY id_canvass_keluar DESC");
-	while ($row=mysql_fetch_array($sql)){
-	$sql2=mysql_query("SELECT * FROM canvass_stock_opname WHERE id_canvass_keluar=" .$row['id_canvass_keluar']. " LIMIT 1");
-	$row2=mysql_fetch_array($sql2);
+	while ($row=mysqli_fetch_array($sql)){
+	$sql2=mysqli_query($con, "SELECT * FROM canvass_stock_opname WHERE id_canvass_keluar=" .$row['id_canvass_keluar']. " LIMIT 1");
+	$row2=mysqli_fetch_array($sql2);
 		echo '<tr>';
 		if ($_SESSION['posisi']=='OWNER'){
 			echo '<td align="center"><input style="width: 20px; height: 20px;" type="checkbox" id="id_canvass_keluar" name="id_canvass_keluar[]" value="' .$row['id_canvass_keluar']. '"></td>';

@@ -1,34 +1,34 @@
 <?php
 $id_karyawan=$_SESSION['id_karyawan'];
 if (isset($_GET['del'])){
-	$sql = mysql_query("SELECT * FROM nota_sudah_cek WHERE id_jual=" .$_GET['del']);
-	$row=mysql_fetch_array($sql);
+	$sql = mysqli_query($con, "SELECT * FROM nota_sudah_cek WHERE id_jual=" .$_GET['del']);
+	$row=mysqli_fetch_array($sql);
 	$jumlah=$row['jumlah'];
 	$tanggal=date("Y-m-d");
-	$sql = mysql_query("SELECT * FROM batal_kirim WHERE id_jual=" .$_GET['del']);
-	if (mysql_num_rows($sql)>0){
-		$sql = mysql_query("UPDATE batal_kirim SET id_karyawan=$id_karyawan,jumlah=$jumlah,status=0,tanggal='$tanggal' WHERE id_jual=" .$_GET['del']);
+	$sql = mysqli_query($con, "SELECT * FROM batal_kirim WHERE id_jual=" .$_GET['del']);
+	if (mysqli_num_rows($sql)>0){
+		$sql = mysqli_query($con, "UPDATE batal_kirim SET id_karyawan=$id_karyawan,jumlah=$jumlah,status=0,tanggal='$tanggal' WHERE id_jual=" .$_GET['del']);
 	} else {
-		$sql = mysql_query("INSERT INTO batal_kirim VALUES(null,$id_karyawan," .$_GET['del']. ",$jumlah,0,'$tanggal')");
+		$sql = mysqli_query($con, "INSERT INTO batal_kirim VALUES(null,$id_karyawan," .$_GET['del']. ",$jumlah,0,'$tanggal')");
 	}
-	$sql = mysql_query("SELECT * FROM pengiriman WHERE id_jual=" .$_GET['del']);
-	if (mysql_num_rows($sql)>0){
-		$sql = mysql_query("UPDATE pengiriman SET status=2 WHERE id_jual=" .$_GET['del']);
+	$sql = mysqli_query($con, "SELECT * FROM pengiriman WHERE id_jual=" .$_GET['del']);
+	if (mysqli_num_rows($sql)>0){
+		$sql = mysqli_query($con, "UPDATE pengiriman SET status=2 WHERE id_jual=" .$_GET['del']);
 	} else {
-		$sql = mysql_query("INSERT INTO pengiriman VALUES(null," .$_GET['del']. ",2,'$tanggal',$id_karyawan,null,null,null,null)");
+		$sql = mysqli_query($con, "INSERT INTO pengiriman VALUES(null," .$_GET['del']. ",2,'$tanggal',$id_karyawan,null,null,null,null)");
 	}
-	$sql = mysql_query("SELECT * FROM batal_kirim WHERE id_jual=" .$_GET['del']. "");
-	$row=mysql_fetch_array($sql);
+	$sql = mysqli_query($con, "SELECT * FROM batal_kirim WHERE id_jual=" .$_GET['del']. "");
+	$row=mysqli_fetch_array($sql);
 	$id_batal_kirim=$row['id_batal_kirim'];
-	$sql=mysql_query("DELETE FROM batal_kirim_detail WHERE id_batal_kirim=$id_batal_kirim");
-	$sql=mysql_query("SELECT *
+	$sql=mysqli_query($con, "DELETE FROM batal_kirim_detail WHERE id_batal_kirim=$id_batal_kirim");
+	$sql=mysqli_query($con, "SELECT *
 FROM
     nota_siap_kirim
     INNER JOIN nota_siap_kirim_detail 
         ON (nota_siap_kirim.id_nota_siap_kirim = nota_siap_kirim_detail.id_nota_siap_kirim)
 WHERE id_jual=" .$_GET['del']. " AND qty_ambil>0");
-	while ($row=mysql_fetch_array($sql)){
-		$sql2 = mysql_query("INSERT INTO batal_kirim_detail VALUES(null,$id_batal_kirim," .$row['id_jual_detail']. "," .$row['id_barang_masuk_rak']. "," .$row['qty_ambil']. ",'" .$row['expire']. "')");
+	while ($row=mysqli_fetch_array($sql)){
+		$sql2 = mysqli_query($con, "INSERT INTO batal_kirim_detail VALUES(null,$id_batal_kirim," .$row['id_jual_detail']. "," .$row['id_barang_masuk_rak']. "," .$row['qty_ambil']. ",'" .$row['expire']. "')");
 	}
 	_direct("?page=driver&mode=barang_keluar");
 }
@@ -67,9 +67,9 @@ WHERE id_jual=" .$_GET['del']. " AND qty_ambil>0");
 				</thead>
 				<tbody>
 <?php
-$sql=mysql_query("SELECT * FROM nota_sudah_cek WHERE id_jual NOT IN (SELECT id_jual FROM batal_kirim WHERE status=0) AND status='2' ORDER BY id_nota_sudah_cek DESC");
-while ($row=mysql_fetch_array($sql)){
-	$sql2=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT * FROM nota_sudah_cek WHERE id_jual NOT IN (SELECT id_jual FROM batal_kirim WHERE status=0) AND status='2' ORDER BY id_nota_sudah_cek DESC");
+while ($row=mysqli_fetch_array($sql)){
+	$sql2=mysqli_query($con, "SELECT
     jual.id_jual
 	, jual.tgl_nota
     , jual.invoice
@@ -93,7 +93,7 @@ FROM
         ON (barang_supplier.id_barang = barang.id_barang) 
 WHERE jual.id_jual=" .$row['id_jual']. "
 GROUP BY jual.id_jual");
-	while ($row2=mysql_fetch_array($sql2)){
+	while ($row2=mysqli_fetch_array($sql2)){
 	($row['tipe_kirim']=='Kirim Sendiri' ? $pilih='barang_keluar_2' : $pilih='barang_keluar_3');
 		echo '<tr>
 				<td><a href="?page=driver&mode=' .$pilih. '&id=' .$row['id_nota_sudah_cek']. '"><div style="min-width:70px">' .date("d-m-Y", strtotime($row2['tgl_nota'])). '</div></a></td>

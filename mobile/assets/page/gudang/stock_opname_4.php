@@ -1,12 +1,12 @@
 <?php
 $id_karyawan=$_SESSION['id_karyawan'];
-	$sql=mysql_query("SELECT *
+	$sql=mysqli_query($con, "SELECT *
 FROM
     stock_opname
     INNER JOIN karyawan 
         ON (stock_opname.id_karyawan = karyawan.id_karyawan)
 	WHERE id_so=$id");
-	$row=mysql_fetch_array($sql);
+	$row=mysqli_fetch_array($sql);
 	$tgl_so=$row['tanggal_so'];
 	$nama=$row['nama_karyawan'];
 ?>
@@ -46,7 +46,7 @@ FROM
 							</thead>
 							<tbody>
 <?php
-	$sql=mysql_query("SELECT *,SUM(stok) AS stok
+	$sql=mysqli_query($con, "SELECT *,SUM(stok) AS stok
 FROM
     barang_masuk_rak
     INNER JOIN barang_masuk 
@@ -61,8 +61,8 @@ FROM
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE stok>0 AND barang.status=1
 GROUP BY barang.id_barang");
-	while ($row=mysql_fetch_array($sql)){
-	$sql2=mysql_query("SELECT *,SUM(jumlah_barang) as jumlah_barang
+	while ($row=mysqli_fetch_array($sql)){
+	$sql2=mysqli_query($con, "SELECT *,SUM(jumlah_barang) as jumlah_barang
 FROM
     stock_opname_detail
     INNER JOIN barang 
@@ -73,16 +73,16 @@ FROM
 		ON (rak.id_gudang = gudang.id_gudang)
 WHERE stock_opname_detail.id_barang=" .$row['id_barang']. "	AND id_so=$id
 GROUP BY rak.id_rak");
-	(mysql_num_rows($sql2)>0 ? $n=mysql_num_rows($sql2) : $n=1);
-	(mysql_num_rows($sql2)>0 ? $x=true : $x=false);
+	(mysqli_num_rows($sql2)>0 ? $n=mysqli_num_rows($sql2) : $n=1);
+	(mysqli_num_rows($sql2)>0 ? $x=true : $x=false);
 	echo '<tr>
 			<td style="vertical-align:middle;text-align:center" rowspan="' .$n. '">' .$row['nama_barang']. '</td>';
-	$sql3=mysql_query("SELECT SUM(jumlah_barang) as total_rak FROM stock_opname_detail WHERE id_barang=" .$row['id_barang']. "	AND id_so=$id");
-	$row3=mysql_fetch_array($sql3);
+	$sql3=mysqli_query($con, "SELECT SUM(jumlah_barang) as total_rak FROM stock_opname_detail WHERE id_barang=" .$row['id_barang']. "	AND id_so=$id");
+	$row3=mysqli_fetch_array($sql3);
 	$total_rak=$row3['total_rak'];
 	$fix=false;
-		while ($row2=mysql_fetch_array($sql2)){
-		$sql4=mysql_query("SELECT *,SUM(stok) AS stok_seharusnya
+		while ($row2=mysqli_fetch_array($sql2)){
+		$sql4=mysqli_query($con, "SELECT *,SUM(stok) AS stok_seharusnya
 FROM
     barang_masuk_rak
     INNER JOIN barang_masuk 
@@ -96,7 +96,7 @@ FROM
     INNER JOIN satuan 
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE barang.id_barang=" .$row2['id_barang']. " AND barang_masuk_rak.id_rak=" .$row2['id_rak']);
-$row4=mysql_fetch_array($sql4);
+$row4=mysqli_fetch_array($sql4);
 $stok_seharusnya=$row4['stok_seharusnya'];
 ($total_rak==$row['stok'] ? $color='color: black' : $color='color: red');
 			echo '		<td style="vertical-align:middle;text-align:center;' .$color. '">' .$row2['nama_rak']. '</td>

@@ -1,11 +1,11 @@
 <?php
 if (isset($edit_konfirm_retur_beli_2_post)){
-	$sql=mysql_query("SELECT * FROM retur_beli_detail WHERE id_retur_beli=$id AND qty_keluar IS NULL");
-	$c=mysql_num_rows($sql);
+	$sql=mysqli_query($con, "SELECT * FROM retur_beli_detail WHERE id_retur_beli=$id AND qty_keluar IS NULL");
+	$c=mysqli_num_rows($sql);
 	if ($c > 0){
 		$pesan="MASIH ADA BARANG YANG BELUM DI SCAN";
 	} else {
-		$sql=mysql_query("SELECT
+		$sql=mysqli_query($con, "SELECT
 			barang_masuk_rak.stok
 			, SUM(retur_beli_detail.qty_keluar) AS total_qty
 			, barang_masuk_rak.id_barang_masuk_rak
@@ -16,22 +16,22 @@ if (isset($edit_konfirm_retur_beli_2_post)){
 				ON (retur_beli_detail.id_barang_masuk_rak = barang_masuk_rak.id_barang_masuk_rak) 
 		WHERE id_retur_beli=$id
 		GROUP BY id_barang_masuk_rak");
-		while ($row=mysql_fetch_array($sql)){
+		while ($row=mysqli_fetch_array($sql)){
 			$stok=$row['stok']-$row['total_qty'];
 			if ($stok<0){
 				tulis_log(date('d-m-Y H:i'). ' Stok minus edit konfim retur beli konfirm_retur_beli_2 id_retur_beli=' .$id);
 				tulis_log('stok=' .$row['stok']. ' total_qty=' .$row['total_qty']);
 				tulis_log("UPDATE barang_masuk_rak SET stok=" .$stok. " WHERE id_barang_masuk_rak=" .$row['id_barang_masuk_rak']);
 			}
-			$sql2=mysql_query("UPDATE barang_masuk_rak SET stok=" .$stok. " WHERE id_barang_masuk_rak=" .$row['id_barang_masuk_rak']. "");
+			$sql2=mysqli_query($con, "UPDATE barang_masuk_rak SET stok=" .$stok. " WHERE id_barang_masuk_rak=" .$row['id_barang_masuk_rak']. "");
 		}
-		$sql3=mysql_query("UPDATE retur_beli SET status=1 WHERE id_retur_beli=$id");
+		$sql3=mysqli_query($con, "UPDATE retur_beli SET status=1 WHERE id_retur_beli=$id");
 		_direct("?page=gudang&mode=konfirm_retur_beli");
 	}
 }
-$sql=mysql_query("SELECT * FROM retur_beli_detail WHERE id_retur_beli=$id AND qty_keluar IS NULL");
-(mysql_num_rows($sql)>0 ? $locked='disabled' : $locked='');
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT * FROM retur_beli_detail WHERE id_retur_beli=$id AND qty_keluar IS NULL");
+(mysqli_num_rows($sql)>0 ? $locked='disabled' : $locked='');
+$sql=mysqli_query($con, "SELECT
     supplier.nama_supplier
 	, beli.id_beli
     , beli.no_nota_beli
@@ -46,7 +46,7 @@ FROM
         ON (retur_beli.id_beli = beli.id_beli)
 WHERE retur_beli.id_retur_beli=$id
 ");
-$row=mysql_fetch_array($sql);
+$row=mysqli_fetch_array($sql);
 $status=$row['status'];
 ?>
 <div class="right_col loading" role="main">
@@ -67,20 +67,20 @@ $status=$row['status'];
 					</div>
 					<div class="x_content">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-building fa-fw"></i></span>
-							<input class="form-control" id="supplier" name="supplier" placeholder="Nama Supplier" title="Nama Supplier" value="<?php echo $row['nama_supplier'] ?>" disabled="disabled" required>
+							<span class="input-group-addon"><i class="fa fa-building fa-fw" style="width: 78px;"></i><br><small>Supplier</small></span>
+							<input class="form-control" id="supplier" name="supplier" placeholder="Nama Supplier" style="padding: 20px 15px;" title="Nama Supplier" value="<?php echo $row['nama_supplier'] ?>" disabled="disabled" required>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-file fa-fw"></i></span>
-							<input class="form-control" id="no_nota_beli" name="no_nota_beli" placeholder="No Nota Beli" title="No Nota Beli" value="<?php echo $row['no_nota_beli'] ?>" disabled="disabled" required>
+							<span class="input-group-addon"><i class="fa fa-file fa-fw" style="width: 78px;"></i><br><small>No. Nota Beli</small></span>
+							<input class="form-control" id="no_nota_beli" style="padding: 20px 15px;" name="no_nota_beli" placeholder="No Nota Beli" title="No Nota Beli" value="<?php echo $row['no_nota_beli'] ?>" disabled="disabled" required>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-file-excel fa-fw"></i></span>
-							<input class="form-control" id="no_nota_retur" name="no_nota_retur" placeholder="No Nota Retur" title="No Nota Retur" value="<?php echo $row['no_retur_beli'] ?>" disabled="disabled" required>
+							<span class="input-group-addon"><i class="fa fa-file-excel fa-fw" style="width: 78px;"></i><br><small>No. Nota Retur</small></span>
+							<input class="form-control" id="no_nota_retur" name="no_nota_retur" style="padding: 20px 15px;" placeholder="No Nota Retur" title="No Nota Retur" value="<?php echo $row['no_retur_beli'] ?>" disabled="disabled" required>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
-							<input class="form-control" id="tgl_retur" name="tgl_retur" placeholder="Tanggal Retur" title="Tanggal Retur" value="<?php echo date("d-m-Y", strtotime($row['tgl_retur'])) ?>" disabled="disabled" required>
+							<span class="input-group-addon"><i class="fa fa-calendar fa-fw" style="width: 78px;"></i><br><small>Tgl. Retur</small></span>
+							<input class="form-control" id="tgl_retur" style="padding: 20px 15px;" name="tgl_retur" placeholder="Tanggal Retur" title="Tanggal Retur" value="<?php echo date("d-m-Y", strtotime($row['tgl_retur'])) ?>" disabled="disabled" required>
 						</div>
 				<?php
 				if ($status!="1"){
@@ -106,7 +106,7 @@ $status=$row['status'];
 				<tbody>
 				<?php
 
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT
     retur_beli_detail.id_retur_beli
     , barang.nama_barang
 	, barang.barcode
@@ -125,9 +125,9 @@ FROM
         ON (barang.id_satuan = satuan.id_satuan)
  WHERE retur_beli_detail.id_retur_beli=$id
  GROUP BY id_beli_detail");
-while($row=mysql_fetch_array($sql)){
+while($row=mysqli_fetch_array($sql)){
 $tmp_id_beli_detail=$row['id_beli_detail'];
-$sql2=mysql_query("SELECT
+$sql2=mysqli_query($con, "SELECT
     barang_masuk_rak.stok
 	, barang_masuk_rak.id_barang_masuk_rak
 	, retur_beli_detail.id_retur_beli_detail
@@ -146,7 +146,7 @@ FROM
     INNER JOIN gudang 
         ON (rak.id_gudang = gudang.id_gudang)
 WHERE barang_masuk.id_beli_detail=$tmp_id_beli_detail");
-while($r=mysql_fetch_array($sql2)){
+while($r=mysqli_fetch_array($sql2)){
 ($r['qty_keluar']=='' ? $qty_keluar='' : $qty_keluar=$r['qty_keluar']. ' ' .$row['nama_satuan']);
 	echo '			<tr>
 						<td>' .$row['nama_barang']. '</td>

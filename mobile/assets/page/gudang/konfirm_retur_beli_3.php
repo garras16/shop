@@ -1,10 +1,10 @@
 <?php
 $scan=true;
 if (isset($edit_konfirm_retur_beli_3_post)){
-	$sql=mysql_query("UPDATE retur_beli_detail SET qty_keluar=$qty_keluar WHERE id_retur_beli_detail=$id");
+	$sql=mysqli_query($con, "UPDATE retur_beli_detail SET qty_keluar=$qty_keluar WHERE id_retur_beli_detail=$id");
 	$scan=false;
 }
-$sql=mysql_query("SELECT
+$sql=mysqli_query($con, "SELECT
     retur_beli_detail.id_retur_beli_detail
     , gudang.nama_gudang
     , rak.nama_rak
@@ -29,7 +29,7 @@ FROM
     INNER JOIN gudang 
         ON (rak.id_gudang = gudang.id_gudang) 
 WHERE id_retur_beli_detail=$id");
-$row=mysql_fetch_array($sql);
+$row=mysqli_fetch_array($sql);
 $id_retur_beli=$row['id_retur_beli'];
 if ($row['qty_retur']==''){
 	_alert("Retur detail mungkin sudah dihapus. Kembali ke menu sebelumnya.");

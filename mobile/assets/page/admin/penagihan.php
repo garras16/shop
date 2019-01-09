@@ -1,12 +1,12 @@
 <?php
 $id_karyawan=$_SESSION['id_karyawan'];
 if (isset($buat_penagihan_post)){
-	$sql = mysql_query("INSERT INTO penagihan VALUES(null,$penagih,'$tanggal','DALAM KOTA',0,$id_karyawan)");
-	$id_tagih=mysql_insert_id();
+	$sql = mysqli_query($con, "INSERT INTO penagihan VALUES(null,$penagih,'$tanggal','DALAM KOTA',0,$id_karyawan)");
+	$id_tagih=mysqli_insert_id($con);
 	
 	foreach ($id_jual as $key => $value) {
-		$sql=mysql_query("INSERT INTO penagihan_detail VALUES(null,$id_tagih,$value,null,3,null,0,0,null,null,null,null,null,null,null,null,null,null,null)");
-		echo mysql_error();
+		$sql=mysqli_query($con, "INSERT INTO penagihan_detail VALUES(null,$id_tagih,$value,null,3,null,0,0,null,null,null,null,null,null,null,null,null,null,null)");
+		echo mysqli_error();
 	}
 	if ($sql){
 		_alert("Penyimpanan data nota tagihan berhasil.");
@@ -33,8 +33,8 @@ if (isset($buat_penagihan_post)){
 								<select class="form-control select2" id="select_karyawan" name="id_karyawan" required>
 									<option value="" disabled selected>Pilih Debt Collector</option>
 									<?php
-									$sql=mysql_query("SELECT * FROM karyawan WHERE status=1");
-									while ($row=mysql_fetch_array($sql)){
+									$sql=mysqli_query($con, "SELECT * FROM karyawan WHERE status=1");
+									while ($row=mysqli_fetch_array($sql)){
 										echo '<option value="' .$row['id_karyawan']. '">' .$row['nama_karyawan']. '</option>';
 									}
 									?>

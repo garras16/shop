@@ -3,15 +3,15 @@ $id_karyawan=$_SESSION['id_karyawan'];
 if (isset($tambah_stock_opname_canvass)){
 	$tgl = explode("/", $expire);
 	$expire = $tgl[2] ."-". $tgl[1] ."-". $tgl[0];
-	$sql=mysql_query("SELECT * FROM canvass_keluar_barang WHERE id_canvass_keluar=$id AND id_barang=$id_barang AND expire='$expire'");
-	if (mysql_num_rows($sql)>0){
-		$row=mysql_fetch_array($sql);
-		$sql2=mysql_query("INSERT INTO canvass_stock_opname values(null,$id," .$row['id_canvass_keluar_barang']. ",$id_barang,'$tanggal',$qty_cek,1,'$expire')");
-		$sql=mysql_query("SELECT * FROM lap_stock_opname WHERE id_canvass_keluar=$id AND id_barang=$id_barang");
-		if (mysql_num_rows($sql)>0){
-			$sql2=mysql_query("UPDATE lap_stock_opname SET tgl_lap='$tanggal',qty_sisa=$qty_sisa,qty_cek=$total_cek,selisih=$selisih,expire='$expire' WHERE id_canvass_keluar=$id AND id_barang=$id_barang AND id_karyawan=$id_karyawan");
+	$sql=mysqli_query($con, "SELECT * FROM canvass_keluar_barang WHERE id_canvass_keluar=$id AND id_barang=$id_barang AND expire='$expire'");
+	if (mysqli_num_rows($sql)>0){
+		$row=mysqli_fetch_array($sql);
+		$sql2=mysqli_query($con, "INSERT INTO canvass_stock_opname values(null,$id," .$row['id_canvass_keluar_barang']. ",$id_barang,'$tanggal',$qty_cek,1,'$expire')");
+		$sql=mysqli_query($con, "SELECT * FROM lap_stock_opname WHERE id_canvass_keluar=$id AND id_barang=$id_barang");
+		if (mysqli_num_rows($sql)>0){
+			$sql2=mysqli_query($con, "UPDATE lap_stock_opname SET tgl_lap='$tanggal',qty_sisa=$qty_sisa,qty_cek=$total_cek,selisih=$selisih,expire='$expire' WHERE id_canvass_keluar=$id AND id_barang=$id_barang AND id_karyawan=$id_karyawan");
 		} else {
-			$sql2=mysql_query("INSERT INTO lap_stock_opname values(null,$id,'$tanggal',$id_barang,$qty_sisa,$total_cek,$selisih,$id_karyawan,'$expire')");
+			$sql2=mysqli_query($con, "INSERT INTO lap_stock_opname values(null,$id,'$tanggal',$id_barang,$qty_sisa,$total_cek,$selisih,$id_karyawan,'$expire')");
 		}
 	} else {
 		_alert("Input Salah. Silakan input kembali.");
@@ -19,26 +19,26 @@ if (isset($tambah_stock_opname_canvass)){
 	_direct("?page=canvass_keluar&mode=stock_opname_2&id=$id");
 }
 if (isset($_GET['del'])){
-	$sql=mysql_query("DELETE FROM canvass_stock_opname WHERE id_canvass_keluar=$id AND id_barang=" .$_GET['del']. "");
-	$sql=mysql_query("DELETE FROM lap_stock_opname WHERE id_canvass_keluar=$id AND id_barang=" .$_GET['del']. " AND id_karyawan=$id_karyawan");
+	$sql=mysqli_query($con, "DELETE FROM canvass_stock_opname WHERE id_canvass_keluar=$id AND id_barang=" .$_GET['del']. "");
+	$sql=mysqli_query($con, "DELETE FROM lap_stock_opname WHERE id_canvass_keluar=$id AND id_barang=" .$_GET['del']. " AND id_karyawan=$id_karyawan");
 	_direct("?page=canvass_keluar&mode=stock_opname_2&id=$id");
 }
 if (isset($selesai_canvass_stock_opname)){	
-	$sql=mysql_query("UPDATE canvass_keluar SET status=3 WHERE id_canvass_keluar=$id");
+	$sql=mysqli_query($con, "UPDATE canvass_keluar SET status=3 WHERE id_canvass_keluar=$id");
 	
 	//jika ada yg belum scan
-	$sql=mysql_query("SELECT * FROM canvass_keluar_barang WHERE id_canvass_keluar=$id AND stok>0 AND id_barang NOT IN (SELECT id_barang FROM canvass_stock_opname WHERE id_canvass_keluar=$id AND stok>0)");
-	while ($row=mysql_fetch_array($sql)){
-		$sql2=mysql_query("INSERT INTO canvass_stock_opname values(null,$id," .$row['id_canvass_keluar_barang']. "," .$row['id_barang']. ",'" .date("Y-m-d"). "',0,1,'" .$row['expire']. "')");
+	$sql=mysqli_query($con, "SELECT * FROM canvass_keluar_barang WHERE id_canvass_keluar=$id AND stok>0 AND id_barang NOT IN (SELECT id_barang FROM canvass_stock_opname WHERE id_canvass_keluar=$id AND stok>0)");
+	while ($row=mysqli_fetch_array($sql)){
+		$sql2=mysqli_query($con, "INSERT INTO canvass_stock_opname values(null,$id," .$row['id_canvass_keluar_barang']. "," .$row['id_barang']. ",'" .date("Y-m-d"). "',0,1,'" .$row['expire']. "')");
 	}
-	$sql=mysql_query("SELECT * FROM canvass_keluar_barang WHERE id_canvass_keluar=$id AND stok>0 AND id_barang NOT IN (SELECT id_barang FROM lap_stock_opname WHERE id_canvass_keluar=$id AND stok>0)");
-	while ($row=mysql_fetch_array($sql)){
-		$sql2=mysql_query("INSERT INTO lap_stock_opname values(null,$id,'" .date("Y-m-d"). "'," .$row['id_barang']. "," .$row['stok']. ",0,-" .$row['stok']. ",$id_karyawan,'" .$row['expire']. "')");
-		echo mysql_error();
+	$sql=mysqli_query($con, "SELECT * FROM canvass_keluar_barang WHERE id_canvass_keluar=$id AND stok>0 AND id_barang NOT IN (SELECT id_barang FROM lap_stock_opname WHERE id_canvass_keluar=$id AND stok>0)");
+	while ($row=mysqli_fetch_array($sql)){
+		$sql2=mysqli_query($con, "INSERT INTO lap_stock_opname values(null,$id,'" .date("Y-m-d"). "'," .$row['id_barang']. "," .$row['stok']. ",0,-" .$row['stok']. ",$id_karyawan,'" .$row['expire']. "')");
+		echo mysqli_error();
 	}
 	
 	//jika ada qty yg salah
-	$sql=mysql_query("SELECT canvass_keluar_barang.id_barang
+	$sql=mysqli_query($con, "SELECT canvass_keluar_barang.id_barang
 FROM
     canvass_keluar_barang
     LEFT JOIN canvass_stock_opname 
@@ -46,12 +46,12 @@ FROM
 WHERE canvass_stock_opname.id_canvass_keluar=$id
 GROUP BY id_barang");
 	$cek_error=false;
-	while ($row=mysql_fetch_array($sql)){
-		$sql2=mysql_query("SELECT SUM(stok) AS stok FROM canvass_keluar_barang WHERE id_canvass_keluar=$id AND id_barang=" .$row['id_barang']);
-		$row2=mysql_fetch_array($sql2);
+	while ($row=mysqli_fetch_array($sql)){
+		$sql2=mysqli_query($con, "SELECT SUM(stok) AS stok FROM canvass_keluar_barang WHERE id_canvass_keluar=$id AND id_barang=" .$row['id_barang']);
+		$row2=mysqli_fetch_array($sql2);
 		$stok=$row2['stok'];
-		$sql2=mysql_query("SELECT SUM(qty_cek_2) AS qty_cek FROM canvass_stock_opname WHERE id_canvass_keluar=$id AND id_barang=" .$row['id_barang']);
-		$row2=mysql_fetch_array($sql2);
+		$sql2=mysqli_query($con, "SELECT SUM(qty_cek_2) AS qty_cek FROM canvass_stock_opname WHERE id_canvass_keluar=$id AND id_barang=" .$row['id_barang']);
+		$row2=mysqli_fetch_array($sql2);
 		$qty_cek=$row2['qty_cek'];
 		if ($stok <> $qty_cek){
 			$cek_error=true;
@@ -60,25 +60,25 @@ GROUP BY id_barang");
 	}
 	if ($cek_error){
 		$tanggal=date("Y-m-d");
-		$sql=mysql_query("UPDATE canvass_keluar SET status=9 WHERE id_canvass_keluar=$id");
-		$sql2=mysql_query("INSERT INTO konfirm_owner VALUES(null,'$tanggal','Ada perbedaan antara hasil perhitungan qty stock opname dan qty seharusnya.','canvass_stock_opname',0,'?page=konfirmasi&mode=konfirm_so_canvass&id=$id')");
+		$sql=mysqli_query($con, "UPDATE canvass_keluar SET status=9 WHERE id_canvass_keluar=$id");
+		$sql2=mysqli_query($con, "INSERT INTO konfirm_owner VALUES(null,'$tanggal','Ada perbedaan antara hasil perhitungan qty stock opname dan qty seharusnya.','canvass_stock_opname',0,'?page=konfirmasi&mode=konfirm_so_canvass&id=$id')");
 		_alert("Ada perbedaan antara qty periksa dan qty seharusnya. Silahkan tunggu konfirmasi owner.");
 	} else {
 		_alert("Silahkan melakukan proses mutasi barang dari mobil ke gudang.");
 	}
 	_direct("?page=canvass_keluar&mode=stock_opname");
 }
-	$sql=mysql_query("SELECT *
+	$sql=mysqli_query($con, "SELECT *
 FROM
     canvass_keluar
     LEFT JOIN kendaraan 
         ON (canvass_keluar.id_mobil = kendaraan.id_kendaraan)
 	WHERE id_canvass_keluar=$id");
-	$row=mysql_fetch_array($sql);
+	$row=mysqli_fetch_array($sql);
 	$tgl_canvass=$row['tanggal_canvass'];
 	$nama_mobil=$row['nama_kendaraan'];
 	$plat=$row['plat'];
-	$sql2=mysql_query("SELECT *
+	$sql2=mysqli_query($con, "SELECT *
 FROM
     canvass_keluar_karyawan
     INNER JOIN karyawan 
@@ -86,7 +86,7 @@ FROM
 	INNER JOIN users 
         ON (karyawan.id_karyawan = users.id_karyawan)
 	WHERE id_canvass_keluar=$id");
-	$baris=mysql_num_rows($sql2);
+	$baris=mysqli_num_rows($sql2);
 ?>
 <div class="right_col loading" role="main">
 	<div class="">
@@ -109,7 +109,7 @@ FROM
 							<tr><td width="40%">No Pol</td><td>' .$plat. '</td></tr>';
 	
 	echo '					<tr><td rowspan="' .$baris. '">Nama Karyawan</td>';
-	while ($row2=mysql_fetch_array($sql2)){
+	while ($row2=mysqli_fetch_array($sql2)){
 		echo '				<td>- ' .$row2['nama_karyawan']. ' ( ' .$row2['posisi']. ' )</td></tr>';
 	}
 	echo '</tr>';
@@ -130,7 +130,7 @@ FROM
 							</thead>
 							<tbody>
 <?php
-	$sql=mysql_query("SELECT *,SUM(qty) as qty, SUM(qty_cek) as qty_cek
+	$sql=mysqli_query($con, "SELECT *,SUM(qty) as qty, SUM(qty_cek) as qty_cek
 FROM
     canvass_keluar_barang
     INNER JOIN barang 
@@ -139,10 +139,10 @@ FROM
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE id_canvass_keluar=$id
 GROUP BY canvass_keluar_barang.id_barang,canvass_keluar_barang.id_rak");
-	while ($row=mysql_fetch_array($sql)){
+	while ($row=mysqli_fetch_array($sql)){
 	echo '<tr>
 				<td style="vertical-align:middle;text-align:center;">' .$row['nama_barang']. '</td>';
-	$sql2=mysql_query("SELECT SUM(qty_ambil) AS qty_ambil
+	$sql2=mysqli_query($con, "SELECT SUM(qty_ambil) AS qty_ambil
 FROM
     canvass_siap_kirim
     INNER JOIN canvass_siap_kirim_detail 
@@ -154,9 +154,9 @@ FROM
     INNER JOIN barang_supplier 
         ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
 WHERE barang_supplier.id_barang=" .$row['id_barang']. "	AND id_canvass_keluar=$id");
-	$row2=mysql_fetch_array($sql2);
-	$sql3=mysql_query("SELECT SUM(qty_cek_2) AS qty_cek_2 FROM canvass_stock_opname WHERE id_barang=" .$row['id_barang']. " AND id_canvass_keluar=$id");
-	$row3=mysql_fetch_array($sql3);
+	$row2=mysqli_fetch_array($sql2);
+	$sql3=mysqli_query($con, "SELECT SUM(qty_cek_2) AS qty_cek_2 FROM canvass_stock_opname WHERE id_barang=" .$row['id_barang']. " AND id_canvass_keluar=$id");
+	$row3=mysqli_fetch_array($sql3);
 	$qty_sisa=$row['qty_cek']-$row2['qty_ambil'];
 		if ($row3['qty_cek_2']==''){
 			echo '		<td></td>
