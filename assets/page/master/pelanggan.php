@@ -137,8 +137,8 @@ $blacklist = ($row['blacklist'] == 1 ? 'Ya' : 'Tidak');
 						<input class="form-control" type="number" name="telepon_kontak" style="padding: 20px 15px;" placeholder="Telepon Kontak Person" onKeyPress="if(this.value.length==20) return false;" required>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-arrows-v fa-fw" style="width:59px;"></i><br><small>Plafon Rp.</small></span>
-						<input id="plafon" type="text" name="plafon" class="form-control" style="padding: 20px 15px;" placeholder="Plafon (Rp)" required>
+						<span class="input-group-addon"><i class="fa fa-arrows-v fa-fw" style="width:59px;"></i><br><small>Plafon</small></span>
+						<input id="plafon" type="text" name="plafon" class="form-control" style="padding: 20px 15px;" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
@@ -198,12 +198,13 @@ $blacklist = ($row['blacklist'] == 1 ? 'Ya' : 'Tidak');
 </div>
 <script>
 $(document).ready(function(){
-	$('#plafon').inputmask('decimal', {allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#myModal2').on('show.bs.modal', function(e){
 		var id = $(e.relatedTarget).data('id');
 		$('#get_pelanggan').load('api/web/get-pelanggan.php?id=' + id,function(){
-			$('#plafon_2').inputmask('decimal', {allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+			$('#plafon_2').inputmask('currency', {prefix: "Rp ", autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 		});
-	})
+	});
+
+	$('#plafon').inputmask('currency', {prefix: "Rp ", autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 });
 </script>

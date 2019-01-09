@@ -154,7 +154,7 @@
 					</div>
 					<div class="input-group" style="margin-bottom:5px;">
 						<span class="input-group-addon"><i class="fa fa-money fa-fw" style="width:56px;"></i><br><small>Lembur</small></span>
-						<input class="form-control" style="padding:20px 15px;" type="text" id="lembur" name="lembur" title="Lembur" placeholder="Lembur (Rp)" required>
+						<input class="form-control" style="padding:20px 15px;" type="text" id="lembur" name="lembur" title="Lembur" required>
 					</div>
 					<div class="input-group" style="margin-bottom:5px;">
 						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-flag fa-fw" style="width:56px;"></i><br><small>Status</small></span>
@@ -199,15 +199,15 @@
 </div>
 <script>
 $(document).ready(function(){
-	$('#gaji').inputmask('decimal', {autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-	$('#harian').inputmask('decimal', {autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-	$('#lembur').inputmask('decimal', {autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+	$('#gaji').inputmask('currency', {prefix: "Rp ", autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+	$('#harian').inputmask('currency', {prefix: "Rp ", autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+	$('#lembur').inputmask('currency', {prefix: "Rp ", autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#myModal2').on('show.bs.modal', function(e){
 		var id = $(e.relatedTarget).data('id');
 		$('#get_karyawan').load('assets/page/master/get-karyawan.php?id=' + id,function(){
-			$('#gaji_2').inputmask('decimal', {autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-			$('#harian_2').inputmask('decimal', {autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-			$('#lembur_2').inputmask('decimal', {autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+			$('#gaji_2').inputmask('currency', {prefix: "Rp ", autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+			$('#harian_2').inputmask('currency', {prefix: "Rp ", autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+			$('#lembur_2').inputmask('currency', {prefix: "Rp ", autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 		});
 	})
 });

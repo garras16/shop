@@ -148,7 +148,7 @@ WHERE
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-money fa-fw" style="width: 39px;"></i><br><small>Harga</small></span>
-						<input id="harga_jual" type="text" name="harga_jual" style="padding: 20px 15px;" class="form-control" placeholder="Harga Jual Tunai (Rp)" required>
+						<input id="harga_jual" type="text" name="harga_jual" style="padding: 20px 15px;" class="form-control" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					</div>
@@ -165,6 +165,6 @@ WHERE
 
 <script>
 $(document).ready(function(){
-	$('#harga_jual').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+	$('#harga_jual').inputmask('currency', {prefix: "Rp ", allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 })
 </script>
