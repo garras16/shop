@@ -44,8 +44,8 @@ $row=mysqli_fetch_array($sql);
 	<input class="form-control" type="number" style="padding: 20px 15px;" name="telepon_kontak" placeholder="Telepon Kontak Person" value="<?php echo $row['telepon_kontak']; ?>" onKeyPress="if(this.value.length==20) return false;" required>
 </div>
 <div class="input-group">
-	<span class="input-group-addon"><i class="fa fa-arrows-v fa-fw" style="width:59px;"></i><br><small>Plafon Rp.</small></span>
-	<input id="plafon_2" name="plafon" class="form-control" style="padding: 20px 15px;" placeholder="Plafon (Rp)" value="<?php echo $row['plafon']; ?>" required>
+	<span class="input-group-addon"><i class="fa fa-arrows-v fa-fw" style="width:59px;"></i><br><small>Plafon</small></span>
+	<input id="plafon_2" name="plafon" class="form-control" style="padding: 20px 15px;" value="<?php echo $row['plafon']; ?>" required>
 	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 </div>
 <div class="input-group">

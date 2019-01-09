@@ -18,7 +18,7 @@ if (isset($tambah_penjualan_post)){
 			break 2;
 		}
 	}*/
-	
+	 
 	$sql=mysqli_query($con, "DELETE FROM data_nota_jual WHERE tgl_nota < '" .date("Y-m-d"). "'");
 	$sql=mysqli_query($con, "SELECT MAX(invoice) AS cID FROM data_nota_jual WHERE tgl_nota='" .date('Y-m-d'). "'");
 	$r=mysqli_fetch_array($sql);
@@ -112,7 +112,7 @@ $plafon=$row['plafon'];
 								</div>
 								<div class="input-group">
 									<span class="input-group-addon">Diskon Nota Jual (%)</span>
-									<input type="number" max="100" min="0" class="form-control" id="diskon" name="diskon_all_persen" value="0" required>
+									<input type="text" max="100" min="0" onchange="handleChange(this);" class="form-control" maxlength="6" id="diskon" name="diskon_all_persen" value="0" required>
 									<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 								</div>
 								<div class="text-right">
@@ -283,7 +283,10 @@ if ($('#select_jenis').val()=='Kredit'){
 		$('#myModal').modal('hide');
 	}
 }
-
+function handleChange(input) {
+    if (input.value < 0) input.value = 0;
+    if (input.value > 100) input.value = 100;
+}
 function getBack(){
 	if ($('#myModal').is(':visible')){
 		$('#myModal').modal('hide');
@@ -301,6 +304,7 @@ function getBack(){
 }
 
 $(document).ready(function(){
+	$('#diskon').numeric({decimalPlaces: 2, negative:false});
 	$('#myModal').on('show.bs.modal', function(e){
 		var jenis=$('#select_jenis').val();
 		var id=$('#id_pelanggan').val();

@@ -113,17 +113,14 @@ while($row=mysqli_fetch_array($sql)){
 							<?php
 							/*$sql=mysqli_query($con, "SELECT provinsi.nama_prov , negara.nama_negara FROM provinsi INNER JOIN negara ON (negara.id_negara = provinsi.id_negara)");*/
 								$sql=mysqli_query($con, "SELECT
-    provinsi.nama_prov
-	, kabupaten.id_kab
-	, kabupaten.id_prov
-    , kabupaten.nama_kab
-    , negara.nama_negara
+	negara.nama_negara
+	, provinsi.id_prov
+    , provinsi.nama_prov 
 FROM
-    kabupaten
+    negara
     INNER JOIN provinsi 
-        ON (kabupaten.id_prov = provinsi.id_prov)
-    INNER JOIN negara 
-        ON (negara.id_negara = provinsi.id_negara) GROUP BY nama_prov");
+        ON (negara.id_negara = provinsi.id_negara)
+ORDER BY provinsi.id_prov");
 								while ($row=mysqli_fetch_array($sql)){
 									echo '<option negara="' .$row['nama_negara']. '" value="' .$row['id_prov']. '">' .$row['nama_prov']. '</option>';
 								}

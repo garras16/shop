@@ -355,15 +355,15 @@ WHERE
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><div style="min-width:70px;text-align:left">Diskon 1 (%)</div></span>
-						<input class="form-control" id="diskon_persen_2_1" min="0" name="diskon_persen_1" type="text" placeholder="Diskon 1" value="0" required>
+						<input class="form-control" id="diskon_persen_2_1" onchange="handleChange(this);" min="0" name="diskon_persen_1" type="text" maxlength="6" placeholder="Diskon 1" value="0" required>
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><div style="min-width:70px;text-align:left">Diskon 2 (%)</div></span>
-						<input class="form-control" id="diskon_persen_2_2" min="0" max="100" name="diskon_persen_2" type="text" placeholder="Diskon 2" value="0" required>
+						<input class="form-control" id="diskon_persen_2_2" onchange="handleChange(this);" min="0" max="100" maxlength="6" name="diskon_persen_2" type="text" placeholder="Diskon 2" value="0" required>
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><div style="min-width:70px;text-align:left">Diskon 3 (%)</div></span>
-						<input class="form-control" id="diskon_persen_2_3" min="0" max="100" name="diskon_persen_3" type="text" placeholder="Diskon 3" value="0" required>
+						<input class="form-control" maxlength="6" id="diskon_persen_2_3" min="0" max="100" onchange="handleChange(this);" name="diskon_persen_3" type="text" placeholder="Diskon 3" value="0" required>
 					</div>
 					</div>
 					<div class="modal-footer">
@@ -477,7 +477,7 @@ function cek_valid(){
 function handleChange(input) {
     if (input.value < 0) input.value = 0;
     if (input.value > 100) input.value = 100;
- }
+}
 $(document).ready(function(){
 	$('#ekspedisi').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#qty').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
@@ -487,9 +487,9 @@ $(document).ready(function(){
 	$('#qty_2').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#harga_2').inputmask('currency', {prefix: "Rp ", allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#diskon_persen').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-	$('#diskon_persen_2_1').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+	/*$('#diskon_persen_2_1').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#diskon_persen_2_2').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-	$('#diskon_persen_2_3').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+	$('#diskon_persen_2_3').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});*/
 	$('#diskon_nota_rp').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$(".select2").select2({
 		placeholderOption: "first",
@@ -527,18 +527,10 @@ $(document).ready(function(){
 	$('#diskon_nota_persen').numeric({decimalPlaces: 2, negative:false});
 	$('#diskon_persen_1_1').numeric({decimalPlaces: 2, negative:false});
 	$('#diskon_persen_1_2').numeric({decimalPlaces: 2, negative:false});
-	$('#diskon_persen_1_3').numeric({decimalPlaces: 2, negative:false});});
-	var i;
-	for(i=1; i < <?= $count; ?>; i++ ) {
-		if(<?= $tot_set_disk_1; ?> > 5000){
-			document.getElementById('tot_set_disk1').style.color = 'red';
-		}
-		if(<?= $tot_set_disk_2; ?> > 5000){
-			document.getElementById('tot_set_disk2').style.color = 'red';
-		}
-		if(<?= $tot_set_disk_3; ?> > 5000){
-			document.getElementById('tot_set_disk3').style.color = 'red';
-		}
-	}
+	$('#diskon_persen_1_3').numeric({decimalPlaces: 2, negative:false});
+	$('#diskon_persen_2_2').numeric({decimalPlaces: 2, negative:false});
+	$('#diskon_persen_2_3').numeric({decimalPlaces: 2, negative:false});
+	$('#diskon_persen_2_1').numeric({decimalPlaces: 2, negative:false});
+});
 
 </script>

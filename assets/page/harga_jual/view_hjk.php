@@ -1,7 +1,7 @@
 <?php
 	if (isset($tambah_harga_jual_kredit_post)){
 		$sql=mysqli_query($con, "SELECT * FROM harga_jual_kredit WHERE id_harga_jual=$id AND hari=$hari");
-		$c=mysql_num_rows($sql);
+		$c=mysqli_num_rows($sql);
 		if (!$c>0){
 			$sql = "INSERT INTO harga_jual_kredit VALUES(null,$id,$harga_jual,$hari)";
 			$q = mysqli_query($con, $sql);

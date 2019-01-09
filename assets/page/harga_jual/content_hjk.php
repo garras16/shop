@@ -52,7 +52,7 @@ while($row=mysqli_fetch_array($sql)){
 
 <script>
 $(document).ready(function(){
-	$('#harga_jual').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+	$('#harga_jual').inputmask('currency', {prefix: "Rp ", allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#myEHJKModal').on('show.bs.modal', function(e){
 		var id_harga_jual_kredit = $(e.relatedTarget).data('id');
 		var harga = $(e.relatedTarget).data('harga');

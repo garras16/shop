@@ -79,6 +79,6 @@ if (isset($edit_pelanggan_post)){
 </div>
 <script>
 $(document).ready(function(){
-	$('#plafon').inputmask('currency', {prefix: '', rightAlign: false, autoUnmask: true, removeMaskOnSubmit:true});
+	$('#plafon').inputmask('currency', {prefix: "Rp ", rightAlign: false, autoUnmask: true, removeMaskOnSubmit:true});
 });
 </script>
