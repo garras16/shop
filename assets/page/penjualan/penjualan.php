@@ -220,7 +220,13 @@ function submit(){
 function cari_barang(){
 	window.location="?page=penjualan&mode=penjualan&cari=" + $('#cari').val();
 }
+function handleChange(input) {
+    if (input.value < 0) input.value = 0;
+    if (input.value > 100) input.value = 100;
+}
 $(document).ready(function(){
+	$('#diskon_all').numeric({decimalPlaces: 2, negative:false});
+	$('#ppn_all').numeric({decimalPlaces: 2, negative:false});
 	$('#tgl_dari').daterangepicker({
 		locale: {
 			format: 'DD-MM-YYYY'

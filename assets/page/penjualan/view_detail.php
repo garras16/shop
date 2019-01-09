@@ -200,8 +200,8 @@ $diskon_all_rp=($diskon_nota/100)*$total_jual;
 				-->
 				<div class="col-md-6 text-right">
 					<div class="input-group">
-						<span class="input-group-addon" style="width:200px;text-align:left;color:#000; border: none; outline: none;""><small>Tot. Jual Set. Disc. (Rp)</small></span>
-						<input class="form-control" id="berat_2" style="border: none; outline: none;" name="berat" value="<?php echo format_uang($total_jual) ?>" readonly>
+						<span class="input-group-addon" style="width:200px;text-align:left; background: #fff;color:#000; border: none; outline: none;""><small>Tot. Jual Set. Disc. (Rp)</small></span>
+						<input class="form-control" id="berat_2" style="border: none; background: #fff; outline: none;" name="berat" value="<?php echo format_uang($total_jual) ?>" readonly>
 					</div>
 				</div>
 			</div>
