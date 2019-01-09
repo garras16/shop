@@ -184,7 +184,7 @@ $jumlah_gantung=$jumlah_nota-$row3['jumlah_bayar'];
 if ($jumlah_gantung>$plafon) _alert("Nota sudah melebihi plafon");
 $sql4=mysqli_query($con, "SELECT * FROM jual WHERE invoice NOT IN (SELECT no_nota_jual FROM bayar_nota_jual WHERE STATUS=1) AND id_pelanggan=" .$row['id_pelanggan']);
 $jml_nota=format_angka(mysqli_num_rows($sql4));
-($plafon-$jumlah_gantung>0 ? $style="" : $style="color:red");
+($plafon-$jumlah_gantung>0 ? $style="color: black;" : $style="color:red;");
 ?>
 <div class="right_col loading" role="main">
 	<div class="">
@@ -266,6 +266,11 @@ $total=0;$total_=0;
 	$row4=mysqli_fetch_array($sql4);
 	$total_ambil=$row4['qty_ambil'];
 	($total_ambil!=$row['qty'] ? $color="color:red" : $color="");
+	if($row['diskon_rp'] < 0 || $row['diskon_rp_2'] < 0 || $row['diskon_rp_3'] < 0) {
+		$color="color: red;";
+	}else{
+		$color="color:black";
+	}
 	$sql2=mysqli_query($con, "SELECT *, SUM(stok) as stok
 FROM
     barang_supplier

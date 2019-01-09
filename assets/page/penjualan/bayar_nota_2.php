@@ -110,45 +110,45 @@ $total_nota=$row['total']-($row['total']*$row['diskon_all_persen']/100);
 					<div class="x_content">
 						<form action="" method="post" onsubmit="return valid2();">
 						<input type="hidden" name="tambah_bayar_nota_jual_post" value="true">
-						<div class="col-xs-7">
+						<div class="col-md-6">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-building fa-fw"></i><br><small>Pelanggan</small></span>
+								<span class="input-group-addon"><i class="fa fa-building fa-fw" style="width:72px;"></i><br><small>Pelanggan</small></span>
 								<input class="form-control" style="padding: 20px 15px;" value="<?php echo $row['nama_pelanggan']; ?>" title="Nama Pelanggan" readonly>
 							</div>
 						</div>
-						<div class="col-xs-6">
+						<div class="col-md-6">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i><br><small>Tgl. Nota</small></span>
+								<span class="input-group-addon"><i class="fa fa-calendar fa-fw" style="width:72px;"></i><br><small>Tgl. Nota</small></span>
 								<input class="form-control" style="padding: 20px 15px;" value="<?php echo date("d-m-Y", strtotime($row['tgl_nota'])); ?>" title="Tanggal Nota Jual" readonly>
 							</div>
 						</div>
-						<div class="col-xs-6">
+						<div class="col-md-6">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-file fa-fw"></i><br><small>No. Nota Jual</small></span>
+								<span class="input-group-addon"><i class="fa fa-file fa-fw" style="width:72px;"></i><br><small>No. Nota Jual</small></span>
 								<input class="form-control" style="padding: 20px 15px;" name="no_nota_jual" value="<?php echo $no_nota_jual ?>" title="No Nota Jual" readonly>
 							</div>
 						</div>
-						<div class="col-xs-6">
+						<div class="col-md-6">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-money fa-fw"></i><br><small>Ttl. Nota Jual</small></span>
+								<span class="input-group-addon"><i class="fa fa-money fa-fw" style="width:72px;"></i><br><small>Ttl. Nota Jual</small></span>
 								<input class="form-control" style="padding: 20px 15px;" id="total_nota" value="<?php echo $total_nota ?>" title="Total Nota Jual (Rp)" readonly>
 							</div>
 						</div>
-						<div class="col-xs-6">
+						<div class="col-md-6">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-info fa-fw"></i><br><small>Jenis</small></span>
+								<span class="input-group-addon"><i class="fa fa-info fa-fw" style="width:60px;"></i><br><small>Jenis</small></span>
 								<input class="form-control" style="padding: 20px 15px;" id="jenis" name="jenis" value="<?php echo $jenis ?>" title="Jenis" readonly>
 							</div>
 						</div>
-						<div class="col-xs-6">
+						<div class="col-md-6">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-money fa-fw"></i><br><small>Sisa</small></span>
+								<span class="input-group-addon"><i class="fa fa-money fa-fw" style="width:60px;"></i><br><small>Sisa</small></span>
 								<input class="form-control" style="padding: 20px 15px;" id="sisa_nota" name="sisa_nota" value="<?php echo $sisa_nota ?>" title="Sisa Nota (Rp)" readonly>
 							</div>
 						</div>
-						<div class="col-xs-12">
+						<div class="col-md-12">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-money fa-fw"></i><br><small>Jml. Bayar</small></span>
+								<span class="input-group-addon"><i class="fa fa-money fa-fw" style="width:60px;"></i><br><small>Jml. Bayar</small></span>
 <?php
 if ($jenis=='Retur'){
 	echo '						<input class="form-control" id="jumlah_bayar" style="padding: 20px 15px;" name="jumlah_bayar" value="0" placeHolder="Jumlah Bayar (Rp)" readonly>';
@@ -161,7 +161,7 @@ if ($jenis=='Retur'){
 						</div>
 						<?php
 if ($jenis=='Transfer' || $jenis=='Giro'){
-	echo '<div class="col-xs-6">
+	echo '<div class="col-md-6">
 			Pengirim :<br>
 			<div class="input-group">
 			<span class="input-group-addon"><i class="fa fa-building fa-fw"></i><br><small>Nama Bank</small></span>
@@ -169,48 +169,48 @@ if ($jenis=='Transfer' || $jenis=='Giro'){
 			<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 			</div>
 			<div class="input-group">
-			<span class="input-group-addon"><i class="fa fa-user fa-fw"></i><br><small>Nama Rek.</small></span>
+			<span class="input-group-addon"><i class="fa fa-user fa-fw" style="width:61px;"></i><br><small>Nama Rek.</small></span>
 			<input class="form-control" id="sisa_nota" name="pengirim_nama_rekening" style="padding: 20px 15px;" value="" placeHolder="Nama Rekening" title="Nama Rekening" maxlength="100" required>
 			<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 			</div>
 			<div class="input-group">
-			<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i><br><small>No. Rek.</small></span>
+			<span class="input-group-addon"><i class="fa fa-tag fa-fw" style="width:61px;"></i><br><small>No. Rek.</small></span>
 			<input class="form-control" id="sisa_nota" name="pengirim_no_rekening" value="" style="padding: 20px 15px;" placeHolder="No Rekening" title="No Rekening" maxlength="20" required>
 			<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 			</div>
 		</div>';
-		echo '<div class="col-xs-6">
+		echo '<div class="col-md-6">
 			Penerima :<br>
 			<div class="input-group">
-			<span class="input-group-addon"><i class="fa fa-building fa-fw"></i><br><small>Nama Bank</small></span>
+			<span class="input-group-addon"><i class="fa fa-building fa-fw" style="width:61px;"></i><br><small>Nama Bank</small></span>
 			<input class="form-control" style="padding: 20px 15px;" id="sisa_nota" name="penerima_nama_bank" value="" placeHolder="Nama Bank" title="Nama Bank" maxlength="50" required>
 			<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 			</div>
 			<div class="input-group">
-			<span class="input-group-addon"><i class="fa fa-user fa-fw"></i><br><small>Nama Rek.</small></span>
+			<span class="input-group-addon"><i class="fa fa-user fa-fw" style="width:61px;"></i><br><small>Nama Rek.</small></span>
 			<input class="form-control" id="sisa_nota" style="padding: 20px 15px;" name="penerima_nama_rekening" value="" placeHolder="Nama Rekening" title="Nama Rekening" maxlength="100" required>
 			<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 			</div>
 			<div class="input-group">
-			<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i><br><small>No. Rek.</small></span>
+			<span class="input-group-addon"><i class="fa fa-tag fa-fw" style="width:61px;"></i><br><small>No. Rek.</small></span>
 			<input class="form-control" id="sisa_nota" name="penerima_no_rekening" style="padding: 20px 15px;" value="" placeHolder="No Rekening" title="No Rekening" maxlength="20" required>
 			<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 			</div>
 		</div>';
 }
 if ($jenis=='Giro'){
-		echo '<div class="col-xs-6">
+		echo '<div class="col-md-6">
 			Giro :
 			<div class="input-group">
-			<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i><br><small>Jth. tempo</small></span>
+			<span class="input-group-addon"><i class="fa fa-calendar fa-fw" style="width:60px;"></i><br><small>Jth. tempo</small></span>
 			<input class="form-control" id="jatuh_tempo" name="jatuh_tempo" style="padding: 20px 15px;" value="" placeHolder="Tanggal Jatuh Tempo" title="Tanggal Jatuh Tempo" required>
 			<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 			</div>
 		</div>';
-		echo '<div class="col-xs-6">
+		echo '<div class="col-md-6">
 			&nbsp;
 			<div class="input-group">
-			<span class="input-group-addon"><i class="fa fa-file fa-fw"></i><br><small>Ket.</small></span>
+			<span class="input-group-addon"><i class="fa fa-file fa-fw" style="width:60px;"></i><br><small>Ket.</small></span>
 			<input class="form-control" id="keterangan" name="keterangan" value="" style="padding: 20px 15px;" placeHolder="Keterangan" maxlength="100">
 			</div>
 		</div>';
