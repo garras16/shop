@@ -159,7 +159,7 @@ if (mysqli_num_rows($sql)>0 || mysqli_num_rows($sql2)>0) {
 					</div>
 					<div id="get_komponen">
 					<div class="input-group">
-						<span class="input-group-addon" style="font-size: 12px;"><i class="fa fa-credit-card fa-fw"></i><br><small>Komponen</small></span>
+						<span class="input-group-addon" style="font-size: 12px; padding: 2px 12px;"><i class="fa fa-credit-card fa-fw"></i><br><small>Komponen</small></span>
 						<select class="form-control select2" id="select_komponen" name="komponen" required>
 							<option value="" disabled selected>Pilih Komponen</option>
 						</select>

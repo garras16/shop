@@ -130,7 +130,7 @@
 					</div>
 					<div class="input-group" style="margin-bottom:5px;">
 						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-briefcase fa-fw" style="width:57px;"></i><br><small>Jabatan</small></span>
-						<select class="select2 form-control" style="padding:20px 15px;" id="select_jabatan" name="jabatan" required>
+						<select class="select2 form-control" id="select_jabatan" name="jabatan" required>
 							<option value="" disabled selected>Pilih Jabatan</option>
 							<?php 
 								$brg=mysqli_query($con, "select * from jabatan");
