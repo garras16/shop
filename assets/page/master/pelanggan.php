@@ -156,7 +156,7 @@ $blacklist = ($row['blacklist'] == 1 ? 'Ya' : 'Tidak');
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-flag fa-fw" style="width: 59px;"></i><br><small>Blacklist</small></span>
+						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-ban fa-fw" style="width: 59px;"></i><br><small>Blacklist</small></span>
 						<select class="form-control select" name="blacklist" required>
 							<option value="" disabled selected>Blacklist ?</option>
 							<option value="0">TIDAK</option>

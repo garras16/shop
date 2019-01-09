@@ -147,7 +147,7 @@ if ($row['status']==1){
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-file fa-fw"></i><br><small>Nota Beli</small></span>
+						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-file fa-fw"></i><br><small>Nota Beli</small></span>
 						<select class="select2 form-control" id="select_nota" name="id_beli" required>
 							<option value="" disabled selected>Nota Beli | Tarif (Rp) | Sisa Hutang (Rp)</option>
 							<?php 

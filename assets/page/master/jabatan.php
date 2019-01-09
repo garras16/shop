@@ -87,7 +87,7 @@ while($row=mysqli_fetch_array($sql)){
 					<input type="hidden" name="tambah_jabatan_post" value="true">
 					<div class="form-group col-sm-12">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i><br><small>Jabatan</small></span>
+							<span class="input-group-addon"><i class="fa fa-briefcase fa-fw"></i><br><small>Jabatan</small></span>
 							<input class="form-control" style="padding:20px 15px;" type="text" placeHolder="Nama Jabatan" name="jabatan" maxlength="20" required>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
