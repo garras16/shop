@@ -34,7 +34,7 @@ $row=mysqli_fetch_array($sql);
 </div>
 <div class="input-group" style="margin-bottom: 5px;">
 	<span class="input-group-addon" style="padding: 3px 12px;"><i class="fa fa-briefcase fa-fw" style="width: 63px;"></i><br><small>Jabatan</small></span>
-	<select class="select2 form-control" id="select_jabatan" name="jabatan" required>
+	<select class="form-control" id="select_jabatan" name="jabatan" required>
 		<option value="" disabled selected >Pilih Jabatan</option>
 			<?php 
 				$sql=mysqli_query($con, "select * from jabatan");

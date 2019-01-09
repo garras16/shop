@@ -18,7 +18,7 @@ $row=mysqli_fetch_array($sql);
 	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 </div>
 <div class="input-group">
-	<span class="input-group-addon"><i class="fa fa-map-marker fa-fw" style="width:59px;"></i><br><small>Alamat</small></span>
+	<span class="input-group-addon"><i class="fa fa-home fa-fw" style="width:59px;"></i><br><small>Alamat</small></span>
 	<input name="alamat" class="form-control" placeholder="Alamat" style="padding: 20px 15px;" value="<?php echo $row['alamat']; ?>" maxlength="100" required>
 	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 </div>
@@ -63,7 +63,7 @@ $row=mysqli_fetch_array($sql);
 	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 </div>
 <div class="input-group">
-	<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-flag fa-fw" style="width: 59px;"></i><br><small>BlackList</small></span>
+	<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-ban fa-fw" style="width: 59px;"></i><br><small>BlackList</small></span>
 	<select class="form-control" name="blacklist" required>
 		<option value="" disabled selected>Blacklist ?</option>
 		<option value="0" <?php echo ($row['blacklist'] == '0' ? 'selected' : '') ?> >TIDAK</option>
