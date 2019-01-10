@@ -256,7 +256,6 @@ $sql2=mysqli_query($con, "SELECT * FROM barang_masuk WHERE id_beli_detail=$id_be
 		}
 	}
 	echo '				</tr>';
-	$count = $count+1;
 }
 $ppn_all_rp=$jumlah*($ppn_all_persen/100);
 $diskon_all_rp=$jumlah*($diskon_all_persen/100);
