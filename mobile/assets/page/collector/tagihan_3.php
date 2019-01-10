@@ -74,7 +74,7 @@ if (isset($tambah_bayar_tagih_nota_jual_post)){
 	if ($jenis !='Retur'){
 		($jumlah_bayar==$sisa_nota ? $status=2 : $status=1);
 		if ($jumlah_bayar==$sisa_nota) $tgl_janji_next = 'null';
-		if ($jumlah_bayar=='0') $status=0;
+		if ($jumlah_bayar=='0' || $jumlah_bayar=='') $status=0;
 		
 		$tgl=date("Y-m-d");
 		$sql=mysqli_query($con, "UPDATE penagihan_detail SET status_bayar=$status WHERE id_jual=$id_jual");

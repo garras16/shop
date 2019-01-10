@@ -116,16 +116,21 @@ WHERE id_jual=" .$row['id_jual']);
 	}
 }
 	
-	
+	$sql2=mysqli_query($con, "SELECT *
+FROM
+    penagihan_detail
+WHERE id_jual=" .$row['id_jual']. " AND jenis<>'Retur'");
+$row2=mysqli_fetch_array($sql2);
+
 	$status='';
-	if ($row['status_bayar']=='0') {$status='Belum Bayar'; $color='red';}
-	if ($row['status_bayar']=='1') {$status='Sedang Mengangsur'; $color='red';}
-	if ($row['status_bayar']=='2') {$status='Lunas'; $color='black';}
-	if ($row['status_bayar']=='3') {$status='Belum Tagih'; $color='black';}
-	if ($row['status_nota_kembali']=='0') $status_nota='Dibawa Debt Collector';
-	if ($row['status_nota_kembali']=='1') $status_nota='Diterima Admin';
-	if ($row['status_nota_kembali']=='2') $status_nota='Lunas';
-	($row['status_nota_kembali']=='2' ? $cmd='Setor' : $cmd='Scan Nota');
+	if ($row2['status_bayar']=='0') {$status='Belum Bayar'; $color='red';}
+	if ($row2['status_bayar']=='1') {$status='Sedang Mengangsur'; $color='red';}
+	if ($row2['status_bayar']=='2') {$status='Lunas'; $color='black';}
+	if ($row2['status_bayar']=='3') {$status='Belum Tagih'; $color='black';}
+	if ($row2['status_nota_kembali']=='0') $status_nota='Dibawa Debt Collector';
+	if ($row2['status_nota_kembali']=='1') $status_nota='Diterima Admin';
+	if ($row2['status_nota_kembali']=='2') $status_nota='Lunas';
+	($row2['status_nota_kembali']=='2' ? $cmd='Setor' : $cmd='Scan Nota');
 	($row['tgl_bayar']=='' ? $tgl_bayar='' : $tgl_bayar=date("d-m-Y",strtotime($row['tgl_bayar'])));
 	($row['tgl_janji_next']=='' ? $tgl_jb='' : $tgl_jb=date('d-m-Y',strtotime($row['tgl_janji_next'])));
 	if ($row['tgl_janji_next']!=''){

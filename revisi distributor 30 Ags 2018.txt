@@ -394,9 +394,9 @@ tagihan debt collector, retur jual masih error ( cek lg pembayaran nota pake ret
 
 
 
-admin app, setoran, jika debt collector setor 0, maka status bayar jd belum bayar		
+admin app, setoran, jika debt collector setor 0, maka status bayar jd belum bayar	OK	-
 
-admin web, penagihan_2, status bayar tidak sinkron						
+admin web, penagihan_2, status bayar tidak sinkron					OK	-
 
 histori penagihan, view utk 3bln terakhir (semua status)				OK	-
 
@@ -486,7 +486,7 @@ tak paham)										OK
 
 - input diskon (%) 6 digit xxx.xx%							OK	-
 
-- ubah data diskon nota beli, jumlah diskon (rp) nya masih error			OK	-
+* ubah data diskon nota beli, jumlah diskon (rp) nya masih error			*	
 
 - hilangkan border/background di info tambahan di bawah				 	OK	-
 
