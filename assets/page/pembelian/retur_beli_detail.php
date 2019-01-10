@@ -122,7 +122,7 @@ $ppn_all_persen=$row['ppn_all_persen'];
 				<?php if ($status!='1' && !$locked) echo '<p align="right"><button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah Retur</button></p>'; ?>
 			</div>
 			<i class="fa fa-check"></i> Barang sudah diproses oleh gudang<br><br>
-			
+			<div class="clearfix" style="margin-bottom: 30px;"></div>
 			<table id="table1" class="table table-bordered table-striped">
 				<thead>
 					<tr>
