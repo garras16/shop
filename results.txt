@@ -1,4 +1,0 @@
-C:\xampp\htdocs\shop\api\add-penjualan.php
-C:\xampp\htdocs\shop\mobile\assets\page\canvass_keluar\add_penjualan.php
-C:\xampp\htdocs\shop\mobile\assets\page\sales\add_penjualan - Copy.php
-C:\xampp\htdocs\shop\mobile\assets\page\sales\add_penjualan.php
