@@ -162,8 +162,8 @@ if ($jenis=='Retur'){
 						<?php
 if ($jenis=='Transfer' || $jenis=='Giro'){
 	echo '<div class="col-md-6">
-			Pengirim :<br>
-			<div class="input-group">
+			<br><b>Pengirim :</b><br>
+			<div class="input-group" style="margin-top:10px;">
 			<span class="input-group-addon"><i class="fa fa-building fa-fw"></i><br><small>Nama Bank</small></span>
 			<input class="form-control" id="sisa_nota" style="padding: 20px 15px;" name="pengirim_nama_bank" value="" placeHolder="Nama Bank" title="Nama Bank" maxlength="50" required>
 			<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
@@ -180,8 +180,8 @@ if ($jenis=='Transfer' || $jenis=='Giro'){
 			</div>
 		</div>';
 		echo '<div class="col-md-6">
-			Penerima :<br>
-			<div class="input-group">
+			<br><b>Penerima :</b><br>
+			<div class="input-group" style="margin-top:10px;">
 			<span class="input-group-addon"><i class="fa fa-building fa-fw" style="width:61px;"></i><br><small>Nama Bank</small></span>
 			<input class="form-control" style="padding: 20px 15px;" id="sisa_nota" name="penerima_nama_bank" value="" placeHolder="Nama Bank" title="Nama Bank" maxlength="50" required>
 			<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
@@ -200,8 +200,8 @@ if ($jenis=='Transfer' || $jenis=='Giro'){
 }
 if ($jenis=='Giro'){
 		echo '<div class="col-md-6">
-			Giro :
-			<div class="input-group">
+			<br><b>Giro :</b>
+			<div class="input-group" style="margin-top:10px;">
 			<span class="input-group-addon"><i class="fa fa-calendar fa-fw" style="width:60px;"></i><br><small>Jth. tempo</small></span>
 			<input class="form-control" id="jatuh_tempo" name="jatuh_tempo" style="padding: 20px 15px;" value="" placeHolder="Tanggal Jatuh Tempo" title="Tanggal Jatuh Tempo" required>
 			<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
@@ -217,7 +217,7 @@ if ($jenis=='Giro'){
 }
 ?>
 						<div class="clearfix"></div>
-						<div>
+						<div style="margin-top: 50px;">
 							<h4><b>NOTA RETUR JUAL</b></h4>
 							<div class="clearfix"></div><br/>
 							<div id="retur_content" class="col-xs-12">

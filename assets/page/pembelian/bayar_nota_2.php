@@ -128,43 +128,43 @@ $id_beli=$row['id_beli'];
 					<div class="x_content">
 						<form action="" method="post" onsubmit="return valid2();">
 						<input type="hidden" name="tambah_bayar_nota_beli_post" value="true">
-						<div class="col-xs-6">
+						<div class="col-md-6">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-building fa-fw" style="width: 48px;"></i><br><small>Supplier</small></span>
 								<input class="form-control" style="padding: 20px 15px;" value="<?php echo $row['nama_supplier']; ?>" title="Nama Supplier" readonly>
 							</div>
 						</div>
-						<div class="col-xs-6">
+						<div class="col-md-6">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-calendar fa-fw" style="width: 48px;"></i><br><small>Tgl.</small></span>
 								<input class="form-control" style="padding: 20px 15px;" value="<?php echo date("d-m-Y", strtotime($row['tanggal'])); ?>" title="Tanggal Nota Beli" readonly>
 							</div>
 						</div>
-						<div class="col-xs-6">
+						<div class="col-md-6">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-file fa-fw" style="width: 48px;"></i><br><small>No. Nota</small></span>
 								<input class="form-control" style="padding: 20px 15px;" name="no_nota_beli" value="<?php echo $no_nota_beli ?>" title="No Nota Beli" readonly>
 							</div>
 						</div>
-						<div class="col-xs-6">
+						<div class="col-md-6">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-money fa-fw" style="width: 48px;"></i><br><small>Jml.</small></span>
 								<input class="form-control" style="padding: 20px 15px;" id="total_nota" value="<?php echo $jumlah_nota ?>" title="Total Nota Beli (Rp)" readonly>
 							</div>
 						</div>
-						<div class="col-xs-6">
+						<div class="col-md-6">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-info fa-fw" style="width: 48px;"></i><br><small>Jenis</small></span>
 								<input class="form-control" id="jenis" style="padding: 20px 15px;" name="jenis" value="<?php echo $jenis ?>" title="Jenis" readonly>
 							</div>
 						</div>
-						<div class="col-xs-6">
+						<div class="col-md-6">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-money fa-fw" style="width: 48px;"></i><br><small>Sisa</small></span>
 								<input class="form-control" id="sisa_nota" name="sisa_nota" style="padding: 20px 15px;" value="<?php echo $sisa_nota ?>" title="Sisa Nota (Rp)" readonly>
 							</div>
 						</div>
-						<div class="col-xs-12">
+						<div class="col-md-12">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-money fa-fw"></i><br><small>Pembayaran</small></span>
 <?php
@@ -179,9 +179,9 @@ if ($jenis=='Retur'){
 						</div>
 <?php
 if ($jenis=='Transfer' || $jenis=='Giro'){
-	echo '<div class="col-xs-6">
-			Pengirim :<br>
-			<div class="input-group">
+	echo '<div class="col-md-6">
+			<br><b>Pengirim :</b><br>
+			<div class="input-group" style="margin-top:10px;">
 			<span class="input-group-addon"><i class="fa fa-building fa-fw"></i><br><small>Nama Bank</small></span>
 			<input class="form-control" id="sisa_nota" style="padding: 20px 15px;" name="pengirim_nama_bank" value="" placeHolder="Nama Bank" title="Nama Bank" maxlength="50" required>
 			<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
@@ -197,9 +197,9 @@ if ($jenis=='Transfer' || $jenis=='Giro'){
 			<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 			</div>
 		</div>';
-		echo '<div class="col-xs-6">
-			Penerima :<br>
-			<div class="input-group">
+		echo '<div class="col-md-6">
+			<br><b>Penerima :</b><br>
+			<div class="input-group" style="margin-top:10px;">
 			<span class="input-group-addon"><i class="fa fa-building fa-fw"></i><br><small>Nama Bank</small></span>
 			<input class="form-control" style="padding: 20px 15px;" id="sisa_nota" name="penerima_nama_bank" value="" placeHolder="Nama Bank" title="Nama Bank" maxlength="50" required>
 			<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
@@ -217,15 +217,15 @@ if ($jenis=='Transfer' || $jenis=='Giro'){
 		</div>';
 }
 if ($jenis=='Giro'){
-		echo '<div class="col-xs-6">
-			Giro :
-			<div class="input-group">
+		echo '<div class="col-md-6">
+			<br><b>Giro :</b>
+			<div class="input-group" style="margin-top:10px;">
 			<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i><br><small>Jth. tempo</small></span>
 			<input class="form-control" style="padding: 20px 15px;" id="jatuh_tempo" name="jatuh_tempo" value="" placeHolder="Tanggal Jatuh Tempo" title="Tanggal Jatuh Tempo" required>
 			<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 			</div>
 		</div>';
-		echo '<div class="col-xs-6">
+		echo '<div class="col-md-6">
 			&nbsp;
 			<div class="input-group">
 			<span class="input-group-addon"><i class="fa fa-file fa-fw"></i><br><small>Ket.</small></span>
@@ -235,8 +235,8 @@ if ($jenis=='Giro'){
 }
 ?>
 						<div class="clearfix"></div>
-						<div>
-							<h4><br>NOTA RETUR BELI</b></h4>
+						<div style="margin-top: 50px;">
+							<h4><b>NOTA RETUR BELI</b></h4>
 							<div class="clearfix"></div><br/>
 							<div id="retur_content" class="col-xs-12">
 								<div class="col-xs-6 bg-blue">

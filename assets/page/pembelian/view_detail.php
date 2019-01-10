@@ -267,9 +267,9 @@ $total_datang=$total_datang-($total_datang*($diskon_all_persen/100));
 					
 				</tbody>
 			</table>
-			<div class="col-md-12">
+			<div class="col-md-12" style="margin-top:50px;padding-left: 0px;">
 				
-				<div class="col-md-6 text-right">
+				<div class="col-md-6 text-right" style="padding-left: 0px;">
 					<div class="input-group">
 						<span class="input-group-addon" style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;"><small>Berat Datang (gr)</small></span>
 						<input class="form-control" id="berat_2" name="berat" style="background: #fff; outline: none; border: none;" value="<?php echo format_angka($berat) ?>" readonly>

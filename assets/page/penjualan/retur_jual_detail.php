@@ -281,11 +281,12 @@ if ($status=="1" or $locked){
 				</tbody>
 			</table>
 			
-			<div class="col-md-12">
-				<div class="col-md-4 text-right">
+			<div class="col-md-12" style="margin-top: 50px; padding-left: 0px;">
+				<div class="col-md-4 text-right" style="padding-left: 0px;">
 					<div class="input-group">
-						<span class="input-group-addon" style="width:160px;text-align:left; background: #fff;color:#000;border: none; outline: none;">Total Jumlah Retur (Rp)</span>
-						<input class="form-control text-right" id="total_retur" style="border: none; background: #fff; outline: none;" name="total_retur" value="<?php echo format_uang($total_retur) ?>" readonly>
+						<span class="input-group-addon" style="padding-left:0px;width:90px;text-align:left; background: #fff;color:#000;border: none; outline: none;">Total Jumlah Retur (Rp)</span>
+						<span class="input-group-addon" style="padding:10px 0px;width:2px;text-align:left; background: #fff;color:#000;border: none; outline: none;">:</span>
+						<input class="form-control" id="total_retur" style="border: none; background: #fff; outline: none;" name="total_retur" value="<?php echo format_uang($total_retur) ?>" readonly>
 					</div>
 				</div>
 			</div>
