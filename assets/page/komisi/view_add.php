@@ -116,18 +116,18 @@ echo '	<tr>
 					<input type="hidden" name="tambah_jenjang_post" value="true">
 					<div class="col-md-12">
 					<div class="input-group">
-						<span class="input-group-addon">Rp</span>
+						<span class="input-group-addon"><small>Target Min.</small></span>
 						<input id="target_awal" name="target_awal" class="form-control" type="text" placeholder="Target Penjualan Minimum (Rp)" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon">Rp</span>
+						<span class="input-group-addon"><small>Target Max.</small></span>
 						<input id="target_akhir" type="text" name="target_akhir" class="form-control" placeholder="Target Penjualan Maksimum (Rp)" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon">%&nbsp;</span>
-						<input id="tunai" name="tunai" type="text" class="form-control" placeholder="Komisi Penjualan Tunai (%)" maxlength="5" required>
+						<span class="input-group-addon">Komisi( %&nbsp;)</span>
+						<input id="tunai" name="tunai" type="text" class="form-control" placeholder="Komisi Penjualan Tunai (%)" maxlength="6" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					</div>
@@ -164,8 +164,8 @@ echo '	<tr>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon">%&nbsp;</span>
-						<input id="tunai_2" name="tunai" class="form-control" placeholder="Komisi Penjualan Tunai (%)" maxlength="5" required>
+						<span class="input-group-addon">Komisi( %&nbsp;)</span>
+						<input id="tunai_2" name="tunai" class="form-control" placeholder="Komisi Penjualan Tunai (%)" maxlength="6" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					</div>
@@ -184,12 +184,14 @@ function deleteRow(r,ID){
     document.getElementById("table1").deleteRow(i);
 }
 $(document).ready(function(){
-	$('#target_awal').inputmask('numeric', {allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, removeMaskOnSubmit: true});
-	$('#target_akhir').inputmask('numeric', {allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-	$('#tunai').inputmask('decimal', {allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true, max: 100});
-	$('#target_awal_2').inputmask('numeric', {allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, removeMaskOnSubmit: true});
-	$('#target_akhir_2').inputmask('numeric', {allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-	$('#tunai_2').inputmask('decimal', {allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true, max: 100});
+	$('#target_awal').inputmask('currency', {prefix: "Rp ", allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, removeMaskOnSubmit: true});
+	$('#target_akhir').inputmask('currency', {prefix: "Rp ", allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});/*
+	$('#tunai').inputmask('decimal', {allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true, max: 100});*/
+	$('#target_awal_2').inputmask('currency', {prefix: "Rp ", allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, removeMaskOnSubmit: true});
+	$('#target_akhir_2').inputmask('currency', {prefix: "Rp ", allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+
+	$('#tunai').numeric({decimalPlaces: 2, negative:false});
+	$('#tunai_2').numeric({decimalPlaces: 2, negative:false});
 	$('#myModal2').on('show.bs.modal', function(e){
 		var id = $(e.relatedTarget).data('id');
 		var awal = $(e.relatedTarget).data('awal');
