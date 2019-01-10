@@ -18,14 +18,14 @@ $sql2=mysqli_query($con, "SELECT SUM(harga*barang_masuk_rak.qty_di_rak) AS jumla
 	$jumlah_nota=$b2['jumlah_nota'];*/
 
 //UNTUK BAYAR KE SUPPLIER BERDSRKAN QTY BELI
-$sql2=mysqli_query($con, "SELECT ppn_all_persen,SUM((harga-diskon_rp-diskon_rp_2-diskon_rp_3)*qty) AS jumlah_nota
+$sql2=mysqli_query($con, "SELECT diskon_all_persen,ppn_all_persen,SUM((harga-diskon_rp-diskon_rp_2-diskon_rp_3)*qty) AS jumlah_nota
 FROM
     beli_detail
     INNER JOIN beli 
         ON (beli_detail.id_beli = beli.id_beli)
 WHERE beli.id_beli=$id_beli");
 	$b2=mysqli_fetch_array($sql2);
-	$jumlah_nota=$b2['jumlah_nota']+($b2['ppn_all_persen']/100*$b2['jumlah_nota']);//-($s['total_datang']*$s['diskon_all_persen']/100);
+	$jumlah_nota=$b2['jumlah_nota']+($b2['ppn_all_persen']/100*$b2['jumlah_nota'])-($b2['diskon_all_persen']/100*$b2['jumlah_nota']);//-($s['total_datang']*$s['diskon_all_persen']/100);
 //-----------------------------------------------------------------------------------------
 
 	$sql3=mysqli_query($con, "SELECT SUM(jumlah) AS jumlah_bayar FROM bayar_nota_beli WHERE no_nota_beli='$no_nota_beli'");
