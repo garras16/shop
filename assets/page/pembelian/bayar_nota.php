@@ -42,16 +42,15 @@ if (isset($_GET['del'])){
 					<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-					<div class="col-md-12">
-						<p align="right"><button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah</button></p>
-					</div>
 					<div class="clearfix"></div>
 					<div class="col-xs-12" style="background:gray; padding-top:10px;padding-bottom:10px">
 						<font color="white">Cari Tanggal Bayar : </font><br/>
 						<input style="width:100px" id="tgl_dari" type="text" value="" placeholder="Tanggal" readonly><font color="white"> - </font><input style="width:100px" id="tgl_sampai" type="text" value="" placeholder="Tanggal" readonly>&nbsp;<a class="btn btn-primary btn-xs" id="btn_dari_sampai" onClick="submit();"><i class="fa fa-search"></i></a>
 					</div>
 					<div class="clearfix" style="margin-bottom: 20px;"></div><br/>
-					
+					<div class="col-md-12">
+						<p align="right"><button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah</button></p>
+					</div>
 			<table id="table1" class="table table-bordered table-striped">
 				<thead>
 					<tr>
