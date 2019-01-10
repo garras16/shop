@@ -95,8 +95,8 @@ $status=($row['status']=='1' ? 'AKTIF' : 'NON AKTIF');
 							<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-archive fa-fw" style="width: 35px;"></i><br><small>Jenis</small></span>
 							<select class="form-control select" id="select_jenis" name="jenis" required>
 								<option value="" disabled selected>Pilih Jenis</option>
-								<option value="INPUT">KAS MASUK</option>
-								<option value="OUTPUT">KAS KELUAR</option>
+								<option value="MASUK">KAS MASUK</option>
+								<option value="KELUAR">KAS KELUAR</option>
 							</select>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>

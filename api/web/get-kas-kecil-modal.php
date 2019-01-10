@@ -21,8 +21,8 @@ $row=mysqli_fetch_array($sql);
 	<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-archive fa-fw" style="width: 35px;"></i><br><small>Jenis</small></span>
 	<select class="form-control" id="select_jenis" name="jenis" required>
 		<option value="" disabled selected>Pilih Jenis</option>
-		<option value="INPUT" <?php echo ($row['jenis'] == 'INPUT' ? 'selected' : '') ?> >KAS MASUK</option>
-		<option value="OUTPUT" <?php echo ($row['jenis'] == 'OUTPUT' ? 'selected' : '') ?> >KAS KELUAR</option>
+		<option value="MASUK" <?php echo ($row['jenis'] == 'MASUK' ? 'selected' : '') ?> >KAS MASUK</option>
+		<option value="KELUAR" <?php echo ($row['jenis'] == 'KELUAR' ? 'selected' : '') ?> >KAS KELUAR</option>
 	</select>
 	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 </div>
