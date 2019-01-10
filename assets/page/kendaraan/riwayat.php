@@ -16,6 +16,7 @@
 					</div>
 					<div class="x_content">
 			<a class="btn btn-danger" href="?page=master&mode=kendaraan"><i class="fa fa-arrow-left"></i> Kembali</a>
+			<div class="clearfix" style="margin-top: 30px;"></div>
 			<table id="table1" class="table table-bordered table-striped">
 				<thead>
 					<tr>
