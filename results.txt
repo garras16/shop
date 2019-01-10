@@ -1,0 +1,5 @@
+C:\xampp\htdocs\shop\assets\page\penagihan\penagihan.php
+C:\xampp\htdocs\shop\assets\page\penjualan\bayar_nota.php
+C:\xampp\htdocs\shop\mobile\assets\page\admin\get-nota.php
+C:\xampp\htdocs\shop\mobile\assets\page\collector\tagihan_2.php
+C:\xampp\htdocs\shop\mobile\assets\page\collector\tagihan_3.php

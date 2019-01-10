@@ -5,7 +5,7 @@ if (isset($buat_penagihan_post)){
 	$id_tagih=mysqli_insert_id($con);
 	
 	foreach ($id_jual as $key => $value) {
-		$sql=mysqli_query($con, "INSERT INTO penagihan_detail VALUES(null,$id_tagih,$value,null,3,null,0,0,null,null,null,null,null,null,null,null,null,null,null)");
+		$sql=mysqli_query($con, "INSERT INTO penagihan_detail VALUES(null,$id_tagih,$value,null,3,null,0,0,null,null,null,null,null,null,null,null,0,null,null)");
 		echo mysqli_error();
 	}
 	if ($sql){

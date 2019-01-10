@@ -95,10 +95,18 @@ while($row=mysqli_fetch_array($sql)){
 	$sql3=mysqli_query($con, "SELECT SUM(jumlah) AS jumlah_bayar FROM bayar_nota_jual WHERE no_nota_jual='$tmp_nota_jual'");
 	$b3=mysqli_fetch_array($sql3);
 	$jumlah_bayar=$b3['jumlah_bayar'];
+	
+	$sql3=mysqli_query($con, "SELECT SUM(jumlah) AS jumlah_bayar FROM bayar_nota_jual WHERE no_nota_jual='$tmp_nota_jual' AND jenis='Giro' AND status_giro<>1");
+	$b3=mysqli_fetch_array($sql3);
+	$jumlah_bayar-=$b3['jumlah_bayar'];
 //-------------------------------------------------------------------------------------------
 	$sql3=mysqli_query($con, "SELECT SUM(bayar) AS jumlah_bayar FROM penagihan_detail WHERE id_jual=$tmp_id_jual");
 	$b3=mysqli_fetch_array($sql3);
 	$jumlah_bayar+=$b3['jumlah_bayar'];
+	
+	$sql3=mysqli_query($con, "SELECT SUM(bayar) AS jumlah_bayar FROM penagihan_detail WHERE id_jual=$tmp_id_jual AND jenis='Giro' AND status_giro<>1");
+	$b3=mysqli_fetch_array($sql3);
+	$jumlah_bayar-=$b3['jumlah_bayar'];
 //-------------------------------------------------------------------------------------------
 	
 $sisa_nota=$jumlah_nota-$jumlah_bayar;

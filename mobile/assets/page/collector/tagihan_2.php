@@ -115,23 +115,34 @@ WHERE id_penagihan=" .$row['id_penagihan']. " AND id_jual=" .$row['id_jual']);
 $row2=mysqli_fetch_array($sql2);
 $total_bayar+=$row2['jumlah_bayar'];
 	
-	$sql2=mysqli_query($con, "SELECT SUM(jumlah) AS jumlah_bayar
+	$sql2=mysqli_query($con, "SELECT *
 FROM
     bayar_nota_jual
     INNER JOIN jual 
         ON (bayar_nota_jual.no_nota_jual = jual.invoice)
 WHERE jual.id_jual=" .$row['id_jual']);
-$row2=mysqli_fetch_array($sql2);
-$jumlah_bayar=$row2['jumlah_bayar'];
+$jumlah_bayar=0;
+while ($row2=mysqli_fetch_array($sql2)){
+	if ($row2['jenis']=='Giro'){
+		if ($row2['status_giro']=='1') $jumlah_bayar+=$row2['jumlah'];
+	} else {
+		$jumlah_bayar+=$row2['jumlah'];
+	}
+}
 
-$sql2=mysqli_query($con, "SELECT SUM(bayar) AS jumlah_bayar
+$sql2=mysqli_query($con, "SELECT *
 FROM
     penagihan_detail
     INNER JOIN jual 
         ON (penagihan_detail.id_jual = jual.id_jual)
 WHERE jual.id_jual=" .$row['id_jual']);
-$row2=mysqli_fetch_array($sql2);
-$jumlah_bayar+=$row2['jumlah_bayar'];
+while ($row2=mysqli_fetch_array($sql2)){
+	if ($row2['jenis']=='Giro'){
+		if ($row2['status_giro']=='1') $jumlah_bayar+=$row2['bayar'];
+	} else {
+		$jumlah_bayar+=$row2['bayar'];
+	}
+}
 
 $sql2=mysqli_query($con, "SELECT SUM(jumlah_retur) AS jumlah_bayar
 FROM

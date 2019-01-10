@@ -56,7 +56,7 @@ if (isset($_GET['pelanggan']) && $_GET['pelanggan']!=''){
 	$val.=" AND pelanggan.nama_pelanggan LIKE '%" .$_GET['pelanggan']. "%'";
 }
 if (!isset($_GET['tanggal']) && !isset($_GET['debt']) && !isset($_GET['pelangan'])){
-	$val="AND status_tagih<>2";
+	$val=" AND tanggal_tagih BETWEEN NOW() - INTERVAL 3 MONTH AND NOW()";
 }
 	$sql=mysqli_query($con, "SELECT *
 FROM

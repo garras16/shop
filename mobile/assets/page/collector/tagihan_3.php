@@ -20,11 +20,28 @@ $jenis=$_GET['jenis'];
 	$sql3=mysqli_query($con, "SELECT SUM(jumlah) AS jumlah_bayar FROM bayar_nota_jual WHERE no_nota_jual='$no_nota_jual'");
 	$b3=mysqli_fetch_array($sql3);
 	$jumlah_bayar_x=$b3['jumlah_bayar'];
+	
+	$sql3=mysqli_query($con, "SELECT SUM(jumlah) AS jumlah_bayar FROM bayar_nota_jual WHERE no_nota_jual='$no_nota_jual' AND jenis='Giro' AND status_giro<>1");
+	$b3=mysqli_fetch_array($sql3);
+	$jumlah_bayar_x-=$b3['jumlah_bayar'];
 //-------------------------------------------------------------------------------------------
 
 	$sql3=mysqli_query($con, "SELECT SUM(bayar) AS jumlah_bayar FROM penagihan_detail WHERE id_jual=$id_jual");
 	$b3=mysqli_fetch_array($sql3);
 	$jumlah_bayar_x+=$b3['jumlah_bayar'];
+	
+	$sql3=mysqli_query($con, "SELECT SUM(bayar) AS jumlah_bayar FROM penagihan_detail WHERE id_jual=$id_jual AND jenis='Giro' AND status_giro<>1");
+	$b3=mysqli_fetch_array($sql3);
+	$jumlah_bayar_x-=$b3['jumlah_bayar'];
+//-------------------------------------------------------------------------------------------
+	$sql3=mysqli_query($con, "SELECT SUM(jumlah_retur) AS jumlah_bayar
+FROM
+    penagihan_detail
+    INNER JOIN penagihan_retur_detail 
+        ON (penagihan_detail.id_penagihan_detail = penagihan_retur_detail.id_penagihan_detail)
+WHERE id_jual=" .$row['id_jual']);
+$b3=mysqli_fetch_array($sql3);
+$jumlah_bayar_x+=$b3['jumlah_bayar'];
 //-------------------------------------------------------------------------------------------
 
 $sisa_nota=$jumlah_nota-$jumlah_bayar_x;
