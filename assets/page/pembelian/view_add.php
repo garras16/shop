@@ -266,7 +266,7 @@ $jumlah=$jumlah+$ppn_all_rp-$diskon_all_rp;
 					<input type="hidden" name="tambah_beli_detail_post" value="true">
 					<div id="add_beli_detail" class="col-md-12">
 						<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-archive fa-fw"></i></span>
+						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-archive fa-fw"></i><br><small>Barang</small></span>
 						<select id="select_barang" class="form-control select2"  name="id_barang_supplier" required>
 							<option value="" disabled selected>Pilih Barang</option>
 <?php
@@ -291,26 +291,26 @@ WHERE
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-shopping-cart fa-fw"></i></span>
-						<input id="qty_2" name="qty" type="text" class="form-control" placeholder="Qty Beli" required>
+						<span class="input-group-addon"><i class="fa fa-shopping-cart fa-fw" style="width: 38px;"></i><br><small>Qty</small></span>
+						<input id="qty_2" name="qty" type="text" style="padding: 20px 15px;" class="form-control" placeholder="Qty Beli" required>
 						<span class="input-group-addon" id="satuan"></span>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-money fa-fw"></i></span>
-						<input class="form-control" id="harga_2" name="harga" type="text" placeholder="Harga Modal (Rp)" required>
+						<span class="input-group-addon"><i class="fa fa-money fa-fw" style="width: 38px;"></i><br><small>Harga</small></span>
+						<input class="form-control" id="harga_2" style="padding: 20px 15px;" name="harga" type="text" placeholder="Harga Modal (Rp)" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><div style="min-width:70px;text-align:left">Diskon Barang 1 (%)</div></span>
+						<span class="input-group-addon"><div style="min-width:70px;text-align:left">Diskon 1 (%)</div></span>
 						<input class="form-control" id="diskon_persen_2_1" name="diskon_persen_1" type="text" placeholder="Diskon 1" value="0" required>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><div style="min-width:70px;text-align:left">Diskon Barang 2 (%)</div></span>
+						<span class="input-group-addon"><div style="min-width:70px;text-align:left">Diskon 2 (%)</div></span>
 						<input class="form-control" id="diskon_persen_2_2" name="diskon_persen_2" type="text" placeholder="Diskon 2" value="0" required>
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"><div style="min-width:70px;text-align:left">Diskon Barang 3 (%)</div></span>
+						<span class="input-group-addon"><div style="min-width:70px;text-align:left">Diskon 3 (%)</div></span>
 						<input class="form-control" id="diskon_persen_2_3" name="diskon_persen_3" type="text" placeholder="Diskon 3" value="0" required>
 					</div>
 					</div>
@@ -363,14 +363,18 @@ $(document).ready(function(){
 	$('#qty').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#berat').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#volume').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-	$('#harga').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+	$('#harga').inputmask('currency', {prefix: "Rp ", allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#qty_2').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-	$('#harga_2').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-	$('#diskon_persen').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+	$('#harga_2').inputmask('currency', {prefix: "Rp ", allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+	$('#diskon_persen').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});/*
 	$('#diskon_persen_2_1').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#diskon_persen_2_2').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#diskon_persen_2_3').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#diskon_nota_rp').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+	*/
+	$('#diskon_persen_2_2').numeric({decimalPlaces: 2, negative:false});
+	$('#diskon_persen_2_3').numeric({decimalPlaces: 2, negative:false});
+	$('#diskon_persen_2_1').numeric({decimalPlaces: 2, negative:false});
 	$(".select2").select2({
 		placeholderOption: "first",
 		allowClear: true,
