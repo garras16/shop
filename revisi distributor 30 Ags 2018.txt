@@ -486,7 +486,7 @@ tak paham)										OK
 
 - input diskon (%) 6 digit xxx.xx%							OK	-
 
-* ubah data diskon nota beli, jumlah diskon (rp) nya masih error			*	
+- ubah data diskon nota beli, jumlah diskon (rp) nya masih error			OK	-
 
 - hilangkan border/background di info tambahan di bawah				 	OK	-
 
