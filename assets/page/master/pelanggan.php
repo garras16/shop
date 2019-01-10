@@ -10,7 +10,6 @@ if (isset($tambah_pelanggan_post)){
 }
 if (isset($edit_pelanggan_post)){
 	$sql=mysqli_query($con, "UPDATE pelanggan SET nama_pelanggan='$nama_pelanggan',alamat='$alamat',lat='$lat',lng='$lng',telepon_pelanggan='$telepon_pelanggan',kontakperson='$kontak',telepon_kontak='$telepon_kontak',plafon=$plafon,barcode='$barcode',status=$status,blacklist=$blacklist WHERE id_pelanggan=$id_pelanggan");
-	_alert($plafon);
 	if ($sql){
 		_buat_pesan("Input Berhasil","green");
 	} else {
