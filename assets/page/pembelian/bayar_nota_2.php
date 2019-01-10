@@ -224,11 +224,8 @@ if ($jenis=='Giro'){
 			<input class="form-control" style="padding: 20px 15px;" id="jatuh_tempo" name="jatuh_tempo" value="" placeHolder="Tanggal Jatuh Tempo" title="Tanggal Jatuh Tempo" required>
 			<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 			</div>
-		</div>';
-		echo '<div class="col-md-6">
-			&nbsp;
 			<div class="input-group">
-			<span class="input-group-addon"><i class="fa fa-file fa-fw"></i><br><small>Ket.</small></span>
+			<span class="input-group-addon"><i class="fa fa-file fa-fw" style="width: 55px;"></i><br><small>Ket.</small></span>
 			<input class="form-control" id="keterangan" style="padding: 20px 15px;" name="keterangan" value="" placeHolder="Keterangan" maxlength="100">
 			</div>
 		</div>';
