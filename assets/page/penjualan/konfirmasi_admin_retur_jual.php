@@ -39,7 +39,7 @@ if (isset($_GET['tolak'])){
 					<div class="x_content"><div class="alert alert-info">
 					  <strong>Klik kolom pada tabel untuk detail.</strong>
 					</div>
-					
+						<div class="clearfix" style="margin-bottom: 20px;"></div>
 						<div class="table-responsive">
 						<table class="table table-bordered table-striped">
 							<thead>

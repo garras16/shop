@@ -63,7 +63,7 @@ if (isset($tambah_pembelian_post)){
 			<div class="col-md-4" style="float: right">
 				<p align="right"><br><button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah</button></p>
 			</div>
-			<div class="clearfix"></div>
+			<div class="clearfix" style="margin-bottom: 30px;"></div>
 			<table id="table1" class="table table-bordered table-striped">
 				<thead>
 					<tr>

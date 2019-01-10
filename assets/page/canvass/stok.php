@@ -20,6 +20,7 @@ $sql=mysqli_query($con, "DELETE FROM canvass_keluar_barang WHERE qty=0 AND qty_c
 					<div class="alert alert-info">
 					  <strong>Klik kolom pada tabel untuk detail.</strong>
 					</div>
+					<div class="clearfix" style="margin-bottom: 20px;"></div>
 				<div class="table responsive">
 				<table id="table1" class="table table-bordered table-striped">
 				<thead>

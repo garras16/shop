@@ -23,7 +23,7 @@ $q = mysqli_query($con, $sql);
 					</div>
 			<p align="right"><a class="btn btn-primary" href="?page=penjualan&mode=cari_nota_retur"><i class="fa fa-plus"></i> Tambah</a></p>
 					
-					<div class="col-xs-12" style="background:gray; padding-top:10px;padding-bottom:10px">
+					<div class="col-xs-12" style="background:gray; padding-top:10px;padding-bottom:10px; margin-bottom: 30px;">
 						<font color="white">Cari Tanggal Retur : </font><br/>
 						<input style="width:100px;height:30px" id="tgl_dari" type="text" value="" placeholder="Tanggal" readonly><font color="white"> - </font><input style="width:100px;height:30px" id="tgl_sampai" type="text" value="" placeholder="Tanggal" readonly>&nbsp;<a class="btn btn-primary" id="btn_dari_sampai" onClick="submit();"><i class="fa fa-search"></i> CARI</a><a class="btn btn-primary" id="btn_dari_sampai" onClick="reset();"><i class="fa fa-refresh"></i> RESET</a>
 					</div>

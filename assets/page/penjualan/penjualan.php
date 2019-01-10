@@ -20,7 +20,7 @@
 					<div class="alert alert-info">
 					  <strong>Klik kolom pada tabel untuk detail.</strong>
 					</div>
-						<div class="col-md-4">
+						<div class="col-md-4" style="margin-bottom: 35px;">
 							<table>
 								<tr>
 									<td>Periode :<br><input class="form-control" style="width:100px" id="tgl_dari" type="text" value="" placeholder="Tanggal" readonly></td>
@@ -31,7 +31,7 @@
 								</tr>
 							</table>
 						</div>
-						<div class="col-md-4" style="margin-top:10px" align="right">
+						<div class="col-md-4" style="margin-top:-2px" align="right">
 							<table>
 								<tr>
 									<td>Cari Barang :<br><input class="form-control" style="width:180px" id="cari" type="text" value="" placeholder="Nama Barang"></td>

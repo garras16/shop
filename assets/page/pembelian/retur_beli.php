@@ -55,7 +55,7 @@ if (isset($tambah_retur_beli_post)){
 			<div class="col-xs-6" style="text-align:right">
 			<p align="right"><button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah</button></p>
 			</div>
-			<div class="clearfix"></div>
+			<div class="clearfix" style="margin-bottom: 20px;"></div>
 			<table id="table1" class="table table-bordered table-striped">
 				<thead>
 					<tr>
