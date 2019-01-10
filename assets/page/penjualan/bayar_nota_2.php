@@ -5,9 +5,21 @@ $sql=mysqli_query($con, "SELECT id_jual FROM jual WHERE invoice='$no_nota_jual'"
 $row=mysqli_fetch_array($sql);
 $id_jual=$row['id_jual'];
 
-	$sql2=mysqli_query($con, "SELECT jumlah FROM nota_sudah_cek WHERE status='2' or status='3' AND id_jual=$id_jual");
-	$b2=mysqli_fetch_array($sql2);
-	$jumlah_nota=$b2['jumlah'];
+	$sql2=mysqli_query($con, "SELECT *, SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total
+		FROM
+    		jual
+    	INNER JOIN jual_detail 
+        	ON (jual.id_jual = jual_detail.id_jual)
+    	INNER JOIN pelanggan 
+        	ON (jual.id_pelanggan = pelanggan.id_pelanggan)
+		WHERE jual.invoice='$no_nota_jual' 
+		GROUP BY jual_detail.id_jual");
+	$row=mysqli_fetch_array($sql2);
+	$id_pelanggan=$row['id_pelanggan'];
+	$id_jual=$row['id_jual'];
+	$total_nota=$row['total']-($row['total']*$row['diskon_all_persen']/100);
+	$grand = $total_nota+($total_nota*($row['ppn_all_persen']/100));
+	$jumlah_nota=$grand;
 
 //-----------------------------------------------------------------------------------------
 
@@ -90,6 +102,7 @@ $row=mysqli_fetch_array($sql);
 $id_pelanggan=$row['id_pelanggan'];
 $id_jual=$row['id_jual'];
 $total_nota=$row['total']-($row['total']*$row['diskon_all_persen']/100);
+$grand = $total_nota+($total_nota*($row['ppn_all_persen']/100));
 ?>
 <!-- page content -->
 <div class="right_col" role="main">
@@ -131,7 +144,7 @@ $total_nota=$row['total']-($row['total']*$row['diskon_all_persen']/100);
 						<div class="col-md-6">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-money fa-fw" style="width:72px;"></i><br><small>Ttl. Nota Jual</small></span>
-								<input class="form-control" style="padding: 20px 15px;" id="total_nota" value="<?php echo $total_nota ?>" title="Total Nota Jual (Rp)" readonly>
+								<input class="form-control" style="padding: 20px 15px;" id="total_nota" value="<?php echo $grand; ?>" title="Total Nota Jual (Rp)" readonly>
 							</div>
 						</div>
 						<div class="col-md-6">
