@@ -39,10 +39,10 @@
 									<td><br><a class="btn btn-primary" onClick="cari_barang();"><i class="fa fa-search"></i></a></td>
 								</tr>
 							</table>
-						</div>
+						</div><!-- 
 						<div class="col-md-4" style="float: right">
 							<p align="right"><br><button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah</button></p>
-						</div>
+						</div> -->
 						<div class="clearfix"></div>
 			<table id="table1" class="table table-bordered table-striped">
 				<thead>
@@ -153,7 +153,7 @@ if ($row['status_konfirm']==0 or $row['status_konfirm']==5){
     </div>
 
     <!-- modal input -->
-<div id="myModal" class="modal fade">
+<!-- <div id="myModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -198,7 +198,7 @@ if ($row['status_konfirm']==0 or $row['status_konfirm']==5){
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->
 
 <script>
 function validasi(){
