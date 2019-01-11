@@ -27,7 +27,7 @@ $id_karyawan=$_SESSION['id_karyawan'];
 							<input type="button" id="reset" onClick="reset()" value="Reset"></input>
 						</div>
 						<div class="clearfix"></div><br>
-						<div class="table-container">
+						<div class="table-responsive">
 						<table id="table1" style="width: 2000px;">
 									<thead>
 										<tr>

@@ -23,7 +23,7 @@ $id_karyawan=$_SESSION['id_karyawan'];
 						</div>
 						<div class="clearfix"></div><br>
 						<div class="table-responsive">
-						<table id="table1" class="table table-bordered table-striped">
+						<table id="table1" style="width: 2500px;">
 							<thead>
 								<tr>
 									<th>Nama Pelanggan</th>
@@ -40,7 +40,7 @@ $id_karyawan=$_SESSION['id_karyawan'];
 									<th>Setor (Rp)</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody style="font-size: 15px;">
 <?php
 $val="";
 if (isset($_GET['tanggal']) && $_GET['tanggal']!=''){
@@ -124,18 +124,18 @@ WHERE id_jual=" .$row['id_jual']);
 		$color2='black';
 	}
 	echo '<tr>
-			<td align="center">' .$row['nama_pelanggan']. '</td>
-			<td align="center">' .$row['invoice']. '</td>
-			<td align="center">' .format_uang($total_jual). '</td>
-			<td align="center">' .$row['nama_karyawan']. '</td>
-			<td align="center">' .date("d-m-Y",strtotime($row['tanggal_tagih'])). '</td>
-			<td align="center">' .format_uang($total_jual). '</td>
-			<td align="center">' .format_uang($total_bayar). '</td>
-			<td align="center">' .format_uang($total_jual-$total_bayar). '</td>
-			<td align="center" style="color: ' .$color2. '">' .$tgl_jb. '</td>
-			<td align="center" style="color: ' .$color. '">' .$status. '</td>
-			<td align="center">' .$status_nota. '</td>
-			<td align="center">' .format_uang($row['setor']). '</td>
+			<td align="center" style="width: 200px;">' .$row['nama_pelanggan']. '</td>
+			<td align="center" style="width: 200px;">' .$row['invoice']. '</td>
+			<td align="center" style="width: 200px;">' .format_uang($total_jual). '</td>
+			<td align="center" style="width: 200px;">' .$row['nama_karyawan']. '</td>
+			<td align="center" style="width: 200px;">' .date("d-m-Y",strtotime($row['tanggal_tagih'])). '</td>
+			<td align="center" style="width: 200px;">' .format_uang($total_jual). '</td>
+			<td align="center" style="width: 200px;">' .format_uang($total_bayar). '</td>
+			<td align="center" style="width: 200px;">' .format_uang($total_jual-$total_bayar). '</td>
+			<td align="center" style="color: ' .$color2. '; width: 200px;">' .$tgl_jb. '</td>
+			<td align="center" style="color: ' .$color. '; width: 200px;">' .$status. '</td>
+			<td align="center" style="width: 200px;">' .$status_nota. '</td>
+			<td align="center" style="width: 200px;">' .format_uang($row['setor']). '</td>
 		</tr>';
 }
 ?>
