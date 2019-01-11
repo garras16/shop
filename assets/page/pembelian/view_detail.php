@@ -196,7 +196,7 @@ $berat+=$row['berat'];
 $volume+=$row['volume'];
 $val1="";$val2="";
 ($row['qty']!=$row['qty_di_rak'] ? $tgl_datang="BELUM LENGKAP" : $tgl_datang=date("d-m-Y", strtotime($row['tgl_datang'])));
-($row['qty']!=$row['qty_di_rak'] ? $val="font-weight:bold" : $val="");
+($row['qty']!=$row['qty_di_rak'] ? $val="" : $val="");
 $sql2=mysqli_query($con, "SELECT * FROM barang_masuk WHERE id_beli_detail=$id_beli_detail");
 (mysqli_num_rows($sql2) > 0 ? $ada="1" : $ada="0");
 	($row['qty_di_rak']=='' ? $datang='0' : $datang=$row['qty_di_rak']);
