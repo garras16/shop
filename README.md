@@ -1,2 +1,2 @@
-# update mysqli
-Revisi yang belum jumlah diskon dan penjualan (ppn)
+# update
+Masih Bug di Detail Pembayaran Retur Jual Detail
