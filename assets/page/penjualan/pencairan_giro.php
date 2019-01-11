@@ -62,23 +62,23 @@ FROM
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
 WHERE jenis='Giro' AND tgl_bayar BETWEEN NOW() - INTERVAL 30 DAY AND NOW()");
 while($row=mysqli_fetch_array($sql)){
-//STATUS GIRO:
-if ($row['status_giro']==0) $status_giro='GANTUNG';
-if ($row['status_giro']==1) $status_giro='TERIMA';
-if ($row['status_giro']==2) $status_giro='TOLAK';
-	echo '			<tr>
-						<td>' .date("d-m-Y",strtotime($row['tgl_nota'])). '</td>
-						<td>' .$row['no_nota_jual']. '</td>
-						<td>' .$row['nama_pelanggan']. '</td>
-						<td>' .date("d-m-Y",strtotime($row['jatuh_tempo'])). '</td>
-						<td>' .$status_giro. '</td>';
-if ($row['status_giro']==0){
-	echo '				<td><a href="?page=penjualan&mode=pencairan_giro&id=' .$row['id_bayar']. '&act=1&tbl=1" class="btn btn-primary btn-xs"><i class="fa fa-times"></i> Terima</a>
-						<a href="?page=penjualan&mode=pencairan_giro&id=' .$row['id_bayar']. '&act=2&tbl=1" class="btn btn-danger btn-xs"><i class="fa fa-times"></i> Tolak</a></td>';
-} else {
-	echo '				<td></td>';
-}
-echo '				</tr>';
+    //STATUS GIRO:
+    if ($row['status_giro']==0) $status_giro='GANTUNG';
+    if ($row['status_giro']==1) $status_giro='TERIMA';
+    if ($row['status_giro']==2) $status_giro='TOLAK';
+        echo '<tr>
+                <td>' .date("d-m-Y",strtotime($row['tgl_nota'])). '</td>
+                <td>' .$row['no_nota_jual']. '</td>
+                <td>' .$row['nama_pelanggan']. '</td>
+                <td>' .date("d-m-Y",strtotime($row['jatuh_tempo'])). '</td>
+                <td>' .$status_giro. '</td>';
+    if ($row['status_giro']==0){
+        echo '<td><a href="?page=penjualan&mode=pencairan_giro&id=' .$row['id_bayar']. '&act=1&tbl=1" class="btn btn-primary btn-xs"><i class="fa fa-times"></i> Terima</a>
+                <a href="?page=penjualan&mode=pencairan_giro&id=' .$row['id_bayar']. '&act=2&tbl=1" class="btn btn-danger btn-xs"><i class="fa fa-times"></i> Tolak</a></td>';
+    } else {
+        echo '<td></td>';
+    }
+    echo '</tr>';
 }
 
 $sql=mysqli_query($con, "SELECT *

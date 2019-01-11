@@ -8,11 +8,11 @@ $id=$_GET['id'];
     <input
         type="hidden"
         name="tambah_harga_jual_kredit_post"
-        value"true"="value"true"">
+        value="true">
     <input
         type="hidden"
         name="id_harga_jual"
-        value"<?php echo $id ?>"="value"<?php echo $id ?>"">
+        value="<?php echo $id ?>">
     <div class="col-md-6">
         <input
             class="form-control"

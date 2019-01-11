@@ -36,9 +36,9 @@ if (isset($_GET['cari'])){
                                 id="datepicker"
                                 placeholder="Bulan & Tahun"
                                 style="width:100px"
-                                readonly="readonly"></input>
-                            <input type="button" id="cari" onclick="cari()" value="Cari"></input>
-                            <input type="button" id="reset" onclick="reset()" value="Reset"></input>
+                                readonly="readonly" />
+                            <input type="button" id="cari" onclick="cari()" value="Cari">
+                            <input type="button" id="reset" onclick="reset()" value="Reset">
                         </div>
                     </div>
                 </div>

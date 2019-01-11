@@ -180,38 +180,93 @@ if ($row['status_konfirm']==0 or $row['status_konfirm']==5){
 </div>
 
 <!-- modal input -->
-<!-- <div id="myModal" class="modal fade"> <div class="modal-dialog"> <div
-class="modal-content"> <div class="modal-header"> <button type="button"
-class="close" data-dismiss="modal" aria-hidden="true"><div
-style="min-width:50px">&times;</div></button> <h4 class="modal-title">Tambah
-Nota Pejualan</h4> </div> <div class="modal-body"> <form action=""
-method="post"> <input type="hidden" name="tambah_pejualan_post" value="true">
-<div class="col-md-12"> <div class="input-group"> <span
-class="input-group-addon"><i class="fa fa-file fa-fw" style="width:
-57px;"></i><br><small>No. Nota</small></span> <input id="no_nota"
-name="no_nota_jual" style="padding: 20px 15px;" type="text" class="form-control"
-placeholder="No Nota Jual" maxlength="15" required> <span
-class="input-group-addon"><i class="fa fa-star fa-fw"
-style="color:red"></i></span> </div> <div class="input-group"> <span
-class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-building
-fa-fw" style="width: 46px;"></i><br><small>Pelanggan</small></span> <select
-name="id_pelanggan" class="select2 form-control" required="true"> <option
-value="" disabled selected>-= Pilih Pelanggan =-</option> <?php
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <div style="min-width:50px">&times;</div>
+                </button>
+                <h4 class="modal-title">Tambah Nota Pejualan</h4>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post">
+                    <input type="hidden" name="tambah_pejualan_post" value="true">
+                    <div class="col-md-12">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-file fa-fw" style="width: 57px;"></i><br>
+                                <small>No. Nota</small>
+                            </span>
+                            <input
+                                id="no_nota"
+                                name="no_nota_jual"
+                                style="padding: 20px 15px;"
+                                type="text"
+                                class="form-control"
+                                placeholder="No Nota Jual"
+                                maxlength="15"
+                                required="required">
+                            <span class="input-group-addon">
+                                <i class="fa fa-star fa-fw" style="color:red"></i>
+                            </span>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon" style="padding: 2px 12px;">
+                                <i class="fa fa-building
+fa-fw" style="width: 46px;"></i><br>
+                                <small>Pelanggan</small>
+                            </span>
+                            <select name="id_pelanggan" class="select2 form-control" required="true">
+                                <option value="" disabled="disabled" selected="selected">-= Pilih Pelanggan =-</option>
+                                <?php
 $cust=mysqli_query($con, "SELECT id_pelanggan, nama_pelanggan FROM pelanggan");
 while($b=mysqli_fetch_array($cust)){ echo '<option value="' .$b['id_pelanggan'].
-'">' .$b['nama_pelanggan']. '</option>'; } ?> </select> <span
-class="input-group-addon"><i class="fa fa-star fa-fw"
-style="color:red"></i></span> </div> <div class="input-group"> <span
-class="input-group-addon"><div style="min-width:90px;text-align:left">Diskon
-Nota (%)</div></span> <input id="diskon_all" onchange="handleChange(this)"
-maxlength="6" name="diskon_all" type="text" class="form-control"
-placeholder="Diskon Nota" value="0" required><br> </div> <div
-class="input-group"> <span class="input-group-addon"><div
-style="min-width:102px;text-align:left">PPN (%)</div></span> <input id="ppn_all"
-onchange="handleChange(this)" maxlength="6" name="ppn_all" type="text"
-class="form-control" placeholder="PPN" value="0" required> </div> </div> <div
-class="modal-footer"> <input type="submit" class="btn btn-primary"
-value="Simpan"> </div> </form> </div> </div> </div> </div> -->
+'">' .$b['nama_pelanggan']. '</option>'; } ?>
+                            </select>
+                            <span class="input-group-addon">
+                                <i class="fa fa-star fa-fw" style="color:red"></i>
+                            </span>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <div style="min-width:90px;text-align:left">Diskon Nota (%)</div>
+                            </span>
+                            <input
+                                id="diskon_all"
+                                onchange="handleChange(this)"
+                                maxlength="6"
+                                name="diskon_all"
+                                type="text"
+                                class="form-control"
+                                placeholder="Diskon Nota"
+                                value="0"
+                                required="required"><br>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <div style="min-width:102px;text-align:left">PPN (%)</div>
+                            </span>
+                            <input
+                                id="ppn_all"
+                                onchange="handleChange(this)"
+                                maxlength="6"
+                                name="ppn_all"
+                                type="text"
+                                class="form-control"
+                                placeholder="PPN"
+                                value="0"
+                                required="required">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" value="Simpan">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
 function validasi() {

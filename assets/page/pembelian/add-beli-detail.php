@@ -16,19 +16,21 @@ require_once('../../../assets/inc/config.php');
         required="required">
         <option value="" disabled="disabled" selected="selected">Pilih Barang</option>
         <?php
-								$sql=mysqli_query($con, "SELECT
-    barang_supplier.id_barang_supplier
-    , barang.nama_barang
-FROM
-    barang_supplier
-    INNER JOIN barang 
-        ON (barang_supplier.id_barang = barang.id_barang) 
-WHERE 
-	barang_supplier.id_supplier=$id_supplier");
-								while($row=mysqli_fetch_array($sql)){
-									echo '<option value="' .$row['id_barang_supplier']. '">' .$row['nama_barang']. '</option>';
-								}
-							?>
+            $sql=mysqli_query($con, "SELECT
+                barang_supplier.id_barang_supplier
+                , barang.nama_barang
+            FROM
+                barang_supplier
+            INNER JOIN 
+                barang 
+            ON 
+                (barang_supplier.id_barang = barang.id_barang) 
+            WHERE 
+	            barang_supplier.id_supplier=$id_supplier");
+            while($row=mysqli_fetch_array($sql)){
+                echo '<option value="' .$row['id_barang_supplier']. '">' .$row['nama_barang']. '</option>';
+            }
+        ?>
     </select>
     <span class="input-group-addon">
         <i class="fa fa-star fa-fw" style="color:red"></i>

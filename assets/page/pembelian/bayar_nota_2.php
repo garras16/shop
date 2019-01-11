@@ -21,13 +21,17 @@ $sql2=mysqli_query($con, "SELECT SUM(harga*barang_masuk_rak.qty_di_rak) AS jumla
 $sql2=mysqli_query($con, "SELECT diskon_all_persen,ppn_all_persen,SUM((harga-diskon_rp-diskon_rp_2-diskon_rp_3)*qty) AS jumlah_nota
 FROM
     beli_detail
-    INNER JOIN beli 
-        ON (beli_detail.id_beli = beli.id_beli)
-WHERE beli.id_beli=$id_beli");
+INNER JOIN 
+    beli 
+ON 
+    (beli_detail.id_beli = beli.id_beli)
+WHERE 
+    beli.id_beli=$id_beli");
 	$b2=mysqli_fetch_array($sql2);
 	$set_disk = $b2['jumlah_nota']-($b2['jumlah_nota']*($b2['diskon_all_persen']/100));
 	$ppn = $set_disk*($b2['ppn_all_persen']/100);
-	$jumlah_nota=$set_disk+$ppn;//-($s['total_datang']*$s['diskon_all_persen']/100);
+    $jumlah_nota=$set_disk+$ppn;
+    //-($s['total_datang']*$s['diskon_all_persen']/100);
 
 //-----------------------------------------------------------------------------------------
 
