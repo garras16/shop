@@ -12,33 +12,37 @@ if (isset($tambah_karyawan_post)){
 }
 ?>
 <!-- page content -->
-		<div class="right_col" role="main">
-			<div class="">
-			<div class="row">
-			<h3>MASTER KARYAWAN</h3>
-			<?php
+<div class="right_col" role="main">
+    <div class="">
+        <div class="row">
+            <h3>MASTER KARYAWAN</h3>
+            <?php
 			if (isset($pesan)){
 				echo '<div class="alert alert-' .$tipe. ' text-center">
 					<h4>' .$pesan. '</h4>
 					</div>';
 			}
 			?>
-			<p align="right"><button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah</button></p>
-			<div style="overflow-x: scroll">
-			<table id="table1" class="table table-bordered table-striped">
-				<thead>
-					<tr>
-						<th>No.</th>
-						<th>Nama Karyawan</th>
-						<th>Barcode</th>
-						<th>No KTP</th>
-						<th>No HP</th>
-						<th>Jabatan</th>
-						<th>Gaji</th>
-					</tr>
-				</thead>
-				<tbody>
-<?php
+            <p align="right">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                    <i class="fa fa-plus"></i>
+                    Tambah</button>
+            </p>
+            <div style="overflow-x: scroll">
+                <table id="table1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Nama Karyawan</th>
+                            <th>Barcode</th>
+                            <th>No KTP</th>
+                            <th>No HP</th>
+                            <th>Jabatan</th>
+                            <th>Gaji</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
 $sql=mysqli_query($con, "SELECT * 
 FROM
     karyawan
@@ -58,76 +62,124 @@ $i+=1;
 					</tr>';
 }
 ?>
-					
-				</tbody>
-			</table>
-			</div>
-			</div>
-			</div>
-		</div>
-		<!-- /page content -->
 
-        
-      </div>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
+</div>
+<!-- /page content -->
 
-	<!-- modal input -->
+</div>
+</div>
+
+<!-- modal input -->
 <div id="myModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">Tambah Karyawan</h4>
-			</div>
-			<div class="modal-body">				
-				<form action="" method="post">
-					<input type="hidden" name="tambah_karyawan_post" value="true">
-					<div class="col-md-12">
-					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-						<input class="form-control" id="nama" name="nama_karyawan" placeholder="Nama Karyawan" maxlength="50" required>
-					</div>
-					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-barcode fa-fw"></i></span>
-						<input name="barcode" class="form-control" placeholder="Barcode" maxlength="10" required>
-					</div>
-					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-credit-card fa-fw"></i></span>
-						<input class="form-control" type="number" name="ktp" placeholder="No. KTP" onKeyPress="if(this.value.length==16) return false;" required>
-					</div>
-					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-phone fa-fw"></i></span>
-						<input class="form-control" type="number" name="no_hp" placeholder="No. HP" onKeyPress="if(this.value.length==15) return false;" required>
-					</div>
-					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-briefcase fa-fw"></i></span>
-						<select class="form-control" id="select_jabatan" name="jabatan" required>
-							<option value="" disabled selected>Pilih Jabatan</option>
-							<?php 
+<div class="modal-dialog">
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Tambah Karyawan</h4>
+    </div>
+    <div class="modal-body">
+        <form action="" method="post">
+            <input type="hidden" name="tambah_karyawan_post" value="true">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-user fa-fw"></i>
+                    </span>
+                    <input
+                        class="form-control"
+                        id="nama"
+                        name="nama_karyawan"
+                        placeholder="Nama Karyawan"
+                        maxlength="50"
+                        required="required">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-barcode fa-fw"></i>
+                    </span>
+                    <input
+                        name="barcode"
+                        class="form-control"
+                        placeholder="Barcode"
+                        maxlength="10"
+                        required="required">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-credit-card fa-fw"></i>
+                    </span>
+                    <input
+                        class="form-control"
+                        type="number"
+                        name="ktp"
+                        placeholder="No. KTP"
+                        onkeypress="if(this.value.length==16) return false;"
+                        required="required">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-phone fa-fw"></i>
+                    </span>
+                    <input
+                        class="form-control"
+                        type="number"
+                        name="no_hp"
+                        placeholder="No. HP"
+                        onkeypress="if(this.value.length==15) return false;"
+                        required="required">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-briefcase fa-fw"></i>
+                    </span>
+                    <select
+                        class="form-control"
+                        id="select_jabatan"
+                        name="jabatan"
+                        required="required">
+                        <option value="" disabled="disabled" selected="selected">Pilih Jabatan</option>
+                        <?php 
 								$brg=mysqli_query($con, "select * from jabatan");
 								while($b=mysql_fetch_array($brg)){
-							?>	
-							<option value="<?php echo $b['id_jabatan']; ?>"><?php echo $b['nama_jabatan'];?></option>
-							<?php 
+							?>
+                        <option value="<?php echo $b['id_jabatan']; ?>"><?php echo $b['nama_jabatan'];?></option>
+                        <?php 
 								}
 							?>
-						</select>
-					</div>
-					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-money fa-fw"></i></span>
-						<input class="form-control" id="gaji" name="gaji" placeholder="Gaji" required>
-					</div>
-					</div>
-					<div class="modal-footer">
-						<input type="submit" class="btn btn-primary" value="Simpan">
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-money fa-fw"></i>
+                    </span>
+                    <input
+                        class="form-control"
+                        id="gaji"
+                        name="gaji"
+                        placeholder="Gaji"
+                        required="required">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-primary" value="Simpan">
+            </div>
+        </form>
+    </div>
+</div>
+</div>
 </div>
 <script>
-$(document).ready(function(){
-	$('#gaji').inputmask('currency', {prefix: '', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+$(document).ready(function () {
+$('#gaji').inputmask('currency', {
+    prefix: '',
+    rightAlign: false,
+    autoUnmask: true,
+    removeMaskOnSubmit: true
+});
 });
 </script>
