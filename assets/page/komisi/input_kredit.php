@@ -5,11 +5,11 @@ require_once('../../../assets/inc/publicfunc.php');
 $id=$_GET['id'];
 ?>
 <form action="" method="post">
-    <input type="hidden" name="tambah_komisi_kredit_post" value"true"="value"true"">
+    <input type="hidden" name="tambah_komisi_kredit_post" value="true">
     <input
         type="hidden"
         name="id_komisi"
-        value"<?php echo $id ?>"="value"<?php echo $id ?>"">
+        value="<?php echo $id ?>">
     <div class="col-md-6">
         <input
             class="form-control"
