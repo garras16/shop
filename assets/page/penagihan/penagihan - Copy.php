@@ -17,58 +17,78 @@ if (isset($batal_penagihan_post)){
 }
 ?>
 <div class="right_col loading" role="main">
-	<div class="">
-	
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="x_panel">
-					<div class="x_title">
-						<div class="col-md-6">
-							<h3>PENAGIHAN</h3>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-				
-						<div class="" role="tabpanel">
-						  <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-							<li role="presentation" class="active"><a href="#tab_content1" id="tab1" role="tab" data-toggle="tab" aria-expanded="true">Nota Jual</a>
-							</li>
-							<li role="presentation" class=""><a href="#tab_content2" role="tab" id="tab2" data-toggle="tab" aria-expanded="false">Penagihan</a>
-							</li>
-						  </ul>
-						  <div id="myTabContent" class="tab-content">
-							<div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="tab1">
-								<form method="post" onsubmit="return cek_valid()">
-								<input type="hidden" name="buat_penagihan_post" value="true">
-								<div class="input-group">
-								<select class="form-control select2" id="select_karyawan" name="id_karyawan" required>
-									<option value="" disabled selected>Pilih Karyawan</option>
-									<?php
+    <div class="">
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <div class="col-md-6">
+                            <h3>PENAGIHAN</h3>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+
+                        <div class="" role="tabpanel">
+                            <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                                <li role="presentation" class="active">
+                                    <a
+                                        href="#tab_content1"
+                                        id="tab1"
+                                        role="tab"
+                                        data-toggle="tab"
+                                        aria-expanded="true">Nota Jual</a>
+                                </li>
+                                <li role="presentation" class="">
+                                    <a
+                                        href="#tab_content2"
+                                        role="tab"
+                                        id="tab2"
+                                        data-toggle="tab"
+                                        aria-expanded="false">Penagihan</a>
+                                </li>
+                            </ul>
+                            <div id="myTabContent" class="tab-content">
+                                <div
+                                    role="tabpanel"
+                                    class="tab-pane fade active in"
+                                    id="tab_content1"
+                                    aria-labelledby="tab1">
+                                    <form method="post" onsubmit="return cek_valid()">
+                                        <input type="hidden" name="buat_penagihan_post" value="true">
+                                        <div class="input-group">
+                                            <select
+                                                class="form-control select2"
+                                                id="select_karyawan"
+                                                name="id_karyawan"
+                                                required="required">
+                                                <option value="" disabled="disabled" selected="selected">Pilih Karyawan</option>
+                                                <?php
 									$sql=mysqli_query($con, "SELECT * FROM karyawan WHERE status=1");
 									while ($row=mysqli_fetch_array($sql)){
 										echo '<option value="' .$row['id_karyawan']. '">' .$row['nama_karyawan']. '</option>';
 									}
 									?>
-								</select>
-								<span class="input-group-btn">
-								<input class="btn btn-primary" type="submit" value="Buat Penagihan">
-								</span>
-								</div>
-								<div class="table-responsive">
-								<table id="table_belum_siap" class="table table-bordered table-striped">
-									<thead>
-										<tr>
-											<th>Pilih</th>
-											<th>Tgl Nota Jual</th>
-											<th>No Nota Jual</th>
-											<th>Nama Sales</th>
-											<th>Nama Pelanggan</th>
-											<th>Jumlah Jual (Rp)</th>
-										</tr>
-									</thead>
-									<tbody>
-<?php
+                                            </select>
+                                            <span class="input-group-btn">
+                                                <input class="btn btn-primary" type="submit" value="Buat Penagihan">
+                                            </span>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table id="table_belum_siap" class="table table-bordered table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Pilih</th>
+                                                        <th>Tgl Nota Jual</th>
+                                                        <th>No Nota Jual</th>
+                                                        <th>Nama Sales</th>
+                                                        <th>Nama Pelanggan</th>
+                                                        <th>Jumlah Jual (Rp)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
 	$sql=mysqli_query($con, "SELECT *
 FROM
     jual
@@ -118,38 +138,49 @@ $jml_nota=format_angka(mysqli_num_rows($sql4));
 			</tr>';
 	}
 ?>
-									</tbody>
-								</table>
-								</div>
-								</form>
-							</div>
-							<div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="tab2">
-							<div class="col-xs-12" style="text-align:right">
-								<input type="text" id="datepicker" PlaceHolder="Bulan & Tahun" style="width:100px" value="<?php if (isset($_GET['cari'])) echo $_GET['cari'] ;?>" readonly></input>
-								<input type="button" id="cari" onClick="cari()" value="Cari"></input>
-								<input type="button" id="reset" onClick="reset()" value="Reset"></input>
-							</div>
-							<form method="post" onsubmit="return cek_valid2()">
-			  <input type="hidden" name="batal_penagihan_post" value="true">
-			  <center><input class="btn btn-primary" type="submit" value="Batalkan Penagihan"></center><br/>
-								<a class="btn btn-danger btn-xs" style="width:10px;height:10px">&nbsp;</a><font color="red">Sisa Plafon < Jumlah Jual</font>
-							  <div class="table-responsive">
-							  <table id="table_siap_tagih" class="table table-bordered table-striped">
-									<thead>
-										<tr>
-											<th>Pilih</th>
-											<th>Tgl Tagih</th>
-											<th>Jatuh Tempo</th>
-											<th>Nama Pelanggan</th>
-											<th>Jml Jual (Rp)</th>
-											<th>Debt Collector</th>
-											<th>Total Bayar (Rp)</th>
-											<th>Status</th>
-											<th>Janji Berikutnya</th>
-										</tr>
-									</thead>
-									<tbody>
-<?php
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div
+                                    role="tabpanel"
+                                    class="tab-pane fade"
+                                    id="tab_content2"
+                                    aria-labelledby="tab2">
+                                    <div class="col-xs-12" style="text-align:right">
+                                        <input
+                                            type="text"
+                                            id="datepicker"
+                                            placeholder="Bulan & Tahun"
+                                            style="width:100px"
+                                            value="<?php if (isset($_GET['cari'])) echo $_GET['cari'] ;?>"
+                                            readonly="readonly"></input>
+                                        <input type="button" id="cari" onclick="cari()" value="Cari"></input>
+                                        <input type="button" id="reset" onclick="reset()" value="Reset"></input>
+                                    </div>
+                                    <form method="post" onsubmit="return cek_valid2()">
+                                        <input type="hidden" name="batal_penagihan_post" value="true">
+                                        <center><input class="btn btn-primary" type="submit" value="Batalkan Penagihan"></center><br/>
+                                        <a class="btn btn-danger btn-xs" style="width:10px;height:10px">&nbsp;</a>
+                                        <font color="red">Sisa Plafon < Jumlah Jual</font>
+                                        <div class="table-responsive">
+                                            <table id="table_siap_tagih" class="table table-bordered table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Pilih</th>
+                                                        <th>Tgl Tagih</th>
+                                                        <th>Jatuh Tempo</th>
+                                                        <th>Nama Pelanggan</th>
+                                                        <th>Jml Jual (Rp)</th>
+                                                        <th>Debt Collector</th>
+                                                        <th>Total Bayar (Rp)</th>
+                                                        <th>Status</th>
+                                                        <th>Janji Berikutnya</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                <?php
 if (isset($_GET['cari'])){
 	$tgl = explode("-", $_GET['cari']);
 	$bln = $tgl[0];	$thn = $tgl[1];
@@ -205,63 +236,64 @@ $total_jual=0;
 			</tr>';
 		
 	}
-?>										
-									</tbody>
-								</table>
-								</div>
-								</form>
-							</div>
-						  </div>
-						</div>
-			
-					</div>
-				</div>
-			<div id="dummy"></div>
-			</div>
-			</div>
-		</div>	
-	</div>
+?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div id="dummy"></div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 
 <script>
-function getBack(){
-	AndroidFunction.closeApp();
+function getBack() {
+    AndroidFunction.closeApp();
 }
-function cari(){
-	var tanggal = $('#datepicker').val();
-	var url = "?page=penagihan&mode=dalam_kota&cari=" + tanggal;
-	if (tanggal!='') window.location=url;
+function cari() {
+    var tanggal = $('#datepicker').val();
+    var url = "?page=penagihan&mode=dalam_kota&cari=" + tanggal;
+    if (tanggal != '') 
+        window.location = url;
+    }
+function reset() {
+    var url = "?page=penagihan&mode=dalam_kota&reset";
+    window.location = url;
 }
-function reset(){
-	var url = "?page=penagihan&mode=dalam_kota&reset";
-	window.location=url;
+function cek_valid() {
+    var len = $('#table_belum_siap')
+        .find("input:checkbox:checked")
+        .length;
+    if (len == 0) {
+        alert("Belum pilih nota.");
+        return false;
+    } else {
+        return true;
+    }
 }
-function cek_valid(){
-	var len = $('#table_belum_siap').find("input:checkbox:checked").length;
-	if (len == 0){
-		alert("Belum pilih nota.");
-		return false;
-	} else {
-		return true;
-	}
+function cek_valid2() {
+    var len = $('#table_siap_tagih')
+        .find("input:checkbox:checked")
+        .length;
+    if (len == 0) {
+        alert("Belum pilih nota.");
+        return false;
+    } else {
+        return true;
+    }
 }
-function cek_valid2(){
-	var len = $('#table_siap_tagih').find("input:checkbox:checked").length;
-	if (len == 0){
-		alert("Belum pilih nota.");
-		return false;
-	} else {
-		return true;
-	}
-}
-$(document).ready(function(){
-	$('#datepicker').datepicker({
-		orientation: "bottom auto",
-		format: "mm-yyyy",
-		startView: 1,
-		minViewMode: 1,
-		autoclose: true
-	});
-	<?php if (isset($_GET['cari']) || isset($_GET['reset'])) echo "$('#tab2').click();" ;?>
+$(document).ready(function () {
+    $('#datepicker').datepicker(
+        {orientation: "bottom auto", format: "mm-yyyy", startView: 1, minViewMode: 1, autoclose: true}
+    );
+    <?php if (isset($_GET['cari']) || isset($_GET['reset'])) echo "$('#tab2').click();" ;?>
 })
 </script>

@@ -20,42 +20,43 @@ if (isset($_GET['tolak'])){
 }
 ?>
 <div class="right_col loading" role="main">
-	<div class="">
-	
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="x_panel">
-					<div class="x_title">
-						<div class="col-md-6">
-							<h3>KONFIRMASI RETUR JUAL</h3>
-						</div>
-						<div class="clearfix"></div>
-						<?php
+    <div class="">
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <div class="col-md-6">
+                            <h3>KONFIRMASI RETUR JUAL</h3>
+                        </div>
+                        <div class="clearfix"></div>
+                        <?php
 							if (isset($pesan)){
 								echo '<span class="badge bg-' .$warna. '">' .$pesan. '</span>';
 							}
 						?>
-					</div>
-					<div class="x_content"><div class="alert alert-info">
-					  <strong>Klik kolom pada tabel untuk detail.</strong>
-					</div>
-						<div class="clearfix" style="margin-bottom: 20px;"></div>
-						<div class="table-responsive">
-						<table class="table table-bordered table-striped">
-							<thead>
-								<tr>
-									<th>Tgl Retur</th>
-									<th>Nama Pelanggan</th>
-									<th>No Retur Jual</th>
-									<th>No Nota Jual</th>
-									<th>Status Bayar</th>
-									<th>Jumlah Jual (Rp)</th>
-									<th>Jumlah Retur Jual (Rp)</th>
-									<th></th>
-								</tr>
-							</thead>
-							<tbody>
-<?php
+                    </div>
+                    <div class="x_content">
+                        <div class="alert alert-info">
+                            <strong>Klik kolom pada tabel untuk detail.</strong>
+                        </div>
+                        <div class="clearfix" style="margin-bottom: 20px;"></div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Tgl Retur</th>
+                                        <th>Nama Pelanggan</th>
+                                        <th>No Retur Jual</th>
+                                        <th>No Nota Jual</th>
+                                        <th>Status Bayar</th>
+                                        <th>Jumlah Jual (Rp)</th>
+                                        <th>Jumlah Retur Jual (Rp)</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php
 	$sql=mysqli_query($con, "SELECT * FROM retur_jual WHERE status=9 GROUP BY id_jual ORDER BY tgl_retur DESC");
 	while ($row=mysqli_fetch_array($sql)){
 	$sql2=mysqli_query($con, "SELECT * FROM jual WHERE id_jual=" .$row['id_jual']. " GROUP BY id_jual ORDER BY id_jual DESC");
@@ -124,19 +125,17 @@ WHERE id_jual=" .$row['id_jual']);
 	}	
 
 ?>
-							</tbody>
-						</table>
-						</div>
-					</div>
-				</div>
-			<div id="dummy"></div>
-			</div>
-		</div>	
-	</div>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div id="dummy"></div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-$(document).ready(function(){
-	
-})
+    $(document).ready(function () {})
 </script>

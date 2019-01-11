@@ -4,41 +4,41 @@ $thn_sql="YEAR(CURRENT_DATE())";
 ?>
 <!-- page content -->
 <div class="right_col" role="main">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
-					<div class="x_title">
-						<h3>SETORAN</h3>
-							<?php
+                    <div class="x_title">
+                        <h3>SETORAN</h3>
+                        <?php
 							if (isset($pesan)){
 								echo '<span class="badge bg-' .$warna. '">' .$pesan. '</span>';
 							}
 							?>
-						<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-			<div class="table responsive">
-			<table id="table1" class="table table-bordered table-striped">
-				<thead>
-					<tr>
-						<th>Nama Pelanggan</th>
-						<th>No Nota Jual</th>
-						<th>Jumlah Jual (Rp)</th>
-						<th>Debt Collector</th>
-						<th>Tgl Tagih</th>
-						<th>Jml Tagih (Rp)</th>
-						<th>Jml Bayar (Rp)</th>
-						<th>Sisa Tagihan (Rp)</th>
-						<th>Tgl Tagih Berikutnya</th>
-						<th>Status Bayar</th>
-						<th>Status Kembali Nota</th>
-						<th>Setor (Rp)</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-<?php
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="table responsive">
+                            <table id="table1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Nama Pelanggan</th>
+                                        <th>No Nota Jual</th>
+                                        <th>Jumlah Jual (Rp)</th>
+                                        <th>Debt Collector</th>
+                                        <th>Tgl Tagih</th>
+                                        <th>Jml Tagih (Rp)</th>
+                                        <th>Jml Bayar (Rp)</th>
+                                        <th>Sisa Tagihan (Rp)</th>
+                                        <th>Tgl Tagih Berikutnya</th>
+                                        <th>Status Bayar</th>
+                                        <th>Status Kembali Nota</th>
+                                        <th>Setor (Rp)</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
 $sql=mysqli_query($con, "SELECT *
 FROM
     penagihan
@@ -90,98 +90,132 @@ $total_jual=0;
 		</tr>';
 }
 ?>
-					
-				</tbody>
-			</table>
-			</div>
-		</div>
-		<!-- /page content -->
 
-        
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /page content -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 
 <!-- modal input -->
 <div id="myModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">Setoran</h4>
-			</div>
-			<div class="modal-body">				
-				<form action="" method="post" onsubmit="return cek_valid();">
-					<input type="hidden" name="edit_setoran_post" value="true">
-					<input type="hidden" id="id_penagihan_detail" name="id_penagihan_detail" value="">
-					<input type="hidden" id="invoice" value="">
-					<div class="text-center" style="margin-bottom:10px"><a id="scan_nota" class="btn btn-primary" onClick="AndroidFunction.scanNota();">Scan Nota</a></div>
-					<div class="form-group col-sm-12">
-						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-book fa-fw"></i> Jumlah Bayar (Rp)</span>
-							<input class="form-control" id="bayar" name="bayar" placeholder="Jumlah Bayar" value="" readonly>
-						</div>
-						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-tags fa-fw"></i> Jumlah Setor (Rp)</span>
-							<input class="form-control" type="tel" id="setor" name="setor" placeholder="Jumlah Setor" value="" required>
-							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<input id="simpan" type="submit" class="btn btn-primary" value="Simpan">
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Setoran</h4>
+        </div>
+        <div class="modal-body">
+            <form action="" method="post" onsubmit="return cek_valid();">
+                <input type="hidden" name="edit_setoran_post" value="true">
+                <input
+                    type="hidden"
+                    id="id_penagihan_detail"
+                    name="id_penagihan_detail"
+                    value="">
+                <input type="hidden" id="invoice" value="">
+                <div class="text-center" style="margin-bottom:10px">
+                    <a id="scan_nota" class="btn btn-primary" onclick="AndroidFunction.scanNota();">Scan Nota</a>
+                </div>
+                <div class="form-group col-sm-12">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-book fa-fw"></i>
+                            Jumlah Bayar (Rp)</span>
+                        <input
+                            class="form-control"
+                            id="bayar"
+                            name="bayar"
+                            placeholder="Jumlah Bayar"
+                            value=""
+                            readonly="readonly">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-tags fa-fw"></i>
+                            Jumlah Setor (Rp)</span>
+                        <input
+                            class="form-control"
+                            type="tel"
+                            id="setor"
+                            name="setor"
+                            placeholder="Jumlah Setor"
+                            value=""
+                            required="required">
+                        <span class="input-group-addon">
+                            <i class="fa fa-star fa-fw" style="color:red"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input id="simpan" type="submit" class="btn btn-primary" value="Simpan">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </div>
 
 <script>
-function getBack(){
-	if ($('#myModal').is(':visible')){
-		$('#myModal').modal('hide');
-	} else {
-		AndroidFunction.closeApp();
-	}
+function getBack() {
+    if ($('#myModal').is(':visible')) {
+        $('#myModal').modal('hide');
+    } else {
+        AndroidFunction.closeApp();
+    }
 }
-function batal_scan(){
-	getBack();
+function batal_scan() {
+    getBack();
 }
-function cek_valid(){
-	var jumlah_bayar = $('#bayar').inputmask('unmaskedvalue');
-	var jumlah_setor = $('#setor').inputmask('unmaskedvalue');
-	
-	if (jumlah_setor > jumlah_bayar){
-		AndroidFunction.showToast("Jumlah setor tidak boleh melebihi jumlah bayar.");
-		return false;
-	} else {
-		return true;
-	}
+function cek_valid() {
+    var jumlah_bayar = $('#bayar').inputmask('unmaskedvalue');
+    var jumlah_setor = $('#setor').inputmask('unmaskedvalue');
+
+    if (jumlah_setor > jumlah_bayar) {
+        AndroidFunction.showToast("Jumlah setor tidak boleh melebihi jumlah bayar.");
+        return false;
+    } else {
+        return true;
+    }
 }
-function cek_scan_nota(barcode){
-	var invoice = $('#invoice').val();
-	if (invoice == barcode){
-		
-	} else {
-		$('#myModal').modal('hide');
-		AndroidFunction.showToast('Barcode Nota salah.');
-	}
+function cek_scan_nota(barcode) {
+    var invoice = $('#invoice').val();
+    if (invoice == barcode) {} else {
+        $('#myModal').modal('hide');
+        AndroidFunction.showToast('Barcode Nota salah.');
+    }
 }
-$(document).ready(function(){
-	$('#scan_nota').hide();
-	$('#setor').inputmask('decimal', {allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, removeMaskOnSubmit: true});
-	$('#bayar').inputmask('decimal', {allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, removeMaskOnSubmit: true});
-	$('#myModal').on('show.bs.modal', function(e){
-		var id_penagihan_detail = $(e.relatedTarget).data('id-penagihan-detail');
-		var invoice = $(e.relatedTarget).data('invoice');
-		var bayar = $(e.relatedTarget).data('bayar');
-		$('#id_penagihan_detail').val(id_penagihan_detail);
-		$('#invoice').val(invoice);
-		$('#jumlah_bayar').val(bayar);
-		//$('#scan_nota').click();
-	})
+$(document).ready(function () {
+    $('#scan_nota').hide();
+    $('#setor').inputmask('decimal', {
+        allowMinus: false,
+        autoGroup: true,
+        groupSeparator: '.',
+        rightAlign: false,
+        removeMaskOnSubmit: true
+    });
+    $('#bayar').inputmask('decimal', {
+        allowMinus: false,
+        autoGroup: true,
+        groupSeparator: '.',
+        rightAlign: false,
+        removeMaskOnSubmit: true
+    });
+    $('#myModal').on('show.bs.modal', function (e) {
+        var id_penagihan_detail = $(e.relatedTarget).data('id-penagihan-detail');
+        var invoice = $(e.relatedTarget).data('invoice');
+        var bayar = $(e.relatedTarget).data('bayar');
+        $('#id_penagihan_detail').val(id_penagihan_detail);
+        $('#invoice').val(invoice);
+        $('#jumlah_bayar').val(bayar);
+        //$('#scan_nota').click();
+    })
 });
 </script>

@@ -7,10 +7,12 @@ $id=explode(',',$_GET['id']);
 $id_pelanggan=$_GET['id_pelanggan'];
 ?>
 <div class="input-group">
-	<span class="input-group-addon"><i class="fa fa-file fa-fw"></i></span>
-	<select id="select_retur" name="no_retur_beli" class="select2 form-control">
-		<option value="" disabled selected>-= Pilih Retur Jual =-</option>
-		<?php
+    <span class="input-group-addon">
+        <i class="fa fa-file fa-fw"></i>
+    </span>
+    <select id="select_retur" name="no_retur_beli" class="select2 form-control">
+        <option value="" disabled="disabled" selected="selected">-= Pilih Retur Jual =-</option>
+    <?php
 			$sql=mysqli_query($con, "SELECT
     retur_jual.id_retur_jual
     , retur_jual.no_retur_jual
@@ -32,16 +34,16 @@ WHERE status=1 AND id_pelanggan=$id_pelanggan AND no_retur_jual NOT IN (SELECT n
 				}
 			}
 		?>
-	</select>
-	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
+    </select>
+    <span class="input-group-addon">
+        <i class="fa fa-star fa-fw" style="color:red"></i>
+    </span>
 </div>
 
 <script>
-$(document).ready(function(){
-	$('#select_retur').select2({
-		placeholderOption: "first",
-		allowClear: true,
-		width: '100%'
-	});
-});
+    $(document).ready(function () {
+        $('#select_retur').select2(
+            {placeholderOption: "first", allowClear: true, width: '100%'}
+        );
+    });
 </script>

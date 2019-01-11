@@ -38,85 +38,94 @@ FROM
 	}
 ?>
 <style type="text/css" media="print">
-    @page 
-    {
-        size:  portrait;   /* auto is the initial value */
-        margin: 10mm 0mm 15mm 0mm;  /* this affects the margin in the printer settings */
+    @page {
+        size: portrait;
+        /* auto is the initial value */
+        margin: 10mm 0 15mm;
+        /* this affects the margin in the printer settings */
     }
-    
-    body
-    {
-        /*border: solid 1px blue ;*/
-        margin: 0mm 0mm 0mm 0mm; /* margin you want for the content */
-    }
-	.spinner-icon {
-		display:none;
-	}
-	.x_panel {
-		border:0;
-		border-bottom: dotted 1px black;
-	}
-	.table > thead > tr > th,
-	.table > tbody > tr > th,
-	.table > tfoot > tr > th,
-	.table > thead > tr > td,
-	.table > tbody > tr > td,
-	.table > tfoot > tr > td {
-	  padding-top: 2px;
-	  padding-bottom: 2px;
-	}
-	@media print{
-		table { page-break-after:auto;}
-		tr    { page-break-inside:avoid;}
-		td    { page-break-inside:auto;}
-		thead { display:table-header-group }
 
-		.row-fluid [class*="span"] {
-			min-height: 20px;
-		}
-	}
+    body {
+        /*border: solid 1px blue ;*/
+        margin: 0;
+        /* margin you want for the content */
+    }
+    .spinner-icon {
+        display: none;
+    }
+    .x_panel {
+        border: 0;
+        border-bottom: dotted 1px black;
+    }
+    .table > tbody > tr > td,
+    .table > tbody > tr > th,
+    .table > tfoot > tr > td,
+    .table > tfoot > tr > th,
+    .table > thead > tr > td,
+    .table > thead > tr > th {
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
+    @media print {
+        table {
+            page-break-after: auto;
+        }
+        tr {
+            page-break-inside: avoid;
+        }
+        td {
+            page-break-inside: auto;
+        }
+        thead {
+            display: table-header-group;
+        }
+
+        .row-fluid [class*="span"] {
+            min-height: 20px;
+        }
+    }
 </style>
 <div id="main_content" class="right_col loading" role="main">
-	<div class="">
-	
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="x_panel">
-					<div class="x_content">
-						<font size="5">NOTA JUAL</font>&nbsp;&nbsp;&nbsp;
-						<font size="4"><?php echo $no_nota ?></font>
-						<?php
+    <div class="">
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_content">
+                        <font size="5">NOTA JUAL</font>&nbsp;&nbsp;&nbsp;
+                        <font size="4"><?php echo $no_nota ?></font>
+                        <?php
 							$generator = new Picqer\Barcode\BarcodeGeneratorJPG();
 							echo '<img align="right" width="300" height="40" src="data:image/jpg;base64,' . base64_encode($generator->getBarcode($no_nota, $generator::TYPE_CODE_128)) . '">';
 						?>
-						<div class="clearfix"></div>
-						<table width="100%" style="margin-top:10px">
-						<tbody>
-<?php
+                        <div class="clearfix"></div>
+                        <table width="100%" style="margin-top:10px">
+                            <tbody>
+                                <?php
 $tgl=date("d", strtotime($tgl_nota));
 $bln=format_bulan(date("m", strtotime($tgl_nota)));
 $thn=date("Y", strtotime($tgl_nota));
 	echo '					<tr><td width="40%">B. Lampung, ' .$tgl. ' ' .$bln. ' ' .$thn. '</td><td align="right"><font size="4">' .$nama_pelanggan. '</font></td></tr>
 							<tr><td width="40%"></td><td align="right">' .$alamat. '</td></tr>';
 ?>
-						</tbody>
-						</table>
-						<div class="clearfix"></div>
-						
-						<div class="row-fluid" id="print-body-wrapper">
-						<table class="table table-bordered" id="table_data" style="margin-top:10px">
-							<thead>
-								<tr>
-									<th>Banyaknya</th>
-									<th>Nama Barang</th>
-									<th>Harga (Rp)</th>
-									<th>Diskon (%)</th>
-									<th>Diskon (Rp)</th>
-									<th>Jumlah (Rp)</th>
-								</tr>
-							</thead>
-							<tbody>
-<?php
+                            </tbody>
+                        </table>
+                        <div class="clearfix"></div>
+
+                        <div class="row-fluid" id="print-body-wrapper">
+                            <table class="table table-bordered" id="table_data" style="margin-top:10px">
+                                <thead>
+                                    <tr>
+                                        <th>Banyaknya</th>
+                                        <th>Nama Barang</th>
+                                        <th>Harga (Rp)</th>
+                                        <th>Diskon (%)</th>
+                                        <th>Diskon (Rp)</th>
+                                        <th>Jumlah (Rp)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php
 	$sql=mysqli_query($con, "SELECT *
 FROM
     jual
@@ -192,89 +201,86 @@ FROM
 	$row=mysqli_fetch_array($sql);
 	$pengirim=$row['nama_karyawan'];
 ?>
-							</tbody>
-						</table>
-						<div id="lastDataTable"></div>
-						</div>
-						<table width="100%">
-						<tbody>
-						<tr>
-							<td width="33%" align="center">Tanda Terima</td>
-							<td width="33%" align="center">Pengirim</td>
-							<td width="33%" align="center">Hormat kami,</td>
-						</tr>
-						<tr>
-							<td width="33%">&nbsp;</td>
-							<td width="33%">&nbsp;</td>
-							<td width="33%">&nbsp;</td>
-						</tr>
-						<tr>
-							<td width="33%">&nbsp;</td>
-							<td width="33%">&nbsp;</td>
-							<td width="33%">&nbsp;</td>
-						</tr>
-						<tr>
-							<td width="33%">&nbsp;</td>
-							<td width="33%">&nbsp;</td>
-							<td width="33%">&nbsp;</td>
-						</tr>
-						<tr>
-							<td width="33%" align="center">_________________________</td>
-							<td width="33%" align="center">_________________________</td>
-							<td width="33%" align="center">_________________________</td>
-						</tr>
-						<tr>
-							<td width="33%">&nbsp;</td>
-							<td width="33%" align="center"><?php echo $pengirim ?></td>
-							<td width="33%" align="center"><?php echo $_SESSION['user_shop'] ?></td>
-						</tr>
-						</tbody>
-						</table>
-						<?php echo 'Diperiksa Oleh : ' .$nama_pemeriksa; ?>
-					</div>
-				</div>
-			</div>
-		</div>	
-	</div>
+                                </tbody>
+                            </table>
+                            <div id="lastDataTable"></div>
+                        </div>
+                        <table width="100%">
+                            <tbody>
+                                <tr>
+                                    <td width="33%" align="center">Tanda Terima</td>
+                                    <td width="33%" align="center">Pengirim</td>
+                                    <td width="33%" align="center">Hormat kami,</td>
+                                </tr>
+                                <tr>
+                                    <td width="33%">&nbsp;</td>
+                                    <td width="33%">&nbsp;</td>
+                                    <td width="33%">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td width="33%">&nbsp;</td>
+                                    <td width="33%">&nbsp;</td>
+                                    <td width="33%">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td width="33%">&nbsp;</td>
+                                    <td width="33%">&nbsp;</td>
+                                    <td width="33%">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td width="33%" align="center">_________________________</td>
+                                    <td width="33%" align="center">_________________________</td>
+                                    <td width="33%" align="center">_________________________</td>
+                                </tr>
+                                <tr>
+                                    <td width="33%">&nbsp;</td>
+                                    <td width="33%" align="center"><?php echo $pengirim ?></td>
+                                    <td width="33%" align="center"><?php echo $_SESSION['user_shop'] ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <?php echo 'Diperiksa Oleh : ' .$nama_pemeriksa; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-function getBack(){
-	window.location='index.php?page=gudang&mode=konfirm_jual';
-}
-$(document).ready(function()
-{
-	var div_pageBreaker = '<div style="page-break-before:always;"></div>';
-	var per_page = 35;
-    $('#table_data').each(function(index, element)
-    {
-		var pages = Math.ceil($('tbody tr').length / per_page);
-		if (pages == 1) {
-			return;
-		}
-		var table_to_split = $(element);
-		var current_page   = 1;
-		for (current_page = 1; current_page <= pages; current_page++) 
-		{
-			var cloned_table = table_to_split.clone();
-			$('tbody tr', table_to_split).each(function(loop, row_element) {
-				if (loop >= per_page) {
-					$(row_element).remove();
-				}
-			});
-			$('tbody tr', cloned_table).each(function(loop, row_element) {
-				if (loop < per_page) {
-					$(row_element).remove();
-				}
-			});
-			if (current_page < pages) {
-				$(div_pageBreaker).appendTo('#lastDataTable');
-				$(cloned_table).appendTo('#lastDataTable');
-			}
-			table_to_split = cloned_table;
-		}
-	});
-	window.print();
-	window.close();
-});
+    function getBack() {
+        window.location = 'index.php?page=gudang&mode=konfirm_jual';
+    }
+    $(document).ready(function () {
+        var div_pageBreaker = '<div style="page-break-before:always;"></div>';
+        var per_page = 35;
+        $('#table_data').each(function (index, element) {
+            var pages = Math.ceil($('tbody tr').length / per_page);
+            if (pages == 1) {
+                return;
+            }
+            var table_to_split = $(element);
+            var current_page = 1;
+            for (current_page = 1; current_page <= pages; current_page++) {
+                var cloned_table = table_to_split.clone();
+                $('tbody tr', table_to_split).each(function (loop, row_element) {
+                    if (loop >= per_page) {
+                        $(row_element).remove();
+                    }
+                });
+                $('tbody tr', cloned_table).each(function (loop, row_element) {
+                    if (loop < per_page) {
+                        $(row_element).remove();
+                    }
+                });
+                if (current_page < pages) {
+                    $(div_pageBreaker).appendTo('#lastDataTable');
+                    $(cloned_table).appendTo('#lastDataTable');
+                }
+                table_to_split = cloned_table;
+            }
+        });
+        window.print();
+        window.close();
+    });
 </script>

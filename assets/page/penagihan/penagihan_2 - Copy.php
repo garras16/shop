@@ -24,39 +24,39 @@ $thn_sql="YEAR(CURRENT_DATE())";
 ?>
 <!-- page content -->
 <div class="right_col" role="main">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
-					<div class="x_title">
-						<h3>PENAGIHAN DALAM KOTA</h3>
-							<?php
+                    <div class="x_title">
+                        <h3>PENAGIHAN DALAM KOTA</h3>
+                        <?php
 							if (isset($pesan)){
 								echo '<span class="badge bg-' .$warna. '">' .$pesan. '</span>';
 							}
 							?>
-						<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-			<div class="table responsive">
-			<table id="table1" class="table table-bordered table-striped">
-				<thead>
-					<tr>
-						<th>Nama Pelanggan</th>
-						<th>No Nota Jual</th>
-						<th>Jumlah (Rp)</th>
-						<th>Debt Collector</th>
-						<th>Tgl Tagih</th>
-						<th>Tgl Bayar</th>
-						<th>Jml Tagih (Rp)</th>
-						<th>Jml Bayar (Rp)</th>
-						<th>Sisa (Rp)</th>
-						<th>Tgl Tagih Berikutnya</th>
-						<th>Status</th>
-					</tr>
-				</thead>
-				<tbody>
-<?php
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="table responsive">
+                            <table id="table1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Nama Pelanggan</th>
+                                        <th>No Nota Jual</th>
+                                        <th>Jumlah (Rp)</th>
+                                        <th>Debt Collector</th>
+                                        <th>Tgl Tagih</th>
+                                        <th>Tgl Bayar</th>
+                                        <th>Jml Tagih (Rp)</th>
+                                        <th>Jml Bayar (Rp)</th>
+                                        <th>Sisa (Rp)</th>
+                                        <th>Tgl Tagih Berikutnya</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
 $sql=mysqli_query($con, "SELECT *,SUM(bayar) AS bayar
 FROM
     penagihan
@@ -105,38 +105,35 @@ $total_jual=0;
 		</tr>';
 }
 ?>
-					
-				</tbody>
-			</table>
-			</div>
-		</div>
-		<!-- /page content -->
 
-        
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /page content -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 
 <script>
-function cari(){
-	var tanggal = $('#datepicker').val();
-	var url = "?page=penagihan&mode=dalam_kota_2&id=<?php echo $id; ?>&cari=" + tanggal;
-	if (tanggal!='') window.location=url;
+function cari() {
+    var tanggal = $('#datepicker').val();
+    var url = "?page=penagihan&mode=dalam_kota_2&id=<?php echo $id; ?>&cari=" +
+            tanggal;
+    if (tanggal != '') 
+        window.location = url;
+    }
+function reset() {
+    var url = "?page=penagihan&mode=dalam_kota_2&id=<?php echo $id; ?>&reset";
+    window.location = url;
 }
-function reset(){
-	var url = "?page=penagihan&mode=dalam_kota_2&id=<?php echo $id; ?>&reset";
-	window.location=url;
-}
-$(document).ready(function(){
-	$('#datepicker').datepicker({
-		orientation: "bottom auto",
-		format: "mm-yyyy",
-		startView: 1,
-		minViewMode: 1,
-		autoclose: true
-	});
+$(document).ready(function () {
+    $('#datepicker').datepicker(
+        {orientation: "bottom auto", format: "mm-yyyy", startView: 1, minViewMode: 1, autoclose: true}
+    );
 });
 </script>

@@ -32,76 +32,103 @@ if ($row['status_bayar']=='1'){
 }
 ?>
 <style type="text/css" media="print">
-    @page 
-    {
-        size:  portrait;   /* auto is the initial value */
-        margin: 10mm 0mm 10mm 0mm;  /* this affects the margin in the printer settings */
+    @page {
+        size: portrait;
+        /* auto is the initial value */
+        margin: 10mm 0;
+        /* this affects the margin in the printer settings */
     }
-    
-    body
-    {
-        /*border: solid 1px blue ;*/
-        margin: 0mm 0mm 0mm 0mm; /* margin you want for the content */
-    }
-	.spinner-icon {
-		display:none;
-	}
-	.x_panel {
-		border:0;
-		border-bottom: dotted 1px black;
-	}
-	.table > thead > tr > th,
-	.table > tbody > tr > th,
-	.table > tfoot > tr > th,
-	.table > thead > tr > td,
-	.table > tbody > tr > td,
-	.table > tfoot > tr > td {
-	  padding-top: 2px;
-	  padding-bottom: 2px;
-	}
-	@media print{
-		table { page-break-after:auto;}
-		tr    { page-break-inside:avoid;}
-		td    { page-break-inside:auto;}
-		thead { display:table-header-group }
 
-		.row-fluid [class*="span"] {
-			min-height: 20px;
-		}
-	}
+    body {
+        /*border: solid 1px blue ;*/
+        margin: 0;
+        /* margin you want for the content */
+    }
+    .spinner-icon {
+        display: none;
+    }
+    .x_panel {
+        border: 0;
+        border-bottom: dotted 1px black;
+    }
+    .table > tbody > tr > td,
+    .table > tbody > tr > th,
+    .table > tfoot > tr > td,
+    .table > tfoot > tr > th,
+    .table > thead > tr > td,
+    .table > thead > tr > th {
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
+    @media print {
+        table {
+            page-break-after: auto;
+        }
+        tr {
+            page-break-inside: avoid;
+        }
+        td {
+            page-break-inside: auto;
+        }
+        thead {
+            display: table-header-group;
+        }
+
+        .row-fluid [class*="span"] {
+            min-height: 20px;
+        }
+    }
 </style>
 <!-- page content -->
 <div class="right_col" role="main">
-	<div class="">
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="x_panel">
-					<div class="x_content">
-					<h3>RETUR PENJUALAN DETAIL</h3>
-					<table class="table table-bordered table-striped">
-					<tbody>
-						<tr><td width="30%">Nama Pelanggan</td><td><?php echo $row['nama_pelanggan'] ?></td></tr>
-						<tr><td width="30%">No Nota Jual</td><td><?php echo $row['invoice'] ?></td></tr>
-						<tr><td width="30%">No Nota Retur</td><td><?php echo $row['no_retur_jual'] ?></td></tr>
-						<tr><td width="30%">Tanggal Retur</td><td><?php echo date("d-m-Y", strtotime($row['tgl_retur'])) ?></td></tr>
-						<tr><td width="30%">Status Bayar</td><td><?php echo $status_bayar ?></td></tr>
-						<tr><td width="30%">Status Retur</td><td><?php echo $status_retur ?></td></tr>
-					</tbody>
-					</table>
-			<div class="clearfix"></div>
-			<div class="row-fluid" id="print-body-wrapper">
-			<table class="table table-bordered table-striped" id="table_data">
-				<thead>
-					<tr>
-						<th>Nama Barang</th>
-						<th>Qty Retur Jual</th>
-						<th>Harga Retur Jual (Rp)</th>
-						<th>Qty Masuk</th>
-						<th>Jumlah Retur Jual (Rp)</th>
-					</tr>
-				</thead>
-				<tbody>
-<?php
+    <div class="">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_content">
+                        <h3>RETUR PENJUALAN DETAIL</h3>
+                        <table class="table table-bordered table-striped">
+                            <tbody>
+                                <tr>
+                                    <td width="30%">Nama Pelanggan</td>
+                                    <td><?php echo $row['nama_pelanggan'] ?></td>
+                                </tr>
+                                <tr>
+                                    <td width="30%">No Nota Jual</td>
+                                    <td><?php echo $row['invoice'] ?></td>
+                                </tr>
+                                <tr>
+                                    <td width="30%">No Nota Retur</td>
+                                    <td><?php echo $row['no_retur_jual'] ?></td>
+                                </tr>
+                                <tr>
+                                    <td width="30%">Tanggal Retur</td>
+                                    <td><?php echo date("d-m-Y", strtotime($row['tgl_retur'])) ?></td>
+                                </tr>
+                                <tr>
+                                    <td width="30%">Status Bayar</td>
+                                    <td><?php echo $status_bayar ?></td>
+                                </tr>
+                                <tr>
+                                    <td width="30%">Status Retur</td>
+                                    <td><?php echo $status_retur ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="clearfix"></div>
+                        <div class="row-fluid" id="print-body-wrapper">
+                            <table class="table table-bordered table-striped" id="table_data">
+                                <thead>
+                                    <tr>
+                                        <th>Nama Barang</th>
+                                        <th>Qty Retur Jual</th>
+                                        <th>Harga Retur Jual (Rp)</th>
+                                        <th>Qty Masuk</th>
+                                        <th>Jumlah Retur Jual (Rp)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php
 $sql=mysqli_query($con, "SELECT *
 FROM
     retur_jual_detail
@@ -140,56 +167,52 @@ echo '			<tr>
 					<td align="right"><b>Rp. ' .format_uang($jml_retur). '</b></td>
 				</tr>';
 ?>
-					
-				</tbody>
-			</table>
-			<div id="lastDataTable"></div>
-			</div>
-			
-			
-			</div>
-			</div>
-			</div>
-		</div>
-		<!-- /page content -->
 
-        
-      </div>
+                                </tbody>
+                            </table>
+                            <div id="lastDataTable"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page content -->
+
     </div>
-	
+</div>
+
 <script>
-$(document).ready(function(){
-	var div_pageBreaker = '<div style="page-break-before:always;"></div>';
-	var per_page = 35;
-    $('#table_data').each(function(index, element)
-    {
-		var pages = Math.ceil($('tbody tr').length / per_page);
-		if (pages == 1) {
-			return;
-		}
-		var table_to_split = $(element);
-		var current_page   = 1;
-		for (current_page = 1; current_page <= pages; current_page++) 
-		{
-			var cloned_table = table_to_split.clone();
-			$('tbody tr', table_to_split).each(function(loop, row_element) {
-				if (loop >= per_page) {
-					$(row_element).remove();
-				}
-			});
-			$('tbody tr', cloned_table).each(function(loop, row_element) {
-				if (loop < per_page) {
-					$(row_element).remove();
-				}
-			});
-			if (current_page < pages) {
-				$(div_pageBreaker).appendTo('#lastDataTable');
-				$(cloned_table).appendTo('#lastDataTable');
-			}
-			table_to_split = cloned_table;
-		}
-	});
-	window.print();
-	window.close();
-});
+    $(document).ready(function () {
+        var div_pageBreaker = '<div style="page-break-before:always;"></div>';
+        var per_page = 35;
+        $('#table_data').each(function (index, element) {
+            var pages = Math.ceil($('tbody tr').length / per_page);
+            if (pages == 1) {
+                return;
+            }
+            var table_to_split = $(element);
+            var current_page = 1;
+            for (current_page = 1; current_page <= pages; current_page++) {
+                var cloned_table = table_to_split.clone();
+                $('tbody tr', table_to_split).each(function (loop, row_element) {
+                    if (loop >= per_page) {
+                        $(row_element).remove();
+                    }
+                });
+                $('tbody tr', cloned_table).each(function (loop, row_element) {
+                    if (loop < per_page) {
+                        $(row_element).remove();
+                    }
+                });
+                if (current_page < pages) {
+                    $(div_pageBreaker).appendTo('#lastDataTable');
+                    $(cloned_table).appendTo('#lastDataTable');
+                }
+                table_to_split = cloned_table;
+            }
+        });
+        window.print();
+        window.close();
+    });
 </script>
