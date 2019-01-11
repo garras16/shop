@@ -26,21 +26,21 @@ FROM
 	}
 ?>
 <div class="right_col loading" role="main">
-	<div class="">
-	
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="x_panel">
-					<div class="x_title">
-						<div class="col-md-6">
-							<h3>RINGKASAN STOCK OPNAME (CANVASS)</h3>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-						<table class="table table-bordered table-striped">
-						<tbody>
-<?php
+    <div class="">
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <div class="col-md-6">
+                            <h3>RINGKASAN STOCK OPNAME (CANVASS)</h3>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <table class="table table-bordered table-striped">
+                            <tbody>
+                                <?php
 	echo '					<tr><td width="40%">Tanggal Canvass</td><td>' .date("d-m-Y", strtotime($tgl_canvass)). '</td></tr>
 							<tr><td width="40%">Nama Mobil</td><td>' .$nama_mobil. '</td></tr>
 							<tr><td width="40%">No Pol</td><td>' .$plat. '</td></tr>';
@@ -51,21 +51,21 @@ FROM
 	}
 	echo '</tr>';
 ?>
-						</tbody>
-						</table>
-						
-						<div class="table-responsive">
-						<table class="table table-bordered table-striped">
-							<thead>
-								<tr>
-									<th>Nama Barang</th>
-									<th>Qty Sisa<br>(Seharusnya)</th>
-									<th>Qty Sisa<br>(Stock Opname)</th>
-									<th>Qty Selisih</th>
-								</tr>
-							</thead>
-							<tbody>
-<?php
+                            </tbody>
+                        </table>
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Nama Barang</th>
+                                        <th>Qty Sisa<br>(Seharusnya)</th>
+                                        <th>Qty Sisa<br>(Stock Opname)</th>
+                                        <th>Qty Selisih</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
 	$sql=mysqli_query($con, "SELECT *,SUM(qty_sisa) AS qty_sisa, SUM(qty_cek) AS qty_cek
 FROM
     lap_stock_opname
@@ -94,49 +94,51 @@ FROM
 		}
 	}
 ?>
-							</tbody>
-						</table>
-						</div>
-					</div>
-				</div>
-			<div id="dummy"></div>
-			</div>
-		</div>	
-	</div>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div id="dummy"></div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- modal input -->
 <div id="myModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&times;</button>
-				<h4 class="modal-title" id="nama_barang"></h4>
-			</div>
-			<div class="modal-body">
-				<div class="table-responsive">
-				<div id="get_expire" class="col-xs-12">
-					
-				</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&times;</button>
+                <h4 class="modal-title" id="nama_barang"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <div id="get_expire" class="col-xs-12"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-function getBack(){
-	window.location='<?php echo $url ?>';
-}
-$(document).ready(function(){
-	$('#myModal').on('show.bs.modal', function(e){
-		var nama = $(e.relatedTarget).data('nama');
-		var id_barang = $(e.relatedTarget).data('id-barang');
-		$('#nama_barang').html(nama);
-		$('#get_expire').html('<center><i class="fa fa-spinner fa-spin" style="font-size:24px"></i></center>');
-		$('#get_expire').load('assets/page/canvass_keluar/get-expire-so.php?barang=' + id_barang + '&canvass=<?php echo $id ?>',function(){
-		
-		});
-	});
-})
+    function getBack() {
+        window.location = '<?php echo $url ?>';
+    }
+    $(document).ready(function () {
+        $('#myModal').on('show.bs.modal', function (e) {
+            var nama = $(e.relatedTarget).data('nama');
+            var id_barang = $(e.relatedTarget).data('id-barang');
+            $('#nama_barang').html(nama);
+            $('#get_expire').html(
+                '<center><i class="fa fa-spinner fa-spin" style="font-size:24px"></i></center>'
+            );
+            $('#get_expire').load(
+                'assets/page/canvass_keluar/get-expire-so.php?barang=' + id_barang + '&canvass=' +
+                        '<?php echo $id ?>',
+                function () {}
+            );
+        });
+    })
 </script>

@@ -52,89 +52,120 @@
 
 <!-- page content -->
 <div class="right_col" role="main">
-	<div class="">
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="x_panel">
-					<div class="x_title">
-						<h3>LIHAT HARGA JUAL KREDIT</h3>
-						<?php
+    <div class="">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h3>LIHAT HARGA JUAL KREDIT</h3>
+                        <?php
 							if (isset($pesan)) echo '<span class="badge bg-' .$warna. '">' .$pesan. '</span><br/><br/>';
 						?>
-						<div class="clearfix"></div>
-						</div>
-						<div class="x_content">
-						<div class="col-xs-6">
-							<a class="btn btn-danger" href="?page=harga_jual&mode=view_detail&id=<?php echo $row['id_pelanggan'] ?>"><i class="fa fa-arrow-left"></i> Kembali</a><br/><br/>
-						</div>
-						<div class="col-xs-6">
-							<p align="right"><a class="btn btn-primary" onClick="reset();"><i class="fa fa-warning"></i> Reset</a><br/><br/></p>
-						</div>
-						<div id="dummy"></div>
-						<div class="clearfix"></div>
-						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-user fa-fw"></i><br><small>Pelanggan</small></span>
-							<input class="form-control" style="padding: 20px 15px;" value="<?php echo $row['nama_pelanggan'] ?>" readonly="readonly">
-						</div>
-						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-archive fa-fw" style="width: 56px;"></i><br><small>Barang</small></span>
-							<input class="form-control" style="padding: 20px 15px;" value="<?php echo $row['nama_barang'] ?>" readonly="readonly" style="color:black">
-						</div>
-						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-building fa-fw" style="width: 56px;"></i><br><small>Supplier</small></sup></span>
-							<input class="form-control" style="padding: 20px 15px;" value="<?php echo $row['nama_supplier'] ?>" readonly="readonly">
-						</div>
-						<br/><br/>
-						<div class="col-xs-12 bg-blue">
-							<div class="col-xs-6">
-								<h5>Harga Jual Kredit (Rp)</h5>
-							</div>
-							<div class="col-xs-5">
-								<h5>Jangka Waktu Maks (hari)</h5>
-							</div>
-							<div class="col-xs-1">
-								<h5></h5>
-							</div>
-						</div>
-						
-							<div class="clearfix"></div><br/>
-						<div id="hjk_content" class="col-xs-12">
-							
-						</div>
-						<div id="input_hjk" class="col-xs-12">
-							
-						</div>
-						<div class="clearfix"></div><br/>
-						<div class="col-xs-12 text-right">
-							<a id="tambah" class="btn btn-primary" onClick="addRow()"><i class="fa fa-plus"></i> Tambah</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- /page content -->
-	</div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="col-xs-6">
+                            <a
+                                class="btn btn-danger"
+                                href="?page=harga_jual&mode=view_detail&id=<?php echo $row['id_pelanggan'] ?>">
+                                <i class="fa fa-arrow-left"></i>
+                                Kembali</a><br/><br/>
+                        </div>
+                        <div class="col-xs-6">
+                            <p align="right">
+                                <a class="btn btn-primary" onclick="reset();">
+                                    <i class="fa fa-warning"></i>
+                                    Reset</a><br/><br/></p>
+                        </div>
+                        <div id="dummy"></div>
+                        <div class="clearfix"></div>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-user fa-fw"></i><br>
+                                <small>Pelanggan</small>
+                            </span>
+                            <input
+                                class="form-control"
+                                style="padding: 20px 15px;"
+                                value="<?php echo $row['nama_pelanggan'] ?>"
+                                readonly="readonly">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-archive fa-fw" style="width: 56px;"></i><br>
+                                <small>Barang</small>
+                            </span>
+                            <input
+                                class="form-control"
+                                style="color:black"
+                                value="<?php echo $row['nama_barang'] ?>"
+                                readonly="readonly">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-building fa-fw" style="width: 56px;"></i><br>
+                                <small>Supplier</small>
+                            </sup>
+                        </span>
+                        <input
+                            class="form-control"
+                            style="padding: 20px 15px;"
+                            value="<?php echo $row['nama_supplier'] ?>"
+                            readonly="readonly">
+                    </div>
+                    <br/><br/>
+                    <div class="col-xs-12 bg-blue">
+                        <div class="col-xs-6">
+                            <h5>Harga Jual Kredit (Rp)</h5>
+                        </div>
+                        <div class="col-xs-5">
+                            <h5>Jangka Waktu Maks (hari)</h5>
+                        </div>
+                        <div class="col-xs-1">
+                            <h5></h5>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div><br/>
+                    <div id="hjk_content" class="col-xs-12"></div>
+                    <div id="input_hjk" class="col-xs-12"></div>
+                    <div class="clearfix"></div><br/>
+                    <div class="col-xs-12 text-right">
+                        <a id="tambah" class="btn btn-primary" onclick="addRow()">
+                            <i class="fa fa-plus"></i>
+                            Tambah</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /page content -->
+</div>
 </div>
 
-
-
-
 <script>
-function addRow(){
-	$('#input_hjk').load('assets/page/harga_jual/input_hjk.php?id=<?php echo $id ?>');
-	$('#tambah').attr('style','display:none');
+function addRow() {
+    $('#input_hjk').load(
+        'assets/page/harga_jual/input_hjk.php?id=<?php echo $id ?>'
+    );
+    $('#tambah').attr('style', 'display:none');
 }
-function clearRow(){
-	$('#input_hjk').empty();
-	$('#tambah').removeAttr('style');
+function clearRow() {
+    $('#input_hjk').empty();
+    $('#tambah').removeAttr('style');
 }
-function reset(){
-	$('#dummy').load('assets/page/harga_jual/add-hjk-detail.php?id=<?php echo $id ?>', function(){
-		$(this).empty();
-		$('#hjk_content').empty();
-	});
+function reset() {
+    $('#dummy').load(
+        'assets/page/harga_jual/add-hjk-detail.php?id=<?php echo $id ?>',
+        function () {
+            $(this).empty();
+            $('#hjk_content').empty();
+        }
+    );
 }
-$(document).ready(function(){
-	$('#hjk_content').load('assets/page/harga_jual/content_hjk.php?id=<?php echo $id ?>');
+$(document).ready(function () {
+    $('#hjk_content').load(
+        'assets/page/harga_jual/content_hjk.php?id=<?php echo $id ?>'
+    );
 });
 </script>

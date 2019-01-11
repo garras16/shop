@@ -2,52 +2,73 @@
 $id_karyawan=$_SESSION['id_karyawan'];
 ?>
 <style type="text/css">
-	#table1 tr td {
-		width: 150px;
-	}
+    #table1 tr td {
+        width: 150px;
+    }
 </style>
 <div class="right_col loading" role="main">
-	<div class="">
-	
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="x_panel">
-					<div class="x_title">
-						<div class="col-md-6">
-							<h3>RIWAYAT PENAGIHAN</h3>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-						<div class="col-xs-12" style="text-align:left">
-							<input type="text" id="datepicker" PlaceHolder="Bulan & Tahun Tagih" style="width:150px" value="<?php if (isset($_GET['tanggal'])) echo $_GET['tanggal'] ;?>" readonly></input>
-							<input type="text" id="cari_debt" name="cari_debt" PlaceHolder="Debt Collector" style="width:100px" value="<?php if (isset($_GET['debt'])) echo $_GET['debt'] ;?>" ></input>
-							<input type="text" id="cari_pelanggan" name="cari_pelanggan" PlaceHolder="Pelanggan" style="width:100px" value="<?php if (isset($_GET['pelanggan'])) echo $_GET['pelanggan'] ;?>" ></input>
-							<input type="button" id="cari" onClick="cari_debt_pelanggan()" value="Cari"></input>
-							<input type="button" id="reset" onClick="reset()" value="Reset"></input>
-						</div>
-						<div class="clearfix"></div><br>
-						<div class="table-responsive">
-						<table id="table1" class="table table-bordered table-striped" style="width: 2050px;">
-									<thead>
-										<tr>
-											<th>Nama Pelanggan</th>
-											<th>No Nota Jual</th>
-											<th>Jumlah Jual (Rp)</th>
-											<th>Sales</th>
-											<th>Driver</th>
-											<th>Debt Collector</th>
-											<th>Tgl Tagih</th>
-											<th>Jumlah Tagih (Rp)</th>
-											<th>Jumlah Bayar (Rp)</th>
-											<th>Sisa Piutang (Rp)</th>
-											<th>Tgl Kunjungan Berikutnya</th>
-											<th>Status Bayar</th>
-											<th>Status Kembali Nota</th>
-										</tr>
-									</thead>
-									<tbody style="font-size: 15px;">
-<?php
+    <div class="">
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <div class="col-md-6">
+                            <h3>RIWAYAT PENAGIHAN</h3>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="col-xs-12" style="text-align:left">
+                            <input
+                                type="text"
+                                id="datepicker"
+                                placeholder="Bulan & Tahun Tagih"
+                                style="width:150px"
+                                value="<?php if (isset($_GET['tanggal'])) echo $_GET['tanggal'] ;?>"
+                                readonly="readonly"></input>
+                            <input
+                                type="text"
+                                id="cari_debt"
+                                name="cari_debt"
+                                placeholder="Debt Collector"
+                                style="width:100px"
+                                value="<?php if (isset($_GET['debt'])) echo $_GET['debt'] ;?>"></input>
+                            <input
+                                type="text"
+                                id="cari_pelanggan"
+                                name="cari_pelanggan"
+                                placeholder="Pelanggan"
+                                style="width:100px"
+                                value="<?php if (isset($_GET['pelanggan'])) echo $_GET['pelanggan'] ;?>"></input>
+                            <input type="button" id="cari" onclick="cari_debt_pelanggan()" value="Cari"></input>
+                            <input type="button" id="reset" onclick="reset()" value="Reset"></input>
+                        </div>
+                        <div class="clearfix"></div><br>
+                        <div class="table-responsive">
+                            <table
+                                id="table1"
+                                class="table table-bordered table-striped"
+                                style="width: 2050px;">
+                                <thead>
+                                    <tr>
+                                        <th>Nama Pelanggan</th>
+                                        <th>No Nota Jual</th>
+                                        <th>Jumlah Jual (Rp)</th>
+                                        <th>Sales</th>
+                                        <th>Driver</th>
+                                        <th>Debt Collector</th>
+                                        <th>Tgl Tagih</th>
+                                        <th>Jumlah Tagih (Rp)</th>
+                                        <th>Jumlah Bayar (Rp)</th>
+                                        <th>Sisa Piutang (Rp)</th>
+                                        <th>Tgl Kunjungan Berikutnya</th>
+                                        <th>Status Bayar</th>
+                                        <th>Status Kembali Nota</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-size: 15px;">
+                                <?php
 $val="";
 if (isset($_GET['tanggal']) && $_GET['tanggal']!=''){
 	$tgl = explode("-", $_GET['tanggal']);
@@ -128,37 +149,35 @@ $total_jual=0;
 			<td align="center" style="width: 670px;">' .$status_nota. '</td>
 		</tr>';
 }
-?>										
-							</tbody>
-						</table>
-					</div>
-				</div>
-				</div>
-			<div id="dummy"></div>
-			</div>
-		</div>	
-	</div>
+?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div id="dummy"></div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-function cari_debt_pelanggan(){
-	var debt = $('#cari_debt').val();
-	var pelanggan = $('#cari_pelanggan').val();
-	var tanggal = $('#datepicker').val();
-	var url = "?page=laporan&mode=lap_histori_penagihan&tanggal=" + tanggal + "&debt=" + debt + "&pelanggan=" + pelanggan;
-	if (debt!='' || pelanggan!='' || tanggal!='') window.location=url;
-}
-function reset(){
-	var url = "?page=laporan&mode=lap_histori_penagihan";
-	window.location=url;
-}
-$(document).ready(function(){
-	$('#datepicker').datepicker({
-		orientation: "bottom auto",
-		format: "mm-yyyy",
-		startView: 1,
-		minViewMode: 1,
-		autoclose: true
-	});
-})
+    function cari_debt_pelanggan() {
+        var debt = $('#cari_debt').val();
+        var pelanggan = $('#cari_pelanggan').val();
+        var tanggal = $('#datepicker').val();
+        var url = "?page=laporan&mode=lap_histori_penagihan&tanggal=" + tanggal + "&deb" +
+                "t=" + debt + "&pelanggan=" + pelanggan;
+        if (debt != '' || pelanggan != '' || tanggal != '') 
+            window.location = url;
+        }
+    function reset() {
+        var url = "?page=laporan&mode=lap_histori_penagihan";
+        window.location = url;
+    }
+    $(document).ready(function () {
+        $('#datepicker').datepicker(
+            {orientation: "bottom auto", format: "mm-yyyy", startView: 1, minViewMode: 1, autoclose: true}
+        );
+    })
 </script>

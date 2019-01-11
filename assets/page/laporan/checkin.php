@@ -1,30 +1,41 @@
 <!-- page content -->
 <div class="right_col" role="main">
-	<div class="">
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="x_panel">
-					<div class="x_title">
-						<h3>LAPORAN CHECK IN</h3>
-					<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-			<table id="table1" class="table table-bordered table-striped" style="width: 1200px;">
-				<thead>
-					<tr>
-						<th>Tanggal</th>
-						<th>Pukul</th>
-						<th>Karyawan</th>
-						<th>Pelanggan</th>
-						<th>GPS</th>
-						<th>Kota</th>
-						<th>Akurasi</th>
-						<th><div style="min-width:50px" rel="tooltip" title="Fake GPS">Mock <i class="fa fa-exclamation-circle"></i></div></th>
-						<th><div style="min-width:50px" rel="tooltip" title="Beda jarak saat check in">Distance <i class="fa fa-exclamation-circle" ></i></div></th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php
+    <div class="">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h3>LAPORAN CHECK IN</h3>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <table
+                            id="table1"
+                            class="table table-bordered table-striped"
+                            style="width: 1200px;">
+                            <thead>
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <th>Pukul</th>
+                                    <th>Karyawan</th>
+                                    <th>Pelanggan</th>
+                                    <th>GPS</th>
+                                    <th>Kota</th>
+                                    <th>Akurasi</th>
+                                    <th>
+                                        <div style="min-width:50px" rel="tooltip" title="Fake GPS">Mock
+                                            <i class="fa fa-exclamation-circle"></i>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div style="min-width:50px" rel="tooltip" title="Beda jarak saat check in">Distance
+                                            <i class="fa fa-exclamation-circle"></i>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
 					$sql=mysqli_query($con, "SELECT
 					    checkin.tanggal
 					    , checkin.jam
@@ -57,14 +68,13 @@
 							</tr>';
 					}
 					?>
-				</tbody>
-			</table>
-			</div>
-			</div>
-			</div>
-		</div>
-		<!-- /page content -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page content -->
 
-        
-      </div>
     </div>
+</div>

@@ -30,45 +30,55 @@ if (isset($tambah_retur_beli_post)){
 ?>
 <!-- page content -->
 <div class="right_col" role="main">
-	<div class="">
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="x_panel">
-					<div class="x_title">
-						<h3>RETUR PEMBELIAN</h3>
-						<?php
+    <div class="">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h3>RETUR PEMBELIAN</h3>
+                        <?php
 							if (isset($pesan)){
 								echo '<span class="badge bg-' .$warna. '">' .$pesan. '</span>';
 							}
 						?>
-					<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-					<div class="alert alert-info">
-					  <strong>Klik kolom pada tabel untuk detail.</strong>
-					</div>
-			<div class="col-xs-6">
-				<input type="text" id="datepicker" PlaceHolder="Bulan & Tahun" style="width:100px" value="<?php if (isset($_GET['cari'])) echo $_GET['cari'] ?>" readonly></input>
-				<input type="button" id="cari" onClick="cari()" value="Cari"></input>
-				<input type="button" id="reset" onClick="reset()" value="Reset"></input>
-			</div>
-			<div class="col-xs-6" style="text-align:right">
-			<p align="right"><button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah</button></p>
-			</div>
-			<div class="clearfix" style="margin-bottom: 20px;"></div>
-			<table id="table1" class="table table-bordered table-striped">
-				<thead>
-					<tr>
-						<th>Tgl. Retur</th>
-						<th>No Retur</th>
-						<th>No Nota Beli</th>
-						<th>Nama Supplier</th>
-						<th>Jumlah Beli (Rp)</th>
-						<th>Status</th>
-					</tr>
-				</thead>
-				<tbody>
-<?php
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="alert alert-info">
+                            <strong>Klik kolom pada tabel untuk detail.</strong>
+                        </div>
+                        <div class="col-xs-6">
+                            <input
+                                type="text"
+                                id="datepicker"
+                                placeholder="Bulan & Tahun"
+                                style="width:100px"
+                                value="<?php if (isset($_GET['cari'])) echo $_GET['cari'] ?>"
+                                readonly="readonly"></input>
+                            <input type="button" id="cari" onclick="cari()" value="Cari"></input>
+                            <input type="button" id="reset" onclick="reset()" value="Reset"></input>
+                        </div>
+                        <div class="col-xs-6" style="text-align:right">
+                            <p align="right">
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                    <i class="fa fa-plus"></i>
+                                    Tambah</button>
+                            </p>
+                        </div>
+                        <div class="clearfix" style="margin-bottom: 20px;"></div>
+                        <table id="table1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Tgl. Retur</th>
+                                    <th>No Retur</th>
+                                    <th>No Nota Beli</th>
+                                    <th>Nama Supplier</th>
+                                    <th>Jumlah Beli (Rp)</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php
 $sql=mysqli_query($con, "SELECT
     retur_beli.tgl_retur
     , retur_beli.id_retur_beli
@@ -109,38 +119,40 @@ if ($row['status']=='1'){
 					</tr>';
 }
 ?>
-					
-				</tbody>
-			</table>
-			</div>
-			</div>
-			</div>
-		</div>
-		<!-- /page content -->
 
-        
-      </div>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page content -->
+
     </div>
+</div>
 
-
-	
 <!-- modal input -->
 <div id="myModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><div style="min-width:50px">&times;</div></button>
-				<h4 class="modal-title">Tambah Retur Beli</h4>
-			</div>
-			<div class="modal-body">				
-				<form action="" method="post">
-					<input type="hidden" name="tambah_retur_beli_post" value="true">
-					<div class="col-md-12">
-					<div class="input-group">
-						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-file fa-fw"></i><br><small>Nota Beli</small></span>
-						<select name="id_beli" class="select2 form-control" required="true">
-							<option value="" disabled selected>-= Pilih Nota Beli =-</option>
-							<?php 
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <div style="min-width:50px">&times;</div>
+                </button>
+                <h4 class="modal-title">Tambah Retur Beli</h4>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post">
+                    <input type="hidden" name="tambah_retur_beli_post" value="true">
+                    <div class="col-md-12">
+                        <div class="input-group">
+                            <span class="input-group-addon" style="padding: 2px 12px;">
+                                <i class="fa fa-file fa-fw"></i><br>
+                                <small>Nota Beli</small>
+                            </span>
+                            <select name="id_beli" class="select2 form-control" required="true">
+                                <option value="" disabled="disabled" selected="selected">-= Pilih Nota Beli =-</option>
+                                <?php 
 								$sql=mysqli_query($con, "SELECT
     beli.id_beli
     , beli.no_nota_beli
@@ -161,36 +173,35 @@ ORDER BY beli.id_beli ASC");
 									echo '<option value="' .$b['id_beli']. '">' .$b['no_nota_beli']. ' | ' .$b['nama_supplier']. ' | Rp ' .format_uang($jumlah). '</option>';
 								}
 							?>
-						</select>
-						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
-					</div>
-					</div>
-					<div class="modal-footer">
-						<input type="submit" class="btn btn-primary" value="Simpan">
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+                            </select>
+                            <span class="input-group-addon">
+                                <i class="fa fa-star fa-fw" style="color:red"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" value="Simpan">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-function cari(){
-	var tanggal = $('#datepicker').val();
-	var url = "?page=pembelian&mode=retur_beli&cari=" + tanggal;
-	if (tanggal!='') window.location=url;
-}
-function reset(){
-	var url = "?page=pembelian&mode=retur_beli";
-	window.location=url;
-}
-$(document).ready(function(){
-	$('#datepicker').datepicker({
-		orientation: "bottom auto",
-		format: "mm-yyyy",
-		startView: 1,
-		minViewMode: 1,
-		autoclose: true
-	});
-});
+    function cari() {
+        var tanggal = $('#datepicker').val();
+        var url = "?page=pembelian&mode=retur_beli&cari=" + tanggal;
+        if (tanggal != '') 
+            window.location = url;
+        }
+    function reset() {
+        var url = "?page=pembelian&mode=retur_beli";
+        window.location = url;
+    }
+    $(document).ready(function () {
+        $('#datepicker').datepicker(
+            {orientation: "bottom auto", format: "mm-yyyy", startView: 1, minViewMode: 1, autoclose: true}
+        );
+    });
 </script>

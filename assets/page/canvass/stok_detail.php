@@ -4,16 +4,16 @@ require_once('../../../assets/inc/config.php');
 $id=$_GET['id'];
 $canvass=$_GET['canvass'];
 ?>
-	<table class="table table-bordered table-striped">
-		<thead>
-			<tr>
-				<th>Tgl Exp.</th>
-				<th>Qty</th>
-				<th>Qty Total</th>
-			</tr>
-		</thead>
-		<tbody>
-<?php
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Tgl Exp.</th>
+            <th>Qty</th>
+            <th>Qty Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
 $test2="";
 //-----------------------------------------------------------------------------------------
 
@@ -58,6 +58,6 @@ $row2=mysqli_fetch_array($sql2);
 }
 
 ?>
-						
-		</tbody>
-	</table>
+
+    </tbody>
+</table>

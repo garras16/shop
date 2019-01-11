@@ -3,19 +3,19 @@ date_default_timezone_set('Asia/Jakarta');
 require_once('../../../assets/inc/config.php');
 $id=$_GET['id'];
 ?>
-	<table class="table table-bordered table-striped">
-		<thead>
-			<tr>
-				<th>Gudang</th>
-				<th>Rak</th>
-				<th>Qty di Rak</th>
-				<th>Tgl Datang</th>
-				<th>Tgl Exp.</th>
-				<th>Qty Total</th>
-			</tr>
-		</thead>
-		<tbody>
-<?php
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Gudang</th>
+            <th>Rak</th>
+            <th>Qty di Rak</th>
+            <th>Tgl Datang</th>
+            <th>Tgl Exp.</th>
+            <th>Qty Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
 $test2="";
 //-----------------------------------------------------------------------------------------
 
@@ -73,6 +73,6 @@ GROUP BY barang_masuk_rak.id_rak,expire,tgl_datang");
 	}
 
 ?>
-						
-		</tbody>
-	</table>
+
+    </tbody>
+</table>

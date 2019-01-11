@@ -21,38 +21,42 @@ if (isset($_GET['del'])){
 ?>
 <!-- page content -->
 <div class="right_col" role="main">
-	<div class="">
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="x_panel">
-					<div class="x_title">
-						<h3>PEMBAYARAN NOTA BELI</h3>
-						<?php
+    <div class="">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h3>PEMBAYARAN NOTA BELI</h3>
+                        <?php
 							if (isset($pesan)){
 								echo '<span class="badge bg-' .$warna. '">' .$pesan. '</span>';
 							}
 						?>
-					<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-			
-			<p align="right"><button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah</button></p>
-			<div class="clearfix"></div>
-			<table id="table1" class="table table-bordered table-striped">
-				<thead>
-					<tr>
-						<th>Tgl. Bayar</th>
-						<th>No Nota Beli</th>
-						<th>Nama Supplier</th>
-						<th>Jenis</th>
-						<th>Jumlah Terbayar (Rp)</th>
-						<th>Sisa Nota (Rp)</th>
-						<th>Status</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-<?php
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+
+                        <p align="right">
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                <i class="fa fa-plus"></i>
+                                Tambah</button>
+                        </p>
+                        <div class="clearfix"></div>
+                        <table id="table1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Tgl. Bayar</th>
+                                    <th>No Nota Beli</th>
+                                    <th>Nama Supplier</th>
+                                    <th>Jenis</th>
+                                    <th>Jumlah Terbayar (Rp)</th>
+                                    <th>Sisa Nota (Rp)</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php
 $sql=mysqli_query($con, "SELECT
     bayar_nota_beli.id_bayar
     , bayar_nota_beli.tgl_bayar
@@ -87,39 +91,44 @@ if ($row['status']=='1'){
 					</tr>';
 }
 ?>
-					
-				</tbody>
-			</table>
-			</div>
-			</div>
-			</div>
-		</div>
-		<!-- /page content -->
 
-        
-      </div>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page content -->
+
     </div>
+</div>
 
-
-	
 <!-- modal input -->
 <div id="myModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><div style="min-width:50px">&times;</div></button>
-				<h4 class="modal-title">Tambah Pembayaran Nota Beli</h4>
-			</div>
-			<div class="modal-body">				
-				<form action="" method="post">
-					<input type="hidden" name="tambah_bayar_nota_beli_post" value="true">
-					<input type="hidden" id="jumlah_bayar" name="jumlah_bayar" value="">
-					<div class="col-md-12">
-					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-file fa-fw"></i></span>
-						<select id="select_nota" name="no_nota_beli" class="select2 form-control" required="true">
-							<option value="" disabled selected>-= Pilih Nota Beli =-</option>
-							<?php 
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <div style="min-width:50px">&times;</div>
+                </button>
+                <h4 class="modal-title">Tambah Pembayaran Nota Beli</h4>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post">
+                    <input type="hidden" name="tambah_bayar_nota_beli_post" value="true">
+                    <input type="hidden" id="jumlah_bayar" name="jumlah_bayar" value="">
+                    <div class="col-md-12">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-file fa-fw"></i>
+                            </span>
+                            <select
+                                id="select_nota"
+                                name="no_nota_beli"
+                                class="select2 form-control"
+                                required="true">
+                                <option value="" disabled="disabled" selected="selected">-= Pilih Nota Beli =-</option>
+                                <?php 
 								$sql=mysqli_query($con, "SELECT 
 	beli.id_beli
     , beli.no_nota_beli
@@ -146,36 +155,44 @@ ORDER BY id_beli ASC");
 									}
 								}
 							?>
-						</select>
-						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
-					</div>
-					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-money fa-fw"></i></span>
-						<select id="jenis" name="jenis" class="select2 form-control" required="true">
-							<option value="" disabled selected>-= Pilih Jenis Bayar =-</option>
-							<option value="Transfer">Transfer</option>
-							<option value="Tunai">Tunai</option>
-							<option value="Retur">Retur</option>
-						</select>
-						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
-					</div>
-					</div>
-					<div class="modal-footer">
-						<input type="submit" class="btn btn-primary" value="Simpan">
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+                            </select>
+                            <span class="input-group-addon">
+                                <i class="fa fa-star fa-fw" style="color:red"></i>
+                            </span>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-money fa-fw"></i>
+                            </span>
+                            <select id="jenis" name="jenis" class="select2 form-control" required="true">
+                                <option value="" disabled="disabled" selected="selected">-= Pilih Jenis Bayar =-</option>
+                                <option value="Transfer">Transfer</option>
+                                <option value="Tunai">Tunai</option>
+                                <option value="Retur">Retur</option>
+                            </select>
+                            <span class="input-group-addon">
+                                <i class="fa fa-star fa-fw" style="color:red"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" value="Simpan">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-$(document).ready(function(){
-	$('#select_nota').on('change', function(){
-		var jumlah = $(this).find(":selected").data('jumlah');
-		if ($('#jenis').val()!='Retur'){
-			$('#jumlah_bayar').val(jumlah);
-		}
-	});
-})
+    $(document).ready(function () {
+        $('#select_nota').on('change', function () {
+            var jumlah = $(this)
+                .find(":selected")
+                .data('jumlah');
+            if ($('#jenis').val() != 'Retur') {
+                $('#jumlah_bayar').val(jumlah);
+            }
+        });
+    })
 </script>

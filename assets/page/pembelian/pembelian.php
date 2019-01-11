@@ -23,60 +23,92 @@ if (isset($tambah_pembelian_post)){
 ?>
 <!-- page content -->
 <div class="right_col" role="main">
-	<div class="">
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="x_panel">
-					<div class="x_title">
-						<h3>PEMBELIAN</h3>
-						<?php
+    <div class="">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h3>PEMBELIAN</h3>
+                        <?php
 							if (isset($pesan)){
 								echo '<span class="badge bg-' .$warna. '">' .$pesan. '</span>';
 							}
 						?>
-					<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-					<div class="alert alert-info">
-					  <strong>Klik kolom pada tabel untuk detail.</strong>
-					</div>
-			<div class="col-md-4">
-				<table>
-					<tr>
-						<td>Cari Tanggal :<br><input class="form-control" style="width:100px" id="tgl_dari" type="text" value="" placeholder="Tanggal" readonly></td>
-						<td><br>&nbsp; - &nbsp;</td>
-						<td><br><input class="form-control" style="width:100px" id="tgl_sampai" type="text" value="" placeholder="Tanggal" readonly></td>
-						<td>&nbsp;&nbsp;</td>
-						<td><br><a class="btn btn-primary" id="btn_dari_sampai" onClick="submit();"><i class="fa fa-search"></i></a></td>
-					</tr>
-				</table>
-			</div>
-			<div class="col-md-4">
-				<table>
-					<tr>
-						<td>Cari Barang :<br><input class="form-control" style="width:200px" id="cari" type="text" value="" placeholder="Nama Barang"></td>
-						<td>&nbsp;&nbsp;</td>
-						<td><br><a class="btn btn-primary" onClick="cari_barang();"><i class="fa fa-search"></i></a></td>
-					</tr>
-				</table>
-			</div>
-			<div class="col-md-4" style="float: right">
-				<p align="right"><br><button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah</button></p>
-			</div>
-			<div class="clearfix" style="margin-bottom: 30px;"></div>
-			<table id="table1" class="table table-bordered table-striped">
-				<thead>
-					<tr>
-						<th>Tgl. Nota Beli</th>
-						<th>No Nota Beli</th>
-						<th>Supplier</th>
-						<th>Total Nota Beli (Rp)</th>
-						<th>Total Datang (Rp)</th>
-						<th>Ekspedisi</th>
-					</tr>
-				</thead>
-				<tbody>
-<?php
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="alert alert-info">
+                            <strong>Klik kolom pada tabel untuk detail.</strong>
+                        </div>
+                        <div class="col-md-4">
+                            <table>
+                                <tr>
+                                    <td>Cari Tanggal :<br><input
+                                        class="form-control"
+                                        style="width:100px"
+                                        id="tgl_dari"
+                                        type="text"
+                                        value=""
+                                        placeholder="Tanggal"
+                                        readonly="readonly"></td>
+                                    <td><br>&nbsp; - &nbsp;</td>
+                                    <td><br><input
+                                        class="form-control"
+                                        style="width:100px"
+                                        id="tgl_sampai"
+                                        type="text"
+                                        value=""
+                                        placeholder="Tanggal"
+                                        readonly="readonly"></td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td><br>
+                                        <a class="btn btn-primary" id="btn_dari_sampai" onclick="submit();">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-4">
+                            <table>
+                                <tr>
+                                    <td>Cari Barang :<br><input
+                                        class="form-control"
+                                        style="width:200px"
+                                        id="cari"
+                                        type="text"
+                                        value=""
+                                        placeholder="Nama Barang"></td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td><br>
+                                        <a class="btn btn-primary" onclick="cari_barang();">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-4" style="float: right">
+                            <p align="right"><br>
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                    <i class="fa fa-plus"></i>
+                                    Tambah</button>
+                            </p>
+                        </div>
+                        <div class="clearfix" style="margin-bottom: 30px;"></div>
+                        <table id="table1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Tgl. Nota Beli</th>
+                                    <th>No Nota Beli</th>
+                                    <th>Supplier</th>
+                                    <th>Total Nota Beli (Rp)</th>
+                                    <th>Total Datang (Rp)</th>
+                                    <th>Ekspedisi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php
 if (isset($_GET['dari'])){
 	$dari=date("Y-m-d", strtotime($_GET['dari']));
 	$sampai=date("Y-m-d", strtotime($_GET['sampai']));
@@ -174,128 +206,195 @@ $total_datang=$s['total_datang']+($s['total_datang']*$s['ppn_all_persen']/100);
 					</tr>';
 }
 ?>
-					
-				</tbody>
-			</table>
-			</div>
-			</div>
-			</div>
-		</div>
-		<!-- /page content -->
 
-        
-      </div>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page content -->
+
     </div>
+</div>
 
-
-	
 <!-- modal input -->
 <div id="myModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><div style="min-width:50px">&times;</div></button>
-				<h4 class="modal-title">Tambah Nota Pembelian</h4>
-			</div>
-			<div class="modal-body">
-				<form action="" method="post">
-					<input type="hidden" name="tambah_pembelian_post" value="true">
-					<div class="col-md-12">
-					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-file fa-fw"></i><br><small>No. Nota</small></span>
-						<input id="no_nota" name="no_nota_beli" style="padding: 20px 15px;" type="text" class="form-control" placeholder="No Nota Beli" maxlength="15" required>
-						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
-					</div>
-					<div class="input-group">
-						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-building fa-fw" style="width: 46px;"></i><br><small>Supplier</small></span>
-						<select name="id_supplier" class="select2 form-control" required="true">
-							<option value="" disabled selected>-= Pilih Supplier =-</option>
-							<?php 
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <div style="min-width:50px">&times;</div>
+                </button>
+                <h4 class="modal-title">Tambah Nota Pembelian</h4>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post">
+                    <input type="hidden" name="tambah_pembelian_post" value="true">
+                    <div class="col-md-12">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-file fa-fw"></i><br>
+                                <small>No. Nota</small>
+                            </span>
+                            <input
+                                id="no_nota"
+                                name="no_nota_beli"
+                                style="padding: 20px 15px;"
+                                type="text"
+                                class="form-control"
+                                placeholder="No Nota Beli"
+                                maxlength="15"
+                                required="required">
+                            <span class="input-group-addon">
+                                <i class="fa fa-star fa-fw" style="color:red"></i>
+                            </span>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon" style="padding: 2px 12px;">
+                                <i class="fa fa-building fa-fw" style="width: 46px;"></i><br>
+                                <small>Supplier</small>
+                            </span>
+                            <select name="id_supplier" class="select2 form-control" required="true">
+                                <option value="" disabled="disabled" selected="selected">-= Pilih Supplier =-</option>
+                                <?php 
 								$cust=mysqli_query($con, "SELECT id_supplier, nama_supplier FROM supplier");
 								while($b=mysqli_fetch_array($cust)){
 									echo '<option value="' .$b['id_supplier']. '">' .$b['nama_supplier']. '</option>';
 								}
 							?>
-						</select>
-						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
-					</div>
-					<div class="input-group">
-						<span class="input-group-addon"><div style="min-width:90px;text-align:left">Diskon Nota (%)</div></span>
-						<input id="diskon_all" onchange="handleChange(this)" maxlength="6" name="diskon_all" type="text" class="form-control" placeholder="Diskon Nota" value="0" required><br>
-					</div>
-					<div class="input-group">
-						<span class="input-group-addon"><div style="min-width:102px;text-align:left">PPN (%)</div></span>
-						<input id="ppn_all" onchange="handleChange(this)" maxlength="6" name="ppn_all" type="text" class="form-control" placeholder="PPN" value="0" required>
-					</div>
-					</div>
-					<div class="modal-footer">
-						<input type="submit" class="btn btn-primary" value="Simpan">
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+                            </select>
+                            <span class="input-group-addon">
+                                <i class="fa fa-star fa-fw" style="color:red"></i>
+                            </span>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <div style="min-width:90px;text-align:left">Diskon Nota (%)</div>
+                            </span>
+                            <input
+                                id="diskon_all"
+                                onchange="handleChange(this)"
+                                maxlength="6"
+                                name="diskon_all"
+                                type="text"
+                                class="form-control"
+                                placeholder="Diskon Nota"
+                                value="0"
+                                required="required"><br>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <div style="min-width:102px;text-align:left">PPN (%)</div>
+                            </span>
+                            <input
+                                id="ppn_all"
+                                onchange="handleChange(this)"
+                                maxlength="6"
+                                name="ppn_all"
+                                type="text"
+                                class="form-control"
+                                placeholder="PPN"
+                                value="0"
+                                required="required">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" value="Simpan">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-/*$(function($) {
-      
+    /*$(function($) {
+
 });*/
-function validasi(){
-	var startDate = new Date.parse(get_global_tanggal($('#tgl_dari').val()));
-	var endDate = new Date.parse(get_global_tanggal($('#tgl_sampai').val()));
-	if (startDate > endDate){
-		$('#tgl_dari').val('');
-		$('#tgl_sampai').val('');
-		$('#btn_dari_sampai').attr('style','display:none');
-		alert("Terjadi kesalahan penulisan tanggal");
-		AndroidFunction.showToast("Terjadi kesalahan penulisan tanggal");
-	} else {
-		$('#btn_dari_sampai').removeAttr('style');
-	}
-}
-function submit(){
-	window.location="?page=pembelian&mode=pembelian&dari=" + $('#tgl_dari').val() + "&sampai=" + $('#tgl_sampai').val();
-}
-function cari_barang(){
-	window.location="?page=pembelian&mode=pembelian&cari=" + $('#cari').val();
-}
-function handleChange(input) {
-    if (input.value < 0) input.value = 0;
-    if (input.value > 100) input.value = 100;
- }
-$(document).ready(function(){
-	//$('#diskon_all').inputmask('decimal', {autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});x
-	$('#diskon_ppn').inputmask('decimal', {autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-	$('#myModal').on('show.bs.modal', function(e){
-		var id = $(e.relatedTarget).data('id');
-		$('#get_karyawan').load('api/web/get-karyawan.php?id=' + id,function(){
-			$('#gaji_2').inputmask('decimal', {autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-			$('#harian_2').inputmask('decimal', {autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-			$('#lembur_2').inputmask('decimal', {autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-		});
-	});
+    function validasi() {
+        var startDate = new Date.parse(get_global_tanggal($('#tgl_dari').val()));
+        var endDate = new Date.parse(get_global_tanggal($('#tgl_sampai').val()));
+        if (startDate > endDate) {
+            $('#tgl_dari').val('');
+            $('#tgl_sampai').val('');
+            $('#btn_dari_sampai').attr('style', 'display:none');
+            alert("Terjadi kesalahan penulisan tanggal");
+            AndroidFunction.showToast("Terjadi kesalahan penulisan tanggal");
+        } else {
+            $('#btn_dari_sampai').removeAttr('style');
+        }
+    }
+    function submit() {
+        window.location = "?page=pembelian&mode=pembelian&dari=" + $('#tgl_dari').val() +
+                "&sampai=" + $('#tgl_sampai').val();
+    }
+    function cari_barang() {
+        window.location = "?page=pembelian&mode=pembelian&cari=" + $('#cari').val();
+    }
+    function handleChange(input) {
+        if (input.value < 0) 
+            input.value = 0;
+        if (input.value > 100) 
+            input.value = 100;
+        }
+    $(document).ready(function () {
+        // $('#diskon_all').inputmask('decimal', {autoGroup: true, groupSeparator: '.',
+        // rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});x
+        $('#diskon_ppn').inputmask('decimal', {
+            autoGroup: true,
+            groupSeparator: '.',
+            rightAlign: false,
+            autoUnmask: true,
+            removeMaskOnSubmit: true
+        });
+        $('#myModal').on('show.bs.modal', function (e) {
+            var id = $(e.relatedTarget).data('id');
+            $('#get_karyawan').load('api/web/get-karyawan.php?id=' + id, function () {
+                $('#gaji_2').inputmask('decimal', {
+                    autoGroup: true,
+                    groupSeparator: '.',
+                    rightAlign: false,
+                    autoUnmask: true,
+                    removeMaskOnSubmit: true
+                });
+                $('#harian_2').inputmask('decimal', {
+                    autoGroup: true,
+                    groupSeparator: '.',
+                    rightAlign: false,
+                    autoUnmask: true,
+                    removeMaskOnSubmit: true
+                });
+                $('#lembur_2').inputmask('decimal', {
+                    autoGroup: true,
+                    groupSeparator: '.',
+                    rightAlign: false,
+                    autoUnmask: true,
+                    removeMaskOnSubmit: true
+                });
+            });
+        });
 
-	$('#tgl_dari').daterangepicker({
-		locale: {
-			format: 'DD-MM-YYYY'
-		},
-		singleDatePicker: true
-	});
-	$('#tgl_sampai').daterangepicker({
-		locale: {
-			format: 'DD-MM-YYYY'
-		},
-		singleDatePicker: true
-	});
-	$("#tgl_dari").on('change', function(){
-		validasi();
-	});
-	$("#tgl_sampai").on('change', function(){
-		validasi();
-	});
+        $('#tgl_dari').daterangepicker({
+            locale: {
+                format: 'DD-MM-YYYY'
+            },
+            singleDatePicker: true
+        });
+        $('#tgl_sampai').daterangepicker({
+            locale: {
+                format: 'DD-MM-YYYY'
+            },
+            singleDatePicker: true
+        });
+        $("#tgl_dari").on('change', function () {
+            validasi();
+        });
+        $("#tgl_sampai").on('change', function () {
+            validasi();
+        });
 
-	$('#diskon_all').numeric({decimalPlaces: 2, negative:false});
-	$('#ppn_all').numeric({decimalPlaces: 2, negative:false});
-});
+        $('#diskon_all').numeric({decimalPlaces: 2, negative: false});
+        $('#ppn_all').numeric({decimalPlaces: 2, negative: false});
+    });
 </script>

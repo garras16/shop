@@ -25,46 +25,51 @@ if (isset($_GET['cari'])){
 ?>
 <!-- page content -->
 <div class="right_col" role="main">
-	<div class="container">
-		<div class="row">
-			<div class="col-xs-12">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
                 <div class="x_panel">
-					<div class="x_content">
-						<div class="col-xs-12" style="text-align:right">
-							<input type="text" id="datepicker" PlaceHolder="Bulan & Tahun" style="width:100px" readonly></input>
-							<input type="button" id="cari" onClick="cari()" value="Cari"></input>
-							<input type="button" id="reset" onClick="reset()" value="Reset"></input>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_content">
+                        <div class="col-xs-12" style="text-align:right">
+                            <input
+                                type="text"
+                                id="datepicker"
+                                placeholder="Bulan & Tahun"
+                                style="width:100px"
+                                readonly="readonly"></input>
+                            <input type="button" id="cari" onclick="cari()" value="Cari"></input>
+                            <input type="button" id="reset" onclick="reset()" value="Reset"></input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
-					<div class="x_title">
-						<h3>LAPORAN RIWAYAT PENGIRIMAN BARANG</h3>
-						<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-			<div class="table responsive">
-			<table id="table1" class="table table-bordered table-striped">
-				<thead>
-					<tr>
-						<th>Tanggal Kirim</th>
-						<th>No Nota Jual</th>
-						<th>Nama Supir</th>
-						<th>Jenis</th>
-						<th>Nama Ekspedisi</th>
-						<th>Berat (Gr)</th>
-						<th>Volume (CM3)</th>
-						<th>Tarif (Rp)</th>
-						<th>Status</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-<?php
+                    <div class="x_title">
+                        <h3>LAPORAN RIWAYAT PENGIRIMAN BARANG</h3>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="table responsive">
+                            <table id="table1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Tanggal Kirim</th>
+                                        <th>No Nota Jual</th>
+                                        <th>Nama Supir</th>
+                                        <th>Jenis</th>
+                                        <th>Nama Ekspedisi</th>
+                                        <th>Berat (Gr)</th>
+                                        <th>Volume (CM3)</th>
+                                        <th>Tarif (Rp)</th>
+                                        <th>Status</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php
 $sql=mysqli_query($con, "SELECT jual.id_jual,id_pengiriman,invoice,pengiriman.status,pengiriman.jenis,tanggal_kirim,nama_karyawan,nama_ekspedisi,berat,volume,tarif
 FROM
     pengiriman
@@ -122,77 +127,75 @@ if ($_SESSION['posisi']=='OWNER' && $status_so<>'1'){
 	echo '	</tr>';
 }
 ?>
-					
-				</tbody>
-			</table>
-			</div>
-		</div>
-		<!-- /page content -->
 
-        
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /page content -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 
-	<!-- modal input -->
+<!-- modal input -->
 <div id="myModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">Ubah Data Riwayat Pengiriman Barang</h4>
-			</div>
-			<div class="modal-body">				
-				<form action="" method="post" onsubmit="return cek_valid();">
-					<input type="hidden" name="edit_histori_kirim_barang_post" value="true">
-					<div id="get_kirim_barang" class="col-md-12">
-					
-					</div>
-					<div class="modal-footer">
-						<input type="submit" class="btn btn-primary" value="Simpan">
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Ubah Data Riwayat Pengiriman Barang</h4>
+        </div>
+        <div class="modal-body">
+            <form action="" method="post" onsubmit="return cek_valid();">
+                <input type="hidden" name="edit_histori_kirim_barang_post" value="true">
+                <div id="get_kirim_barang" class="col-md-12"></div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="Simpan">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </div>
 <script>
-function cari(){
-	var tanggal = $('#datepicker').val();
-	var url = "?page=laporan&mode=kirim_barang&cari=" + tanggal;
-	if (tanggal!='') window.location=url;
+function cari() {
+    var tanggal = $('#datepicker').val();
+    var url = "?page=laporan&mode=kirim_barang&cari=" + tanggal;
+    if (tanggal != '') 
+        window.location = url;
+    }
+function reset() {
+    var url = "?page=laporan&mode=kirim_barang";
+    window.location = url;
 }
-function reset(){
-	var url = "?page=laporan&mode=kirim_barang";
-	window.location=url;
+function cek_valid() {
+    if ($("#select_ekspedisi").val() == '') {
+        return true;
+    } else {
+        if ($("#val_berat_volume").nval() > 0 || $("#tarif").nval() > 0) {
+            alert('Berat / Volume / Traif harus > 0');
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
-function cek_valid(){
-	if ($("#select_ekspedisi").val()==''){
-		return true;
-	} else {
-		if ($("#val_berat_volume").nval()>0 || $("#tarif").nval()>0){
-			alert('Berat / Volume / Traif harus > 0');
-			return false;
-		} else {
-			return true;
-		}
-	}
-}
-$(document).ready(function(){
-	$('#datepicker').datepicker({
-		orientation: "bottom auto",
-		format: "mm-yyyy",
-		startView: 1,
-		minViewMode: 1,
-		autoclose: true
-	});
-	$('#myModal').on('show.bs.modal', function(e){
-		var id = $(e.relatedTarget).data('id');
-		$('#get_kirim_barang').html('<center><i class="fa fa-spinner fa-spin" style="font-size:24px"></i></center>');
-		$('#get_kirim_barang').load("assets/page/laporan/get-kirim-barang.php?id=" + id);
-	})
+$(document).ready(function () {
+    $('#datepicker').datepicker(
+        {orientation: "bottom auto", format: "mm-yyyy", startView: 1, minViewMode: 1, autoclose: true}
+    );
+    $('#myModal').on('show.bs.modal', function (e) {
+        var id = $(e.relatedTarget).data('id');
+        $('#get_kirim_barang').html(
+            '<center><i class="fa fa-spinner fa-spin" style="font-size:24px"></i></center>'
+        );
+        $('#get_kirim_barang').load(
+            "assets/page/laporan/get-kirim-barang.php?id=" + id
+        );
+    })
 });
 </script>
