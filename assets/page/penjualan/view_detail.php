@@ -121,7 +121,7 @@ WHERE id_jual=$id");
                 <div class="x_panel">
 					<div class="x_content">
 
-				<table id="table1" class="table table-bordered table-striped table-responsive">
+				<table id="table1" class="table table-bordered table-striped" style="width: 2200px;">
 				<thead>
 					<tr>
 						<th>Barcode</th>

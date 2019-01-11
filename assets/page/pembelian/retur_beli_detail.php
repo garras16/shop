@@ -123,7 +123,7 @@ $ppn_all_persen=$row['ppn_all_persen'];
 			</div>
 			<i class="fa fa-check"></i> Barang sudah diproses oleh gudang<br><br>
 			<div class="clearfix" style="margin-bottom: 30px;"></div>
-			<table id="table1" class="table table-bordered table-striped">
+			<table id="table1" class="table table-bordered table-striped" style="width: 2200px;">
 				<thead>
 					<tr>
 						<th>Nama Barang</th>
