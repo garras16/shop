@@ -9,7 +9,7 @@
 					<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-			<table id="table1" class="table table-bordered table-striped">
+			<table id="table1" class="table table-bordered table-striped" style="width: 1200px;">
 				<thead>
 					<tr>
 						<th>Tanggal</th>

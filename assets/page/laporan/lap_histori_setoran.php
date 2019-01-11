@@ -23,7 +23,7 @@ $id_karyawan=$_SESSION['id_karyawan'];
 						</div>
 						<div class="clearfix"></div><br>
 						<div class="table-responsive">
-						<table id="table1" class="table table-bordered table-striped" style="width: 3000px;">
+						<table id="table1" class="table table-bordered table-striped" style="width: 2300px;">
 							<thead>
 								<tr>
 									<th>Nama Pelanggan</th>
@@ -40,7 +40,7 @@ $id_karyawan=$_SESSION['id_karyawan'];
 									<th>Setor (Rp)</th>
 								</tr>
 							</thead>
-							<tbody style="font-size: 15px;">
+							<tbody style="font-size: 13px;">
 <?php
 $val="";
 if (isset($_GET['tanggal']) && $_GET['tanggal']!=''){
@@ -124,18 +124,18 @@ WHERE id_jual=" .$row['id_jual']);
 		$color2='black';
 	}
 	echo '<tr>
-			<td align="center" style="width: 200px;">' .$row['nama_pelanggan']. '</td>
-			<td align="center" style="width: 200px;">' .$row['invoice']. '</td>
-			<td align="center" style="width: 200px;">' .format_uang($total_jual). '</td>
-			<td align="center" style="width: 200px;">' .$row['nama_karyawan']. '</td>
-			<td align="center" style="width: 200px;">' .date("d-m-Y",strtotime($row['tanggal_tagih'])). '</td>
-			<td align="center" style="width: 200px;">' .format_uang($total_jual). '</td>
-			<td align="center" style="width: 200px;">' .format_uang($total_bayar). '</td>
-			<td align="center" style="width: 200px;">' .format_uang($total_jual-$total_bayar). '</td>
-			<td align="center" style="color: ' .$color2. '; width: 200px;">' .$tgl_jb. '</td>
-			<td align="center" style="color: ' .$color. '; width: 200px;">' .$status. '</td>
-			<td align="center" style="width: 200px;">' .$status_nota. '</td>
-			<td align="center" style="width: 200px;">' .format_uang($row['setor']). '</td>
+			<td align="center" style="width: 120px;">' .$row['nama_pelanggan']. '</td>
+			<td align="center" style="width: 120px;">' .$row['invoice']. '</td>
+			<td align="center" style="width: 120px;">' .format_uang($total_jual). '</td>
+			<td align="center" style="width: 100px;">' .$row['nama_karyawan']. '</td>
+			<td align="center" style="width: 100px;">' .date("d-m-Y",strtotime($row['tanggal_tagih'])). '</td>
+			<td align="center" style="width: 120px;">' .format_uang($total_jual). '</td>
+			<td align="center" style="width: 120px;">' .format_uang($total_bayar). '</td>
+			<td align="center" style="width: 130px;">' .format_uang($total_jual-$total_bayar). '</td>
+			<td align="center" style="color: ' .$color2. '; width: 105px;">' .$tgl_jb. '</td>
+			<td align="center" style="color: ' .$color. '; width: 100px;">' .$status. '</td>
+			<td align="center" style="width: 120px;">' .$status_nota. '</td>
+			<td align="center" style="width: 110px;">' .format_uang($row['setor']). '</td>
 		</tr>';
 }
 ?>
