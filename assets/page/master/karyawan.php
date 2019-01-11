@@ -57,7 +57,7 @@
 								</thead>
 								<tbody>
 									<?php
-									$sql=mysqli_query($con, "SELECT * 
+									$sql=mysqli_query($con, "SELECT *, karyawan.status AS keaktifan 
 									FROM
 									    karyawan
 								    INNER JOIN jabatan 
@@ -67,7 +67,7 @@
 							
 									while($row=mysqli_fetch_array($sql)){
 									$i+=1;
-									$status = ($row['status'] == 1 ? 'Aktif' : 'Non Aktif');
+									$status = ($row['keaktifan'] == 1 ? 'Aktif' : 'Non Aktif');
 										echo '<tr>
 												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .$i. '</a></td>
 												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .$row['nama_karyawan']. '</a></td>
