@@ -128,7 +128,7 @@ $ppn_all_persen=$row2['ppn_all_persen'];
 					<div class="x_content">
 				<p align="right"><a data-toggle="modal" data-target="#myModal" data-id-beli="<?php echo $id ?>" data-id-supplier="<?php echo $id_supplier ?>" class="btn btn-warning"><i class="fa fa-plus"></i> Tambah Data</a></p>
 				<div class="table responsive">
-				<table id="table1" class="table table-bordered table-striped">
+				<table id="table1" class="table table-bordered table-striped" style="width: 1950px;">
 				<thead>
 					<tr>
 						<th>Nama Barang</th>
@@ -194,20 +194,20 @@ $volume+=$row['volume'];
 	$jumlah+=$tot_set_disk_3;
 	
 	echo '			<tr>
-						<td>' .$row['nama_barang']. '</td>
-						<td>' .format_angka($row['qty']). ' ' .$row['nama_satuan']. '</td>
-						<td>' .format_angka($row['berat']). '</td>
-						<td>' .format_angka($row['volume']). '</td>
-						<td>' .format_uang($row['harga']). '</td>
-						<td>' .format_uang($row['qty']*$row['harga']). '</td>
-						<td>' .format_uang($row['qty']*$diskon1). '</td>
-						<td>' .format_uang($tot_set_disk_1). '</td>
-						<td>' .format_uang($row['qty']*$diskon2). '</td>
-						<td>' .format_uang($tot_set_disk_2). '</td>
-						<td>' .format_uang($row['qty']*$diskon3). '</td>
-						<td>' .format_uang($tot_set_disk_3). '</td>
-						<td>' .$tgl_datang. '</td>
-						<td><a class="label label-warning" onClick="deleteRow(this,' .$row['id_beli_detail']. ')" ><i class="fa fa-trash"></i> HAPUS</a></td>';
+						<td style="width: 120px;">' .$row['nama_barang']. '</td>
+						<td style="width: 90px;">' .format_angka($row['qty']). ' ' .$row['nama_satuan']. '</td>
+						<td style="width: 90px;">' .format_angka($row['berat']). '</td>
+						<td style="width: 120px;">' .format_angka($row['volume']). '</td>
+						<td style="width: 140px;">' .format_uang($row['harga']). '</td>
+						<td style="width: 160px;">' .format_uang($row['qty']*$row['harga']). '</td>
+						<td style="width: 120px;">' .format_uang($row['qty']*$diskon1). '</td>
+						<td style="width: 150px;">' .format_uang($tot_set_disk_1). '</td>
+						<td style="width: 120px;">' .format_uang($row['qty']*$diskon2). '</td>
+						<td style="width: 150px;">' .format_uang($tot_set_disk_2). '</td>
+						<td style="width: 120px;">' .format_uang($row['qty']*$diskon3). '</td>
+						<td style="width: 150px;">' .format_uang($tot_set_disk_3). '</td>
+						<td style="width: 150px;">' .$tgl_datang. '</td>
+						<td style="width: 20px;"><a class="label label-warning" onClick="deleteRow(this,' .$row['id_beli_detail']. ')" ><i class="fa fa-trash"></i> HAPUS</a></td>';
 	echo '			</tr>';
 }
 $diskon_all_rp=$jumlah*($diskon_all_persen/100);
