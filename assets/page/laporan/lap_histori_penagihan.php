@@ -1,6 +1,11 @@
 <?php
 $id_karyawan=$_SESSION['id_karyawan'];
 ?>
+<style type="text/css">
+	#table1 tr td {
+		width: 150px;
+	}
+</style>
 <div class="right_col loading" role="main">
 	<div class="">
 	
@@ -22,8 +27,8 @@ $id_karyawan=$_SESSION['id_karyawan'];
 							<input type="button" id="reset" onClick="reset()" value="Reset"></input>
 						</div>
 						<div class="clearfix"></div><br>
-						<div class="table-responsive">
-						<table id="table1" class="table table-bordered table-striped">
+						<div class="table-container">
+						<table id="table1" style="width: 2000px;">
 									<thead>
 										<tr>
 											<th>Nama Pelanggan</th>
@@ -38,10 +43,10 @@ $id_karyawan=$_SESSION['id_karyawan'];
 											<th>Sisa Piutang (Rp)</th>
 											<th>Tgl Kunjungan Berikutnya</th>
 											<th>Status Bayar</th>
-											<th>Status Kembali Nota</th>
+											<th style="width: 1000px;">Status Kembali Nota</th>
 										</tr>
 									</thead>
-									<tbody>
+									<tbody style="font-size: 15px;">
 <?php
 $val="";
 if (isset($_GET['tanggal']) && $_GET['tanggal']!=''){
@@ -108,19 +113,19 @@ $total_jual=0;
 	$nama_driver=$row3['nama_karyawan'];
 	
 	echo '<tr>
-			<td align="center">' .$row['nama_pelanggan']. '</td>
-			<td align="center">' .$row['invoice']. '</td>
-			<td align="center">' .format_uang($total_jual). '</td>
-			<td align="center">' .$nama_sales. '</td>
-			<td align="center">' .$nama_driver. '</td>
-			<td align="center">' .$row['nama_karyawan']. '</td>
-			<td align="center">' .date("d-m-Y",strtotime($row['tanggal_tagih'])). '</td>
-			<td align="center">' .format_uang($total_jual). '</td>
-			<td align="center">' .format_uang($row['bayar']). '</td>
-			<td align="center">' .format_uang($total_jual-$row['bayar']). '</td>
-			<td align="center" style="color: ' .$color2. '">' .$tgl_jb. '</td>
-			<td align="center" style="color: ' .$color. '">' .$status. '</td>
-			<td align="center">' .$status_nota. '</td>
+			<td align="center" style="width: 1100px;">' .$row['nama_pelanggan']. '</td>
+			<td align="center" style="width: 600px;">' .$row['invoice']. '</td>
+			<td align="center" style="width: 600px;">' .format_uang($total_jual). '</td>
+			<td align="center" style="width: 600px;">' .$nama_sales. '</td>
+			<td align="center" style="width: 600px;">' .$nama_driver. '</td>
+			<td align="center" style="width: 600px;">' .$row['nama_karyawan']. '</td>
+			<td align="center" style="width: 600px;">' .date("d-m-Y",strtotime($row['tanggal_tagih'])). '</td>
+			<td align="center" style="width: 1200px;">' .format_uang($total_jual). '</td>
+			<td align="center" style="width: 1200px;">' .format_uang($row['bayar']). '</td>
+			<td align="center" style="width: 1200px;">' .format_uang($total_jual-$row['bayar']). '</td>
+			<td align="center" style="color: ' .$color2. ' ;width: 600px;">' .$tgl_jb. '</td>
+			<td align="center" style="color: ' .$color. ' ;width: 800px;">' .$status. '</td>
+			<td align="center" style="width: 1800px;">' .$status_nota. '</td>
 		</tr>';
 }
 ?>										

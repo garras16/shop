@@ -37,7 +37,7 @@ if (isset($batal_penagihan_post)){
 						  <div id="myTabContent" class="tab-content">
 							<div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="tab1">
 								
-								<div class="table-responsive">
+								<div class="table-responsive" style="overflow-x: auto;">
 								<table id="table1" class="table table-bordered table-striped">
 									<thead>
 										<tr>

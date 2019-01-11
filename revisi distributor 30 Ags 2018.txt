@@ -497,3 +497,6 @@ tak paham)										OK
 * penjualan ada ppn (boleh kosong / 0)							*	
 
 - penjualan, tampilan info bawah, rata kiri						OK	-
+- Tabel, isi nya jangan sampe wrap kebawah, tabel jadi scroll samping gpp
+
+

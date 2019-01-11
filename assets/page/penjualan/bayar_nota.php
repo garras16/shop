@@ -211,12 +211,14 @@ GROUP BY id_jual");
 									$jumlah_bayar+=$row2['jumlah_bayar'];
 
 									$sisa_piutang=$sisaan-$jumlah_bayar;
-									$sql2=mysqli_query($con, "SELECT SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah
-									FROM
-										jual_detail 
-									WHERE id_jual=$tmp_id_jual");
+									$sql2=mysqli_query($con, "SELECT SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah_nota FROM jual_detail WHERE id_jual=$tmp_id_jual");
 									$b2=mysqli_fetch_array($sql2);
-									if ($sisa_piutang>0) echo '<option data-piutang="' .$sisaan. '" data-jumlah="' .$b2['jumlah']. '" value="' .$b['invoice']. '">' .$b['invoice']. ' | ' .$b['nama_pelanggan']. ' | Rp ' .format_uang($b2['jumlah']). '</option>';
+									$sqll = mysqli_query($con, "SELECT diskon_all_persen, ppn_all_persen FROM jual WHERE id_jual=$tmp_id_jual");
+									$bb = mysqli_fetch_array($sqll);
+									$set_dis=$b2['jumlah_nota']-($b2['jumlah_nota']*$bb['diskon_all_persen']/100);
+									$ppn = $set_dis*($bb['ppn_all_persen']/100);
+									$jumlah_nota = $set_dis+$ppn;
+									if ($sisa_piutang>0) echo '<option data-piutang="' .$sisaan. '" data-jumlah="' .$b2['jumlah']. '" value="' .$b['invoice']. '">' .$b['invoice']. ' | ' .$b['nama_pelanggan']. ' | Rp ' .format_uang($jumlah_nota). '</option>';
 								}
 							?>
 						</select>
@@ -271,7 +273,7 @@ $(document).ready(function(){
 		
 		$('#piutang').val(piutang);
 		if ($('#jenis').val()!='Retur'){
-			$('#jumlah_bayar').val(jumlah+10);
+			$('#jumlah_bayar').val(jumlah);
 		}
 	});
 	$('#tgl_dari').daterangepicker({
