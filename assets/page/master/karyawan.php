@@ -40,7 +40,7 @@
 						<p align="right"><button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah</button></p>
 						<div class="clearfix"></div>
 						<div class="table responsive">
-							<table id="table1" class="table table-bordered table-striped">
+							<table id="table1" class="table table-bordered table-striped" style="width: 1050px;">
 								<thead>
 									<tr>
 										<th>No.</th>

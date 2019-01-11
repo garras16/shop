@@ -38,7 +38,7 @@ if (isset($edit_supplier_post)){
 					</div>
 				<p align="right"><button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah</button></p>
 			
-			<table id="table1" class="table table-bordered table-striped">
+			<table id="table1" class="table table-bordered table-striped" style="width: 2200px;">
 				<thead>
 					<tr>
 						<th>No.</th>
@@ -96,7 +96,7 @@ $i+=1;
 $status = ($row['status'] == 1 ? 'Aktif' : 'Non Aktif');
 IF ($row['nama_supplier']=='DIRI SENDIRI'){
 	echo '			<tr>
-						<td>' .$i. '</a></td>
+						<td style="width: 50px;">' .$i. '</a></td>
 						<td>' .$row['nama_supplier']. '</td>
 						<td>' .$row['alamat']. '</td>
 						<td>' .$row['nama_kel']. '</td>
