@@ -21,6 +21,7 @@ $id_jual=$row['id_jual'];
 	$grand = $total_nota+($total_nota*($row['ppn_all_persen']/100));
 	$jumlah_nota=$grand;
 
+
 //-----------------------------------------------------------------------------------------
 
 	$sql3=mysqli_query($con, "SELECT SUM(jumlah) AS jumlah_bayar FROM bayar_nota_jual WHERE no_nota_jual='$no_nota_jual'");

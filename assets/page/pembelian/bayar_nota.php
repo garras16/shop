@@ -101,7 +101,12 @@ while($row=mysqli_fetch_array($sql)){
 			beli_detail 
 		WHERE id_beli=$tmp_id_beli");
 	$b2=mysqli_fetch_array($sql2);
-	$jumlah_nota=$b2['jumlah_nota']+($b2['jumlah_nota']*$row['ppn_all_persen']/100)-($b2['jumlah_nota']*$row['diskon_all_persen']/100);
+
+	$sqll = mysqli_query($con, "SELECT ppn_all_persen FROM beli WHERE id_beli=$tmp_id_beli");
+	$bb = mysqli_fetch_array($sqll);
+	$set_dis=$b2['jumlah_nota']-($b2['jumlah_nota']*$row['diskon_all_persen']/100);
+	$ppn = $set_dis*($bb['ppn_all_persen']/100);
+	$jumlah_nota = $set_dis+$ppn;
 
 //-----------------------------------------------------------------------------------------	
 	$tmp_nota_beli=$row['no_nota_beli'];
@@ -183,12 +188,15 @@ WHERE bayar_nota_beli.status IS NULL OR bayar_nota_beli.status=2 OR bayar_nota_b
 GROUP BY beli.id_beli");
 								while($b=mysqli_fetch_array($sql)){
 									$tmp_id_beli=$b['id_beli'];
-									$sql2=mysqli_query($con, "SELECT SUM((harga*qty)-diskon_rp-diskon_rp_2-diskon_rp_3) AS jumlah
-										FROM
-											beli_detail 
-									     WHERE id_beli=$tmp_id_beli");
+									$sql2=mysqli_query($con, "SELECT SUM((harga*qty)-diskon_rp-diskon_rp_2-diskon_rp_3) AS jumlah FROM beli_detail  WHERE id_beli=$tmp_id_beli");
 									$b2=mysqli_fetch_array($sql2);
-									$total=$b2['jumlah']+($b2['jumlah']*$b['ppn_all_persen']/100)-($b2['jumlah']*$b['diskon_all_persen']/100);
+									$sqll = mysqli_query($con, "SELECT diskon_all_persen, ppn_all_persen FROM beli WHERE id_beli=$tmp_id_beli");
+									$bb = mysqli_fetch_array($sqll);
+									$set_dis=$b2['jumlah']-($b2['jumlah']*$bb['diskon_all_persen']/100);
+									$ppn = $set_dis*($bb['ppn_all_persen']/100);
+									$jumlah_nota = $set_dis+$ppn;
+									$total= $jumlah_nota;
+
 									if ($total!=''){
 										echo '<option data-jumlah="' .$total. '" value="' .$b['no_nota_beli']. '">' .$b['no_nota_beli']. ' | ' .$b['nama_supplier']. ' | Rp ' .format_uang($total). '</option>';
 									}

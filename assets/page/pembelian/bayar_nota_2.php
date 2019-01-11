@@ -25,7 +25,10 @@ FROM
         ON (beli_detail.id_beli = beli.id_beli)
 WHERE beli.id_beli=$id_beli");
 	$b2=mysqli_fetch_array($sql2);
-	$jumlah_nota=$b2['jumlah_nota']+($b2['ppn_all_persen']/100*$b2['jumlah_nota'])-($b2['diskon_all_persen']/100*$b2['jumlah_nota']);//-($s['total_datang']*$s['diskon_all_persen']/100);
+	$set_disk = $b2['jumlah_nota']-($b2['jumlah_nota']*($b2['diskon_all_persen']/100));
+	$ppn = $set_disk*($b2['ppn_all_persen']/100);
+	$jumlah_nota=$set_disk+$ppn;//-($s['total_datang']*$s['diskon_all_persen']/100);
+
 //-----------------------------------------------------------------------------------------
 
 	$sql3=mysqli_query($con, "SELECT SUM(jumlah) AS jumlah_bayar FROM bayar_nota_beli WHERE no_nota_beli='$no_nota_beli'");

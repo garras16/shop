@@ -88,6 +88,7 @@ while($row=mysqli_fetch_array($sql)){
 	$tmp_id_jual=$row['id_jual'];
 	$sql2=mysqli_query($con, "SELECT SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah_nota FROM jual_detail WHERE id_jual=$tmp_id_jual");
 	$b2=mysqli_fetch_array($sql2);
+	
 	$sqll = mysqli_query($con, "SELECT ppn_all_persen FROM jual WHERE id_jual=$tmp_id_jual");
 	$bb = mysqli_fetch_array($sqll);
 	$set_dis=$b2['jumlah_nota']-($b2['jumlah_nota']*$row['diskon_all_persen']/100);
