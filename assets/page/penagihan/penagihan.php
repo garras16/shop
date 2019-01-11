@@ -37,8 +37,8 @@ if (isset($batal_penagihan_post)){
 						  <div id="myTabContent" class="tab-content">
 							<div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="tab1">
 								
-								<div class="table-responsive" style="overflow-x: auto;">
-								<table id="table1" class="table table-bordered table-striped">
+								<div class="table-responsive">
+								<table id="table1" class="table table-bordered table-striped" style="width: 2000px;">
 									<thead>
 										<tr>
 											<th>Tgl Nota Jual</th>

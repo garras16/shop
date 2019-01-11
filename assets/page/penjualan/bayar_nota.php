@@ -41,8 +41,8 @@ if (isset($_GET['del'])){
 						<p align="right"><button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah</button></p>
 					</div>
 					<div class="clearfix"></div><br/>
-					
-			<table id="table1" class="table table-bordered table-striped">
+					<div class="table-responsive">
+			<table id="table1" class="table table-bordered table-striped" style="width: 2000px;">
 				<thead>
 					<tr>
 						<th>Tgl. Nota Jual</th>
@@ -122,21 +122,22 @@ if ($row['status']=='1'){
 	$status="";
 }
 	echo '			<tr>
-						<td align="center">' .date("d-m-Y", strtotime($row['tgl_nota'])). '</td>
-						<td align="center">' .$row['no_nota_jual']. '</td>
+						<td align="center" style="width: 150px;">' .date("d-m-Y", strtotime($row['tgl_nota'])). '</td>
+						<td align="center" style="width: 150px;">' .$row['no_nota_jual']. '</td>
 						<td align="center">' .$row['nama_pelanggan']. '</td>
 						<td align="center">' .$row['jenis']. '</td>
-						<td align="center">' .date("d-m-Y", strtotime($row['tgl_bayar'])). '</td>
-						<td align="right">' .format_uang($row['jumlah']). '</td>
-						<td align="right">' .format_uang($sisa_nota). '</td>
-						<td align="center">' .$status. '</td>
-						<td align="center"><a href="?page=penjualan&mode=bayar_nota&del=' .$row['id_bayar']. '" class="btn btn-primary btn-xs"><i class="fa fa-trash"></i></a></td>
+						<td align="center" style="width: 150px;">' .date("d-m-Y", strtotime($row['tgl_bayar'])). '</td>
+						<td align="right" style="width: 200px;">' .format_uang($row['jumlah']). '</td>
+						<td align="right" style="width: 200px;">' .format_uang($sisa_nota). '</td>
+						<td align="center" style="width: 150px;">' .$status. '</td>
+						<td align="center" style="width: 50px;"><a href="?page=penjualan&mode=bayar_nota&del=' .$row['id_bayar']. '" class="btn btn-primary btn-xs"><i class="fa fa-trash"></i></a></td>
 					</tr>';
 }
 ?>
 					
 				</tbody>
 			</table>
+					</div>
 			</div>
 			</div>
 			</div>

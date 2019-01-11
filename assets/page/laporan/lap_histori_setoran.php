@@ -23,7 +23,7 @@ $id_karyawan=$_SESSION['id_karyawan'];
 						</div>
 						<div class="clearfix"></div><br>
 						<div class="table-responsive">
-						<table id="table1" style="width: 2500px;">
+						<table id="table1" class="table table-bordered table-striped" style="width: 3000px;">
 							<thead>
 								<tr>
 									<th>Nama Pelanggan</th>
