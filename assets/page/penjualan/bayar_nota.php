@@ -219,7 +219,8 @@ GROUP BY id_jual");
 									$set_dis=$b2['jumlah_nota']-($b2['jumlah_nota']*$bb['diskon_all_persen']/100);
 									$ppn = $set_dis*($bb['ppn_all_persen']/100);
 									$jumlah_nota = $set_dis+$ppn;
-									if ($sisa_piutang>0) echo '<option data-piutang="' .$sisaan. '" data-jumlah="' .$b2['jumlah']. '" value="' .$b['invoice']. '">' .$b['invoice']. ' | ' .$b['nama_pelanggan']. ' | Rp ' .format_uang($jumlah_nota). '</option>';
+									$piutang = $jumlah_nota-$jumlah_bayar;
+									if ($sisa_piutang>0) echo '<option data-piutang="' .$piutang. '" data-jumlah="' .$b2['jumlah']. '" value="' .$b['invoice']. '">' .$b['invoice']. ' | ' .$b['nama_pelanggan']. ' | Rp ' .format_uang($jumlah_nota). '</option>';
 								}
 							?>
 						</select>
