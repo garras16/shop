@@ -596,7 +596,7 @@ WHERE id_jual=$id_jual");
                     <div style="min-width:50px">&times;</div>
                 </button>
                 <h4 class="modal-title">DETAIL PEMBAYARAN
-                    <?php echo $no_nota_jual ?></h4>
+                    <b><?php echo $no_nota_jual ?></b></h4>
             </div>
             <div class="modal-body">
                 <?php

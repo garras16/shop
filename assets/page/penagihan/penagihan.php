@@ -3,7 +3,7 @@ $id_karyawan=$_SESSION['id_karyawan'];
 if (isset($batal_penagihan_post)){
 	foreach ($id_penagihan as $key => $value) {
 		$sql=mysqli_query($con, "SELECT * FROM penagihan_detail WHERE id_penagihan=" .$value. " AND status_bayar<3");
-		if (mysql_num_rows($sql)==0){
+		if (mysqli_num_rows($sql)==0){
 			$sql=mysqli_query($con, "DELETE FROM penagihan WHERE id_penagihan=" .$value);
 			$sql=mysqli_query($con, "DELETE FROM penagihan_detail WHERE id_penagihan=" .$value);
 		} else {
