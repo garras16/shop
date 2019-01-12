@@ -600,9 +600,19 @@ WHERE id_jual=$id_jual");
             </div>
             <div class="modal-body">
                 <?php
-					$sql2=mysqli_query($con, "SELECT jumlah FROM nota_sudah_cek WHERE status='2' AND id_jual=$id_jual");
-					$b2=mysqli_fetch_array($sql2);
-					$jumlah_nota=$b2['jumlah'];
+					// $sql2=mysqli_query($con, "SELECT jumlah FROM nota_sudah_cek WHERE status='2' AND id_jual=$id_jual");
+					// $b2=mysqli_fetch_array($sql2);
+                    // $jumlah_nota=$b2['jumlah'];
+
+                    $tmp_id_jual=$row['id_jual'];
+                    $sql2=mysqli_query($con, "SELECT SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah_nota FROM jual_detail WHERE id_jual=$id_jual");
+                    $b2=mysqli_fetch_array($sql2);
+                    
+                    $sqll = mysqli_query($con, "SELECT ppn_all_persen FROM jual WHERE id_jual=$id_jual");
+                    $bb = mysqli_fetch_array($sqll);
+                    $set_dis=$b2['jumlah_nota']-($b2['jumlah_nota']*$row['diskon_all_persen']/100);
+                    $ppn = $set_dis*($bb['ppn_all_persen']/100);
+                    $jumlah_nota = $set_dis+$ppn;
 				?>
                 <div class="input-group">
                     <span class="input-group-addon">Jumlah Nota Jual</span>
