@@ -65,7 +65,7 @@ if (isset($_GET['del'])){
                         </p>
                         <div class="clearfix"></div>
                         <div class="table responsive">
-                            <table id="table1" class="table table-bordered table-striped">
+                            <table id="table1" class="table table-bordered table-striped" style="width: 1300px;">
                                 <thead>
                                     <tr>
                                         <th>Tgl. Nota Beli</th>
@@ -107,14 +107,14 @@ if ($row['status']==1){
 	$status='';
 }
 	echo '			<tr>
-						<td>' .date("d-m-Y",strtotime($row['tanggal'])). '</td>
-						<td>' .$row['no_nota_beli']. '</td>
-						<td>' .$row['nama_ekspedisi']. '</td>
-						<td>' .date("d-m-Y",strtotime($row['tgl_bayar'])). '</td>
-						<td>' .format_uang($row['jumlah_bayar']). '</td>
-						<td>' .format_uang($sisa_hutang). '</td>
-						<td>' .$status. '</td>
-						<td><a class="btn btn-danger btn-xs" href="?page=ekspedisi&mode=bayar_hutang&del=' .$row['id_bayar_ekspedisi_detail']. '&id=' .$row['id_bayar_ekspedisi']. '"><i class="fa fa-trash"></i> Hapus</a></td>
+						<td style="width: 120px;">' .date("d-m-Y",strtotime($row['tanggal'])). '</td>
+						<td style="width: 120px;">' .$row['no_nota_beli']. '</td>
+						<td style="width: 200px;">' .$row['nama_ekspedisi']. '</td>
+						<td style="width: 150px;">' .date("d-m-Y",strtotime($row['tgl_bayar'])). '</td>
+						<td style="width: 200px;">' .format_uang($row['jumlah_bayar']). '</td>
+						<td style="width: 200px;">' .format_uang($sisa_hutang). '</td>
+						<td style="width: 150px;">' .$status. '</td>
+						<td style="width: 30px;"><a class="btn btn-danger btn-xs" href="?page=ekspedisi&mode=bayar_hutang&del=' .$row['id_bayar_ekspedisi_detail']. '&id=' .$row['id_bayar_ekspedisi']. '"><i class="fa fa-trash"></i> Hapus</a></td>
 					</tr>';
 }
 ?>
