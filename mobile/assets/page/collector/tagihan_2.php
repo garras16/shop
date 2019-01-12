@@ -257,5 +257,6 @@ $(document).ready(function(){
 	$("input[name='jenis']").change(function(){
 		$('#simpan').click();
 	});
+	AndroidFunction.setOrientasi(1);
 })
 </script>

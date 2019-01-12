@@ -116,8 +116,13 @@ WHERE id_jual=" .$row['id_jual']);
 	}
 }
 	
-	
-	$status='';
+/*	$sql2=mysqli_query($con, "SELECT *
+FROM
+    penagihan_detail
+WHERE id_jual=" .$row['id_jual']. " AND jenis<>'Retur'");
+$row2=mysqli_fetch_array($sql2);*/
+
+	$status='';$color='black';
 	if ($row['status_bayar']=='0') {$status='Belum Bayar'; $color='red';}
 	if ($row['status_bayar']=='1') {$status='Sedang Mengangsur'; $color='red';}
 	if ($row['status_bayar']=='2') {$status='Lunas'; $color='black';}

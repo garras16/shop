@@ -39,7 +39,7 @@ FROM
     penagihan_detail
     INNER JOIN penagihan_retur_detail 
         ON (penagihan_detail.id_penagihan_detail = penagihan_retur_detail.id_penagihan_detail)
-WHERE id_jual=" .$row['id_jual']);
+WHERE id_jual=" .$id_jual);
 $b3=mysqli_fetch_array($sql3);
 $jumlah_bayar_x+=$b3['jumlah_bayar'];
 //-------------------------------------------------------------------------------------------
@@ -74,7 +74,7 @@ if (isset($tambah_bayar_tagih_nota_jual_post)){
 	if ($jenis !='Retur'){
 		($jumlah_bayar==$sisa_nota ? $status=2 : $status=1);
 		if ($jumlah_bayar==$sisa_nota) $tgl_janji_next = 'null';
-		if ($jumlah_bayar=='0') $status=0;
+		if ($jumlah_bayar=='0' || $jumlah_bayar=='') $status=0;
 		
 		$tgl=date("Y-m-d");
 		$sql=mysqli_query($con, "UPDATE penagihan_detail SET status_bayar=$status WHERE id_jual=$id_jual");
@@ -163,12 +163,12 @@ $id_jual=$row['id_jual'];
 								<input class="form-control" name="no_nota_jual" value="<?php echo $no_nota_jual ?>" title="No Nota Jual" readonly>
 							</div>
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-money fa-fw"></i> Total Piutang</span>
+								<span class="input-group-addon"><i class="fa fa-money fa-fw"></i> <small>Total Piutang</small></span>
 								<input class="form-control" id="total_nota" value="<?php echo $total_piutang ?>" title="Total Nota Jual (Rp)" readonly>
 							</div>
 							
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-credit-card fa-fw"></i> Sisa Piutang</span>
+								<span class="input-group-addon"><i class="fa fa-credit-card fa-fw"></i> <small>Sisa Piutang</small></span>
 								<input class="form-control" id="sisa_nota" name="sisa_nota" value="<?php echo $sisa_nota ?>" title="Sisa Nota (Rp)" readonly>
 							</div>
 							<div class="input-group">
@@ -456,6 +456,6 @@ $(document).ready(function(){
 			AndroidFunction.showToast('Tanggal harus > ' + today + '.');
 		}
 	}});
-	AndroidFunction.setOrientasi(1);
+	AndroidFunction.setOrientasi(0);
 });
 </script>
