@@ -4,7 +4,6 @@ $jenis=$_GET['jenis'];
 $sql=mysqli_query($con, "SELECT id_jual FROM jual WHERE invoice='$no_nota_jual'");
 $row=mysqli_fetch_array($sql);
 $id_jual=$row['id_jual'];
-
 	$sql2=mysqli_query($con, "SELECT *, SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total
 		FROM
     		jual
@@ -223,10 +222,10 @@ $grand = $total_nota+($total_nota*($row['ppn_all_persen']/100));
                                     </span>
                                 <?php
 if ($jenis=='Retur'){
-	echo '						<input class="form-control" id="jumlah_bayar" style="padding: 20px 15px;" name="jumlah_bayar" value="0" placeHolder="Jumlah Bayar (Rp)" readonly>';
+	echo '<input class="form-control" id="jumlah_bayar" style="padding: 20px 15px;" name="jumlah_bayar" value="0" placeHolder="Jumlah Bayar (Rp)" readonly>';
 } else {
-	echo '						<input class="form-control" id="jumlah_bayar" style="padding: 20px 15px;" name="jumlah_bayar" value=""  autofocus placeHolder="Jumlah Bayar (Rp)" required>
-								<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>';
+	echo '<input class="form-control" id="jumlah_bayar" style="padding: 20px 15px;" name="jumlah_bayar" value=""  autofocus placeHolder="Jumlah Bayar (Rp)" required>
+			<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>';
 }
 ?>
                                 </div>

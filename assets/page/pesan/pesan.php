@@ -28,12 +28,12 @@ while($row=mysqli_fetch_array($sql)){
 $i+=1;
 if ($row['status_pesan']=='0'){$status='BELUM DIBACA'; $style='badge bg-red';}
 if ($row['status_pesan']=='1'){$status='TERBACA'; $style='badge bg-green';}
-	echo '			<tr>
-						<td align="center"><a href="?page=pesan&mode=pesan_detail&id=' .$row['id_pesan']. '"><div style="min-width:70px">' .$i. '</div></a></td>
-						<td><a href="?page=pesan&mode=pesan_detail&id=' .$row['id_pesan']. '"><div style="min-width:70px">' .date("d-m-Y", strtotime($row['tanggal'])). '</div></a></td>
-						<td><a href="?page=pesan&mode=pesan_detail&id=' .$row['id_pesan']. '"><div style="min-width:70px">' .$row['judul']. '</div></a></td>
-						<td><a href="?page=pesan&mode=pesan_detail&id=' .$row['id_pesan']. '"  class="' .$style. '"><div style="min-width:70px">' .$status. '</div></a></td>';
-	echo '			</tr>';
+	echo '<tr>
+            <td align="center"><a href="?page=pesan&mode=pesan_detail&id=' .$row['id_pesan']. '"><div style="min-width:70px">' .$i. '</div></a></td>
+            <td><a href="?page=pesan&mode=pesan_detail&id=' .$row['id_pesan']. '"><div style="min-width:70px">' .date("d-m-Y", strtotime($row['tanggal'])). '</div></a></td>
+            <td><a href="?page=pesan&mode=pesan_detail&id=' .$row['id_pesan']. '"><div style="min-width:70px">' .$row['judul']. '</div></a></td>
+            <td><a href="?page=pesan&mode=pesan_detail&id=' .$row['id_pesan']. '"  class="' .$style. '"><div style="min-width:70px">' .$status. '</div></a></td>';
+	echo '</tr>';
 }
 ?>
 

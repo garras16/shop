@@ -24,9 +24,9 @@ $sql=mysqli_query($con, "SELECT * FROM pesan WHERE id_pesan=" .$id. " ORDER BY t
 $row=mysqli_fetch_array($sql);
 if ($row['status_pesan']=='0'){$status='BELUM DIBACA'; $style='badge bg-red';}
 if ($row['status_pesan']=='1'){$status='TERBACA'; $style='badge bg-green';}
-	echo '			<tr><td width="30%">Tanggal Pesan</td><td width="70%">' .date("d F Y, H:i", strtotime($row['tanggal'])). '</td></tr>
-					<tr><td width="30%">Judul</td><td width="70%">' .$row['judul']. '</td></tr>
-					<tr><td width="30%">Pesan</td><td width="70%"><textarea readonly style="width:100%" rows="10">' .$row['pesan']. '</textarea></td></tr>';
+	echo '<tr><td width="30%">Tanggal Pesan</td><td width="70%">' .date("d F Y, H:i", strtotime($row['tanggal'])). '</td></tr>
+            <tr><td width="30%">Judul</td><td width="70%">' .$row['judul']. '</td></tr>
+            <tr><td width="30%">Pesan</td><td width="70%"><textarea readonly style="width:100%" rows="10">' .$row['pesan']. '</textarea></td></tr>';
 ?>
 
                         </tbody>
