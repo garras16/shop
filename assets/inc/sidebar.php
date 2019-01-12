@@ -47,7 +47,7 @@
 				  </li>
 				  <li <?php echo ($page=='penjualan' ? ' class="active"' : '') ?> ><a><i class="fa fa-balance-scale"></i> PENJUALAN <span class="fa fa-chevron-down"></span></a>
 					<ul class="nav child_menu" style="<?php echo ($page=='penjualan' ? 'display: block' : 'display: none') ?>">
-						<li <?php echo ($page=='penjualan' && $mode=='penjualan' ? ' class="current-page"' : '') ?> ><a href="?page=penjualan&mode=penjualan"><i class="fa fa-bar-chart" aria-hidden="true"></i> Transaksi</a></li>
+						<li <?php echo ($page=='penjualan' && $mode=='penjualan' ? ' class="current-page"' : '') ?> ><a href="?page=penjualan&mode=penjualan"><i class="fa fa-exchange" aria-hidden="true"></i> Transaksi</a></li>
 						<li <?php echo ($page=='penjualan' && $mode=='retur_jual' ? ' class="current-page"' : '') ?> ><a href="?page=penjualan&mode=retur_jual"><i class="fa fa-chevron-left" aria-hidden="true"></i> Retur Jual</a></li>
 						<li <?php echo ($page=='penjualan' && $mode=='bayar_nota' ? ' class="current-page"' : '') ?> ><a href="?page=penjualan&mode=bayar_nota"><i class="fa fa-credit-card" aria-hidden="true"></i> Bayar Nota Jual</a></li>
 						<li <?php echo ($page=='penjualan' && $mode=='pencairan_giro' ? ' class="current-page"' : '') ?> ><a href="?page=penjualan&mode=pencairan_giro"><i class="fa fa-money" aria-hidden="true"></i> Pencairan Giro</a></li>
@@ -56,7 +56,7 @@
 				  </li>
 				  <li <?php echo ($page=='pembelian' ? ' class="active"' : '') ?> ><a><i class="fa fa-shopping-cart"></i> PEMBELIAN <span class="fa fa-chevron-down"></span></a>
 					<ul class="nav child_menu" style="<?php echo ($page=='pembelian' ? 'display: block' : 'display: none') ?>">
-						<li <?php echo ($page=='pembelian' && $mode=='pembelian' ? ' class="current-page"' : '') ?> ><a href="?page=pembelian&mode=pembelian"><i class="fa fa-bar-chart" aria-hidden="true"></i> Transaksi Beli</a></li>
+						<li <?php echo ($page=='pembelian' && $mode=='pembelian' ? ' class="current-page"' : '') ?> ><a href="?page=pembelian&mode=pembelian"><i class="fa fa-exchange" aria-hidden="true"></i> Transaksi Beli</a></li>
 						<li <?php echo ($page=='pembelian' && $mode=='retur_beli' ? ' class="current-page"' : '') ?> ><a href="?page=pembelian&mode=retur_beli"><i class="fa fa-chevron-right" aria-hidden="true"></i> Retur Beli</a></li>
 						<li <?php echo ($page=='pembelian' && $mode=='bayar_nota' ? ' class="current-page"' : '') ?> ><a href="?page=pembelian&mode=bayar_nota"><i class="fa fa-credit-card" aria-hidden="true"></i> Bayar Nota Beli</a></li>
 					</ul>
