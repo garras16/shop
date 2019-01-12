@@ -1,28 +1,28 @@
 <?php
-date_default_timezone_set('Asia/Jakarta');
-require_once('../../assets/inc/config.php');
-require_once('../../assets/inc/publicfunc.php');
+    date_default_timezone_set('Asia/Jakarta');
+    require_once('../../assets/inc/config.php');
+    require_once('../../assets/inc/publicfunc.php');
 
-if (isset($_GET['id'])){
-	$id=$_GET['id'];
-} else {
-	die();
-}
-$sql=mysqli_query($con, "SELECT
-    provinsi.nama_prov
-    , kabupaten.nama_kab
-    , negara.nama_negara
-	, kecamatan.id_kec
-    , kecamatan.nama_kec
-FROM
-    kabupaten
-    INNER JOIN provinsi 
-        ON (kabupaten.id_prov = provinsi.id_prov)
-    INNER JOIN kecamatan 
-        ON (kabupaten.id_kab = kecamatan.id_kab)
-    INNER JOIN negara 
-        ON (negara.id_negara = provinsi.id_negara) WHERE id_kec='$id'");
-$row=mysqli_fetch_array($sql);
+    if (isset($_GET['id'])){
+        $id=$_GET['id'];
+    } else {
+        die();
+    }
+    $sql=mysqli_query($con, "SELECT
+        provinsi.nama_prov
+        , kabupaten.nama_kab
+        , negara.nama_negara
+        , kecamatan.id_kec
+        , kecamatan.nama_kec
+    FROM
+        kabupaten
+        INNER JOIN provinsi 
+            ON (kabupaten.id_prov = provinsi.id_prov)
+        INNER JOIN kecamatan 
+            ON (kabupaten.id_kab = kecamatan.id_kab)
+        INNER JOIN negara 
+            ON (negara.id_negara = provinsi.id_negara) WHERE id_kec='$id'");
+    $row=mysqli_fetch_array($sql);
 ?>
 <input type="hidden" name="id_kec" value="<?php echo $id ?>">
 <div class="input-group">

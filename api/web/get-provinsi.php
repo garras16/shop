@@ -1,19 +1,19 @@
 <?php
-date_default_timezone_set('Asia/Jakarta');
-require_once('../../assets/inc/config.php');
-require_once('../../assets/inc/publicfunc.php');
+    date_default_timezone_set('Asia/Jakarta');
+    require_once('../../assets/inc/config.php');
+    require_once('../../assets/inc/publicfunc.php');
 
-if (isset($_GET['id'])){
-	$id=$_GET['id'];
-} else {
-	die();
-}
-$sql=mysqli_query($con, "SELECT * 
-FROM
-    provinsi
-    INNER JOIN negara 
-        ON (provinsi.id_negara = negara.id_negara) WHERE id_prov='$id'");
-$row=mysqli_fetch_array($sql);
+    if (isset($_GET['id'])){
+        $id=$_GET['id'];
+    } else {
+        die();
+    }
+    $sql=mysqli_query($con, "SELECT * 
+    FROM
+        provinsi
+        INNER JOIN negara 
+            ON (provinsi.id_negara = negara.id_negara) WHERE id_prov='$id'");
+    $row=mysqli_fetch_array($sql);
 ?>
 <input type="hidden" name="id_prov" value="<?php echo $id ?>">
 <div class="input-group">

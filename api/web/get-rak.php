@@ -1,19 +1,19 @@
 <?php
-date_default_timezone_set('Asia/Jakarta');
-require_once('../../assets/inc/config.php');
-require_once('../../assets/inc/publicfunc.php');
+    date_default_timezone_set('Asia/Jakarta');
+    require_once('../../assets/inc/config.php');
+    require_once('../../assets/inc/publicfunc.php');
 
-if (isset($_GET['id'])){
-	$id=$_GET['id'];
-} else {
-	die();
-}
-$sql=mysqli_query($con, "SELECT * 
-FROM
-    gudang
-    INNER JOIN rak 
-        ON (gudang.id_gudang = rak.id_gudang) WHERE id_rak='$id'");
-$row=mysqli_fetch_array($sql);
+    if (isset($_GET['id'])){
+        $id=$_GET['id'];
+    } else {
+        die();
+    }
+    $sql=mysqli_query($con, "SELECT * 
+    FROM
+        gudang
+        INNER JOIN rak 
+            ON (gudang.id_gudang = rak.id_gudang) WHERE id_rak='$id'");
+    $row=mysqli_fetch_array($sql);
 ?>
 <input type="hidden" name="id_rak" value="<?php echo $id ?>">
 <input type="hidden" name="id_gudang" value="<?php echo $row['id_gudang'] ?>">

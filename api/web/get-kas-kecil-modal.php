@@ -1,15 +1,15 @@
 <?php
-date_default_timezone_set('Asia/Jakarta');
-require_once('../../assets/inc/config.php');
-require_once('../../assets/inc/publicfunc.php');
+    date_default_timezone_set('Asia/Jakarta');
+    require_once('../../assets/inc/config.php');
+    require_once('../../assets/inc/publicfunc.php');
 
-if (isset($_GET['id'])){
-	$id=$_GET['id'];
-} else {
-	die();
-}
-$sql=mysqli_query($con, "SELECT * FROM mst_kas_kecil WHERE id_kas_kecil='$id'");
-$row=mysqli_fetch_array($sql);
+    if (isset($_GET['id'])){
+        $id=$_GET['id'];
+    } else {
+        die();
+    }
+    $sql=mysqli_query($con, "SELECT * FROM mst_kas_kecil WHERE id_kas_kecil='$id'");
+    $row=mysqli_fetch_array($sql);
 ?>
 <input type="hidden" name="id_kas_kecil" value="<?php echo $id ?>">
 <div class="input-group">

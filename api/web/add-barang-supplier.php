@@ -1,8 +1,8 @@
 <?php
-date_default_timezone_set('Asia/Jakarta');
-require_once('../../assets/inc/config.php');
+    date_default_timezone_set('Asia/Jakarta');
+    require_once('../../assets/inc/config.php');
 
-$id=$_GET['id'];
+    $id=$_GET['id'];
 
 ?>
 <input type="hidden" name="id_barang" value="<?php echo $id ?>"/>

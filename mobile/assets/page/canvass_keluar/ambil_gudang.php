@@ -1,24 +1,24 @@
 <?php
-if (isset($tambah_ambil_gudang_mobil_post)){
-	$sql = "INSERT INTO canvass_keluar VALUES(null,'$tanggal','$id_mobil',0)";
-	$q = mysqli_query($con, $sql);
-	$id_canvass=mysqli_insert_id($con);
-	if ($q){
-		_buat_pesan("Input Berhasil","green");
-		_direct("?page=canvass_keluar&mode=input_ambil_gudang&id=" .$id_canvass);
+	if (isset($tambah_ambil_gudang_mobil_post)){
+		$sql = "INSERT INTO canvass_keluar VALUES(null,'$tanggal','$id_mobil',0)";
+		$q = mysqli_query($con, $sql);
+		$id_canvass=mysqli_insert_id($con);
+		if ($q){
+			_buat_pesan("Input Berhasil","green");
+			_direct("?page=canvass_keluar&mode=input_ambil_gudang&id=" .$id_canvass);
+		} else {
+			_buat_pesan("Input Gagal","red");
+			_direct("?page=canvass_keluar&mode=ambil_gudang");
+		}
 	} else {
-		_buat_pesan("Input Gagal","red");
-		_direct("?page=canvass_keluar&mode=ambil_gudang");
+		$sql = mysqli_query($con, "DELETE FROM canvass_keluar 
+			WHERE id_canvass_keluar NOT IN (SELECT id_canvass_keluar FROM canvass_keluar_barang)
+			OR id_canvass_keluar NOT IN (SELECT id_canvass_keluar FROM canvass_keluar_karyawan)");
+		$sql = mysqli_query($con, "DELETE FROM canvass_keluar_karyawan 
+			WHERE id_canvass_keluar NOT IN (SELECT id_canvass_keluar FROM canvass_keluar)");
+		$sql = mysqli_query($con, "DELETE FROM canvass_keluar_barang 
+			WHERE id_canvass_keluar NOT IN (SELECT id_canvass_keluar FROM canvass_keluar)");
 	}
-} else {
-	$sql = mysqli_query($con, "DELETE FROM canvass_keluar 
-		WHERE id_canvass_keluar NOT IN (SELECT id_canvass_keluar FROM canvass_keluar_barang)
-		OR id_canvass_keluar NOT IN (SELECT id_canvass_keluar FROM canvass_keluar_karyawan)");
-	$sql = mysqli_query($con, "DELETE FROM canvass_keluar_karyawan 
-		WHERE id_canvass_keluar NOT IN (SELECT id_canvass_keluar FROM canvass_keluar)");
-	$sql = mysqli_query($con, "DELETE FROM canvass_keluar_barang 
-		WHERE id_canvass_keluar NOT IN (SELECT id_canvass_keluar FROM canvass_keluar)");
-}
 
 ?>
 <!-- page content -->

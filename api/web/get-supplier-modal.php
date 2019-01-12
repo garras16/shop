@@ -1,20 +1,20 @@
 <?php
-date_default_timezone_set('Asia/Jakarta');
-require_once('../../assets/inc/config.php');
-require_once('../../assets/inc/publicfunc.php');
+    date_default_timezone_set('Asia/Jakarta');
+    require_once('../../assets/inc/config.php');
+    require_once('../../assets/inc/publicfunc.php');
 
-if (isset($_GET['id_supplier'])){
-	$id_supplier=$_GET['id_supplier'];
-	$id_negara=$_GET['id_negara'];
-	$id_prov=$_GET['id_prov'];
-	$id_kab=$_GET['id_kab'];
-	$id_kec=$_GET['id_kec'];
-	$id_kel=$_GET['id_kel'];
-} else {
-	die();
-}
-$sql=mysqli_query($con, "SELECT * FROM supplier WHERE id_supplier='$id_supplier'");
-$row=mysqli_fetch_array($sql);
+    if (isset($_GET['id_supplier'])){
+        $id_supplier=$_GET['id_supplier'];
+        $id_negara=$_GET['id_negara'];
+        $id_prov=$_GET['id_prov'];
+        $id_kab=$_GET['id_kab'];
+        $id_kec=$_GET['id_kec'];
+        $id_kel=$_GET['id_kel'];
+    } else {
+        die();
+    }
+    $sql=mysqli_query($con, "SELECT * FROM supplier WHERE id_supplier='$id_supplier'");
+    $row=mysqli_fetch_array($sql);
 ?>
 <input type="hidden" name="id_supplier" value="<?php echo $id_supplier ?>">
 <div class="col-sm-12">
