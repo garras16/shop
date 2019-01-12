@@ -394,12 +394,11 @@ tagihan debt collector, retur jual masih error ( cek lg pembayaran nota pake ret
 
 
 
-admin app, setoran, jika debt collector setor 0, maka status bayar jd belum bayar	OK	-
-
-admin web, penagihan_2, status bayar tidak sinkron					OK	-
-
-histori penagihan, view utk 3bln terakhir (semua status)				OK	-
-
+- admin app, setoran, jika debt collector setor 0, maka status bayar jd belum bayar,
+maka uang yg disetor boleh lebih gak boleh kurang bayar	dr jml uang dibayar			
+- jika debt collctor sudah scan toko, update status belum tagih ke belum bayar		
+- admin web, penagihan_2, status bayar tidak sinkron					OK	
+- histori penagihan, view utk 3bln terakhir (semua status)				OK	
 
 
 - jika sales sudah memproses 1 tagihan, maka tak bisa dibatalkan				
@@ -443,7 +442,7 @@ warna di janji berikutnya jadi merah							OK
 
 
 
-- bayar nota jual giro, sisa piutang berkurang saat pencairan				OK	-
+- bayar nota jual giro, sisa piutang berkurang saat pencairan				OK	
 
 
 
@@ -464,8 +463,7 @@ retur jual										OK
 jumlah jual, jumlah retur jual								OK
 - debt collector, tagihan, jika bayar retur tidak dihitung di tagihan_2			OK	-
 
-- debt collector, tagihan_2 (pembayaran tagihan), portrait				OK	-
-
+- debt collector, tagihan_2 (pembayaran tagihan), portrait				OK	
 - pembelian, samping diskon nota beli, diberi keterangan kecil: "tidak mempengaruhi
 
 harga modal" (beri icon kecil, saat klik muncul notifikasi)				OK	
@@ -497,3 +495,17 @@ tak paham)										OK
 * penjualan ada ppn (boleh kosong / 0)							*	
 
 - penjualan, tampilan info bawah, rata kiri						OK	-
+
+tutup harian
+- muncul ringkasan yg berisi:
+	1. jumlah nota yg ditagih
+	2. jumlah nota yg dibayar
+	3. jumlah nota yg disetor
+	4. jumlah nota yg tidak dibayar
+	5. jumlah nota yg tidak disetor
+	6. jumlah uang yg ditagih
+	7. jumlah uang yg dibayar
+	8. jumlah uang yg disetor
+	9. jumlah uang yg tidak dibayar
+	10. jumlah uang yg tidak disetor
+- 1 hari hanya 1x tutup harian

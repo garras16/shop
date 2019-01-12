@@ -78,7 +78,7 @@ while ($row2=mysqli_fetch_array($sql2)){
 	}
 }
 
-$sql2=mysqli_query($con, "SELECT SUM(bayar) AS jumlah_bayar
+$sql2=mysqli_query($con, "SELECT *,SUM(bayar) AS jumlah_bayar
 FROM
     penagihan_detail
     INNER JOIN jual 
