@@ -34,7 +34,7 @@ FROM
 WHERE beli.id_beli=$id");
 $total_datang=0;
 while ($row=mysqli_fetch_array($sql3)){
-	$diskon1=$row['harga']*$row['diskon_persen']/100;
+	$diskon1=$row['harga']*($row['diskon_persen']/100);
 	$tot_set_disk_1=$row['qty_di_rak']*($row['harga']-$diskon1);
 	$diskon2=($row['harga']-$diskon1)*$row['diskon_persen_2']/100;
 	$tot_set_disk_2=$row['qty_di_rak']*($row['harga']-$diskon1-$diskon2);
