@@ -79,16 +79,16 @@ if ($row['status']=='1'){
 } else {
 	$status="";
 }
-	echo '			<tr>
-						<td align="center">' .date("d-m-Y", strtotime($row['tgl_bayar'])). '</td>
-						<td align="center">' .$row['no_nota_beli']. '</td>
-						<td align="center">' .$row['nama_supplier']. '</td>
-						<td align="center">' .$row['jenis']. '</td>
-						<td align="right">' .format_uang($row['jumlah']). '</td>
-						<td align="right"></td>
-						<td align="center">' .$status. '</td>
-						<td align="center"><a href="?page=pembelian&mode=bayar_nota&del=' .$row['id_bayar']. '" class="btn btn-primary btn-xs"><i class="fa fa-trash"></i></a></td>
-					</tr>';
+	echo '<tr>
+			<td align="center">' .date("d-m-Y", strtotime($row['tgl_bayar'])). '</td>
+			<td align="center">' .$row['no_nota_beli']. '</td>
+			<td align="center">' .$row['nama_supplier']. '</td>
+            <td align="center">' .$row['jenis']. '</td>
+            <td align="right">' .format_uang($row['jumlah']). '</td>
+            <td align="right"></td>
+            <td align="center">' .$status. '</td>
+            <td align="center"><a href="?page=pembelian&mode=bayar_nota&del=' .$row['id_bayar']. '" class="btn btn-primary btn-xs"><i class="fa fa-trash"></i></a></td>
+        </tr>';
 }
 ?>
 

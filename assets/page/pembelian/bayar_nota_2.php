@@ -232,13 +232,13 @@ $id_beli=$row['id_beli'];
                                         <i class="fa fa-money fa-fw"></i><br>
                                         <small>Pembayaran</small>
                                     </span>
-                                <?php
-if ($jenis=='Retur'){
-	echo '						<input class="form-control" id="jumlah_bayar" style="padding: 20px 15px;" name="jumlah_bayar" value="0" placeHolder="Jumlah Bayar (Rp)" readonly>';
-} else {
-	echo '						<input class="form-control" id="jumlah_bayar" style="padding: 20px 15px;" name="jumlah_bayar" value=""  autofocus placeHolder="Jumlah Bayar (Rp)" required>
-								<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>';
-}
+<?php
+    if ($jenis=='Retur'){
+        echo '<input class="form-control" id="jumlah_bayar" style="padding: 20px 15px;" name="jumlah_bayar" value="0" placeHolder="Jumlah Bayar (Rp)" readonly>';
+    } else {
+        echo '<input class="form-control" id="jumlah_bayar" style="padding: 20px 15px;" name="jumlah_bayar" value=""  autofocus placeHolder="Jumlah Bayar (Rp)" required>
+                <span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>';
+    }
 ?>
                                 </div>
                             </div>

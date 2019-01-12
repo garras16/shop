@@ -149,21 +149,21 @@ if ($row['status_konfirm']==0 or $row['status_konfirm']==5){
 } else {
 	$status_nota="";$style='';$style2='';
 }
-	echo '			<tr>
-						<td><a href="?page=penjualan&mode=view_detail&id=' .$row['id_jual']. '">' .$i. '</a></td>
-						<td><a href="?page=penjualan&mode=view_detail&id=' .$row['id_jual']. '">' .date("d-m-Y", strtotime($row['tgl_nota'])). '</a></td>
-						<td><a href="?page=penjualan&mode=view_detail&id=' .$row['id_jual']. '">' .$row['invoice']. '</a></td>
-						<td><a href="?page=penjualan&mode=view_detail&id=' .$row['id_jual']. '">' .$row['nama_pelanggan']. '</a></td>
-						<td><a href="?page=penjualan&mode=view_detail&id=' .$row['id_jual']. '">' .$row['nama_karyawan']. '</a></td>
-						<td><a class="' .$style2. '" href="?page=penjualan&mode=view_detail&id=' .$row['id_jual']. '">' .$status_cetak. '</a></td>
-						<td><a class="' .$style. '" href="?page=penjualan&mode=view_detail&id=' .$row['id_jual']. '">' .$status_nota. '</a></td>';
+	echo '<tr>
+			<td><a href="?page=penjualan&mode=view_detail&id=' .$row['id_jual']. '">' .$i. '</a></td>
+			<td><a href="?page=penjualan&mode=view_detail&id=' .$row['id_jual']. '">' .date("d-m-Y", strtotime($row['tgl_nota'])). '</a></td>
+			<td><a href="?page=penjualan&mode=view_detail&id=' .$row['id_jual']. '">' .$row['invoice']. '</a></td>
+			<td><a href="?page=penjualan&mode=view_detail&id=' .$row['id_jual']. '">' .$row['nama_pelanggan']. '</a></td>
+			<td><a href="?page=penjualan&mode=view_detail&id=' .$row['id_jual']. '">' .$row['nama_karyawan']. '</a></td>
+			<td><a class="' .$style2. '" href="?page=penjualan&mode=view_detail&id=' .$row['id_jual']. '">' .$status_cetak. '</a></td>
+			<td><a class="' .$style. '" href="?page=penjualan&mode=view_detail&id=' .$row['id_jual']. '">' .$status_nota. '</a></td>';
 	$sql2=mysqli_query($con, "SELECT * FROM jual WHERE id_jual NOT IN (SELECT id_jual FROM canvass_siap_kirim) AND id_jual NOT IN (SELECT id_jual FROM nota_siap_kirim) AND id_jual=" .$row['id_jual']);
 	if (mysqli_num_rows($sql2)>0 && $_SESSION['posisi']=="OWNER"){
-		echo '			<td align="center"><a href="?page=penjualan&mode=penjualan&del=' .$row['id_jual']. '" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> HAPUS</a></td>';
+		echo '<td align="center"><a href="?page=penjualan&mode=penjualan&del=' .$row['id_jual']. '" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> HAPUS</a></td>';
 	} else {
-		echo '			<td></td>';
+		echo '<td></td>';
 	}
-	echo '			</tr>';
+	echo '</tr>';
 }
 ?>
 
