@@ -1,29 +1,29 @@
 
     <!-- Bootstrap -->
     <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- FastClick >
+    <!-- FastClick -->
     <script src="../vendors/fastclick/lib/fastclick.js"></script>
-    <!-- NProgress >
+    <!-- NProgress -->
     <script src="../vendors/nprogress/nprogress.js"></script>
-    <!-- Chart.js >
+    <!-- Chart.js -->
     <script src="../vendors/Chart.js/dist/Chart.min.js"></script>
-    <!-- gauge.js >
+    <!-- gauge.js -->
     <script src="../vendors/gauge.js/dist/gauge.min.js"></script>
 	<!-- SELECT2 -->
     <script src="../vendors/select2/dist/js/select2.full.min.js"></script>
     <!-- bootstrap-progressbar -->
     <script src="../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-    <!-- iCheck >
+    <!-- iCheck -->
     <script src="../vendors/iCheck/icheck.min.js"></script>
-    <!-- Skycons >
+    <!-- Skycons -->
     <script src="../vendors/skycons/skycons.js"></script>
-    <!-- Flot >
+    <!-- Flot -->
     <script src="../vendors/Flot/jquery.flot.js"></script>
     <script src="../vendors/Flot/jquery.flot.pie.js"></script>
     <script src="../vendors/Flot/jquery.flot.time.js"></script>
     <script src="../vendors/Flot/jquery.flot.stack.js"></script>
     <script src="../vendors/Flot/jquery.flot.resize.js"></script>
-    <!-- Flot plugins >
+    <!-- Flot plugins -->
     <script src="../vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
     <script src="../vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
     <script src="../vendors/flot.curvedlines/curvedLines.js"></script>
@@ -31,7 +31,7 @@
     <script src="../vendors/DateJS/build/date.js"></script>
 	<!-- Magnific PopUp -->
 	<script src="../vendors/magnific-popup/jquery.magnific-popup.min.js"></script>
-    <!-- JQVMap >
+    <!-- JQVMap -->
     <script src="../vendors/jqvmap/dist/jquery.vmap.js"></script>
     <script src="../vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
     <script src="../vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
@@ -40,7 +40,7 @@
     <script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
 	<!-- Date Picker -->
 	<script src="../vendors/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-	<!-- jQuery Tags Input >
+	<!-- jQuery Tags Input -->
     <script src="../vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
 	<!-- jQuery Input Mask -->
 	<script src="../vendors/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>

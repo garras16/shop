@@ -14,9 +14,9 @@
     <!-- Font Awesome -->
     <link href="../vendors/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet">
 	<link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress >
+    <!-- NProgress -->
     <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
-    <!-- iCheck >
+    <!-- iCheck -->
     <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
 	<!-- DataTable -->
     <link href="../vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
@@ -27,7 +27,7 @@
 	<link href="../vendors/magnific-popup/magnific-popup.css" rel="stylesheet">
     <!-- bootstrap-progressbar -->
     <link href="../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
-    <!-- JQVMap >
+    <!-- JQVMap -->
     <link href="../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
 	<!-- Date picker -->
 	<link rel="stylesheet" href="../vendors/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
