@@ -13,7 +13,19 @@ $row=mysqli_fetch_array($sql);
 ?>
 <input type="hidden" name="id_negara" value="<?php echo $id ?>">
 <div class="input-group">
-	<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i><br><small>Nama</small></span>
-	<input class="form-control" placeHolder="Nama Negara" name="negara" style="padding: 20px 15px;" value="<?php echo $row['nama_negara']; ?>" maxlength="40" required>
-	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
+    <span class="input-group-addon">
+        <i class="fa fa-tag fa-fw"></i><br>
+        <small>Nama</small>
+    </span>
+    <input
+        class="form-control"
+        placeholder="Nama Negara"
+        name="negara"
+        style="padding: 20px 15px;"
+        value="<?php echo $row['nama_negara']; ?>"
+        maxlength="40"
+        required="required">
+    <span class="input-group-addon">
+        <i class="fa fa-star fa-fw" style="color:red"></i>
+    </span>
 </div>

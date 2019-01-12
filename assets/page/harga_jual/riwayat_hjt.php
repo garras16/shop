@@ -25,49 +25,74 @@
 		barang_supplier.id_barang_supplier=$id AND pelanggan.id_pelanggan=$id_pelanggan");
 	$row=mysqli_fetch_array($sql);
 	?>
-	
-	<!-- page content -->
-	<div class="right_col" role="main">
-		<div class="">
-			<div class="row">
-				<div class="col-md-12 col-sm-12 col-xs-12">
-					<div class="x_panel">
-						<div class="x_title">
-							<h3>RIWAYAT HARGA JUAL TUNAI</h3>
-							<?php
+
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h3>RIWAYAT HARGA JUAL TUNAI</h3>
+                        <?php
 								if (isset($pesan)){
 									echo '<span class="badge bg-' .$warna. '">' .$pesan. '</span>';
 								}
 							?>
-							<div class="clearfix"></div>
-						</div>
-						
-						<div class="x_content">
-							<a class="btn btn-danger" href="?page=harga_jual&mode=view_detail&id=<?php echo $id_pelanggan ?>"><i class="fa fa-arrow-left"></i> Kembali</a>
-							<div class="clearfix"></div><br/>
-							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-user fa-fw"></i><br><small>Pelanggan</small></span>
-								<input class="form-control" style="padding: 20px 15px;" value="<?php echo $row['nama_pelanggan'] ?>" readonly="readonly">
-							</div>
-							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-archive fa-fw" style="width: 56px;"></i><br><small>Barang</small></span>
-								<input class="form-control" style="padding: 20px 15px;" value="<?php echo $row['nama_barang'] ?>" readonly="readonly" style="color:black">
-							</div>
-							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-building fa-fw" style="width: 56px;"></i><br><small>Supplier</small></span>
-								<input class="form-control" style="padding: 20px 15px;" value="<?php echo $row['nama_supplier'] ?>" readonly="readonly">
-							</div>
-							<div class="clearfix"></div><br/>
-					
-							<table id="table1" class="table table-bordered table-striped">
-								<thead>
-									<tr>
-										<th>Tanggal Mulai Berlaku</th>
-										<th>Harga Jual Tunai (Rp)</th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content">
+                        <a
+                            class="btn btn-danger"
+                            href="?page=harga_jual&mode=view_detail&id=<?php echo $id_pelanggan ?>">
+                            <i class="fa fa-arrow-left"></i>
+                            Kembali</a>
+                        <div class="clearfix"></div><br/>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-user fa-fw"></i><br>
+                                <small>Pelanggan</small>
+                            </span>
+                            <input
+                                class="form-control"
+                                style="padding: 20px 15px;"
+                                value="<?php echo $row['nama_pelanggan'] ?>"
+                                readonly="readonly">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-archive fa-fw" style="width: 56px;"></i><br>
+                                <small>Barang</small>
+                            </span>
+                            <input
+                                class="form-control"
+                                style="color:black"
+                                value="<?php echo $row['nama_barang'] ?>"
+                                readonly="readonly">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-building fa-fw" style="width: 56px;"></i><br>
+                                <small>Supplier</small>
+                            </span>
+                            <input
+                                class="form-control"
+                                style="padding: 20px 15px;"
+                                value="<?php echo $row['nama_supplier'] ?>"
+                                readonly="readonly">
+                        </div>
+                        <div class="clearfix"></div><br/>
+
+                        <table id="table1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Tanggal Mulai Berlaku</th>
+                                    <th>Harga Jual Tunai (Rp)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
 									$sql=mysqli_query($con, "SELECT tanggal, harga_jual FROM hj_tunai_detail WHERE id_barang_supplier=$id AND id_pelanggan=$id_pelanggan");
 
 									while($row=mysqli_fetch_array($sql)){
@@ -77,30 +102,44 @@
 											</tr>';
 									}
 									?>
-														
-								</tbody>
-							</table>
-							<form method="post">
-								<input type="hidden" name="tambah_harga_jual_tunai_post" value="true">
-								<div class="input-group">
-									<input type="tel" id="harga_jual" name="harga_jual" class="form-control" placeholder="Harga Jual Tunai (Rp)" required>
-									<span class="input-group-btn"><button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button></span>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		<!-- /page content -->
-        
-      	</div>
+
+                            </tbody>
+                        </table>
+                        <form method="post">
+                            <input type="hidden" name="tambah_harga_jual_tunai_post" value="true">
+                            <div class="input-group">
+                                <input
+                                    type="tel"
+                                    id="harga_jual"
+                                    name="harga_jual"
+                                    class="form-control"
+                                    placeholder="Harga Jual Tunai (Rp)"
+                                    required="required">
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fa fa-save"></i>
+                                        Simpan</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page content -->
+
     </div>
-	
+</div>
 
-
-	
 <script>
-$(document).ready(function(){
-	$('#harga_jual').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-})
+    $(document).ready(function () {
+        $('#harga_jual').inputmask('decimal', {
+            allowMinus: false,
+            autoGroup: true,
+            groupSeparator: '.',
+            rightAlign: false,
+            autoUnmask: true,
+            removeMaskOnSubmit: true
+        });
+    })
 </script>

@@ -12,41 +12,46 @@ if (isset($_GET['cari'])){
 ?>
 <!-- page content -->
 <div class="right_col" role="main">
-	<div class="container">
-		<div class="row">
-			<div class="col-xs-12">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
                 <div class="x_panel">
-					<div class="x_content">
-						<div class="col-xs-12" style="text-align:right">
-							<input type="text" id="datepicker" PlaceHolder="Bulan & Tahun" style="width:100px" readonly></input>
-							<input type="button" id="cari" onClick="cari()" value="Cari"></input>
-							<input type="button" id="reset" onClick="reset()" value="Reset"></input>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_content">
+                        <div class="col-xs-12" style="text-align:right">
+                            <input
+                                type="text"
+                                id="datepicker"
+                                placeholder="Bulan & Tahun"
+                                style="width:100px"
+                                readonly="readonly" />
+                            <input type="button" id="cari" onclick="cari()" value="Cari" />
+                            <input type="button" id="reset" onclick="reset()" value="Reset" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
-					<div class="x_title">
-						<h3>LAPORAN ARUS KAS</h3>
-						<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-			<div class="table-responsive">
-			<table id="table1" class="table table-bordered table-striped">
-				<thead>
-					<tr>
-						<th>Tanggal</th>
-						<th>Komponen</th>
-						<th>Keterangan</th>
-						<th>Uang Masuk (Rp)</th>
-						<th>Uang Keluar (Rp)</th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php
+                    <div class="x_title">
+                        <h3>LAPORAN ARUS KAS</h3>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="table-responsive">
+                            <table id="table1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Tanggal</th>
+                                        <th>Komponen</th>
+                                        <th>Keterangan</th>
+                                        <th>Uang Masuk (Rp)</th>
+                                        <th>Uang Keluar (Rp)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
 					$jumlah_masuk=0;$jumlah_keluar=0;
 					$sql=mysqli_query($con, "SELECT * FROM kas_kecil WHERE jenis='KELUAR' AND MONTH(tanggal)=$bln_sql AND YEAR(tanggal)=$thn_sql");
 					if (mysqli_num_rows($sql)>0) 
@@ -87,35 +92,32 @@ if (isset($_GET['cari'])){
 							  </tr>';
 					}
 					?>
-				</tbody>
-			</table>
-			</div>
-		</div>
-		<!-- /page content -->
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /page content -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 
 <script>
-function cari(){
-	var tanggal = $('#datepicker').val();
-	var url = "?page=laporan&mode=arus_kas&cari=" + tanggal;
-	if (tanggal!='') window.location=url;
+function cari() {
+    var tanggal = $('#datepicker').val();
+    var url = "?page=laporan&mode=arus_kas&cari=" + tanggal;
+    if (tanggal != '') 
+        window.location = url;
+    }
+function reset() {
+    var url = "?page=laporan&mode=arus_kas";
+    window.location = url;
 }
-function reset(){
-	var url = "?page=laporan&mode=arus_kas";
-	window.location=url;
-}
-$(document).ready(function(){
-	$('#datepicker').datepicker({
-		orientation: "bottom auto",
-		format: "mm-yyyy",
-		startView: 1,
-		minViewMode: 1,
-		autoclose: true
-	});
+$(document).ready(function () {
+    $('#datepicker').datepicker(
+        {orientation: "bottom auto", format: "mm-yyyy", startView: 1, minViewMode: 1, autoclose: true}
+    );
 });
 </script>

@@ -11,12 +11,10 @@ if (isset($_GET['id'])){
 
 ?>
 
-		<option value="" disabled selected>Pilih Varian</option>
-		<?php
-			$sql=mysqli_query($con, "SELECT * FROM varian_kendaraan WHERE nama_jenis='$id'");
-			while($rows=mysqli_fetch_array($sql)){
-				echo '<option value="' .$rows['id_varian']. '">' .$rows['nama_varian']. '</option>';
-			}
-		?>
-	
-
+<option value="" disabled="disabled" selected="selected">Pilih Varian</option>
+<?php
+	$sql=mysqli_query($con, "SELECT * FROM varian_kendaraan WHERE nama_jenis='$id'");
+	while($rows=mysqli_fetch_array($sql)){
+		echo '<option value="' .$rows['id_varian']. '">' .$rows['nama_varian']. '</option>';
+	}
+?>

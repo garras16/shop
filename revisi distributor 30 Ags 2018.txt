@@ -495,6 +495,7 @@ tak paham)										OK
 * penjualan ada ppn (boleh kosong / 0)							*	
 
 - penjualan, tampilan info bawah, rata kiri						OK	-
+<<<<<<< HEAD
 
 tutup harian
 - muncul ringkasan yg berisi:
@@ -509,3 +510,8 @@ tutup harian
 	9. jumlah uang yg tidak dibayar
 	10. jumlah uang yg tidak disetor
 - 1 hari hanya 1x tutup harian
+=======
+- Tabel, isi nya jangan sampe wrap kebawah, tabel jadi scroll samping gpp
+
+
+>>>>>>> 320e3f2724ca93e545c1f5a55be6c4ec8bd7517c

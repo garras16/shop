@@ -11,79 +11,120 @@ if (isset($id)){
 ?>
 <!-- page content -->
 <div class="right_col" role="main">
-	<div class="">
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="x_panel">
-					<div class="x_title">
-						<h3>CARI NOTA PENJUALAN</h3>
-						<?php
+    <div class="">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h3>CARI NOTA PENJUALAN</h3>
+                        <?php
 							if (isset($pesan)){
 								echo '<span class="badge bg-' .$warna. '">' .$pesan. '</span>';
 							}
 						?>
-					<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-			
-			<center>
-				<form action="" method="post">
-				<input type="hidden" name="cari_nota_retur_jual_post" value="true">
-				<div class="col-xs-6">
-					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-building fa-fw"></i><br><small>Pelanggan</small></span>
-						<input class="form-control" type="text" style="padding: 20px 15px;" name="pelanggan" placeHolder="Cari Pelanggan" value="<?php if (isset($pelanggan)) echo $pelanggan ?>" required>
-						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
-					</div>
-				</div>
-				<div class="col-xs-6">
-					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-file fa-fw"></i><br><small style="font-size: 10px;">Tgl. Nota Jual</small></span>
-						<input class="form-control" type="text" style="padding: 20px 15px;" name="tgl_nota" placeHolder="Cari Tanggal Nota Jual" value="<?php if (isset($tgl_nota)) echo $tgl_nota ?>">
-					</div>
-				</div>
-				<div class="col-xs-6">
-					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-truck fa-fw"></i><br><small>Tgl. Kirim</small></span>
-						<input class="form-control" type="text" style="padding: 20px 15px;" name="tgl_kirim" placeHolder="Cari Tanggal Kirim" value="<?php if (isset($tgl_kirim)) echo $tgl_kirim ?>">
-					</div>
-				</div>
-				<div class="col-xs-6">
-					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-bookmark fa-fw"></i><br><small>Barang</small></span>
-						<input class="form-control" type="text" style="padding: 20px 15px;" name="barang" placeHolder="Cari Barang" value="<?php if (isset($barang)) echo $barang ?>">
-					</div>
-				</div>
-				<div class="clearfix"></div>
-				<button class="btn btn-primary" type="submit"><i class="fa fa-search"></i> CARI NOTA</button>
-				</form>
-			</center>
-			<div class="clearfix"></div>
-			</div>
-			</div>
-			</div>
-		</div>
-		<!-- /page content -->
-		
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="x_panel">
-					<div id="table_content" class="x_content">
-						<table id="table2" class="table table-bordered table-striped">
-							<thead>
-								<tr>
-									<th>Tgl. Nota Jual</th>
-									<th>No Nota Jual</th>
-									<th>Nama Pelanggan</th>
-									<th>Pemeriksa Barang</th>
-									<th>Pengirim Barang</th>
-									<th>Tanggal Kirim</th>
-									<th>Status Pembayaran</th>
-									<th>Status Retur</th>
-								</tr>
-							</thead>
-							<tbody>
-<?php
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+
+                        <center>
+                            <form action="" method="post">
+                                <input type="hidden" name="cari_nota_retur_jual_post" value="true">
+                                <div class="col-xs-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-building fa-fw"></i><br>
+                                            <small>Pelanggan</small>
+                                        </span>
+                                        <input
+                                            class="form-control"
+                                            type="text"
+                                            style="padding: 20px 15px;"
+                                            name="pelanggan"
+                                            placeholder="Cari Pelanggan"
+                                            value="<?php if (isset($pelanggan)) echo $pelanggan ?>"
+                                            required="required">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-star fa-fw" style="color:red"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-file fa-fw"></i><br>
+                                            <small style="font-size: 10px;">Tgl. Nota Jual</small>
+                                        </span>
+                                        <input
+                                            class="form-control"
+                                            type="text"
+                                            style="padding: 20px 15px;"
+                                            name="tgl_nota"
+                                            placeholder="Cari Tanggal Nota Jual"
+                                            value="<?php if (isset($tgl_nota)) echo $tgl_nota ?>">
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-truck fa-fw"></i><br>
+                                            <small>Tgl. Kirim</small>
+                                        </span>
+                                        <input
+                                            class="form-control"
+                                            type="text"
+                                            style="padding: 20px 15px;"
+                                            name="tgl_kirim"
+                                            placeholder="Cari Tanggal Kirim"
+                                            value="<?php if (isset($tgl_kirim)) echo $tgl_kirim ?>">
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-bookmark fa-fw"></i><br>
+                                            <small>Barang</small>
+                                        </span>
+                                        <input
+                                            class="form-control"
+                                            type="text"
+                                            style="padding: 20px 15px;"
+                                            name="barang"
+                                            placeholder="Cari Barang"
+                                            value="<?php if (isset($barang)) echo $barang ?>">
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fa fa-search"></i>
+                                    CARI NOTA</button>
+                            </form>
+                        </center>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page content -->
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div id="table_content" class="x_content">
+                        <table id="table2" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Tgl. Nota Jual</th>
+                                    <th>No Nota Jual</th>
+                                    <th>Nama Pelanggan</th>
+                                    <th>Pemeriksa Barang</th>
+                                    <th>Pengirim Barang</th>
+                                    <th>Tanggal Kirim</th>
+                                    <th>Status Pembayaran</th>
+                                    <th>Status Retur</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php
 if (isset($cari_nota_retur_jual_post)){
 $val="pelanggan.nama_pelanggan LIKE '%" .$pelanggan. "%'";
 
@@ -161,15 +202,12 @@ FROM
 	}
 }
 ?>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- /page content -->
-      </div>
     </div>
-
-
-	
+</div>

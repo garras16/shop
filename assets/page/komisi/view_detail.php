@@ -45,34 +45,43 @@ $row=mysqli_fetch_array($sql);
 ?>
 <!-- page content -->
 <div class="right_col" role="main">
-	<div class="">
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
-					<div class="x_title">
-						<h3>MASTER KOMISI SALES</h3>
-						<h4>Detail Komisi - <?php echo $row['nama_karyawan'] ?></h4>
-							<?php
+                    <div class="x_title">
+                        <h3>MASTER KOMISI SALES</h3>
+                        <h4>Detail Komisi -
+                            <?php echo $row['nama_karyawan'] ?></h4>
+                        <?php
 							if (isset($pesan)){
 								echo '<span class="badge bg-' .$warna. '">' .$pesan. '</span><br/><br/>';
 							}
 							?>
-						<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-			<p align="left"><a href="?page=master&mode=komisi" class="btn btn-danger"><i class="fa fa-arrow-left"></i> Kembali</a></p>
-			
-			<p align="right"><button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah Jenjang</button></p>
-			<table id="table1" class="table table-bordered table-striped">
-				<thead>
-					<tr>
-						<th></th>
-						<th>PENJUALAN TOTAL (RP)</th>
-						<th>KOMISI PENJUALAN TUNAI (%)</th>
-					</tr>
-				</thead>
-				<tbody>
-<?php
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <p align="left">
+                            <a href="?page=master&mode=komisi" class="btn btn-danger">
+                                <i class="fa fa-arrow-left"></i>
+                                Kembali</a>
+                        </p>
+
+                        <p align="right">
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                <i class="fa fa-plus"></i>
+                                Tambah Jenjang</button>
+                        </p>
+                        <table id="table1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>PENJUALAN TOTAL (RP)</th>
+                                    <th>KOMISI PENJUALAN TUNAI (%)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
 $sql=mysqli_query($con, "SELECT * FROM komisi WHERE komisi.id_karyawan=$id");
 while ($row=mysqli_fetch_array($sql)){
 echo '	<tr>
@@ -90,127 +99,221 @@ echo '	<tr>
 			<td>' .format_uang($row['tunai']). '</a></td>
 		</tr>';
 }
-?>			
-					
-				</tbody>
-			</table>
-			
-			<div id="dummy"></div>
-			
-			
-			</div>
-			</div>
-			</div>
-			</div>
-		</div>
-		<!-- /page content -->
+?>
 
-        
-      </div>
+                            </tbody>
+                        </table>
+
+                        <div id="dummy"></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    <!-- /page content -->
+
+</div>
+</div>
 
 <!-- modal input -->
 <div id="myModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">Tambah Jenjang Komisi Tunai</h4>
-			</div>
-			<div class="modal-body">				
-				<form action="" method="post">
-					<input type="hidden" name="tambah_jenjang_post" value="true">
-					<div class="col-md-12">
-					<div class="input-group">
-						<span class="input-group-addon" style="width: 85px;"><small>Target Min.</small></span>
-						<input id="target_awal" name="target_awal" class="form-control" type="text" placeholder="Target Penjualan Minimum (Rp)" required>
-						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
-					</div>
-					<div class="input-group">
-						<span class="input-group-addon" style="width: 85px;"><small>Target Max.</small></span>
-						<input id="target_akhir" type="text" name="target_akhir" class="form-control" placeholder="Target Penjualan Maksimum (Rp)" required>
-						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
-					</div>
-					<div class="input-group">
-						<span class="input-group-addon" style="width: 85px;"><small>Komisi (%&nbsp;)</small></span>
-						<input id="tunai" name="tunai" type="text" class="form-control" placeholder="Komisi Penjualan Tunai (%)" maxlength="6" required>
-						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
-					</div>
-					</div>
-					<div class="modal-footer">
-						<input type="submit" class="btn btn-primary" value="Simpan">
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>	
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Tambah Jenjang Komisi Tunai</h4>
+        </div>
+        <div class="modal-body">
+            <form action="" method="post">
+                <input type="hidden" name="tambah_jenjang_post" value="true">
+                <div class="col-md-12">
+                    <div class="input-group">
+                        <span class="input-group-addon" style="width: 85px;">
+                            <small>Target Min.</small>
+                        </span>
+                        <input
+                            id="target_awal"
+                            name="target_awal"
+                            class="form-control"
+                            type="text"
+                            placeholder="Target Penjualan Minimum (Rp)"
+                            required="required">
+                        <span class="input-group-addon">
+                            <i class="fa fa-star fa-fw" style="color:red"></i>
+                        </span>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" style="width: 85px;">
+                            <small>Target Max.</small>
+                        </span>
+                        <input
+                            id="target_akhir"
+                            type="text"
+                            name="target_akhir"
+                            class="form-control"
+                            placeholder="Target Penjualan Maksimum (Rp)"
+                            required="required">
+                        <span class="input-group-addon">
+                            <i class="fa fa-star fa-fw" style="color:red"></i>
+                        </span>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" style="width: 85px;">
+                            <small>Komisi (%&nbsp;)</small>
+                        </span>
+                        <input
+                            id="tunai"
+                            name="tunai"
+                            type="text"
+                            class="form-control"
+                            placeholder="Komisi Penjualan Tunai (%)"
+                            maxlength="6"
+                            required="required">
+                        <span class="input-group-addon">
+                            <i class="fa fa-star fa-fw" style="color:red"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="Simpan">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
 
 <!-- modal input -->
 <div id="myModal2" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">Ubah Data Jenjang Komisi Tunai</h4>
-			</div>
-			<div class="modal-body">				
-				<form action="" method="post">
-					<input type="hidden" name="edit_jenjang_post" value="true">
-					<input type="hidden" id="id_komisi" name="id_komisi" value="">
-					<div class="col-md-12">
-					<div class="input-group">
-						<span class="input-group-addon" style="width: 85px;"><small>Target Min.</small></span>
-						<input id="target_awal_2" name="target_awal" class="form-control" type="text" placeholder="Target Penjualan Minimum (Rp)" required>
-						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
-					</div>
-					<div class="input-group">
-						<span class="input-group-addon" style="width: 85px;"><small>Target Max.</small></span>
-						<input id="target_akhir_2" name="target_akhir" class="form-control" placeholder="Target Penjualan Maksimum (Rp)" required>
-						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
-					</div>
-					<div class="input-group">
-						<span class="input-group-addon" style="width: 85px;"><small>Komisi (%&nbsp;)</small></span>
-						<input id="tunai_2" name="tunai" onchange="handleChange(this);" class="form-control" type="text" placeholder="Komisi Penjualan Tunai (%)" maxlength="5" required>
-						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
-					</div>
-					</div>
-					<div class="modal-footer">
-						<input type="submit" class="btn btn-primary" value="Simpan">
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Ubah Data Jenjang Komisi Tunai</h4>
+        </div>
+        <div class="modal-body">
+            <form action="" method="post">
+                <input type="hidden" name="edit_jenjang_post" value="true">
+                <input type="hidden" id="id_komisi" name="id_komisi" value="">
+                <div class="col-md-12">
+                    <div class="input-group">
+                        <span class="input-group-addon" style="width: 85px;">
+                            <small>Target Min.</small>
+                        </span>
+                        <input
+                            id="target_awal_2"
+                            name="target_awal"
+                            class="form-control"
+                            type="text"
+                            placeholder="Target Penjualan Minimum (Rp)"
+                            required="required">
+                        <span class="input-group-addon">
+                            <i class="fa fa-star fa-fw" style="color:red"></i>
+                        </span>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" style="width: 85px;">
+                            <small>Target Max.</small>
+                        </span>
+                        <input
+                            id="target_akhir_2"
+                            name="target_akhir"
+                            class="form-control"
+                            placeholder="Target Penjualan Maksimum (Rp)"
+                            required="required">
+                        <span class="input-group-addon">
+                            <i class="fa fa-star fa-fw" style="color:red"></i>
+                        </span>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" style="width: 85px;">
+                            <small>Komisi (%&nbsp;)</small>
+                        </span>
+                        <input
+                            id="tunai_2"
+                            name="tunai"
+                            onchange="handleChange(this);"
+                            class="form-control"
+                            type="text"
+                            placeholder="Komisi Penjualan Tunai (%)"
+                            maxlength="5"
+                            required="required">
+                        <span class="input-group-addon">
+                            <i class="fa fa-star fa-fw" style="color:red"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="Simpan">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </div>
 <script>
-function deleteRow(r,ID){
-	$('#dummy').load('assets/page/komisi/delete.php?id=' + ID);
+function deleteRow(r, ID) {
+    $('#dummy').load('assets/page/komisi/delete.php?id=' + ID);
     var i = r.parentNode.parentNode.rowIndex;
-    document.getElementById("table1").deleteRow(i);
+    document
+        .getElementById("table1")
+        .deleteRow(i);
 }
 function handleChange(input) {
-    if (input.value < 0) input.value = 0;
-    if (input.value > 100) input.value = 100;
-}
-$(document).ready(function(){
-	$('#tunai').numeric({decimalPlaces: 2, negative:false});
-	$('#tunai_2').numeric({decimalPlaces: 2, negative:false});
-	$('#target_awal').inputmask('currency', {prefix: "Rp ", allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, removeMaskOnSubmit: true});
-	$('#target_akhir').inputmask('currency', {prefix: "Rp ", allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});/*
+    if (input.value < 0) 
+        input.value = 0;
+    if (input.value > 100) 
+        input.value = 100;
+    }
+$(document).ready(function () {
+    $('#tunai').numeric({decimalPlaces: 2, negative: false});
+    $('#tunai_2').numeric({decimalPlaces: 2, negative: false});
+    $('#target_awal').inputmask('currency', {
+        prefix: "Rp ",
+        allowMinus: false,
+        autoGroup: true,
+        groupSeparator: '.',
+        rightAlign: false,
+        removeMaskOnSubmit: true
+    });
+    $('#target_akhir').inputmask('currency', {
+        prefix: "Rp ",
+        allowMinus: false,
+        autoGroup: true,
+        groupSeparator: '.',
+        rightAlign: false,
+        autoUnmask: true,
+        removeMaskOnSubmit: true
+    });/*
 	$('#tunai').inputmask('decimal', {allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true, max: 100});*/
-	$('#target_awal_2').inputmask('currency', {prefix: "Rp ", allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, removeMaskOnSubmit: true});
-	$('#target_akhir_2').inputmask('currency', {prefix: "Rp ", allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});/*
+    $('#target_awal_2').inputmask('currency', {
+        prefix: "Rp ",
+        allowMinus: false,
+        autoGroup: true,
+        groupSeparator: '.',
+        rightAlign: false,
+        removeMaskOnSubmit: true
+    });
+    $('#target_akhir_2').inputmask('currency', {
+        prefix: "Rp ",
+        allowMinus: false,
+        autoGroup: true,
+        groupSeparator: '.',
+        rightAlign: false,
+        autoUnmask: true,
+        removeMaskOnSubmit: true
+    });/*
 	$('#tunai_2').inputmask('decimal', {allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true, max: 100});*/
-	$('#myModal2').on('show.bs.modal', function(e){
-		var id = $(e.relatedTarget).data('id');
-		var awal = $(e.relatedTarget).data('awal');
-		var akhir = $(e.relatedTarget).data('akhir');
-		var tunai = $(e.relatedTarget).data('tunai');
-		$('#id_komisi').val(id);
-		$('#target_awal_2').val(awal);
-		$('#target_akhir_2').val(akhir);
-		$('#tunai_2').val(tunai);
-	});
+    $('#myModal2').on('show.bs.modal', function (e) {
+        var id = $(e.relatedTarget).data('id');
+        var awal = $(e.relatedTarget).data('awal');
+        var akhir = $(e.relatedTarget).data('akhir');
+        var tunai = $(e.relatedTarget).data('tunai');
+        $('#id_komisi').val(id);
+        $('#target_awal_2').val(awal);
+        $('#target_akhir_2').val(akhir);
+        $('#tunai_2').val(tunai);
+    });
 });
 </script>

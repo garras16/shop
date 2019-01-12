@@ -3,7 +3,7 @@ $id_karyawan=$_SESSION['id_karyawan'];
 if (isset($batal_penagihan_post)){
 	foreach ($id_penagihan as $key => $value) {
 		$sql=mysqli_query($con, "SELECT * FROM penagihan_detail WHERE id_penagihan=" .$value. " AND status_bayar<3");
-		if (mysql_num_rows($sql)==0){
+		if (mysqli_num_rows($sql)==0){
 			$sql=mysqli_query($con, "DELETE FROM penagihan WHERE id_penagihan=" .$value);
 			$sql=mysqli_query($con, "DELETE FROM penagihan_detail WHERE id_penagihan=" .$value);
 		} else {
@@ -14,48 +14,67 @@ if (isset($batal_penagihan_post)){
 }
 ?>
 <div class="right_col loading" role="main">
-	<div class="">
-	
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="x_panel">
-					<div class="x_title">
-						<div class="col-md-6">
-							<h3>PENAGIHAN</h3>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-				
-						<div class="" role="tabpanel">
-						  <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-							<li role="presentation" class="active"><a href="#tab_content1" id="tab1" role="tab" data-toggle="tab" aria-expanded="true">Nota Jual Jatuh Tempo</a>
-							</li>
-							<li role="presentation" class=""><a href="#tab_content2" role="tab" id="tab2" data-toggle="tab" aria-expanded="false">Penagihan</a>
-							</li>
-						  </ul>
-						  <div id="myTabContent" class="tab-content">
-							<div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="tab1">
-								
-								<div class="table-responsive">
-								<table id="table1" class="table table-bordered table-striped">
-									<thead>
-										<tr>
-											<th>Tgl Nota Jual</th>
-											<th>No Nota Jual</th>
-											<th>Nama Sales</th>
-											<th>Nama Driver</th>
-											<th>Nama Pelanggan</th>
-											<th>Jumlah Jual (Rp)</th>
-											<th>Sisa Plafon (Rp)</th>
-											<th>Tipe Nota</th>
-											<th>Tgl Jatuh Tempo</th>
-											<th>Tgl Kunjungan Berikutnya</th>
-											<th>Sisa Piutang (Rp)</th>
-										</tr>
-									</thead>
-									<tbody>
-<?php
+    <div class="">
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <div class="col-md-6">
+                            <h3>PENAGIHAN</h3>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+
+                        <div class="" role="tabpanel">
+                            <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                                <li role="presentation" class="active">
+                                    <a
+                                        href="#tab_content1"
+                                        id="tab1"
+                                        role="tab"
+                                        data-toggle="tab"
+                                        aria-expanded="true">Nota Jual Jatuh Tempo</a>
+                                </li>
+                                <li role="presentation" class="">
+                                    <a
+                                        href="#tab_content2"
+                                        role="tab"
+                                        id="tab2"
+                                        data-toggle="tab"
+                                        aria-expanded="false">Penagihan</a>
+                                </li>
+                            </ul>
+                            <div id="myTabContent" class="tab-content">
+                                <div
+                                    role="tabpanel"
+                                    class="tab-pane fade active in"
+                                    id="tab_content1"
+                                    aria-labelledby="tab1">
+
+                                    <div class="table-responsive">
+                                        <table
+                                            id="table1"
+                                            class="table table-bordered table-striped"
+                                            style="width: 1500px;">
+                                            <thead>
+                                                <tr>
+                                                    <th>Tgl Nota Jual</th>
+                                                    <th>No Nota Jual</th>
+                                                    <th>Nama Sales</th>
+                                                    <th>Nama Driver</th>
+                                                    <th>Nama Pelanggan</th>
+                                                    <th>Jumlah Jual (Rp)</th>
+                                                    <th>Sisa Plafon (Rp)</th>
+                                                    <th>Tipe Nota</th>
+                                                    <th>Tgl Jatuh Tempo</th>
+                                                    <th>Tgl Kunjungan Berikutnya</th>
+                                                    <th>Sisa Piutang (Rp)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php
 	$sql=mysqli_query($con, "SELECT *
 FROM
     jual
@@ -182,28 +201,32 @@ if ($row2['tgl_janji_next']!=''){
 			</tr>';
 	}
 ?>
-									</tbody>
-								</table>
-								</div>
-							</div>
-							<div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="tab2">
-							<form method="post" onsubmit="return cek_valid2()">
-			  <input type="hidden" name="batal_penagihan_post" value="true">
-			  <center><input class="btn btn-primary" type="submit" value="Batalkan Penagihan"></center><br/>
-							
-							  <div class="table-responsive">
-							  <table id="table_siap_tagih" class="table table-bordered table-striped">
-									<thead>
-										<tr>
-											<th>Pilih</th>
-											<th>Tgl Tagih</th>
-											<th>Total Nilai Tagihan (Rp)</th>
-											<th>Debt Collector</th>
-											<th>Total Bayar (Rp)</th>
-										</tr>
-									</thead>
-									<tbody>
-<?php
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div
+                                    role="tabpanel"
+                                    class="tab-pane fade"
+                                    id="tab_content2"
+                                    aria-labelledby="tab2">
+                                    <form method="post" onsubmit="return cek_valid2()">
+                                        <input type="hidden" name="batal_penagihan_post" value="true">
+                                        <center><input class="btn btn-primary" type="submit" value="Batalkan Penagihan"></center><br/>
+
+                                        <div class="table-responsive">
+                                            <table id="table_siap_tagih" class="table table-bordered table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Pilih</th>
+                                                        <th>Tgl Tagih</th>
+                                                        <th>Total Nilai Tagihan (Rp)</th>
+                                                        <th>Debt Collector</th>
+                                                        <th>Total Bayar (Rp)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                <?php
 
 	$sql=mysqli_query($con, "SELECT *,SUM(bayar) AS bayar
 FROM
@@ -257,45 +280,43 @@ $total_jual=0;
 			</tr>';
 		
 	}
-?>										
-									</tbody>
-								</table>
-								</div>
-								</form>
-							</div>
-						  </div>
-						</div>
-			
-					</div>
-				</div>
-			<div id="dummy"></div>
-			</div>
-			</div>
-		</div>	
-	</div>
+?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div id="dummy"></div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 
 <script>
-function getBack(){
-	AndroidFunction.closeApp();
+function getBack() {
+    AndroidFunction.closeApp();
 }
-function cek_valid2(){
-	var len = $('#table_siap_tagih').find("input:checkbox:checked").length;
-	if (len == 0){
-		alert("Belum pilih nota.");
-		return false;
-	} else {
-		return true;
-	}
+function cek_valid2() {
+    var len = $('#table_siap_tagih')
+        .find("input:checkbox:checked")
+        .length;
+    if (len == 0) {
+        alert("Belum pilih nota.");
+        return false;
+    } else {
+        return true;
+    }
 }
-$(document).ready(function(){
-	$('#table_siap_tagih').DataTable({
-		"pageLength": 30,
-		"bPaginate": true,
-		"bLengthChange": false,
-		"scrollX": false,
-		"aaSorting": []
-	});
-	<?php if (isset($_GET['reset'])) echo "$('#tab2').click()"; ?>
+$(document).ready(function () {
+    $('#table_siap_tagih').DataTable(
+        {"pageLength": 30, "bPaginate": true, "bLengthChange": false, "scrollX": false, "aaSorting": []}
+    );
+    <?php if (isset($_GET['reset'])) echo "$('#tab2').click()"; ?>
 })
 </script>

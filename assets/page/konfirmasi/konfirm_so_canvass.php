@@ -58,24 +58,24 @@ FROM
  $tgl_so=$row4['tgl_lap'];
 ?>
 <div class="right_col loading" role="main">
-	<div class="">
-	
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="x_panel">
-					<div class="x_title">
-						<h3>KONFIRMASI STOCK OPNAME (CANVASS)</h3>
-						<?php
+    <div class="">
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h3>KONFIRMASI STOCK OPNAME (CANVASS)</h3>
+                        <?php
 							if (isset($pesan)){
 								echo '<span class="badge bg-' .$warna. '">' .$pesan. '</span>';
 							}
 						?>
-						<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-						<table class="table table-bordered table-striped">
-						<tbody>
-<?php
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <table class="table table-bordered table-striped">
+                            <tbody>
+                                <?php
 	echo '					<tr><td width="40%">Tanggal Canvass</td><td>' .date("d-m-Y", strtotime($tgl_canvass)). '</td></tr>
 							<tr><td width="40%">Tanggal Stock Opname</td><td>' .date("d-m-Y", strtotime($tgl_so)). '</td></tr>
 							<tr><td width="40%">Nama Mobil</td><td>' .$nama_mobil. '</td></tr>
@@ -87,21 +87,21 @@ FROM
 	}
 	echo '</tr>';
 ?>
-						</tbody>
-						</table>
-						
-						<div class="table-responsive">
-						<table class="table table-bordered table-striped">
-							<thead>
-								<tr>
-									<th>Nama Barang</th>
-									<th>Qty Sisa (Seharusnya)</th>
-									<th>Qty Sisa (Stock Opname)</th>
-									<th>Qty Selisih</th>
-								</tr>
-							</thead>
-							<tbody>
-<?php
+                            </tbody>
+                        </table>
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Nama Barang</th>
+                                        <th>Qty Sisa (Seharusnya)</th>
+                                        <th>Qty Sisa (Stock Opname)</th>
+                                        <th>Qty Selisih</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php
 	$sql=mysqli_query($con, "SELECT *
 FROM
     lap_stock_opname
@@ -125,59 +125,92 @@ FROM
 			</tr>';
 	}	
 ?>
-							</tbody>
-						</table>
-						</div>
-						<center><a href="?page=konfirmasi&mode=konfirm_so_canvass&act=terima&id=<?php echo $id. '&id_konfirm=' .$_GET['id_konfirm'] ?>" class="btn btn-primary"><i class="fa fa-thumbs-up"></i> TERIMA</a>
-						<a href="?page=konfirmasi&mode=konfirm_so_canvass&act=tolak&id=<?php echo $id. '&id_konfirm=' .$_GET['id_konfirm']; ?>" class="btn btn-danger"><i class="fa fa-thumbs-down"></i> TOLAK</a></center>
-					</div>
-				</div>
-			<div id="dummy"></div>
-			</div>
-		</div>	
-	</div>
+                                </tbody>
+                            </table>
+                        </div>
+                        <center>
+                            <a
+                                href="?page=konfirmasi&mode=konfirm_so_canvass&act=terima&id=<?php echo $id. '&id_konfirm=' .$_GET['id_konfirm'] ?>"
+                                class="btn btn-primary">
+                                <i class="fa fa-thumbs-up"></i>
+                                TERIMA</a>
+                            <a
+                                href="?page=konfirmasi&mode=konfirm_so_canvass&act=tolak&id=<?php echo $id. '&id_konfirm=' .$_GET['id_konfirm']; ?>"
+                                class="btn btn-danger">
+                                <i class="fa fa-thumbs-down"></i>
+                                TOLAK</a>
+                        </center>
+                    </div>
+                </div>
+                <div id="dummy"></div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- modal input -->
 <div id="myModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><div style="min-width:50px">&times;</div></button>
-				<h4 class="modal-title">Ubah Data Stock Opname</h4>
-			</div>
-			<div class="modal-body">				
-				<form action="" method="post">
-					<input type="hidden" name="edit_lap_stock_opname_post" value="true">
-					<input type="hidden" id="id_laporan_stock_opname" name="id_laporan_stock_opname" value="">
-					<input type="hidden" id="qty_sisa" name="qty_sisa" value="">
-					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-shopping-cart fa-fw"></i></span>
-						<input id="qty_cek" name="qty_cek" type="text" class="form-control" placeholder="Qty Periksa" required>
-						<span class="input-group-addon" id="satuan"></span>
-						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
-					</div>
-					<div class="modal-footer">
-						<input type="submit" class="btn btn-primary" value="Simpan">
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <div style="min-width:50px">&times;</div>
+                </button>
+                <h4 class="modal-title">Ubah Data Stock Opname</h4>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post">
+                    <input type="hidden" name="edit_lap_stock_opname_post" value="true">
+                    <input
+                        type="hidden"
+                        id="id_laporan_stock_opname"
+                        name="id_laporan_stock_opname"
+                        value="">
+                    <input type="hidden" id="qty_sisa" name="qty_sisa" value="">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-shopping-cart fa-fw"></i>
+                        </span>
+                        <input
+                            id="qty_cek"
+                            name="qty_cek"
+                            type="text"
+                            class="form-control"
+                            placeholder="Qty Periksa"
+                            required="required">
+                        <span class="input-group-addon" id="satuan"></span>
+                        <span class="input-group-addon">
+                            <i class="fa fa-star fa-fw" style="color:red"></i>
+                        </span>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" value="Simpan">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-$(document).ready(function(){
-	$('#qty_cek').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-	$('#myModal').on('show.bs.modal', function(e){
-		var id = $(e.relatedTarget).data('id');
-		var qty_cek = $(e.relatedTarget).data('qty_cek');
-		var qty_sisa = $(e.relatedTarget).data('qty_sisa');
-		var sat = $(e.relatedTarget).data('satuan');
-		$('#id_laporan_stock_opname').val(id);
-		$('#qty_cek').val(qty_cek);
-		$('#qty_sisa').val(qty_sisa);
-		$('#satuan').html(sat);
-	})
-})
+    $(document).ready(function () {
+        $('#qty_cek').inputmask('decimal', {
+            allowMinus: false,
+            autoGroup: true,
+            groupSeparator: '.',
+            rightAlign: false,
+            autoUnmask: true,
+            removeMaskOnSubmit: true
+        });
+        $('#myModal').on('show.bs.modal', function (e) {
+            var id = $(e.relatedTarget).data('id');
+            var qty_cek = $(e.relatedTarget).data('qty_cek');
+            var qty_sisa = $(e.relatedTarget).data('qty_sisa');
+            var sat = $(e.relatedTarget).data('satuan');
+            $('#id_laporan_stock_opname').val(id);
+            $('#qty_cek').val(qty_cek);
+            $('#qty_sisa').val(qty_sisa);
+            $('#satuan').html(sat);
+        })
+    })
 </script>

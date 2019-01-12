@@ -2,31 +2,31 @@
 $id_karyawan=$_SESSION['id_karyawan'];
 ?>
 <div class="right_col loading" role="main">
-	<div class="">
-	
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="x_panel">
-					<div class="x_title">
-						<div class="col-md-6">
-							<h3>RINGKASAN STOCK OPNAME (CANVASS)</h3>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-						<div class="table-responsive">
-						<table class="table table-bordered table-striped">
-							<thead>
-								<tr>
-									<th>Tgl Canvass</th>
-									<th>Tgl Stock Opname</th>
-									<th>Nama Mobil</th>
-									<th>No Pol</th>
-									<th>Nama Karyawan</th>
-								</tr>
-							</thead>
-							<tbody>
-<?php
+    <div class="">
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <div class="col-md-6">
+                            <h3>RINGKASAN STOCK OPNAME (CANVASS)</h3>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Tgl Canvass</th>
+                                        <th>Tgl Stock Opname</th>
+                                        <th>Nama Mobil</th>
+                                        <th>No Pol</th>
+                                        <th>Nama Karyawan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
 	$sql=mysqli_query($con, "SELECT canvass_keluar.id_canvass_keluar,tgl_lap,tanggal_canvass,nama_kendaraan,plat
 FROM
     lap_stock_opname
@@ -59,22 +59,20 @@ WHERE id_canvass_keluar=" .$row['id_canvass_keluar']);
 	}	
 
 ?>
-							</tbody>
-						</table>
-						</div>
-					</div>
-				</div>
-			<div id="dummy"></div>
-			</div>
-		</div>	
-	</div>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div id="dummy"></div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-function getBack(){
-	AndroidFunction.closeApp();
-}
-$(document).ready(function(){
-	
-})
+    function getBack() {
+        AndroidFunction.closeApp();
+    }
+    $(document).ready(function () {})
 </script>

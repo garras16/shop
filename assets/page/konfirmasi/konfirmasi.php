@@ -9,32 +9,33 @@ function getTipe($tipe){
 }
 ?>
 <div class="right_col loading" role="main">
-	<div class="">
-	
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="x_panel">
-					<div class="x_title">
-						<div class="col-md-6">
-							<h3>KONFIRMASI OWNER</h3>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-					<div class="x_content"><div class="alert alert-info">
-					  <strong>Klik kolom pada tabel untuk detail.</strong>
-					</div>
-					
-						<div class="table-responsive">
-						<table class="table table-bordered table-striped">
-							<thead>
-								<tr>
-									<th>Tgl Konfirmasi</th>
-									<th>Tipe</th>
-									<th>Deskripsi</th>
-								</tr>
-							</thead>
-							<tbody>
-<?php
+    <div class="">
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <div class="col-md-6">
+                            <h3>KONFIRMASI OWNER</h3>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="alert alert-info">
+                            <strong>Klik kolom pada tabel untuk detail.</strong>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Tgl Konfirmasi</th>
+                                        <th>Tipe</th>
+                                        <th>Deskripsi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
 	$sql=mysqli_query($con, "SELECT *,konfirm_owner.id_konfirm_owner
 FROM
     konfirm_owner
@@ -51,19 +52,17 @@ ORDER BY konfirm_owner.id_konfirm_owner DESC");
 	}	
 
 ?>
-							</tbody>
-						</table>
-						</div>
-					</div>
-				</div>
-			<div id="dummy"></div>
-			</div>
-		</div>	
-	</div>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div id="dummy"></div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-$(document).ready(function(){
-	
-})
+    $(document).ready(function () {})
 </script>

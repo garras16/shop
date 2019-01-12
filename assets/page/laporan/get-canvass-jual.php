@@ -10,16 +10,16 @@ if (isset($_GET['id'])){
 }
 ?>
 <table class="table table-bordered table-striped table9">
-	<thead>
-		<tr>
-			<th>Tgl Nota Jual</th>
-			<th>No Nota Jual</th>
-			<th>Nama Pelanggan</th>
-			<th>Total Jual (Rp)</th>
-		</tr>
-	</thead>
-	<tbody>
-		<?php
+    <thead>
+        <tr>
+            <th>Tgl Nota Jual</th>
+            <th>No Nota Jual</th>
+            <th>Nama Pelanggan</th>
+            <th>Total Jual (Rp)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
 		$sql=mysqli_query($con, "SELECT jual.id_jual,tgl_nota,invoice,nama_pelanggan,SUM(qty_ambil*harga) AS total_jual
 		FROM
 		    canvass_keluar
@@ -44,5 +44,5 @@ if (isset($_GET['id'])){
 				</tr>';
 		}
 		?>
-	</tbody>
+    </tbody>
 </table>

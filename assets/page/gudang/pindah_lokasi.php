@@ -1,33 +1,33 @@
 <div class="right_col" role="main">
-	<div class="">
-	
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="x_panel">
-					<div class="x_title">
-						<h3>PINDAH LOKASI</h3>
-						<?php
+    <div class="">
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h3>PINDAH LOKASI</h3>
+                        <?php
 							if (isset($pesan)){
 								echo '<span class="badge bg-' .$warna. '">' .$pesan. '</span>';
 							}
 						?>
-					<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-					<div class="alert alert-info">
-					  <strong>Klik kolom pada tabel untuk detail.</strong>
-					</div>
-					<div class="clearfix" style="margin-bottom: 20px;"></div>
-				<div class="table responsive">
-				<table id="table1" class="table table-bordered table-striped">
-				<thead>
-					<tr>
-						<th>Nama Barang</th>
-						<th>Total Stok</th>
-					</tr>
-				</thead>
-				<tbody>
-				<?php
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="alert alert-info">
+                            <strong>Klik kolom pada tabel untuk detail.</strong>
+                        </div>
+                        <div class="clearfix" style="margin-bottom: 20px;"></div>
+                        <div class="table responsive">
+                            <table id="table1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Nama Barang</th>
+                                        <th>Total Stok</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
 $sql=mysqli_query($con, "SELECT
     barang.id_barang
     , barang.nama_barang
@@ -61,51 +61,51 @@ if ($total!='')
 					</tr>';
 }
 ?>
-					
-				</tbody>
-			</table>
-			
-			</div>
-			</div>
-			<div id="dummy"></div>
-			</div>
-			</div>
-		</div>	
-	</div>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                    <div id="dummy"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- modal input -->
 <div id="myModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><div style="min-width:50px">&times;</div></button>
-				<h4 id="judul" class="modal-title">Detail Stok Barang</h4>
-			</div>
-			<div class="modal-body">				
-				<form action="" method="post">
-					<input type="hidden" name="edit_gudang_konfirm_beli_post" value="true">
-					<div style="overflow-x: auto">
-						<div id="get_content" class="col-md-12">
-							
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <div style="min-width:50px">&times;</div>
+                </button>
+                <h4 id="judul" class="modal-title">Detail Stok Barang</h4>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post">
+                    <input type="hidden" name="edit_gudang_konfirm_beli_post" value="true">
+                    <div style="overflow-x: auto">
+                        <div id="get_content" class="col-md-12"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
-
 <script>
-$(document).ready(function(){
-	$('#myModal').on('show.bs.modal', function(e){
-		var id = $(e.relatedTarget).data('id');
-		var nama = $(e.relatedTarget).data('nama');
-		$('#judul').html('Detail Stok Barang - ' + nama);
-		$('#get_content').load('assets/page/gudang/stok_detail.php?id=' + id,function(){
-			
-		});
-	});
-});
+    $(document).ready(function () {
+        $('#myModal').on('show.bs.modal', function (e) {
+            var id = $(e.relatedTarget).data('id');
+            var nama = $(e.relatedTarget).data('nama');
+            $('#judul').html('Detail Stok Barang - ' + nama);
+            $('#get_content').load(
+                'assets/page/gudang/stok_detail.php?id=' + id,
+                function () {}
+            );
+        });
+    });
 </script>
