@@ -23,8 +23,8 @@ if (isset($tambah_bayar_ekspedisi_post)){
 	$tarif=$row['tarif_ekspedisi'];
 	
 	$status=0;
-	if ($total_bayar>0) $status=1;
-	if ($tarif == $total_bayar) $status=2;
+	if ($total_bayar>0 && $total_bayar<$tarif) $status=1;
+	if ($tarif < $total_bayar) $status=2;
 	
 	$sql = mysqli_query($con, "UPDATE bayar_ekspedisi SET status=$status WHERE id_bayar_ekspedisi=$id_bayar_ekspedisi");
 	_direct("?page=ekspedisi&mode=bayar_hutang");
@@ -183,7 +183,10 @@ FROM
         ON (bayar_ekspedisi.id_bayar_ekspedisi = bayar_ekspedisi_detail.id_bayar_ekspedisi)
 WHERE id_beli=" .$b['id_beli']);
 $row2=mysqli_fetch_array($sql);
-$sisa_hutang=$b['tarif_ekspedisi']-$row2['total_bayar'];
+
+$sqll = mysqli_query($con, "SELECT tarif_ekspedisi FROM beli WHERE id_beli=".$b['id_beli']);
+$nilai = mysqli_fetch_array($sqll);
+$sisa_hutang=$nilai['tarif_ekspedisi']-$row2['total_bayar'];
 							?>
                             <option
                                 data-sisa="<?php echo $sisa_hutang; ?>"
@@ -233,11 +236,11 @@ function cek_valid() {
         .data('sisa');
     var jumlah_bayar = $('#jumlah_bayar').inputmask('unmaskedvalue');
 
-    if (jumlah_bayar == 0) {
+    if (jumlah_bayar <= 0) {
         alert("Jumlah Bayar harus lebih dari 0.");
         return false;
     }
-    if (jumlah_bayar > sisa_hutang) {
+    if (jumlah_bayar < sisa_hutang) {
         alert("Jumlah Bayar harus kurang dari sisa hutang.");
         return false;
     }
