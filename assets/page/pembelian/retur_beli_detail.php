@@ -308,7 +308,7 @@ if ($status=="1" || $locked){
                                 <div class="input-group">
                                     <span
                                         class="input-group-addon"
-                                        style="padding-left:0px;width:90px;text-align:left;color:#000; background: #fff; border: none; outline: none;">Total Jumlah Retur (Rp)</span>
+                                        style="padding-left:0px;width:90px;text-align:left;color:#000; background: #fff; border: none; outline: none;">Total Jumlah Retur</span>
                                     <span
                                         class="input-group-addon"
                                         style="padding:10px 0px;width:2px;text-align:left;color:#000; background: #fff; border: none; outline: none;">:</span>
@@ -594,6 +594,15 @@ WHERE id_beli=$id_beli");
             removeMaskOnSubmit: true
         });
         $('#harga_retur').inputmask('currency', {
+            prefix: "Rp ",
+            allowMinus: false,
+            autoGroup: true,
+            groupSeparator: '.',
+            rightAlign: false,
+            autoUnmask: true,
+            removeMaskOnSubmit: true
+        });
+        $('#total_retur').inputmask('currency', {
             prefix: "Rp ",
             allowMinus: false,
             autoGroup: true,

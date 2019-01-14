@@ -184,7 +184,7 @@ WHERE id_jual=$id");
                                 <div class="input-group">
                                     <span class="input-group-addon">
                                         <i class="fa fa-cut fa-fw"></i>
-                                        <small>Disc. Nota Jual (Rp)</small>
+                                        <small>Disc. Nota Jual</small>
                                     </span>
                                     <input
                                         id="diskon_nota"
@@ -293,7 +293,7 @@ $diskon_all_rp=($diskon_nota/100)*$total_jual;
                                         class="input-group-addon"
                                         style=" margin-left:10px; padding-left: 0px; width:90px;text-align:left; background: #fff;color:#000; border: none; outline: none;"
                                         ">
-                                        <small>Tot. Jual Set. Disc. (Rp)</small>
+                                        <small>Tot. Jual Set. Disc.</small>
                                     </span>
                                     <span
                                         class="input-group-addon"
@@ -303,7 +303,7 @@ $diskon_all_rp=($diskon_nota/100)*$total_jual;
                                     </span>
                                     <input
                                         class="form-control"
-                                        id="berat_2"
+                                        id="total_jual_2"
                                         style="border: none; background: #fff; outline: none;"
                                         name="berat"
                                         value="<?php echo format_uang($total_jual) ?>"
@@ -354,8 +354,7 @@ $diskon_all_rp=($diskon_nota/100)*$total_jual;
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon">
-                            <i class="fa fa-cut fa-fw"></i>
-                            Rp
+                            Nominal
                         </span>
                         <input
                             id="diskon_nota_rp"
@@ -376,21 +375,32 @@ $diskon_all_rp=($diskon_nota/100)*$total_jual;
 
 <script>
     $(document).ready(function () {
-        $('#total_jual').inputmask('decimal', {
+        $('#total_jual').inputmask('currency', {
+            prefix: "Rp ",
             allowMinus: false,
             autoGroup: true,
             groupSeparator: '.',
             rightAlign: false,
             removeMaskOnSubmit: true
         });
-        $('#diskon_nota').inputmask('decimal', {
+        $('#total_jual_2').inputmask('currency', {
+            prefix: "Rp ",
             allowMinus: false,
             autoGroup: true,
             groupSeparator: '.',
             rightAlign: false,
             removeMaskOnSubmit: true
         });
-        $('#diskon_nota_rp').inputmask('decimal', {
+        $('#diskon_nota').inputmask('currency', {
+            prefix: "Rp ",
+            allowMinus: false,
+            autoGroup: true,
+            groupSeparator: '.',
+            rightAlign: false,
+            removeMaskOnSubmit: true
+        });
+        $('#diskon_nota_rp').inputmask('currency', {
+            prefix: "Rp ",
             allowMinus: false,
             autoGroup: true,
             groupSeparator: '.',

@@ -403,7 +403,7 @@ $total_datang=$total_datang-($total_datang*($diskon_all_persen/100));
                                         </span>
                                         <input
                                             class="form-control"
-                                            id="diskon"
+                                            id="ppn"
                                             name="total"
                                             style="background: #fff; outline: none; border: none;"
                                             value="<?php echo format_uang($ppn_all_rp) ?>"
@@ -431,7 +431,7 @@ $total_datang=$total_datang-($total_datang*($diskon_all_persen/100));
                                         </span>
                                         <input
                                             class="form-control"
-                                            id="total_2"
+                                            id="total_2_2"
                                             style="background: #fff; outline: none; border: none;"
                                             name="total"
                                             value="<?php echo format_uang($total_datang) ?>"
@@ -827,6 +827,42 @@ WHERE
             autoUnmask: true,
             removeMaskOnSubmit: true
         });
+        $('#diskon').inputmask('currency', {
+            prefix: "Rp ",
+            allowMinus: false,
+            autoGroup: true,
+            groupSeparator: '.',
+            rightAlign: false,
+            autoUnmask: true,
+            removeMaskOnSubmit: true
+        });
+        $('#ppn').inputmask('currency', {
+            prefix: "Rp ",
+            allowMinus: false,
+            autoGroup: true,
+            groupSeparator: '.',
+            rightAlign: false,
+            autoUnmask: true,
+            removeMaskOnSubmit: true
+        });
+        $('#total_2').inputmask('currency', {
+            prefix: "Rp ",
+            allowMinus: false,
+            autoGroup: true,
+            groupSeparator: '.',
+            rightAlign: false,
+            autoUnmask: true,
+            removeMaskOnSubmit: true
+        });
+        $('#total_2_2').inputmask('currency', {
+            prefix: "Rp ",
+            allowMinus: false,
+            autoGroup: true,
+            groupSeparator: '.',
+            rightAlign: false,
+            autoUnmask: true,
+            removeMaskOnSubmit: true
+        });
         $('#harga').inputmask('currency', {
             prefix: "Rp ",
             allowMinus: false,
@@ -864,7 +900,8 @@ WHERE
         /*$('#diskon_persen_2_1').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#diskon_persen_2_2').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#diskon_persen_2_3').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});*/
-        $('#diskon_nota_rp').inputmask('decimal', {
+        $('#diskon_nota_rp').inputmask('currency', {
+            prefix: "Rp ",
             allowMinus: false,
             autoGroup: true,
             groupSeparator: '.',
