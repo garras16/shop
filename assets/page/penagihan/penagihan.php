@@ -65,12 +65,12 @@ if (isset($batal_penagihan_post)){
                                                     <th>Nama Sales</th>
                                                     <th>Nama Driver</th>
                                                     <th>Nama Pelanggan</th>
-                                                    <th>Jumlah Jual (Rp)</th>
-                                                    <th>Sisa Plafon (Rp)</th>
+                                                    <th>Jumlah Jual</th>
+                                                    <th>Sisa Plafon</th>
                                                     <th>Tipe Nota</th>
                                                     <th>Tgl Jatuh Tempo</th>
                                                     <th>Tgl Kunjungan Berikutnya</th>
-                                                    <th>Sisa Piutang (Rp)</th>
+                                                    <th>Sisa Piutang</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -192,12 +192,12 @@ if ($row2['tgl_janji_next']!=''){
 				<td align="center"><div style="min-width:70px">' .$row['nama_karyawan']. '</div></td>
 				<td align="center"><div style="min-width:70px">' .$nama_driver. '</div></td>
 				<td align="center"><div style="min-width:70px">' .$row['nama_pelanggan']. '</div></td>
-				<td align="center"><div style="min-width:70px">' .format_uang($total_jual). '</div></td>
-				<td align="center"><div style="min-width:70px;color:' .$color1. '">' .format_uang($sisa_plafon). '</div></td>
+				<td align="center"><div style="min-width:70px" class="uang">' .format_uang($total_jual). '</div></td>
+				<td align="center"><div style="min-width:70px;color:' .$color1. '" class="uang">' .format_uang($sisa_plafon). '</div></td>
 				<td align="center"><div style="min-width:70px">' .$tipe. '</div></td>
 				<td align="center"><div style="min-width:70px;color:' .$color2. '">' .date("d-m-Y",strtotime($tgl_jt_tempo)). '</div></td>
 				<td align="center"><div style="min-width:70px;color:' .$color3. '">' .$tgl_janji_next. '</div></td>
-				<td align="center"><div style="min-width:70px">' .format_uang($sisa_piutang). '</div></td>
+				<td align="center"><div style="min-width:70px" class="uang">' .format_uang($sisa_piutang). '</div></td>
 			</tr>';
 	}
 ?>
@@ -220,9 +220,9 @@ if ($row2['tgl_janji_next']!=''){
                                                     <tr>
                                                         <th>Pilih</th>
                                                         <th>Tgl Tagih</th>
-                                                        <th>Total Nilai Tagihan (Rp)</th>
+                                                        <th>Total Nilai Tagihan</th>
                                                         <th>Debt Collector</th>
-                                                        <th>Total Bayar (Rp)</th>
+                                                        <th>Total Bayar</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -274,9 +274,9 @@ $total_jual=0;
 		echo '<tr>
 				<td align="center"><input style="width: 20px; height: 20px;" type="checkbox" id="id_penagihan" name="id_penagihan[]" value="' .$row['id_penagihan']. '"></td>
 				<td align="center"><a href="?page=penagihan&mode=penagihan_2&id=' .$row['id_penagihan']. '"><div style="min-width:70px">' .date("d-m-Y",strtotime($row['tanggal_tagih'])). '</div></a></td>
-				<td align="center"><a href="?page=penagihan&mode=penagihan_2&id=' .$row['id_penagihan']. '"><div style="min-width:70px">' .format_uang($total_jual). '</div></a></td>
+				<td align="center"><a href="?page=penagihan&mode=penagihan_2&id=' .$row['id_penagihan']. '"><div style="min-width:70px" class="uang">' .format_uang($total_jual). '</div></a></td>
 				<td align="center"><a href="?page=penagihan&mode=penagihan_2&id=' .$row['id_penagihan']. '"><div style="min-width:70px">' .$row['nama_karyawan']. '</div></a></td>
-				<td align="center"><a href="?page=penagihan&mode=penagihan_2&id=' .$row['id_penagihan']. '"><div style="min-width:70px">' .format_uang($row['bayar']). '</div></a></td>
+				<td align="center"><a href="?page=penagihan&mode=penagihan_2&id=' .$row['id_penagihan']. '"><div style="min-width:70px" class="uang">' .format_uang($row['bayar']). '</div></a></td>
 			</tr>';
 		
 	}
@@ -317,6 +317,15 @@ $(document).ready(function () {
     $('#table_siap_tagih').DataTable(
         {"pageLength": 30, "bPaginate": true, "bLengthChange": false, "scrollX": false, "aaSorting": []}
     );
+    $('.uang').inputmask('currency', {
+        prefix: "Rp ",
+        autoGroup: true,
+        allowMinus: false,
+        groupSeparator: '.',
+        rightAlign: false,
+        autoUnmask: true,
+        removeMaskOnSubmit: true
+    });
     <?php if (isset($_GET['reset'])) echo "$('#tab2').click()"; ?>
 })
 </script>

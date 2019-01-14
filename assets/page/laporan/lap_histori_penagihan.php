@@ -54,14 +54,14 @@ $id_karyawan=$_SESSION['id_karyawan'];
                                     <tr>
                                         <th>Nama Pelanggan</th>
                                         <th>No Nota Jual</th>
-                                        <th>Jumlah Jual (Rp)</th>
+                                        <th>Jumlah Jual</th>
                                         <th>Sales</th>
                                         <th>Driver</th>
                                         <th>Debt Collector</th>
                                         <th>Tgl Tagih</th>
-                                        <th>Jumlah Tagih (Rp)</th>
-                                        <th>Jumlah Bayar (Rp)</th>
-                                        <th>Sisa Piutang (Rp)</th>
+                                        <th>Jumlah Tagih</th>
+                                        <th>Jumlah Bayar</th>
+                                        <th>Sisa Piutang</th>
                                         <th>Tgl Kunjungan Berikutnya</th>
                                         <th>Status Bayar</th>
                                         <th>Status Kembali Nota</th>
@@ -136,14 +136,14 @@ $total_jual=0;
 	echo '<tr>
 			<td align="center" style="width: 400px;">' .$row['nama_pelanggan']. '</td>
 			<td align="center" style="width: 300px;">' .$row['invoice']. '</td>
-			<td align="center" style="width: 300px;">' .format_uang($total_jual). '</td>
+			<td align="center" style="width: 300px;" class="uang">' .format_uang($total_jual). '</td>
 			<td align="center" style="width: 300px;">' .$nama_sales. '</td>
 			<td align="center" style="width: 300px;">' .$nama_driver. '</td>
 			<td align="center" style="width: 300px;">' .$row['nama_karyawan']. '</td>
 			<td align="center" style="width: 200px;">' .date("d-m-Y",strtotime($row['tanggal_tagih'])). '</td>
-			<td align="center" style="width: 400px;">' .format_uang($total_jual). '</td>
-			<td align="center" style="width: 400px;">' .format_uang($row['bayar']). '</td>
-			<td align="center" style="width: 400px;">' .format_uang($total_jual-$row['bayar']). '</td>
+			<td align="center" style="width: 400px;" class="uang">' .format_uang($total_jual). '</td>
+			<td align="center" style="width: 400px;" class="uang">' .format_uang($row['bayar']). '</td>
+			<td align="center" style="width: 400px;" class="uang">' .format_uang($total_jual-$row['bayar']). '</td>
 			<td align="center" style="color: ' .$color2. ' ;width: 700px;">' .$tgl_jb. '</td>
 			<td align="center" style="color: ' .$color. ' ;width: 300px;">' .$status. '</td>
 			<td align="center" style="width: 670px;">' .$status_nota. '</td>
@@ -179,5 +179,14 @@ $total_jual=0;
         $('#datepicker').datepicker(
             {orientation: "bottom auto", format: "mm-yyyy", startView: 1, minViewMode: 1, autoclose: true}
         );
+        $('.uang').inputmask('currency', {
+            prefix: "Rp ",
+            autoGroup: true,
+            allowMinus: false,
+            groupSeparator: '.',
+            rightAlign: false,
+            autoUnmask: true,
+            removeMaskOnSubmit: true
+        });
     })
 </script>

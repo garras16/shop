@@ -218,14 +218,14 @@ WHERE id_jual=$id");
                                     <th>Barcode</th>
                                     <th>Nama Barang</th>
                                     <th>Qty Jual</th>
-                                    <th>Harga Jual (Rp)</th>
-                                    <th>Tot. Seb. Diskon (Rp)</th>
-                                    <th>Disc 1 (Rp)</th>
-                                    <th>Tot. set. disc 1 (Rp)</th>
-                                    <th>Disc 2 (Rp)</th>
-                                    <th>Tot. set. disc 2 (Rp)</th>
-                                    <th>Disc 3 (Rp)</th>
-                                    <th>Tot. set. disc 3 (Rp)</th>
+                                    <th>Harga Jual</th>
+                                    <th>Tot. Seb. Diskon</th>
+                                    <th>Disc 1</th>
+                                    <th>Tot. set. disc 1</th>
+                                    <th>Disc 2</th>
+                                    <th>Tot. set. disc 2</th>
+                                    <th>Disc 3</th>
+                                    <th>Tot. set. disc 3</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -270,14 +270,14 @@ while($row=mysqli_fetch_array($sql)){
 						<td style="'.$val.'">' .$row['barcode']. '</td>
 						<td style="'.$val.'">' .$row['nama_barang']. '</td>
 						<td style="'.$val.'">' .$row['qty']. ' ' .$row['nama_satuan']. '</td>
-						<td style="'.$val.'">' .format_uang($row['harga_jual']). '</td>
-						<td style="'.$val.'">' .format_uang($row['qty']*$row['harga_jual']). '</td>
-						<td style="'.$val.'">' .format_uang($diskon1). '</td>
-						<td style="'.$val.'">' .format_uang($tot_set_disk_1). '</td>
-						<td style="'.$val.'">' .format_uang($diskon2). '</td>
-						<td style="'.$val.'">' .format_uang($tot_set_disk_2). '</td>
-						<td style="'.$val.'">' .format_uang($diskon3). '</td>
-						<td style="'.$val.'">' .format_uang($tot_set_disk_3). '</td>
+						<td style="'.$val.'" class="uang">' .format_uang($row['harga_jual']). '</td>
+						<td style="'.$val.'" class="uang">' .format_uang($row['qty']*$row['harga_jual']). '</td>
+						<td style="'.$val.'" class="uang">' .format_uang($diskon1). '</td>
+						<td style="'.$val.'" class="uang">' .format_uang($tot_set_disk_1). '</td>
+						<td style="'.$val.'" class="uang">' .format_uang($diskon2). '</td>
+						<td style="'.$val.'" class="uang">' .format_uang($tot_set_disk_2). '</td>
+						<td style="'.$val.'" class="uang">' .format_uang($diskon3). '</td>
+						<td style="'.$val.'" class="uang">' .format_uang($tot_set_disk_3). '</td>
 					</tr>';
 }
 $diskon_all_rp=($diskon_nota/100)*$total_jual;
@@ -375,6 +375,15 @@ $diskon_all_rp=($diskon_nota/100)*$total_jual;
 
 <script>
     $(document).ready(function () {
+        $('.uang').inputmask('currency', {
+            prefix: "Rp ",
+            autoGroup: true,
+            allowMinus: false,
+            groupSeparator: '.',
+            rightAlign: false,
+            autoUnmask: true,
+            removeMaskOnSubmit: true
+        });
         $('#total_jual').inputmask('currency', {
             prefix: "Rp ",
             allowMinus: false,

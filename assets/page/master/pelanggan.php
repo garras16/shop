@@ -56,7 +56,7 @@ if (isset($edit_pelanggan_post)){
                                     <th>Telepon Pelanggan</th>
                                     <th>Kontak Person</th>
                                     <th>Telepon Kontak Person</th>
-                                    <th>Plafon (Rp)</th>
+                                    <th>Plafon</th>
                                     <th>Barcode Pelanggan</th>
                                     <th>Status</th>
                                     <th>Blacklist</th>
@@ -79,7 +79,7 @@ $blacklist = ($row['blacklist'] == 1 ? 'Ya' : 'Tidak');
 						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_pelanggan']. '">' .$row['telepon_pelanggan']. '</a></td>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_pelanggan']. '">' .$row['kontakperson']. '</a></td>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_pelanggan']. '">' .$row['telepon_kontak']. '</a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_pelanggan']. '">' .format_angka($row['plafon']). '</a></td>
+						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_pelanggan']. '" class="uang">' .format_uang($row['plafon']). '</a></td>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_pelanggan']. '">' .$row['barcode']. '</a></td>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_pelanggan']. '">' .$status. '</a></td>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_pelanggan']. '">' .$blacklist. '</a></td>
@@ -323,6 +323,15 @@ $blacklist = ($row['blacklist'] == 1 ? 'Ya' : 'Tidak');
                     removeMaskOnSubmit: true
                 });
             });
+        });
+        $('.uang').inputmask('currency', {
+            prefix: "Rp ",
+            autoGroup: true,
+            allowMinus: false,
+            groupSeparator: '.',
+            rightAlign: false,
+            autoUnmask: true,
+            removeMaskOnSubmit: true
         });
 
         $('#plafon').inputmask('currency', {

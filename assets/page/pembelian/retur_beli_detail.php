@@ -184,18 +184,18 @@ $ppn_all_persen=$row['ppn_all_persen'];
                                 <tr>
                                     <th>Nama Barang</th>
                                     <th>Qty Beli</th>
-                                    <th>Harga Beli (Rp)</th>
-                                    <th>Diskon 1 (Rp)</th>
-                                    <th>Diskon 2 (Rp)</th>
-                                    <th>Diskon 3 (Rp)</th>
-                                    <th>Jumlah Beli (Rp)</th>
+                                    <th>Harga Beli</th>
+                                    <th>Diskon 1</th>
+                                    <th>Diskon 2</th>
+                                    <th>Diskon 3</th>
+                                    <th>Jumlah Beli</th>
                                     <th>Gudang</th>
                                     <th>Rak</th>
                                     <th>Stok</th>
                                     <th>Qty Retur</th>
-                                    <th>Harga Retur (Rp)</th>
+                                    <th>Harga Retur</th>
                                     <th>Qty Keluar</th>
-                                    <th>Jumlah Retur (Rp)</th>
+                                    <th>Jumlah Retur</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -259,18 +259,18 @@ if ($status=="1" || $locked){
 	echo '			<tr>
 						<td>' .$row['nama_barang']. '</td>
 						<td>' .$row['qty']. ' ' .$row['nama_satuan']. '</td>
-						<td>' .format_uang($row['harga']). '</td>
-						<td>' .format_uang($row['diskon_rp']). '</td>
-						<td>' .format_uang($row['diskon_rp_2']). '</td>
-						<td>' .format_uang($row['diskon_rp_3']). '</td>
-						<td>' .format_uang($total_jual). '</td>
+						<td class="uang">' .format_uang($row['harga']). '</td>
+						<td class="uang">' .format_uang($row['diskon_rp']). '</td>
+						<td class="uang">' .format_uang($row['diskon_rp_2']). '</td>
+						<td class="uang">' .format_uang($row['diskon_rp_3']). '</td>
+						<td class="uang">' .format_uang($total_jual). '</td>
 						<td>' .$r['nama_gudang']. '</td>
 						<td>' .$r['nama_rak']. '</td>
 						<td>' .$r['stok']. ' ' .$row['nama_satuan']. '</td>
 						<td>' .$r['qty_retur']. ' ' .$row['nama_satuan']. '</td>
-						<td>' .format_uang($r['harga_retur']). '</td>
+						<td class="uang">' .format_uang($r['harga_retur']). '</td>
 						<td>' .$qty_keluar. '</td>
-						<td>' .format_uang($r['harga_retur']*$r['qty_retur']). '</td>';
+						<td class="uang">' .format_uang($r['harga_retur']*$r['qty_retur']). '</td>';
 	if ($qty_keluar!='') {
 		echo '<td><i class="fa fa-check"></i></td>';
 	} else {
@@ -281,18 +281,18 @@ if ($status=="1" || $locked){
 	echo '			<tr>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id-rbd="' .$r['id_retur_beli_detail']. '" data-qty="' .$r['qty_retur']. '" data-harga="' .$r['harga_retur']. '"><div style="min-width:50px">' .$row['nama_barang']. '</div></a></td>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id-rbd="' .$r['id_retur_beli_detail']. '" data-qty="' .$r['qty_retur']. '" data-harga="' .$r['harga_retur']. '"><div style="min-width:50px">' .$row['qty']. ' ' .$row['nama_satuan']. '</div></a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id-rbd="' .$r['id_retur_beli_detail']. '" data-qty="' .$r['qty_retur']. '" data-harga="' .$r['harga_retur']. '"><div style="min-width:50px">' .format_uang($row['harga']). '</div></a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id-rbd="' .$r['id_retur_beli_detail']. '" data-qty="' .$r['qty_retur']. '" data-harga="' .$r['harga_retur']. '"><div style="min-width:50px">' .format_uang($row['diskon_rp']). '</div></a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id-rbd="' .$r['id_retur_beli_detail']. '" data-qty="' .$r['qty_retur']. '" data-harga="' .$r['harga_retur']. '"><div style="min-width:50px">' .format_uang($row['diskon_rp_2']). '</div></a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id-rbd="' .$r['id_retur_beli_detail']. '" data-qty="' .$r['qty_retur']. '" data-harga="' .$r['harga_retur']. '"><div style="min-width:50px">' .format_uang($row['diskon_rp_3']). '</div></a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id-rbd="' .$r['id_retur_beli_detail']. '" data-qty="' .$r['qty_retur']. '" data-harga="' .$r['harga_retur']. '"><div style="min-width:50px">' .format_uang($total_jual). '</div></a></td>
+						<td><a data-toggle="modal" data-target="#myModal2" data-id-rbd="' .$r['id_retur_beli_detail']. '" data-qty="' .$r['qty_retur']. '" data-harga="' .$r['harga_retur']. '"><div style="min-width:50px" class="uang">' .format_uang($row['harga']). '</div></a></td>
+						<td><a data-toggle="modal" data-target="#myModal2" data-id-rbd="' .$r['id_retur_beli_detail']. '" data-qty="' .$r['qty_retur']. '" data-harga="' .$r['harga_retur']. '"><div style="min-width:50px" class="uang">' .format_uang($row['diskon_rp']). '</div></a></td>
+						<td><a data-toggle="modal" data-target="#myModal2" data-id-rbd="' .$r['id_retur_beli_detail']. '" data-qty="' .$r['qty_retur']. '" data-harga="' .$r['harga_retur']. '"><div style="min-width:50px" class="uang">' .format_uang($row['diskon_rp_2']). '</div></a></td>
+						<td><a data-toggle="modal" data-target="#myModal2" data-id-rbd="' .$r['id_retur_beli_detail']. '" data-qty="' .$r['qty_retur']. '" data-harga="' .$r['harga_retur']. '"><div style="min-width:50px" class="uang">' .format_uang($row['diskon_rp_3']). '</div></a></td>
+						<td><a data-toggle="modal" data-target="#myModal2" data-id-rbd="' .$r['id_retur_beli_detail']. '" data-qty="' .$r['qty_retur']. '" data-harga="' .$r['harga_retur']. '"><div style="min-width:50px" class="uang">' .format_uang($total_jual). '</div></a></td>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id-rbd="' .$r['id_retur_beli_detail']. '" data-qty="' .$r['qty_retur']. '" data-harga="' .$r['harga_retur']. '"><div style="min-width:50px">' .$r['nama_gudang']. '</div></a></td>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id-rbd="' .$r['id_retur_beli_detail']. '" data-qty="' .$r['qty_retur']. '" data-harga="' .$r['harga_retur']. '"><div style="min-width:50px">' .$r['nama_rak']. '</div></a></td>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id-rbd="' .$r['id_retur_beli_detail']. '" data-qty="' .$r['qty_retur']. '" data-harga="' .$r['harga_retur']. '"><div style="min-width:50px">' .$r['stok']. ' ' .$row['nama_satuan']. '</div></a></td>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id-rbd="' .$r['id_retur_beli_detail']. '" data-qty="' .$r['qty_retur']. '" data-harga="' .$r['harga_retur']. '"><div style="min-width:50px">' .$r['qty_retur']. ' ' .$row['nama_satuan']. '</div></a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id-rbd="' .$r['id_retur_beli_detail']. '" data-qty="' .$r['qty_retur']. '" data-harga="' .$r['harga_retur']. '"><div style="min-width:50px">' .format_uang($r['harga_retur']). '</div></a></td>
+						<td><a data-toggle="modal" data-target="#myModal2" data-id-rbd="' .$r['id_retur_beli_detail']. '" data-qty="' .$r['qty_retur']. '" data-harga="' .$r['harga_retur']. '"><div style="min-width:50px" class="uang">' .format_uang($r['harga_retur']). '</div></a></td>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id-rbd="' .$r['id_retur_beli_detail']. '" data-qty="' .$r['qty_retur']. '" data-harga="' .$r['harga_retur']. '"><div style="min-width:50px">' .$qty_keluar. '</div></a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id-rbd="' .$r['id_retur_beli_detail']. '" data-qty="' .$r['qty_retur']. '" data-harga="' .$r['harga_retur']. '"><div style="min-width:50px">' .format_uang($r['harga_retur']*$r['qty_retur']). '</div></a></td>
+						<td><a data-toggle="modal" data-target="#myModal2" data-id-rbd="' .$r['id_retur_beli_detail']. '" data-qty="' .$r['qty_retur']. '" data-harga="' .$r['harga_retur']. '"><div style="min-width:50px" class="uang">' .format_uang($r['harga_retur']*$r['qty_retur']). '</div></a></td>
 						<td><a href="?page=pembelian&mode=retur_beli_detail&id=' .$id. '&del=' .$r['id_retur_beli_detail']. '" class="btn btn-warning btn-xs" title="Hapus"><i class="fa fa-trash"></i></a></td>
 					</tr>';
 }
@@ -597,6 +597,15 @@ WHERE id_beli=$id_beli");
             prefix: "Rp ",
             allowMinus: false,
             autoGroup: true,
+            groupSeparator: '.',
+            rightAlign: false,
+            autoUnmask: true,
+            removeMaskOnSubmit: true
+        });
+        $('.uang').inputmask('currency', {
+            prefix: "Rp ",
+            autoGroup: true,
+            allowMinus: false,
             groupSeparator: '.',
             rightAlign: false,
             autoUnmask: true,

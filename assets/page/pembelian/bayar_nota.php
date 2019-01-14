@@ -85,8 +85,8 @@ if (isset($_GET['del'])){
                                     <th>Nama Supplier</th>
                                     <th>Jenis</th>
                                     <th>Tgl. Bayar Terakhir</th>
-                                    <th>Jumlah Bayar Per Tgl (Rp)</th>
-                                    <th>Sisa Nota (Rp)</th>
+                                    <th>Jumlah Bayar Per Tgl</th>
+                                    <th>Sisa Nota</th>
                                     <th>Status</th>
                                     <th></th>
                                 </tr>
@@ -154,8 +154,8 @@ if ($row['status']=='1'){
             <td align="center" style="width: 200px;">' .$row['nama_supplier']. '</td>
             <td align="center" style="width: 100px;">' .$row['jenis']. '</td>
             <td align="center" style="width: 170px;">' .date("d-m-Y", strtotime($row['tgl_bayar'])). '</td>
-            <td align="right" style="width: 190px;">' .format_uang($row['jumlah']). '</td>
-            <td align="right" style="width: 190px;">' .format_uang($sisa_nota). '</td>
+            <td align="right" style="width: 190px;" class="uang">' .format_uang($row['jumlah']). '</td>
+            <td align="right" style="width: 190px;" class="uang">' .format_uang($sisa_nota). '</td>
             <td align="center" style="width: 150px;">' .$status. '</td>
             <td align="center" style="width: 20px;"><a href="?page=pembelian&mode=bayar_nota&del=' .$row['id_bayar']. '" class="btn btn-primary btn-xs"><i class="fa fa-trash"></i></a></td>
         </tr>';
@@ -290,6 +290,15 @@ GROUP BY beli.id_beli");
             if ($('#jenis').val() != 'Retur') {
                 $('#jumlah_bayar').val(jumlah);
             }
+        });
+        $('.uang').inputmask('currency', {
+            prefix: "Rp ",
+            autoGroup: true,
+            allowMinus: false,
+            groupSeparator: '.',
+            rightAlign: false,
+            autoUnmask: true,
+            removeMaskOnSubmit: true
         });
         $('#tgl_dari').daterangepicker({
             locale: {

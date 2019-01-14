@@ -49,16 +49,16 @@ $id_karyawan=$_SESSION['id_karyawan'];
                                     <tr>
                                         <th>Nama Pelanggan</th>
                                         <th>No Nota Jual</th>
-                                        <th>Jumlah Jual (Rp)</th>
+                                        <th>Jumlah Jual</th>
                                         <th>Debt Collector</th>
                                         <th>Tgl Tagih</th>
-                                        <th>Jml Tagih (Rp)</th>
-                                        <th>Jml Bayar (Rp)</th>
-                                        <th>Sisa Piutang (Rp)</th>
+                                        <th>Jml Tagih</th>
+                                        <th>Jml Bayar</th>
+                                        <th>Sisa Piutang</th>
                                         <th>Tgl Kunjungan Berikutnya</th>
                                         <th>Status Bayar</th>
                                         <th>Status Kembali Nota</th>
-                                        <th>Setor (Rp)</th>
+                                        <th>Setor</th>
                                     </tr>
                                 </thead>
                                 <tbody style="font-size: 13px;">
@@ -147,16 +147,16 @@ WHERE id_jual=" .$row['id_jual']);
 	echo '<tr>
 			<td align="center" style="width: 120px;">' .$row['nama_pelanggan']. '</td>
 			<td align="center" style="width: 120px;">' .$row['invoice']. '</td>
-			<td align="center" style="width: 120px;">' .format_uang($total_jual). '</td>
+			<td align="center" style="width: 120px;" class="uang">' .format_uang($total_jual). '</td>
 			<td align="center" style="width: 100px;">' .$row['nama_karyawan']. '</td>
 			<td align="center" style="width: 100px;">' .date("d-m-Y",strtotime($row['tanggal_tagih'])). '</td>
-			<td align="center" style="width: 120px;">' .format_uang($total_jual). '</td>
-			<td align="center" style="width: 120px;">' .format_uang($total_bayar). '</td>
-			<td align="center" style="width: 130px;">' .format_uang($total_jual-$total_bayar). '</td>
+			<td align="center" style="width: 120px;" class="uang">' .format_uang($total_jual). '</td>
+			<td align="center" style="width: 120px;" class="uang">' .format_uang($total_bayar). '</td>
+			<td align="center" style="width: 130px;" class="uang">' .format_uang($total_jual-$total_bayar). '</td>
 			<td align="center" style="color: ' .$color2. '; width: 105px;">' .$tgl_jb. '</td>
 			<td align="center" style="color: ' .$color. '; width: 100px;">' .$status. '</td>
 			<td align="center" style="width: 120px;">' .$status_nota. '</td>
-			<td align="center" style="width: 110px;">' .format_uang($row['setor']). '</td>
+			<td align="center" style="width: 110px;" class="uang">' .format_uang($row['setor']). '</td>
 		</tr>';
 }
 ?>
@@ -189,5 +189,14 @@ WHERE id_jual=" .$row['id_jual']);
         $('#datepicker').datepicker(
             {orientation: "bottom auto", format: "mm-yyyy", startView: 1, minViewMode: 1, autoclose: true}
         );
+        $('.uang').inputmask('currency', {
+            prefix: "Rp ",
+            autoGroup: true,
+            allowMinus: false,
+            groupSeparator: '.',
+            rightAlign: false,
+            autoUnmask: true,
+            removeMaskOnSubmit: true
+        });
     })
 </script>

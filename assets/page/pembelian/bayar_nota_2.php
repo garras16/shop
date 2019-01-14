@@ -307,7 +307,7 @@ if ($jenis=='Giro'){
                                         <h5>No Retur Beli</h5>
                                     </div>
                                     <div class="col-xs-6 bg-blue">
-                                        <h5>Jumlah Retur (Rp)</h5>
+                                        <h5>Jumlah Retur</h5>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div><br/>
@@ -344,7 +344,7 @@ $c=0;
                                 <div class="clearfix"></div><br/>
                                 <div class="col-xs-12">
                                     <div class="col-xs-6 bg-blue">
-                                        <h5>Total Retur (Rp)</h5>
+                                        <h5>Total Retur</h5>
                                     </div>
                                     <div class="col-xs-6 bg-blue">
                                         <input
@@ -488,19 +488,20 @@ $c=0;
             autoUnmask: true,
             removeMaskOnSubmit: true
         });
+        $('#tot_retur').inputmask('currency', {
+            prefix: "Rp ",
+            autoGroup: true,
+            allowMinus: false,
+            groupSeparator: '.',
+            rightAlign: false,
+            autoUnmask: true,
+            removeMaskOnSubmit: true
+        });
         $('#myModal').on('show.bs.modal', function (e) {
             $('#content').load(
                 'assets/page/pembelian/get-retur.php?id_supplier=' +
                 <?php echo $id_supplier ?> + '&id=' + rb
             );
-            $('#tot_retur').inputmask('decimal', {
-                allowMinus: false,
-                autoGroup: true,
-                groupSeparator: '.',
-                rightAlign: false,
-                autoUnmask: true,
-                removeMaskOnSubmit: true
-            });
         });
         $('#jatuh_tempo').inputmask("datetime", {
             inputFormat: "dd/mm/yyyy",
