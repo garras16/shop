@@ -23,8 +23,8 @@ if (isset($tambah_bayar_ekspedisi_post)){
 	$tarif=$row['tarif_ekspedisi'];
 	
 	$status=0;
-	if ($total_bayar>0 && $total_bayar<$tarif) $status=1;
-	if ($tarif < $total_bayar) $status=2;
+	if ($total_bayar>0) $status=1;
+	if ($tarif <= $total_bayar) $status=2;
 	
 	$sql = mysqli_query($con, "UPDATE bayar_ekspedisi SET status=$status WHERE id_bayar_ekspedisi=$id_bayar_ekspedisi");
 	_direct("?page=ekspedisi&mode=bayar_hutang");
@@ -124,7 +124,6 @@ if ($row['status']==1){
                         </div>
                     </div>
                     <!-- /page content -->
-
                 </div>
             </div>
         </div>
@@ -239,12 +238,12 @@ function cek_valid() {
     if (jumlah_bayar <= 0) {
         alert("Jumlah Bayar harus lebih dari 0.");
         return false;
-    }
-    if (jumlah_bayar < sisa_hutang) {
+    }else if (jumlah_bayar > sisa_hutang) {
         alert("Jumlah Bayar harus kurang dari sisa hutang.");
         return false;
+    }else{
+       return true;
     }
-    return true;
 }
 $(document).ready(function () {
     $('#jumlah_bayar').inputmask('currency', {
