@@ -470,8 +470,7 @@ harga modal" (beri icon kecil, saat klik muncul notifikasi)				OK
 
 - diskon barang bisa 3 level (beli & jual)						OK	-
 
-- pembelian, view_detail, perhatikan layout tombol edit diskon nota beli		
-OK	-
+- pembelian, view_detail, perhatikan layout tombol edit diskon nota beli		OK	-
 - penjualan, beri total jual set diskon							OK
 
 - konfirmasi admin dipindah ke penjualan (konfirmasi retur jual)			OK	
@@ -484,7 +483,7 @@ tak paham)										OK
 
 - input diskon (%) 6 digit xxx.xx%							OK	-
 
-* ubah data diskon nota beli, jumlah diskon (rp) nya masih error			*	
+- ubah data diskon nota beli, jumlah diskon (rp) nya masih error			OK	-
 
 - hilangkan border/background di info tambahan di bawah				 	OK	-
 
