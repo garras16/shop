@@ -313,7 +313,8 @@ function submit() {
             "&sampai=" + $('#tgl_sampai').val();
 }
 $(document).ready(function () {
-    $('#piutang').inputmask('decimal', {
+    $('#piutang').inputmask('currency', {
+        prefix: "Rp ",
         allowMinus: false,
         autoGroup: true,
         groupSeparator: '.',

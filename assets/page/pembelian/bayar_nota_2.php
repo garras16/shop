@@ -56,7 +56,7 @@ if (isset($tambah_bayar_nota_beli_post)){
 	}
 
 	if ($jenis !='Retur'){
-		($jumlah_bayar==$sisa_nota ? $status=1 : $status=2);
+		($jumlah_bayar>=$sisa_nota ? $status=1 : $status=2);
 		$sql=mysqli_query($con, "UPDATE bayar_nota_beli SET status=$status WHERE no_nota_beli='$no_nota_beli'");
 		if ($jenis =='Transfer'){
 			$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','$jenis',$jumlah_bayar,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening',null,null)");
@@ -479,7 +479,8 @@ $c=0;
             autoUnmask: true,
             removeMaskOnSubmit: true
         });
-        $('#sisa_nota').inputmask('decimal', {
+        $('#sisa_nota').inputmask('currency', {
+            prefix: "Rp ",
             allowMinus: false,
             autoGroup: true,
             groupSeparator: '.',
