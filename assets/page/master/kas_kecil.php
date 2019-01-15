@@ -16,7 +16,7 @@ if (isset($edit_komponen_kas_post)){
 		_buat_pesan("Input Berhasil","green");
 	} else {
 		_buat_pesan("Input Gagal","red");
-	}
+    }
 	_direct("?page=master&mode=kas_kecil");
 }
 ?>

@@ -44,4 +44,9 @@
     <!-- Custom Theme Style -->
     <link href="css/custom.min.css" rel="stylesheet">
 	<link href="css/shop.css" rel="stylesheet">
+	<style>
+	a{
+	cursor: pointer;
+	}
+	</style>
   </head>

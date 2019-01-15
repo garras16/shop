@@ -61,8 +61,8 @@ $thn_sql="YEAR(CURRENT_DATE())";
                                     <tr>
                                         <th>Tanggal</th>
                                         <th>Komponen</th>
-                                        <th>Uang Masuk (Rp)</th>
-                                        <th>Uang Keluar (Rp)</th>
+                                        <th>Uang Masuk</th>
+                                        <th>Uang Keluar</th>
                                         <th>Keterangan</th>
                                         <th></th>
                                     </tr>

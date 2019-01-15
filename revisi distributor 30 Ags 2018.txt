@@ -470,7 +470,12 @@ harga modal" (beri icon kecil, saat klik muncul notifikasi)				OK
 
 - diskon barang bisa 3 level (beli & jual)						OK	-
 
+<<<<<<< HEAD
+- pembelian, view_detail, perhatikan layout tombol edit diskon nota beli		OK	
+
+=======
 - pembelian, view_detail, perhatikan layout tombol edit diskon nota beli		OK	-
+>>>>>>> ecf6a69e028288415b9f35162624791cae8e34f5
 - penjualan, beri total jual set diskon							OK
 
 - konfirmasi admin dipindah ke penjualan (konfirmasi retur jual)			OK	
@@ -481,7 +486,7 @@ harga modal" (beri icon kecil, saat klik muncul notifikasi)				OK
 tak paham)										OK	
 -
 
-- input diskon (%) 6 digit xxx.xx%							OK	-
+- input diskon (%) 6 digit xxx.xx% (pembelian sudah)							*	
 
 - ubah data diskon nota beli, jumlah diskon (rp) nya masih error			OK	-
 
@@ -512,5 +517,6 @@ tutup harian
 =======
 - Tabel, isi nya jangan sampe wrap kebawah, tabel jadi scroll samping gpp
 
+ppn adalah jumlah setelah diskon
 
 >>>>>>> 320e3f2724ca93e545c1f5a55be6c4ec8bd7517c
