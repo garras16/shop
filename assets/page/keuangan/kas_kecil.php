@@ -9,6 +9,7 @@ if (isset($tambah_input_kas_kecil_post)){
 	}
 	_direct("?page=keuangan&mode=kas_kecil");
 }
+
 if (isset($_GET['del'])){
 	$sql = "DELETE FROM kas_kecil WHERE id_kas_kecil=" .$_GET['del']. "";
 	$q = mysqli_query($con, $sql);
