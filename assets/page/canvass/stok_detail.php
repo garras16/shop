@@ -1,8 +1,8 @@
 <?php
-date_default_timezone_set('Asia/Jakarta');
-require_once('../../../assets/inc/config.php');
-$id=$_GET['id'];
-$canvass=$_GET['canvass'];
+    date_default_timezone_set('Asia/Jakarta');
+    require_once('../../../assets/inc/config.php');
+    $id=$_GET['id'];
+    $canvass=$_GET['canvass'];
 ?>
 <table class="table table-bordered table-striped">
     <thead>
@@ -44,17 +44,17 @@ FROM
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE canvass_keluar.id_canvass_keluar=$canvass AND barang.id_barang=$id
 GROUP BY barang.id_barang,expire");
-while($r=mysqli_fetch_array($sql)){
-$sql2=mysqli_query($con, "SELECT SUM(qty_cek) AS qty_cek FROM lap_stock_opname WHERE id_canvass_keluar=$canvass AND id_barang=" .$r['id_barang']. " AND expire='" .$r['expire']. "'");
-$row2=mysqli_fetch_array($sql2);
-	echo '<tr>
-			<td><div style="min-width:70px">' .date("d-m-Y",strtotime($r['expire'])). '</div></td>
-			<td><div style="min-width:70px">' .($r['total']-$row2['qty_cek']). ' ' .$r['nama_satuan']. '</div></td>';
-	if ($test2==''){
-		echo '<td style="vertical-align:middle;text-align:center" rowspan="' .$count_qty. '">' .($qty_total-$total_qty_cek). '</td>';
-		$test2="1";
-	}
-	echo '</tr>';
+while($r=mysqli_fetch_array($sql)) {
+    $sql2=mysqli_query($con, "SELECT SUM(qty_cek) AS qty_cek FROM lap_stock_opname WHERE id_canvass_keluar=$canvass AND id_barang=" .$r['id_barang']. " AND expire='" .$r['expire']. "'");
+    $row2=mysqli_fetch_array($sql2);
+        echo '<tr>
+                <td><div style="min-width:70px">' .date("d-m-Y",strtotime($r['expire'])). '</div></td>
+                <td><div style="min-width:70px">' .($r['total']-$row2['qty_cek']). ' ' .$r['nama_satuan']. '</div></td>';
+        if ($test2==''){
+            echo '<td style="vertical-align:middle;text-align:center" rowspan="' .$count_qty. '">' .($qty_total-$total_qty_cek). '</td>';
+            $test2="1";
+        }
+        echo '</tr>';
 }
 
 ?>
