@@ -24,7 +24,7 @@ if (isset($tambah_bayar_ekspedisi_post)){
 	
 	$status=0;
 	if ($total_bayar>0) $status=1;
-	if ($tarif == $total_bayar) $status=2;
+	if ($tarif <= $total_bayar) $status=2;
 	
 	$sql = mysqli_query($con, "UPDATE bayar_ekspedisi SET status=$status WHERE id_bayar_ekspedisi=$id_bayar_ekspedisi");
 	_direct("?page=ekspedisi&mode=bayar_hutang");
@@ -72,8 +72,8 @@ if (isset($_GET['del'])){
                                         <th>No Nota Beli</th>
                                         <th style="min-width:100px">Nama Ekspedisi</th>
                                         <th>Tgl. Bayar Terakhir</th>
-                                        <th>Jumlah Bayar Per Tgl (Rp)</th>
-                                        <th>Sisa Hutang (Rp)</th>
+                                        <th>Jumlah Bayar Per Tgl</th>
+                                        <th>Sisa Hutang</th>
                                         <th style="min-width:100px">Status</th>
                                         <th></th>
                                     </tr>
@@ -111,8 +111,8 @@ if ($row['status']==1){
 						<td style="width: 120px;">' .$row['no_nota_beli']. '</td>
 						<td style="width: 200px;">' .$row['nama_ekspedisi']. '</td>
 						<td style="width: 150px;">' .date("d-m-Y",strtotime($row['tgl_bayar'])). '</td>
-						<td style="width: 200px;">' .format_uang($row['jumlah_bayar']). '</td>
-						<td style="width: 200px;">' .format_uang($sisa_hutang). '</td>
+						<td style="width: 200px;" class="uang">' .format_uang($row['jumlah_bayar']). '</td>
+						<td style="width: 200px;" class="uang">' .format_uang($sisa_hutang). '</td>
 						<td style="width: 150px;">' .$status. '</td>
 						<td style="width: 30px;"><a class="btn btn-danger btn-xs" href="?page=ekspedisi&mode=bayar_hutang&del=' .$row['id_bayar_ekspedisi_detail']. '&id=' .$row['id_bayar_ekspedisi']. '"><i class="fa fa-trash"></i> Hapus</a></td>
 					</tr>';
@@ -124,7 +124,6 @@ if ($row['status']==1){
                         </div>
                     </div>
                     <!-- /page content -->
-
                 </div>
             </div>
         </div>
@@ -183,7 +182,10 @@ FROM
         ON (bayar_ekspedisi.id_bayar_ekspedisi = bayar_ekspedisi_detail.id_bayar_ekspedisi)
 WHERE id_beli=" .$b['id_beli']);
 $row2=mysqli_fetch_array($sql);
-$sisa_hutang=$b['tarif_ekspedisi']-$row2['total_bayar'];
+
+$sqll = mysqli_query($con, "SELECT tarif_ekspedisi FROM beli WHERE id_beli=".$b['id_beli']);
+$nilai = mysqli_fetch_array($sqll);
+$sisa_hutang=$nilai['tarif_ekspedisi']-$row2['total_bayar'];
 							?>
                             <option
                                 data-sisa="<?php echo $sisa_hutang; ?>"
@@ -233,15 +235,15 @@ function cek_valid() {
         .data('sisa');
     var jumlah_bayar = $('#jumlah_bayar').inputmask('unmaskedvalue');
 
-    if (jumlah_bayar == 0) {
+    if (jumlah_bayar <= 0) {
         alert("Jumlah Bayar harus lebih dari 0.");
         return false;
-    }
-    if (jumlah_bayar > sisa_hutang) {
+    }else if (jumlah_bayar > sisa_hutang) {
         alert("Jumlah Bayar harus kurang dari sisa hutang.");
         return false;
+    }else{
+       return true;
     }
-    return true;
 }
 $(document).ready(function () {
     $('#jumlah_bayar').inputmask('currency', {
@@ -250,6 +252,15 @@ $(document).ready(function () {
         autoGroup: true,
         groupSeparator: '.',
         rightAlign: false,
+        removeMaskOnSubmit: true
+    });
+    $('.uang').inputmask('currency', {
+        prefix: "Rp ",
+        autoGroup: true,
+        allowMinus: false,
+        groupSeparator: '.',
+        rightAlign: false,
+        autoUnmask: true,
         removeMaskOnSubmit: true
     });
 

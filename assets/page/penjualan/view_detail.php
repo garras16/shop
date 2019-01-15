@@ -184,7 +184,7 @@ WHERE id_jual=$id");
                                 <div class="input-group">
                                     <span class="input-group-addon">
                                         <i class="fa fa-cut fa-fw"></i>
-                                        <small>Disc. Nota Jual (Rp)</small>
+                                        <small>Disc. Nota Jual</small>
                                     </span>
                                     <input
                                         id="diskon_nota"
@@ -218,14 +218,14 @@ WHERE id_jual=$id");
                                     <th>Barcode</th>
                                     <th>Nama Barang</th>
                                     <th>Qty Jual</th>
-                                    <th>Harga Jual (Rp)</th>
-                                    <th>Tot. Seb. Diskon (Rp)</th>
-                                    <th>Disc 1 (Rp)</th>
-                                    <th>Tot. set. disc 1 (Rp)</th>
-                                    <th>Disc 2 (Rp)</th>
-                                    <th>Tot. set. disc 2 (Rp)</th>
-                                    <th>Disc 3 (Rp)</th>
-                                    <th>Tot. set. disc 3 (Rp)</th>
+                                    <th>Harga Jual</th>
+                                    <th>Tot. Seb. Diskon</th>
+                                    <th>Disc 1</th>
+                                    <th>Tot. set. disc 1</th>
+                                    <th>Disc 2</th>
+                                    <th>Tot. set. disc 2</th>
+                                    <th>Disc 3</th>
+                                    <th>Tot. set. disc 3</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -270,14 +270,14 @@ while($row=mysqli_fetch_array($sql)){
 						<td style="'.$val.'">' .$row['barcode']. '</td>
 						<td style="'.$val.'">' .$row['nama_barang']. '</td>
 						<td style="'.$val.'">' .$row['qty']. ' ' .$row['nama_satuan']. '</td>
-						<td style="'.$val.'">' .format_uang($row['harga_jual']). '</td>
-						<td style="'.$val.'">' .format_uang($row['qty']*$row['harga_jual']). '</td>
-						<td style="'.$val.'">' .format_uang($diskon1). '</td>
-						<td style="'.$val.'">' .format_uang($tot_set_disk_1). '</td>
-						<td style="'.$val.'">' .format_uang($diskon2). '</td>
-						<td style="'.$val.'">' .format_uang($tot_set_disk_2). '</td>
-						<td style="'.$val.'">' .format_uang($diskon3). '</td>
-						<td style="'.$val.'">' .format_uang($tot_set_disk_3). '</td>
+						<td style="'.$val.'" class="uang">' .format_uang($row['harga_jual']). '</td>
+						<td style="'.$val.'" class="uang">' .format_uang($row['qty']*$row['harga_jual']). '</td>
+						<td style="'.$val.'" class="uang">' .format_uang($diskon1). '</td>
+						<td style="'.$val.'" class="uang">' .format_uang($tot_set_disk_1). '</td>
+						<td style="'.$val.'" class="uang">' .format_uang($diskon2). '</td>
+						<td style="'.$val.'" class="uang">' .format_uang($tot_set_disk_2). '</td>
+						<td style="'.$val.'" class="uang">' .format_uang($diskon3). '</td>
+						<td style="'.$val.'" class="uang">' .format_uang($tot_set_disk_3). '</td>
 					</tr>';
 }
 $diskon_all_rp=($diskon_nota/100)*$total_jual;
@@ -293,7 +293,7 @@ $diskon_all_rp=($diskon_nota/100)*$total_jual;
                                         class="input-group-addon"
                                         style=" margin-left:10px; padding-left: 0px; width:90px;text-align:left; background: #fff;color:#000; border: none; outline: none;"
                                         ">
-                                        <small>Tot. Jual Set. Disc. (Rp)</small>
+                                        <small>Tot. Jual Set. Disc.</small>
                                     </span>
                                     <span
                                         class="input-group-addon"
@@ -303,7 +303,7 @@ $diskon_all_rp=($diskon_nota/100)*$total_jual;
                                     </span>
                                     <input
                                         class="form-control"
-                                        id="berat_2"
+                                        id="total_jual_2"
                                         style="border: none; background: #fff; outline: none;"
                                         name="berat"
                                         value="<?php echo format_uang($total_jual) ?>"
@@ -354,8 +354,7 @@ $diskon_all_rp=($diskon_nota/100)*$total_jual;
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon">
-                            <i class="fa fa-cut fa-fw"></i>
-                            Rp
+                            Nominal
                         </span>
                         <input
                             id="diskon_nota_rp"
@@ -376,21 +375,41 @@ $diskon_all_rp=($diskon_nota/100)*$total_jual;
 
 <script>
     $(document).ready(function () {
-        $('#total_jual').inputmask('decimal', {
+        $('.uang').inputmask('currency', {
+            prefix: "Rp ",
+            autoGroup: true,
+            allowMinus: false,
+            groupSeparator: '.',
+            rightAlign: false,
+            autoUnmask: true,
+            removeMaskOnSubmit: true
+        });
+        $('#total_jual').inputmask('currency', {
+            prefix: "Rp ",
             allowMinus: false,
             autoGroup: true,
             groupSeparator: '.',
             rightAlign: false,
             removeMaskOnSubmit: true
         });
-        $('#diskon_nota').inputmask('decimal', {
+        $('#total_jual_2').inputmask('currency', {
+            prefix: "Rp ",
             allowMinus: false,
             autoGroup: true,
             groupSeparator: '.',
             rightAlign: false,
             removeMaskOnSubmit: true
         });
-        $('#diskon_nota_rp').inputmask('decimal', {
+        $('#diskon_nota').inputmask('currency', {
+            prefix: "Rp ",
+            allowMinus: false,
+            autoGroup: true,
+            groupSeparator: '.',
+            rightAlign: false,
+            removeMaskOnSubmit: true
+        });
+        $('#diskon_nota_rp').inputmask('currency', {
+            prefix: "Rp ",
             allowMinus: false,
             autoGroup: true,
             groupSeparator: '.',

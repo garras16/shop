@@ -47,7 +47,7 @@
                             <table
                                 id="table1"
                                 class="table table-bordered table-striped"
-                                style="width: 1050px;">
+                                style="width: 1500px;">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
@@ -56,9 +56,9 @@
                                         <th>No KTP</th>
                                         <th>No HP</th>
                                         <th>Jabatan</th>
-                                        <th>Gaji (Rp)</th>
-                                        <th>Harian (Rp)</th>
-                                        <th>Lembur (Rp)</th>
+                                        <th>Gaji</th>
+                                        <th>Harian</th>
+                                        <th>Lembur</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -82,9 +82,9 @@
 												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .$row['ktp']. '</a></td>
 												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .$row['no_hp']. '</a></td>
 												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .$row['nama_jabatan']. '</a></td>
-												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .format_uang($row['gaji']). '</a></td>
-												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .format_uang($row['harian']). '</a></td>
-												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .format_uang($row['lembur']). '</a></td>
+												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '" class="uang">' .format_uang($row['gaji']). '</a></td>
+												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '" class="uang">' .format_uang($row['harian']). '</a></td>
+												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '" class="uang">' .format_uang($row['lembur']). '</a></td>
 												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .$status. '</a></td>
 											</tr>';
 									}
@@ -308,6 +308,15 @@
 </div>
 <script>
 $(document).ready(function () {
+    $('.uang').inputmask('currency', {
+        prefix: "Rp ",
+        autoGroup: true,
+        allowMinus: false,
+        groupSeparator: '.',
+        rightAlign: false,
+        autoUnmask: true,
+        removeMaskOnSubmit: true
+    });
     $('#gaji').inputmask('currency', {
         prefix: "Rp ",
         autoGroup: true,

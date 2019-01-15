@@ -98,7 +98,7 @@
 									while($row=mysqli_fetch_array($sql)){
 										echo '<tr>
 												<td>' .date("d-m-Y", strtotime($row['tanggal'])). '</a></td>
-												<td align="right">' .format_uang($row['harga_jual']). '</a></td>
+												<td align="right" class="uang">' .format_uang($row['harga_jual']). '</a></td>
 											</tr>';
 									}
 									?>
@@ -133,7 +133,17 @@
 
 <script>
     $(document).ready(function () {
-        $('#harga_jual').inputmask('decimal', {
+        $('.uang').inputmask('currency', {
+            prefix: "Rp ",
+            autoGroup: true,
+            allowMinus: false,
+            groupSeparator: '.',
+            rightAlign: false,
+            autoUnmask: true,
+            removeMaskOnSubmit: true
+        });
+        $('#harga_jual').inputmask('currency', {
+            prefix: "Rp ",
             allowMinus: false,
             autoGroup: true,
             groupSeparator: '.',

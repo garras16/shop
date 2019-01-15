@@ -102,8 +102,8 @@ if (isset($tambah_pembelian_post)){
                                     <th>Tgl. Nota Beli</th>
                                     <th>No Nota Beli</th>
                                     <th>Supplier</th>
-                                    <th>Total Nota Beli (Rp)</th>
-                                    <th>Total Datang (Rp)</th>
+                                    <th>Total Nota Beli</th>
+                                    <th>Total Datang</th>
                                     <th>Ekspedisi</th>
                                 </tr>
                             </thead>
@@ -198,11 +198,11 @@ $total_datang=$s['total_datang']+($s['total_datang']*$s['ppn_all_persen']/100);
 						<td><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '"><div style="min-width:70px">' .date("d-m-Y", strtotime($row['tanggal'])). '</div></a></td>
 						<td><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '"><div style="min-width:70px">' .$row['no_nota_beli']. '</div></a></td>
 						<td><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '"><div style="min-width:70px">' .$row['nama_supplier']. '</div></a></td>
-						<td align="right"><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '"><div style="min-width:70px">' .format_uang($total_beli). '</div></a></td>
-						<td align="right"><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '"><div style="min-width:70px">' .format_uang($total_datang). '</div></a></td>
+						<td align="right"><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '"><div style="min-width:70px" class="uang">' .format_uang($total_beli). '</div></a></td>
+						<td align="right"><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '"><div style="min-width:70px" class="uang">' .format_uang($total_datang). '</div></a></td>
 						<td><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '"><div style="min-width:70px">' .$row['nama_ekspedisi']. '</div></a></td>
-						<!--td align="right"><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '"><div style="min-width:70px">' .format_angka($row['berat_ekspedisi']). '</div></a></td>
-						<td align="right"><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '"><div style="min-width:70px">' .format_uang($row['tarif_ekspedisi']). '</div></a></td-->
+						<!--td align="right"><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '"><div style="min-width:70px" class="uang">' .format_angka($row['berat_ekspedisi']). '</div></a></td>
+						<td align="right"><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '"><div style="min-width:70px" class="uang">' .format_uang($row['tarif_ekspedisi']). '</div></a></td-->
 					</tr>';
 }
 ?>
@@ -341,6 +341,15 @@ $total_datang=$s['total_datang']+($s['total_datang']*$s['ppn_all_persen']/100);
     $(document).ready(function () {
         // $('#diskon_all').inputmask('decimal', {autoGroup: true, groupSeparator: '.',
         // rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});x
+        $('.uang').inputmask('currency', {
+            prefix: "Rp ",
+            autoGroup: true,
+            allowMinus: false,
+            groupSeparator: '.',
+            rightAlign: false,
+            autoUnmask: true,
+            removeMaskOnSubmit: true
+        });
         $('#diskon_ppn').inputmask('decimal', {
             autoGroup: true,
             groupSeparator: '.',

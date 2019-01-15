@@ -54,7 +54,7 @@ if (isset($tambah_harga_jual_tunai_post)){
                                         <th>No.</th>
                                         <th>Nama Barang</th>
                                         <th>Nama Supplier</th>
-                                        <th>Harga Jual Tunai (Rp)</th>
+                                        <th>Harga Jual Tunai</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -96,7 +96,7 @@ $i+=1;
 						<td><div style="min-width:50px">' .$i. '</div></td>
 						<td><div style="min-width:50px">' .$row['nama_barang']. '</div></td>
 						<td><div style="min-width:50px">' .$row['nama_supplier']. '</div></td>
-						<td><div style="min-width:50px">' .format_uang($row['harga_jual']). '</div></td>
+						<td><div style="min-width:50px" class="uang">' .format_uang($row['harga_jual']). '</div></td>
 					</tr>';
 }
 ?>
@@ -193,6 +193,15 @@ $(document).ready(function () {
         prefix: "Rp ",
         allowMinus: false,
         autoGroup: true,
+        groupSeparator: '.',
+        rightAlign: false,
+        autoUnmask: true,
+        removeMaskOnSubmit: true
+    });
+    $('.uang').inputmask('currency', {
+        prefix: "Rp ",
+        autoGroup: true,
+        allowMinus: false,
         groupSeparator: '.',
         rightAlign: false,
         autoUnmask: true,

@@ -73,7 +73,7 @@ if (isset($tambah_retur_beli_post)){
                                     <th>No Retur</th>
                                     <th>No Nota Beli</th>
                                     <th>Nama Supplier</th>
-                                    <th>Jumlah Beli (Rp)</th>
+                                    <th>Jumlah Beli</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
@@ -114,7 +114,7 @@ if ($row['status']=='1'){
 						<td><a href="?page=pembelian&mode=retur_beli_detail&id=' .$row['id_retur_beli']. '"><div style="min-width:70px">' .$row['no_retur_beli']. '</div></a></td>
 						<td><a href="?page=pembelian&mode=retur_beli_detail&id=' .$row['id_retur_beli']. '"><div style="min-width:70px">' .$row['no_nota_beli']. '</div></a></td>
 						<td><a href="?page=pembelian&mode=retur_beli_detail&id=' .$row['id_retur_beli']. '"><div style="min-width:70px">' .$row['nama_supplier']. '</div></a></td>
-						<td><a href="?page=pembelian&mode=retur_beli_detail&id=' .$row['id_retur_beli']. '"><div style="min-width:70px">' .format_uang($jumlah_beli). '</div></a></td>
+						<td><a href="?page=pembelian&mode=retur_beli_detail&id=' .$row['id_retur_beli']. '"><div style="min-width:70px" class="uang">' .format_uang($jumlah_beli). '</div></a></td>
 						<td><a href="?page=pembelian&mode=retur_beli_detail&id=' .$row['id_retur_beli']. '" class="' .$style. '"><div style="min-width:70px;">' .$status. '</div></a></td>
 					</tr>';
 }
@@ -200,6 +200,15 @@ ORDER BY beli.id_beli ASC");
         window.location = url;
     }
     $(document).ready(function () {
+        $('.uang').inputmask('currency', {
+            prefix: "Rp ",
+            autoGroup: true,
+            allowMinus: false,
+            groupSeparator: '.',
+            rightAlign: false,
+            autoUnmask: true,
+            removeMaskOnSubmit: true
+        });
         $('#datepicker').datepicker(
             {orientation: "bottom auto", format: "mm-yyyy", startView: 1, minViewMode: 1, autoclose: true}
         );

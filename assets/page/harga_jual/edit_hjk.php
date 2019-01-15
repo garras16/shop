@@ -35,7 +35,8 @@ $id=$_GET['id'];
 </form>
 <script>
     $(document).ready(function () {
-        $('#harga_jual').inputmask('decimal', {
+        $('#harga_jual').inputmask('currency', {
+            prefix: "Rp ",
             allowMinus: false,
             autoGroup: true,
             groupSeparator: '.',

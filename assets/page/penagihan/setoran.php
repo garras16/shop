@@ -24,16 +24,16 @@ $thn_sql="YEAR(CURRENT_DATE())";
                                     <tr>
                                         <th>Nama Pelanggan</th>
                                         <th>No Nota Jual</th>
-                                        <th>Jumlah Jual (Rp)</th>
+                                        <th>Jumlah Jual</th>
                                         <th>Debt Collector</th>
                                         <th>Tgl Tagih</th>
-                                        <th>Jml Tagih (Rp)</th>
-                                        <th>Jml Bayar (Rp)</th>
-                                        <th>Sisa Piutang (Rp)</th>
+                                        <th>Jml Tagih</th>
+                                        <th>Jml Bayar</th>
+                                        <th>Sisa Piutang</th>
                                         <th>Tgl Tagih Berikutnya</th>
                                         <th>Status Bayar</th>
                                         <th>Status Kembali Nota</th>
-                                        <th>Setor (Rp)</th>
+                                        <th>Setor</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -84,12 +84,12 @@ $total_jual=0;
 	echo '<tr>
 			<td align="center">' .$row['nama_pelanggan']. '</td>
 			<td align="center">' .$row['invoice']. '</td>
-			<td align="center">' .format_uang($total_jual). '</td>
+			<td align="center" class="uang">' .format_uang($total_jual). '</td>
 			<td align="center">' .$row['nama_karyawan']. '</td>
 			<td align="center">' .date("d-m-Y",strtotime($row['tanggal_tagih'])). '</td>
-			<td align="center">' .format_uang($total_jual). '</td>
-			<td align="center">' .format_uang($row['bayar']). '</td>
-			<td align="center">' .format_uang($total_jual-$row['bayar']). '</td>
+			<td align="center" class="uang">' .format_uang($total_jual). '</td>
+			<td align="center" class="uang">' .format_uang($row['bayar']). '</td>
+			<td align="center" class="uang">' .format_uang($total_jual-$row['bayar']). '</td>
 			<td align="center" style="color: ' .$color2. '">' .$tgl_jb. '</td>
 			<td align="center" style="color: ' .$color. '">' .$status. '</td>
 			<td align="center">' .$status_nota. '</td>
@@ -136,7 +136,7 @@ $total_jual=0;
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="fa fa-book fa-fw"></i>
-                            Jumlah Bayar (Rp)</span>
+                            Jumlah Bayar</span>
                         <input
                             class="form-control"
                             id="bayar"
@@ -148,7 +148,7 @@ $total_jual=0;
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="fa fa-tags fa-fw"></i>
-                            Jumlah Setor (Rp)</span>
+                            Jumlah Setor</span>
                         <input
                             class="form-control"
                             type="tel"
@@ -201,19 +201,33 @@ function cek_scan_nota(barcode) {
     }
 }
 $(document).ready(function () {
+    
     $('#scan_nota').hide();
-    $('#setor').inputmask('decimal', {
-        allowMinus: false,
+    $('.uang').inputmask('currency', {
+        prefix: "Rp ",
         autoGroup: true,
+        allowMinus: false,
         groupSeparator: '.',
         rightAlign: false,
+        autoUnmask: true,
         removeMaskOnSubmit: true
     });
-    $('#bayar').inputmask('decimal', {
-        allowMinus: false,
+    $('#setor').inputmask('currency', {
+        prefix: "Rp ",
         autoGroup: true,
+        allowMinus: false,
         groupSeparator: '.',
         rightAlign: false,
+        autoUnmask: true,
+        removeMaskOnSubmit: true
+    });
+    $('#bayar').inputmask('currency', {
+        prefix: "Rp ",
+        autoGroup: true,
+        allowMinus: false,
+        groupSeparator: '.',
+        rightAlign: false,
+        autoUnmask: true,
         removeMaskOnSubmit: true
     });
     $('#myModal').on('show.bs.modal', function (e) {

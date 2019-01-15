@@ -63,8 +63,8 @@ $q = mysqli_query($con, $sql);
                                     <th>No Nota Jual</th>
                                     <th>Nama Pelanggan</th>
                                     <th>Nama Sales</th>
-                                    <th>Jumlah Jual (Rp)</th>
-                                    <th>Jumlah Retur (Rp)</th>
+                                    <th>Jumlah Jual</th>
+                                    <th>Jumlah Retur</th>
                                     <th>Status Retur</th>
                                 </tr>
                             </thead>
@@ -121,8 +121,8 @@ if ($row['status']=='1'){
 						<td><a href="?page=penjualan&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '"><div style="min-width:70px">' .$row['invoice']. '</div></a></td>
 						<td><a href="?page=penjualan&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '"><div style="min-width:70px">' .$row['nama_pelanggan']. '</div></a></td>
 						<td><a href="?page=penjualan&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '"><div style="min-width:70px">' .$row['nama_karyawan']. '</div></a></td>
-						<td><a href="?page=penjualan&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '"><div style="min-width:70px">' .format_uang($jumlah_jual). '</div></a></td>
-						<td><a href="?page=penjualan&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '"><div style="min-width:70px">' .format_uang($jumlah_retur). '</div></a></td>
+						<td><a href="?page=penjualan&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '"><div style="min-width:70px" class="uang">' .format_uang($jumlah_jual). '</div></a></td>
+						<td><a href="?page=penjualan&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '"><div style="min-width:70px" class="uang">' .format_uang($jumlah_retur). '</div></a></td>
 						<td><a href="?page=penjualan&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '"><div style="min-width:70px" class="badge bg-green">' .$status. '</div></a></td>
 					</tr>';
 }
@@ -160,6 +160,15 @@ if ($row['status']=='1'){
         window.location = "?page=penjualan&mode=retur_jual";
     }
     $(document).ready(function () {
+        $('.uang').inputmask('currency', {
+            prefix: "Rp ",
+            autoGroup: true,
+            allowMinus: false,
+            groupSeparator: '.',
+            rightAlign: false,
+            autoUnmask: true,
+            removeMaskOnSubmit: true
+        });
         $('#tgl_dari').daterangepicker({
             locale: {
                 format: 'DD-MM-YYYY'

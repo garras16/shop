@@ -60,8 +60,8 @@ $thn_sql="YEAR(CURRENT_DATE())";
                                     <tr>
                                         <th>Tanggal</th>
                                         <th>Komponen</th>
-                                        <th>Uang Masuk (Rp)</th>
-                                        <th>Uang Keluar (Rp)</th>
+                                        <th>Uang Masuk</th>
+                                        <th>Uang Keluar</th>
                                         <th>Keterangan</th>
                                         <th></th>
                                     </tr>
@@ -87,7 +87,7 @@ $jumlah_keluar+=$row['jumlah'];
 						<td><div style="min-width:70px">' .date("d-m-Y", strtotime($row['tanggal'])). '</div></td>
 						<td><div style="min-width:70px">' .$row['komponen']. '</div></td>
 						<td><div style="min-width:70px"></div></td>
-						<td><div style="min-width:70px" align="right">' .format_uang($row['jumlah']). '</div></td>
+						<td><div style="min-width:70px" align="right" class="uang">' .format_uang($row['jumlah']). '</div></td>
 						<td><div style="min-width:70px">' .$row['keterangan']. '</div></td>';
 	if ($_SESSION['posisi']=='OWNER'){
 		echo '			<td align="center"><a class="btn btn-primary btn-xs" href="?page=keuangan&mode=kas_kecil&del=' .$row['id_kas_kecil']. '"><i class="fa fa-trash"></i> HAPUS</a></td>';
@@ -105,7 +105,7 @@ $jumlah_masuk+=$row['jumlah'];
 	echo '			<tr>
 						<td><div style="min-width:70px">' .date("d-m-Y", strtotime($row['tanggal'])). '</div></td>
 						<td><div style="min-width:70px">' .$row['komponen']. '</div></td>
-						<td><div style="min-width:70px" align="right">' .format_uang($row['jumlah']). '</div></td>
+						<td><div style="min-width:70px" align="right" class="uang">' .format_uang($row['jumlah']). '</div></td>
 						<td><div style="min-width:70px"></div></td>
 						<td><div style="min-width:70px">' .$row['keterangan']. '</div></td>';
 	if ($_SESSION['posisi']=='OWNER'){
@@ -118,8 +118,8 @@ $jumlah_masuk+=$row['jumlah'];
 if (mysqli_num_rows($sql)>0 || mysqli_num_rows($sql2)>0) {
 	echo '<tr style="background: aqua">
 			<td colspan="2"><b>TOTAL</b></td>
-			<td align="right">' .format_uang($jumlah_masuk). '</td>
-			<td align="right">' .format_uang($jumlah_keluar). '</td>
+			<td align="right" class="uang">' .format_uang($jumlah_masuk). '</td>
+			<td align="right" class="uang">' .format_uang($jumlah_keluar). '</td>
 			<td colspan="2"></td>
 		  </tr>';
 }
@@ -263,6 +263,15 @@ function reset() {
 }
 $(document).ready(function () {
     $('#jumlah').inputmask('currency', {
+        prefix: "Rp ",
+        autoGroup: true,
+        allowMinus: false,
+        groupSeparator: '.',
+        rightAlign: false,
+        autoUnmask: true,
+        removeMaskOnSubmit: true
+    });
+    $('.uang').inputmask('currency', {
         prefix: "Rp ",
         autoGroup: true,
         allowMinus: false,

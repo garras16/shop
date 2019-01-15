@@ -29,17 +29,17 @@ $thn_sql="YEAR(CURRENT_DATE())";
                                     <tr>
                                         <th>Nama Pelanggan</th>
                                         <th>No Nota Jual</th>
-                                        <th>Jumlah Jual (Rp)</th>
-                                        <th>Plafon (Rp)</th>
-                                        <th>Sisa Plafon (Rp)</th>
+                                        <th>Jumlah Jual</th>
+                                        <th>Plafon</th>
+                                        <th>Sisa Plafon</th>
                                         <th>Sales</th>
                                         <th>Driver</th>
                                         <th>Debt Collector</th>
                                         <th>Tgl Jatuh Tempo</th>
                                         <th>Tgl Tagih</th>
-                                        <th>Jumlah Tagih (Rp)</th>
-                                        <th>Jumlah Bayar (Rp)</th>
-                                        <th>Sisa Piutang (Rp)</th>
+                                        <th>Jumlah Tagih</th>
+                                        <th>Jumlah Bayar</th>
+                                        <th>Sisa Piutang</th>
                                         <th>Tgl Kunjungan Berikutnya</th>
                                         <th>Status Bayar</th>
                                         <th>Status Kembali Nota</th>
@@ -130,17 +130,17 @@ $total_jual=0;
 	echo '<tr>
 			<td align="center">' .$row['nama_pelanggan']. '</td>
 			<td align="center">' .$row['invoice']. '</td>
-			<td align="center">' .format_uang($total_jual). '</td>
-			<td align="center">' .format_uang($plafon). '</td>
+			<td align="center" class="uang">' .format_uang($total_jual). '</td>
+			<td align="center" class="uang">' .format_uang($plafon). '</td>
 			<td align="center" style="color:' .$color1. '">' .format_uang($sisa_plafon). '</td>
 			<td align="center">' .$nama_sales. '</td>
 			<td align="center">' .$nama_driver. '</td>
 			<td align="center">' .$row['nama_karyawan']. '</td>
 			<td align="center">' .$tgl_jt_tempo. '</td>
 			<td align="center">' .date("d-m-Y",strtotime($row['tanggal_tagih'])). '</td>
-			<td align="center">' .format_uang($total_jual). '</td>
-			<td align="center">' .format_uang($row['bayar']). '</td>
-			<td align="center">' .format_uang($total_jual-$row['bayar']). '</td>
+			<td align="center" class="uang">' .format_uang($total_jual). '</td>
+			<td align="center" class="uang">' .format_uang($row['bayar']). '</td>
+			<td align="center" class="uang">' .format_uang($total_jual-$row['bayar']). '</td>
 			<td align="center" style="color:' .$color2. '">' .$tgl_jb. '</td>
 			<td align="center" style="color: ' .$color. '">' .$status. '</td>
 			<td align="center">' .$status_nota. '</td>
@@ -174,6 +174,15 @@ function reset() {
     window.location = url;
 }
 $(document).ready(function () {
+    $('.uang').inputmask('currency', {
+        prefix: "Rp ",
+        autoGroup: true,
+        allowMinus: false,
+        groupSeparator: '.',
+        rightAlign: false,
+        autoUnmask: true,
+        removeMaskOnSubmit: true
+    });
     $('#datepicker').datepicker(
         {orientation: "bottom auto", format: "mm-yyyy", startView: 1, minViewMode: 1, autoclose: true}
     );
