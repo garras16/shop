@@ -186,11 +186,11 @@ $id_beli=$row['id_beli'];
                                         <small>Jml.</small>
                                     </span>
                                     <input
-                                        class="form-control"
+                                        class="form-control uang"
                                         style="padding: 20px 15px;"
                                         id="total_nota"
                                         value="<?php echo $jumlah_nota ?>"
-                                        title="Total Nota Beli (Rp)"
+                                        title="Total Nota Beli"
                                         readonly="readonly">
                                 </div>
                             </div>
@@ -462,6 +462,15 @@ $c=0;
         $('#myModal').modal('hide');
     }
     $(document).ready(function () {
+        $('.uang').inputmask('currency', {
+            prefix: "Rp ",
+            autoGroup: true,
+            allowMinus: false,
+            groupSeparator: '.',
+            rightAlign: false,
+            autoUnmask: true,
+            removeMaskOnSubmit: true
+        });
         $('#jumlah_bayar').inputmask('currency', {
             prefix: "Rp ",
             allowMinus: false,

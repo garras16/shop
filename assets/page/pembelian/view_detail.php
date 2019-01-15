@@ -185,7 +185,7 @@ FROM
                                     <input
                                         class="form-control"
                                         style="padding: 20px 15px;"
-                                        placeholder="Tarif Ekspedisi (Rp)"
+                                        placeholder="Tarif Ekspedisi"
                                         value="Rp <?php echo format_uang($row['tarif_ekspedisi']); ?>"
                                         readonly="readonly">
                                 </div>
@@ -298,28 +298,28 @@ $sql2=mysqli_query($con, "SELECT * FROM barang_masuk WHERE id_beli_detail=$id_be
 		echo '<td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '">' .format_angka($row['qty']). ' ' .$row['nama_satuan']. '</div></a></td>
 			    <td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '">' .format_angka($row['berat']). '</div></a></td>
 			    <td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '">' .format_angka($row['volume']). '</div></a></td>
-				<td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '" class="uang">' .format_uang($row['harga']). '</div></a></td>
-                <td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '" class="uang">' .format_uang($row['qty']*$row['harga']). '</div></a></td>
-                <td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '" class="uang">' .format_uang($diskon1). '</div></a></td>
-                <td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. ' ;" class="uang">' .format_uang($tot_set_disk_1). '</div></a></td>
-                <td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '" class="uang">' .format_uang($diskon2). '</div></a></td>
-                <td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div div id="tot_set_disk2" style="min-width:70px; ' .$val. '" class="uang">' .format_uang($tot_set_disk_2). '</div></a></td>
-                <td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '" class="uang">' .format_uang($diskon3). '</div></a></td>
-                <td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div id="tot_set_disk3" style="min-width:70px; ' .$val. '" class="uang">' .format_uang($tot_set_disk_3). '</div></a></td>
+				<td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '" class="uang">' .$row['harga']. '</div></a></td>
+                <td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '" class="uang">' .$row['qty']*$row['harga']. '</div></a></td>
+                <td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '" class="uang">' .$diskon1. '</div></a></td>
+                <td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. ' ;" class="uang">' .$tot_set_disk_1. '</div></a></td>
+                <td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '" class="uang">' .$diskon2. '</div></a></td>
+                <td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div div id="tot_set_disk2" style="min-width:70px; ' .$val. '" class="uang">' .$tot_set_disk_2. '</div></a></td>
+                <td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '" class="uang">' .$diskon3. '</div></a></td>
+                <td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div id="tot_set_disk3" style="min-width:70px; ' .$val. '" class="uang">' .$tot_set_disk_3. '</div></a></td>
                 <td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '">' .$tgl_datang. '</div></a></td>
                 <td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '">' .format_angka($row['qty_di_rak']). ' ' .$row['nama_satuan']. '</div></a></td>';
 	} else {
 		echo '<td><div style="min-width:70px; ' .$val. '">' .format_angka($row['qty']). ' ' .$row['nama_satuan']. '</div></td>
                 <td><div style="min-width:70px; ' .$val. '">' .format_angka($row['berat']). '</div></td>
                 <td><div style="min-width:70px; ' .$val. '">' .format_angka($row['volume']). '</div></td>
-                <td><div style="min-width:70px; ' .$val. '">' .format_uang($row['harga']). '</div></td>
-                <td><div style="min-width:70px; ' .$val. '">' .format_uang($row['qty']*$row['harga']). '</div></td>
-                <td><div style="min-width:70px; ' .$val. '">' .format_uang($diskon1). '</td>
-                <td><div style="min-width:70px; ' .$val. '">' .format_uang($tot_set_disk_1). '</td>
-                <td><div style="min-width:70px; ' .$val. '">' .format_uang($diskon2). '</td>
-                <td><div style="min-width:70px; ' .$val. '">' .format_uang($tot_set_disk_2). '</td>
-                <td><div style="min-width:70px; ' .$val. '">' .format_uang($diskon3). '</td>
-                <td><div style="min-width:70px; ' .$val. '">' .format_uang($tot_set_disk_3). '</td>
+                <td><div style="min-width:70px; ' .$val. '">' .$row['harga']. '</div></td>
+                <td><div style="min-width:70px; ' .$val. '">' .$row['qty']*$row['harga']. '</div></td>
+                <td><div style="min-width:70px; ' .$val. '">' .$diskon1. '</td>
+                <td><div style="min-width:70px; ' .$val. '">' .$tot_set_disk_1. '</td>
+                <td><div style="min-width:70px; ' .$val. '">' .$diskon2. '</td>
+                <td><div style="min-width:70px; ' .$val. '">' .$tot_set_disk_2. '</td>
+                <td><div style="min-width:70px; ' .$val. '">' .$diskon3. '</td>
+                <td><div style="min-width:70px; ' .$val. '">' .$tot_set_disk_3. '</td>
                 <td><div style="min-width:70px; ' .$val. '">' .$tgl_datang. '</div></td>
                 <td><div style="min-width:70px; ' .$val. '">' .format_angka($row['qty_di_rak']). ' ' .$row['nama_satuan']. '</div></td>';
 	}
@@ -372,7 +372,7 @@ $total_datang=$total_datang-($total_datang*($diskon_all_persen/100));
                                             id="volume_2"
                                             style="background: #fff; outline: none; border: none;"
                                             name="volume"
-                                            value="<?php echo format_angka($volume) ?>"
+                                            value="<?php echo $volume ?>"
                                             readonly="readonly">
                                     </div>
                                     <div class="input-group">
@@ -381,7 +381,7 @@ $total_datang=$total_datang-($total_datang*($diskon_all_persen/100));
                                             data-target="#myModal3"
                                             class="input-group-addon"
                                             style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;">
-                                            <small style="color: red;">Diskon Nota Beli (Rp)</small>
+                                            <small style="color: red;">Diskon Nota Beli</small>
                                             <a title="">
                                                 <small style="font-size: 10px; color: blue;">
                                                     [UBAH]</small>
@@ -392,49 +392,49 @@ $total_datang=$total_datang-($total_datang*($diskon_all_persen/100));
                                             id="diskon"
                                             name="total"
                                             style="background: #fff; outline: none; border: none;"
-                                            value="<?php echo format_uang($diskon_all_rp) ?>"
+                                            value="<?php echo $diskon_all_rp ?>"
                                             readonly="readonly">
                                     </div>
                                     <div class="input-group">
                                         <span
                                             class="input-group-addon"
                                             style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;">
-                                            <small>PPN (Rp)</small>
+                                            <small>PPN</small>
                                         </span>
                                         <input
                                             class="form-control"
                                             id="ppn"
                                             name="total"
                                             style="background: #fff; outline: none; border: none;"
-                                            value="<?php echo format_uang($ppn_all_rp) ?>"
+                                            value="<?php echo $ppn_all_rp ?>"
                                             readonly="readonly">
                                     </div>
                                     <div class="input-group">
                                         <span
                                             class="input-group-addon"
                                             style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;">
-                                            <small>Tot. N.Beli Set. Disc & PPN (Rp)</small>
+                                            <small>Tot. N.Beli Set. Disc & PPN</small>
                                         </span>
                                         <input
                                             class="form-control"
                                             id="total_2"
                                             style="background: #fff; outline: none; border: none;"
                                             name="total"
-                                            value="<?php echo format_uang($jumlah) ?>"
+                                            value="<?php echo $jumlah ?>"
                                             readonly="readonly">
                                     </div>
                                     <div class="input-group">
                                         <span
                                             class="input-group-addon"
                                             style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;">
-                                            <small>Tot. Datang Set. Disc & PPN (Rp)</small>
+                                            <small>Tot. Datang Set. Disc & PPN</small>
                                         </span>
                                         <input
                                             class="form-control"
                                             id="total_2_2"
                                             style="background: #fff; outline: none; border: none;"
                                             name="total"
-                                            value="<?php echo format_uang($total_datang) ?>"
+                                            value="<?php echo $total_datang ?>"
                                             readonly="readonly">
                                     </div>
                                 </div>
