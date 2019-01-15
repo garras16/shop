@@ -79,7 +79,7 @@ $blacklist = ($row['blacklist'] == 1 ? 'Ya' : 'Tidak');
 						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_pelanggan']. '">' .$row['telepon_pelanggan']. '</a></td>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_pelanggan']. '">' .$row['kontakperson']. '</a></td>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_pelanggan']. '">' .$row['telepon_kontak']. '</a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_pelanggan']. '" class="uang">' .format_uang($row['plafon']). '</a></td>
+						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_pelanggan']. '" class="uang">' .$row['plafon']. '</a></td>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_pelanggan']. '">' .$row['barcode']. '</a></td>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_pelanggan']. '">' .$status. '</a></td>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_pelanggan']. '">' .$blacklist. '</a></td>
