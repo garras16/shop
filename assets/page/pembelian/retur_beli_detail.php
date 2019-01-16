@@ -253,8 +253,8 @@ WHERE barang_masuk.id_beli_detail=$tmp_id_beli_detail");
 while($r=mysqli_fetch_array($sql2)){
 $total_retur+=$r['harga_retur']*$r['qty_retur'];
 ($r['qty_keluar']=='' ? $qty_keluar='' : $qty_keluar=$r['qty_keluar']. ' ' .$row['nama_satuan']);
-$total_jual=$row['qty']*($row['harga']-$row['diskon_rp']-$row['diskon_rp_2']-$row['diskon_rp_3']);
-$total_jual=$total_jual+($total_jual*$ppn_all_persen/100);//-($total_jual*$diskon_all_persen/100);
+$totall_jual=$row['qty']*($row['harga']-$row['diskon_rp']-$row['diskon_rp_2']-$row['diskon_rp_3']);
+$total_jual=$totall_jual+($totall_jual*$ppn_all_persen/100);//-($total_jual*$diskon_all_persen/100);
 if ($status=="1" || $locked){
 	echo '			<tr>
 						<td>' .$row['nama_barang']. '</td>

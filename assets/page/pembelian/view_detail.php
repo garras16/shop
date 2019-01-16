@@ -312,14 +312,14 @@ $sql2=mysqli_query($con, "SELECT * FROM barang_masuk WHERE id_beli_detail=$id_be
 		echo '<td><div style="min-width:70px; ' .$val. '">' .format_angka($row['qty']). ' ' .$row['nama_satuan']. '</div></td>
                 <td><div style="min-width:70px; ' .$val. '">' .format_angka($row['berat']). '</div></td>
                 <td><div style="min-width:70px; ' .$val. '">' .format_angka($row['volume']). '</div></td>
-                <td><div style="min-width:70px; ' .$val. '">' .$row['harga']. '</div></td>
+                <td><div style="min-width:70px; ' .$val. '" class="uang">' .$row['harga']. '</div></td>
                 <td><div style="min-width:70px; ' .$val. '">' .$row['qty']*$row['harga']. '</div></td>
-                <td><div style="min-width:70px; ' .$val. '">' .$diskon1. '</td>
-                <td><div style="min-width:70px; ' .$val. '">' .$tot_set_disk_1. '</td>
-                <td><div style="min-width:70px; ' .$val. '">' .$diskon2. '</td>
-                <td><div style="min-width:70px; ' .$val. '">' .$tot_set_disk_2. '</td>
-                <td><div style="min-width:70px; ' .$val. '">' .$diskon3. '</td>
-                <td><div style="min-width:70px; ' .$val. '">' .$tot_set_disk_3. '</td>
+                <td><div style="min-width:70px; ' .$val. '" class="uang">' .$diskon1. '</td>
+                <td><div style="min-width:70px; ' .$val. '" class="uang">' .$tot_set_disk_1. '</td>
+                <td><div style="min-width:70px; ' .$val. '" class="uang">' .$diskon2. '</td>
+                <td><div style="min-width:70px; ' .$val. '" class="uang">' .$tot_set_disk_2. '</td>
+                <td><div style="min-width:70px; ' .$val. '" class="uang">' .$diskon3. '</td>
+                <td><div style="min-width:70px; ' .$val. '" class="uang">' .$tot_set_disk_3. '</td>
                 <td><div style="min-width:70px; ' .$val. '">' .$tgl_datang. '</div></td>
                 <td><div style="min-width:70px; ' .$val. '">' .format_angka($row['qty_di_rak']). ' ' .$row['nama_satuan']. '</div></td>';
 	}
