@@ -143,8 +143,10 @@ while($row=mysqli_fetch_array($sql)){
 $sisa_nota=$jumlah_nota-$jumlah_bayar;
 if($row['jenis'] == "Giro" && $row['status_giro'] == 1) {
 	$nilai = "DITERIMA";
-}else if($row['jenis'] == "Giro" && $row['status_giro'] == 2){
+}else if($row['jenis'] == "Giro" && $row['status_giro'] == 2) {
 	$nilai = "DITOLAK";
+}else if($row['jenis'] == "Giro" && $row['status_giro'] == 0) {
+	$nilai = "BELUM DICAIRKAN";
 }else{
 	$nilai = "-";
 }
@@ -333,14 +335,14 @@ $(document).ready(function () {
         removeMaskOnSubmit: true
     });
     $('.uang').inputmask('currency', {
-            prefix: "Rp ",
-            autoGroup: true,
-            allowMinus: false,
-            groupSeparator: '.',
-            rightAlign: false,
-            autoUnmask: true,
-            removeMaskOnSubmit: true
-        });
+        prefix: "Rp ",
+        autoGroup: true,
+        allowMinus: false,
+        groupSeparator: '.',
+        rightAlign: false,
+        autoUnmask: true,
+        removeMaskOnSubmit: true
+    });
     $('#select_nota').on('change', function () {
         var jumlah = $(this)
             .find(":selected")
