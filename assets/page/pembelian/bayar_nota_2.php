@@ -415,14 +415,14 @@ $c=0;
         }
     }
     function valid2() {
-        var total_nota = parseInt($('#total_nota').val());
-        var sisa_nota = parseInt($('#sisa_nota').val());
-        var jumlah_bayar = parseInt($('#jumlah_bayar').val());
+        var total_nota = parseFloat($('#total_nota').val());
+        var sisa_nota = parseFloat($('#sisa_nota').val());
+        var jumlah_bayar = parseFloat($('#jumlah_bayar').val());
         if ($('#jenis').val() != 'Retur') {
             if (jumlah_bayar + jumlah_retur <= sisa_nota && jumlah_bayar > 0) {
                 return true;
             } else {
-                if (jumlah_bayar == 0)
+                if (jumlah_bayar <= 0)
                     alert('Jumlah Bayar harus > 0');
                 if (jumlah_bayar + jumlah_retur >= sisa_nota)
                     alert('Jumlah Bayar tidak boleh melebihi Sisa Nota Beli');
