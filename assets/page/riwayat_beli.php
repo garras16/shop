@@ -45,7 +45,7 @@
                                     <th>Ekspedisi</th>
                                     <th>Berat Ekspedisi (gr)</th>
                                     <th>Volume Ekspedisi (cm3)</th>
-                                    <th>Tarif Ekspedisi (Rp)</th>
+                                    <th>Tarif Ekspedisi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -86,7 +86,7 @@ while($row=mysqli_fetch_array($sql)){
 						<td><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '">' .$row['nama_ekspedisi']. '</a></td>
 						<td><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '">' .format_angka($row['berat']). '</a></td>
 						<td><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '">' .format_angka($row['volume']). '</a></td>
-						<td><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '">' .format_uang($row['tarif_ekspedisi']). '</a></td>
+						<td><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '" class="uang">' .$row['tarif_ekspedisi']. '</a></td>
 					</tr>';
 }
 ?>
@@ -121,6 +121,15 @@ while($row=mysqli_fetch_array($sql)){
                 "&sampai=" + $('#tgl_sampai').val();
     }
     $(document).ready(function () {
+        $('.uang').inputmask('currency', {
+            prefix: "Rp ",
+            autoGroup: true,
+            allowMinus: false,
+            groupSeparator: '.',
+            rightAlign: false,
+            autoUnmask: true,
+            removeMaskOnSubmit: true
+        });
         var now = new Date();
         $('#tgl_dari').daterangepicker({
             locale: {
