@@ -146,7 +146,7 @@ if($row['jenis'] == "Giro" && $row['status_giro'] == 1) {
 }else if($row['jenis'] == "Giro" && $row['status_giro'] == 2){
 	$nilai = "DITOLAK";
 }else{
-	$nilai = "";
+	$nilai = "-";
 }
 if ($row['status']=='1'){
 	$status="LUNAS";
