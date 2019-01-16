@@ -143,7 +143,7 @@ $total_jual=0;
 			<td align="center" style="width: 200px;">' .date("d-m-Y",strtotime($row['tanggal_tagih'])). '</td>
 			<td align="center" style="width: 400px;" class="uang">' .$total_jual. '</td>
 			<td align="center" style="width: 400px;" class="uang">' .$row['bayar']. '</td>
-			<td align="center" style="width: 400px;" class="uang">' .$total_jual-$row['bayar']. '</td>
+			<td align="center" style="width: 400px;" class="uang">' .($total_jual-$row['bayar']). '</td>
 			<td align="center" style="color: ' .$color2. ' ;width: 700px;">' .$tgl_jb. '</td>
 			<td align="center" style="color: ' .$color. ' ;width: 300px;">' .$status. '</td>
 			<td align="center" style="width: 670px;">' .$status_nota. '</td>
