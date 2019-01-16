@@ -98,7 +98,7 @@
 									while($row=mysqli_fetch_array($sql)){
 										echo '<tr>
 												<td>' .date("d-m-Y", strtotime($row['tanggal'])). '</a></td>
-												<td align="right" class="uang">' .format_uang($row['harga_jual']). '</a></td>
+												<td align="right" class="uang">' .$row['harga_jual']. '</a></td>
 											</tr>';
 									}
 									?>

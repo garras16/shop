@@ -318,18 +318,18 @@ if ($status=="1" or $locked){
 	echo '			<tr>
 						<td style="'.$val.'">' .$row['nama_barang']. '</td>
 						<td style="'.$val.'">' .$row['qty']. ' ' .$row['nama_satuan']. '</td>
-						<td style="'.$val.'">' .format_uang($row['harga']). '</td>
-						<td style="'.$val.'">' .format_uang($tot_seb_disk). '</td>
-						<td style="'.$val.'">' .format_uang($diskon1). '</td>
-						<td style="'.$val.'">' .format_uang($tot_set_disk_1). '</td>
-						<td style="'.$val.'">' .format_uang($diskon2). '</td>
-						<td style="'.$val.'">' .format_uang($tot_set_disk_2). '</td>
-						<td style="'.$val.'">' .format_uang($diskon3). '</td>
-						<td style="'.$val.'">' .format_uang($tot_set_disk_3). '</td>
+						<td style="'.$val.'" class="uang">' .$row['harga']. '</td>
+						<td style="'.$val.'" class="uang">' .$tot_seb_disk. '</td>
+						<td style="'.$val.'" class="uang">' .$diskon1. '</td>
+						<td style="'.$val.'" class="uang">' .$tot_set_disk_1. '</td>
+						<td style="'.$val.'" class="uang">' .$diskon2. '</td>
+						<td style="'.$val.'" class="uang">' .$tot_set_disk_2. '</td>
+						<td style="'.$val.'" class="uang">' .$diskon3. '</td>
+						<td style="'.$val.'" class="uang">' .$tot_set_disk_3. '</td>
 						<td style="'.$val.'">' .$row['qty_retur']. ' ' .$row['nama_satuan']. '</td>
-						<td style="'.$val.'">' .format_uang($row['harga_retur']). '</td>
+						<td style="'.$val.'" class="uang">' .$row['harga_retur']. '</td>
 						<td style="'.$val.'">' .$qty_masuk. '</td>
-						<td style="'.$val.'">' .format_uang($jml_retur). '</td>';
+						<td style="'.$val.'" class="uang">' .$jml_retur. '</td>';
 	if ($qty_masuk!='') {
 		echo '<td><i class="fa fa-check"></i></td>';
 	} else {
@@ -340,18 +340,18 @@ if ($status=="1" or $locked){
 	echo '			<tr>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px;'.$val.'">' .$row['nama_barang']. '</div></a></td>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px;'.$val.'">' .$row['qty']. ' ' .$row['nama_satuan']. '</div></a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px;'.$val.'">' .format_uang($row['harga']). '</div></a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px;'.$val.'">' .format_uang($tot_seb_disk). '</div></a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px;'.$val.'">' .format_uang($diskon1). '</div></a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px;'.$val.'">' .format_uang($tot_set_disk_1). '</div></a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px;'.$val.'">' .format_uang($diskon2). '</div></a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px;'.$val.'">' .format_uang($tot_set_disk_2). '</div></a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px;'.$val.'">' .format_uang($diskon3). '</div></a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px;'.$val.'">' .format_uang($tot_set_disk_3). '</div></a></td>
+						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px;'.$val.'" class="uang">' .$row['harga']. '</div></a></td>
+						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px;'.$val.'" class="uang">' .$tot_seb_disk. '</div></a></td>
+						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px;'.$val.'" class="uang">' .$diskon1. '</div></a></td>
+						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px;'.$val.'" class="uang">' .$tot_set_disk_1. '</div></a></td>
+						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px;'.$val.'" class="uang">' .$diskon2. '</div></a></td>
+						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px;'.$val.'" class="uang">' .$tot_set_disk_2. '</div></a></td>
+						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px;'.$val.'" class="uang">' .$diskon3. '</div></a></td>
+						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px;'.$val.'" class="uang">' .$tot_set_disk_3. '</div></a></td>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px;'.$val.'">' .$row['qty_retur']. ' ' .$row['nama_satuan']. '</div></a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px;'.$val.'">' .format_uang($row['harga_retur']). '</div></a></td>
+						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px;'.$val.'" class="uang">' .$row['harga_retur']. '</div></a></td>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px;'.$val.'">' .$qty_masuk. '</div></a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px;'.$val.'">' .format_uang($jml_retur). '</div></a></td>
+						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px;'.$val.'" class="uang">' .$jml_retur. '</div></a></td>
 						<td><a href="?page=penjualan&mode=retur_jual_detail&id=' .$id. '&del=' .$row['id_retur_jual_detail']. '" class="btn btn-warning btn-xs" title="Hapus"><i class="fa fa-trash"></i></a></td>
 					</tr>';
 }
@@ -696,6 +696,15 @@ WHERE id_jual=$id_jual");
         }
     }
     $(document).ready(function () {
+        $('.uang').inputmask('currency', {
+            prefix: "Rp ",
+            autoGroup: true,
+            allowMinus: false,
+            groupSeparator: '.',
+            rightAlign: false,
+            autoUnmask: true,
+            removeMaskOnSubmit: true
+        });
         $('#qty_retur').inputmask('decimal', {
             allowMinus: false,
             autoGroup: true,

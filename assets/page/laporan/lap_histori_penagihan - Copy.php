@@ -114,9 +114,9 @@
 										($row['tgl_janji_next']=='' ? $tgl_jb='' : $tgl_jb=date('d-m-Y',strtotime($row['tgl_janji_next'])));
 										echo '<tr>
 												<td align="center"><a href="?page=laporan&mode=lap_histori_penagihan_2&id=' .$row['id_penagihan']. '"><div style="min-width:70px">' .date("d-m-Y",strtotime($row['tanggal_tagih'])). '</div></a></td>
-												<td align="center"><a href="?page=laporan&mode=lap_histori_penagihan_2&id=' .$row['id_penagihan']. '"><div style="min-width:70px">' .format_uang($total_jual). '</div></a></td>
+												<td align="center"><a href="?page=laporan&mode=lap_histori_penagihan_2&id=' .$row['id_penagihan']. '"><div style="min-width:70px" class="uang">' .$total_jual. '</div></a></td>
 												<td align="center"><a href="?page=laporan&mode=lap_histori_penagihan_2&id=' .$row['id_penagihan']. '"><div style="min-width:70px">' .$row['nama_karyawan']. '</div></a></td>
-												<td align="center"><a href="?page=laporan&mode=lap_histori_penagihan_2&id=' .$row['id_penagihan']. '"><div style="min-width:70px">' .format_uang($row['bayar']). '</div></a></td>
+												<td align="center"><a href="?page=laporan&mode=lap_histori_penagihan_2&id=' .$row['id_penagihan']. '"><div style="min-width:70px" class="uang">' .$row['bayar']. '</div></a></td>
 											</tr>';
 										
 									}
@@ -147,6 +147,15 @@
         window.location = url;
     }
     $(document).ready(function () {
+        $('.uang').inputmask('currency', {
+            prefix: "Rp ",
+            autoGroup: true,
+            allowMinus: false,
+            groupSeparator: '.',
+            rightAlign: false,
+            autoUnmask: true,
+            removeMaskOnSubmit: true
+        });
         $('#datepicker').datepicker(
             {orientation: "bottom auto", format: "mm-yyyy", startView: 1, minViewMode: 1, autoclose: true}
         );

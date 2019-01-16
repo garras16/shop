@@ -313,11 +313,11 @@ if ($status=="1" || $locked){
                                         class="input-group-addon"
                                         style="padding:10px 0px;width:2px;text-align:left;color:#000; background: #fff; border: none; outline: none;">:</span>
                                     <input
-                                        class="form-control"
+                                        class="form-control uang"
                                         id="total_retur"
                                         style="border: none; background: #fff; outline: none;"
                                         name="total_retur"
-                                        value="<?php echo format_uang($total_retur) ?>"
+                                        value="<?php echo $total_retur ?>"
                                         readonly="readonly">
                                 </div>
                             </div>

@@ -106,7 +106,7 @@ if ($_SESSION['posisi']=='OWNER' && $status_so<>'1'){
 				<td align="center"><a data-toggle="modal" data-target="#myModal" data-id="' .$row['id_pengiriman']. '"><div style="min-width:70px">' .$row['nama_ekspedisi']. '</div></a></td>
 				<td align="center"><a data-toggle="modal" data-target="#myModal" data-id="' .$row['id_pengiriman']. '"><div style="min-width:70px">' .format_angka($row['berat']). '</div></a></td>
 				<td align="center"><a data-toggle="modal" data-target="#myModal" data-id="' .$row['id_pengiriman']. '"><div style="min-width:70px">' .format_angka($row['volume']). '</div></a></td>
-				<td align="right"><a data-toggle="modal" data-target="#myModal" data-id="' .$row['id_pengiriman']. '"><div style="min-width:70px" class="uang">' .format_uang($row['tarif']). '</div></a></td>
+				<td align="right"><a data-toggle="modal" data-target="#myModal" data-id="' .$row['id_pengiriman']. '"><div style="min-width:70px" class="uang">' .$row['tarif']. '</div></a></td>
 				<td align="center"><a data-toggle="modal" data-target="#myModal" data-id="' .$row['id_pengiriman']. '"><div style="min-width:70px">' .$status. '</div></a></td>
 				<td align="center"><a href="?page=penjualan&mode=view_detail&id=' .$row['id_jual']. '&direct" class="btn btn-primary btn-xs">View</a></td>
 			</tr>';
@@ -119,7 +119,7 @@ if ($_SESSION['posisi']=='OWNER' && $status_so<>'1'){
 				<td align="center"><div style="min-width:70px">' .$row['nama_ekspedisi']. '</div></td>
 				<td align="center"><div style="min-width:70px">' .format_angka($row['berat']). '</div></td>
 				<td align="center"><div style="min-width:70px">' .format_angka($row['volume']). '</div></td>
-				<td align="right"><div style="min-width:70px" class="uang">' .format_uang($row['tarif']). '</div></td>
+				<td align="right"><div style="min-width:70px" class="uang">' .$row['tarif']. '</div></td>
 				<td align="center"><div style="min-width:70px">' .$status. '</div></td>
 				<td align="center"><a href="?page=penjualan&mode=view_detail&id=' .$row['id_jual']. '&direct" class="btn btn-primary btn-xs">View</a></td>
 			</tr>';

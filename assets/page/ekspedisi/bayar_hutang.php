@@ -111,8 +111,8 @@ if ($row['status']==1){
 						<td style="width: 120px;">' .$row['no_nota_beli']. '</td>
 						<td style="width: 200px;">' .$row['nama_ekspedisi']. '</td>
 						<td style="width: 150px;">' .date("d-m-Y",strtotime($row['tgl_bayar'])). '</td>
-						<td style="width: 200px;" class="uang">' .format_uang($row['jumlah_bayar']). '</td>
-						<td style="width: 200px;" class="uang">' .format_uang($sisa_hutang). '</td>
+						<td style="width: 200px;" class="uang">' .$row['jumlah_bayar']. '</td>
+						<td style="width: 200px;" class="uang">' .$sisa_hutang. '</td>
 						<td style="width: 150px;">' .$status. '</td>
 						<td style="width: 30px;"><a class="btn btn-danger btn-xs" href="?page=ekspedisi&mode=bayar_hutang&del=' .$row['id_bayar_ekspedisi_detail']. '&id=' .$row['id_bayar_ekspedisi']. '"><i class="fa fa-trash"></i> Hapus</a></td>
 					</tr>';

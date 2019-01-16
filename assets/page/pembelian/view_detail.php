@@ -183,10 +183,10 @@ FROM
                                         <small>Tarif</small>
                                     </span>
                                     <input
-                                        class="form-control"
+                                        class="form-control uang"
                                         style="padding: 20px 15px;"
                                         placeholder="Tarif Ekspedisi"
-                                        value="Rp <?php echo format_uang($row['tarif_ekspedisi']); ?>"
+                                        value="Rp <?php echo $row['tarif_ekspedisi']; ?>"
                                         readonly="readonly">
                                 </div>
                             </div>

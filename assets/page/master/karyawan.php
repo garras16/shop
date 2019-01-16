@@ -82,9 +82,9 @@
 												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .$row['ktp']. '</a></td>
 												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .$row['no_hp']. '</a></td>
 												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .$row['nama_jabatan']. '</a></td>
-												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '" class="uang">' .format_uang($row['gaji']). '</a></td>
-												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '" class="uang">' .format_uang($row['harian']). '</a></td>
-												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '" class="uang">' .format_uang($row['lembur']). '</a></td>
+												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '" class="uang">' .$row['gaji']. '</a></td>
+												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '" class="uang">' .$row['harian']. '</a></td>
+												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '" class="uang">' .$row['lembur']. '</a></td>
 												<td><a data-toggle="modal" data-target="#myModal2" data-id="' .$row['id_karyawan']. '">' .$status. '</a></td>
 											</tr>';
 									}

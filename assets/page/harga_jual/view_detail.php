@@ -96,7 +96,7 @@ $i+=1;
 						<td><div style="min-width:50px">' .$i. '</div></td>
 						<td><div style="min-width:50px">' .$row['nama_barang']. '</div></td>
 						<td><div style="min-width:50px">' .$row['nama_supplier']. '</div></td>
-						<td><div style="min-width:50px" class="uang">' .format_uang($row['harga_jual']). '</div></td>
+						<td><div style="min-width:50px" class="uang">' .$row['harga_jual']. '</div></td>
 					</tr>';
 }
 ?>

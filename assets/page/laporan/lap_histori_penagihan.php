@@ -136,14 +136,14 @@ $total_jual=0;
 	echo '<tr>
 			<td align="center" style="width: 400px;">' .$row['nama_pelanggan']. '</td>
 			<td align="center" style="width: 300px;">' .$row['invoice']. '</td>
-			<td align="center" style="width: 300px;" class="uang">' .format_uang($total_jual). '</td>
+			<td align="center" style="width: 300px;" class="uang">' .$total_jual. '</td>
 			<td align="center" style="width: 300px;">' .$nama_sales. '</td>
 			<td align="center" style="width: 300px;">' .$nama_driver. '</td>
 			<td align="center" style="width: 300px;">' .$row['nama_karyawan']. '</td>
 			<td align="center" style="width: 200px;">' .date("d-m-Y",strtotime($row['tanggal_tagih'])). '</td>
-			<td align="center" style="width: 400px;" class="uang">' .format_uang($total_jual). '</td>
-			<td align="center" style="width: 400px;" class="uang">' .format_uang($row['bayar']). '</td>
-			<td align="center" style="width: 400px;" class="uang">' .format_uang($total_jual-$row['bayar']). '</td>
+			<td align="center" style="width: 400px;" class="uang">' .$total_jual. '</td>
+			<td align="center" style="width: 400px;" class="uang">' .$row['bayar']. '</td>
+			<td align="center" style="width: 400px;" class="uang">' .$total_jual-$row['bayar']. '</td>
 			<td align="center" style="color: ' .$color2. ' ;width: 700px;">' .$tgl_jb. '</td>
 			<td align="center" style="color: ' .$color. ' ;width: 300px;">' .$status. '</td>
 			<td align="center" style="width: 670px;">' .$status_nota. '</td>

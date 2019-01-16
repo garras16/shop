@@ -152,8 +152,8 @@ if ($row['status']=='1'){
 						<td align="center" style="width: 180px;">' .$row['nama_pelanggan']. '</td>
 						<td align="center" style="width: 100px;">' .$row['jenis']. '</td>
 						<td align="center" style="width: 120px;">' .date("d-m-Y", strtotime($row['tgl_bayar'])). '</td>
-						<td align="right" style="width: 150px;" class="uang">' .format_uang($row['jumlah']). '</td>
-						<td align="right" style="width: 130px;" class="uang">' .format_uang($sisa_nota). '</td>
+						<td align="right" style="width: 150px;" class="uang">' .$row['jumlah']. '</td>
+						<td align="right" style="width: 130px;" class="uang">' .$sisa_nota. '</td>
 						<td align="center" style="width: 110px;">' .$status. '</td>
 						<td align="center" style="width: 20px;"><a href="?page=penjualan&mode=bayar_nota&del=' .$row['id_bayar']. '" class="btn btn-primary btn-xs"><i class="fa fa-trash"></i></a></td>
 					</tr>';

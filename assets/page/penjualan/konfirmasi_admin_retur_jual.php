@@ -117,8 +117,8 @@ WHERE id_jual=" .$row['id_jual']);
 				<td><div style="min-width:70px;text-align:center"><a target="_blank" href="?page=penjualan&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '">' .$row['no_retur_jual']. '</div></a></td>
 				<td><div style="min-width:70px;text-align:center"><a target="_blank" href="?page=penjualan&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '">' .$invoice. '</div></a></td>
 				<td><div style="min-width:70px;text-align:center"><a target="_blank" href="?page=penjualan&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '">' .$status. '</div></a></td>
-				<td><div style="min-width:70px;text-align:center"><a target="_blank" href="?page=penjualan&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '" class="uang">' .format_uang($total_jual). '</div></a></td>
-				<td><div style="min-width:70px;text-align:center"><a target="_blank" href="?page=penjualan&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '" class="uang">' .format_uang($total_retur). '</div></a></td>
+				<td><div style="min-width:70px;text-align:center"><a target="_blank" href="?page=penjualan&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '" class="uang">' .$total_jual. '</div></a></td>
+				<td><div style="min-width:70px;text-align:center"><a target="_blank" href="?page=penjualan&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '" class="uang">' .$total_retur. '</div></a></td>
 				<td style="text-align:center"><a class="btn btn-xs btn-warning" href="?page=konfirmasi&mode=konfirmasi_admin&terima=' .$row['id_retur_jual']. '">Terima</a>
 				<a class="btn btn-xs btn-danger" href="?page=konfirmasi&mode=konfirmasi_admin&tolak=' .$row['id_retur_jual']. '">Tolak</a></td>
 			</tr>';
