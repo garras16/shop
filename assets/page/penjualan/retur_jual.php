@@ -121,8 +121,8 @@ if ($row['status']=='1'){
 						<td><a href="?page=penjualan&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '"><div style="min-width:70px">' .$row['invoice']. '</div></a></td>
 						<td><a href="?page=penjualan&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '"><div style="min-width:70px">' .$row['nama_pelanggan']. '</div></a></td>
 						<td><a href="?page=penjualan&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '"><div style="min-width:70px">' .$row['nama_karyawan']. '</div></a></td>
-						<td><a href="?page=penjualan&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '"><div style="min-width:70px" class="uang">' .format_uang($jumlah_jual). '</div></a></td>
-						<td><a href="?page=penjualan&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '"><div style="min-width:70px" class="uang">' .format_uang($jumlah_retur). '</div></a></td>
+						<td><a href="?page=penjualan&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '"><div style="min-width:70px" class="uang">' .$jumlah_jual. '</div></a></td>
+						<td><a href="?page=penjualan&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '"><div style="min-width:70px" class="uang">' .$jumlah_retur. '</div></a></td>
 						<td><a href="?page=penjualan&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '"><div style="min-width:70px" class="badge bg-green">' .$status. '</div></a></td>
 					</tr>';
 }
