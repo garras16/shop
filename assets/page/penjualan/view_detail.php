@@ -270,14 +270,14 @@ while($row=mysqli_fetch_array($sql)){
 						<td style="'.$val.'">' .$row['barcode']. '</td>
 						<td style="'.$val.'">' .$row['nama_barang']. '</td>
 						<td style="'.$val.'">' .$row['qty']. ' ' .$row['nama_satuan']. '</td>
-						<td style="'.$val.'" class="uang">' .format_uang($row['harga_jual']). '</td>
-						<td style="'.$val.'" class="uang">' .format_uang($row['qty']*$row['harga_jual']). '</td>
-						<td style="'.$val.'" class="uang">' .format_uang($diskon1). '</td>
-						<td style="'.$val.'" class="uang">' .format_uang($tot_set_disk_1). '</td>
-						<td style="'.$val.'" class="uang">' .format_uang($diskon2). '</td>
-						<td style="'.$val.'" class="uang">' .format_uang($tot_set_disk_2). '</td>
-						<td style="'.$val.'" class="uang">' .format_uang($diskon3). '</td>
-						<td style="'.$val.'" class="uang">' .format_uang($tot_set_disk_3). '</td>
+						<td style="'.$val.'" class="uang">' .$row['harga_jual']. '</td>
+						<td style="'.$val.'" class="uang">' .$row['qty']*$row['harga_jual']. '</td>
+						<td style="'.$val.'" class="uang">' .$diskon1. '</td>
+						<td style="'.$val.'" class="uang">' .$tot_set_disk_1. '</td>
+						<td style="'.$val.'" class="uang">' .$diskon2. '</td>
+						<td style="'.$val.'" class="uang">' .$tot_set_disk_2. '</td>
+						<td style="'.$val.'" class="uang">' .$diskon3. '</td>
+						<td style="'.$val.'" class="uang">' .$tot_set_disk_3. '</td>
 					</tr>';
 }
 $diskon_all_rp=($diskon_nota/100)*$total_jual;
@@ -302,11 +302,11 @@ $diskon_all_rp=($diskon_nota/100)*$total_jual;
                                         <small>:</small>
                                     </span>
                                     <input
-                                        class="form-control"
+                                        class="form-control uang"
                                         id="total_jual_2"
                                         style="border: none; background: #fff; outline: none;"
                                         name="berat"
-                                        value="<?php echo format_uang($total_jual) ?>"
+                                        value="<?php echo $total_jual ?>"
                                         readonly="readonly">
                                 </div>
                             </div>

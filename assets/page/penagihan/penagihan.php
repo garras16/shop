@@ -274,9 +274,9 @@ $total_jual=0;
 		echo '<tr>
 				<td align="center"><input style="width: 20px; height: 20px;" type="checkbox" id="id_penagihan" name="id_penagihan[]" value="' .$row['id_penagihan']. '"></td>
 				<td align="center"><a href="?page=penagihan&mode=penagihan_2&id=' .$row['id_penagihan']. '"><div style="min-width:70px">' .date("d-m-Y",strtotime($row['tanggal_tagih'])). '</div></a></td>
-				<td align="center"><a href="?page=penagihan&mode=penagihan_2&id=' .$row['id_penagihan']. '"><div style="min-width:70px" class="uang">' .format_uang($total_jual). '</div></a></td>
+				<td align="center"><a href="?page=penagihan&mode=penagihan_2&id=' .$row['id_penagihan']. '"><div style="min-width:70px" class="uang">' .$total_jual. '</div></a></td>
 				<td align="center"><a href="?page=penagihan&mode=penagihan_2&id=' .$row['id_penagihan']. '"><div style="min-width:70px">' .$row['nama_karyawan']. '</div></a></td>
-				<td align="center"><a href="?page=penagihan&mode=penagihan_2&id=' .$row['id_penagihan']. '"><div style="min-width:70px" class="uang">' .format_uang($row['bayar']). '</div></a></td>
+				<td align="center"><a href="?page=penagihan&mode=penagihan_2&id=' .$row['id_penagihan']. '"><div style="min-width:70px" class="uang">' .$row['bayar']. '</div></a></td>
 			</tr>';
 		
 	}

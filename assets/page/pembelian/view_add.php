@@ -208,14 +208,14 @@ $ppn_all_persen=$row2['ppn_all_persen'];
                                         <th>Qty Beli</th>
                                         <th>Berat (gr)</th>
                                         <th>Volume (cm3)</th>
-                                        <th>Harga Modal (Rp)</th>
-                                        <th>Tot. Seb. Diskon (Rp)</th>
-                                        <th>Disc 1 (Rp)</th>
-                                        <th>Tot. set. disc 1 (Rp)</th>
-                                        <th>Disc 2 (Rp)</th>
-                                        <th>Tot. set. disc 2 (Rp)</th>
-                                        <th>Disc 3 (Rp)</th>
-                                        <th>Tot. set. disc 3 (Rp)</th>
+                                        <th>Harga Modal</th>
+                                        <th>Tot. Seb. Diskon</th>
+                                        <th>Disc 1</th>
+                                        <th>Tot. set. disc 1</th>
+                                        <th>Disc 2</th>
+                                        <th>Tot. set. disc 2</th>
+                                        <th>Disc 3</th>
+                                        <th>Tot. set. disc 3</th>
                                         <th>Tgl Datang</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -271,14 +271,14 @@ $volume+=$row['volume'];
 						<td style="width: 90px;">' .format_angka($row['qty']). ' ' .$row['nama_satuan']. '</td>
 						<td style="width: 90px;">' .format_angka($row['berat']). '</td>
 						<td style="width: 120px;">' .format_angka($row['volume']). '</td>
-						<td style="width: 140px;">' .format_uang($row['harga']). '</td>
-						<td style="width: 160px;">' .format_uang($row['qty']*$row['harga']). '</td>
-						<td style="width: 120px;">' .format_uang($row['qty']*$diskon1). '</td>
-						<td style="width: 150px;">' .format_uang($tot_set_disk_1). '</td>
-						<td style="width: 120px;">' .format_uang($row['qty']*$diskon2). '</td>
-						<td style="width: 150px;">' .format_uang($tot_set_disk_2). '</td>
-						<td style="width: 120px;">' .format_uang($row['qty']*$diskon3). '</td>
-						<td style="width: 150px;">' .format_uang($tot_set_disk_3). '</td>
+						<td style="width: 140px;" class="uang">' .$row['harga']. '</td>
+						<td style="width: 160px;" class="uang">' .$row['qty']*$row['harga']. '</td>
+						<td style="width: 120px;" class="uang">' .$row['qty']*$diskon1. '</td>
+						<td style="width: 150px;" class="uang">' .$tot_set_disk_1. '</td>
+						<td style="width: 120px;" class="uang">' .$row['qty']*$diskon2. '</td>
+						<td style="width: 150px;" class="uang">' .$tot_set_disk_2. '</td>
+						<td style="width: 120px;" class="uang">' .$row['qty']*$diskon3. '</td>
+						<td style="width: 150px;" class="uang">' .$tot_set_disk_3. '</td>
 						<td style="width: 150px;">' .$tgl_datang. '</td>
 						<td style="width: 20px;"><a class="label label-warning" onClick="deleteRow(this,' .$row['id_beli_detail']. ')" ><i class="fa fa-trash"></i> HAPUS</a></td>';
 	echo '			</tr>';
@@ -323,54 +323,54 @@ $jumlah=$jumlah+$ppn_all_rp-$diskon_all_rp;
                                             data-target="#myModal2"
                                             class="input-group-addon"
                                             style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;">
-                                            <small style="color: red;">Diskon Nota Beli (Rp)</small>
+                                            <small style="color: red;">Diskon Nota Beli</small>
                                             <a title="">
                                                 <small style="font-size: 10px; color: blue;">
                                                     [UBAH]</small>
                                             </a>
                                         </span>
                                         <input
-                                            class="form-control text-right"
+                                            class="form-control text-right uang"
                                             id="diskon"
                                             style="background: #fff; outline: none; border: none;"
                                             name="total"
-                                            value="<?php echo format_uang($diskon_all_rp) ?>"
+                                            value="<?php echo $diskon_all_rp ?>"
                                             readonly="readonly">
                                     </div>
                                     <div class="input-group">
                                         <span
                                             class="input-group-addon"
-                                            style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;">PPN (Rp)</span>
+                                            style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;">PPN</span>
                                         <input
-                                            class="form-control text-right"
+                                            class="form-control text-right uang"
                                             id="diskon"
                                             style="background: #fff; outline: none; border: none;"
                                             name="total"
-                                            value="<?php echo format_uang($ppn_all_rp) ?>"
+                                            value="<?php echo $ppn_all_rp ?>"
                                             readonly="readonly">
                                     </div>
                                     <div class="input-group">
                                         <span
                                             class="input-group-addon"
-                                            style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;">Total Nota Beli (Rp)</span>
+                                            style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;">Total Nota Beli</span>
                                         <input
-                                            class="form-control text-right"
+                                            class="form-control text-right uang"
                                             id="total_2"
                                             style="background: #fff; outline: none; border: none;"
                                             name="total"
-                                            value="<?php echo format_uang($jumlah) ?>"
+                                            value="<?php echo $jumlah ?>"
                                             readonly="readonly">
                                     </div>
                                     <div class="input-group">
                                         <span
                                             class="input-group-addon"
-                                            style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;">Total Datang (Rp)</span>
+                                            style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;">Total Datang</span>
                                         <input
-                                            class="form-control text-right"
+                                            class="form-control text-right uang"
                                             id="total_3"
                                             style="background: #fff; outline: none; border: none;"
                                             name="total"
-                                            value="<?php echo format_uang($total_datang) ?>"
+                                            value="<?php echo $total_datang ?>"
                                             readonly="readonly">
                                     </div>
                                 </div>
@@ -556,8 +556,8 @@ WHERE
                                 </span>
                                 <input
                                     id="diskon_nota_rp"
-                                    class="form-control"
-                                    placeholder="Diskon Nota Beli (Rp)"
+                                    class="form-control uang"
+                                    placeholder="Diskon Nota Beli"
                                     style="padding: 20px 15px;"
                                     title="Diskon Nota Beli (Rp)"
                                     value="<?php echo $diskon_all_rp ?>"
@@ -588,6 +588,15 @@ WHERE
                     input.value = 100;
                 }
             $(document).ready(function () {
+                $('.uang').inputmask('currency', {
+                    prefix: "Rp ",
+                    autoGroup: true,
+                    allowMinus: false,
+                    groupSeparator: '.',
+                    rightAlign: false,
+                    autoUnmask: true,
+                    removeMaskOnSubmit: true
+                });
                 $('#ekspedisi').inputmask('decimal', {
                     allowMinus: false,
                     autoGroup: true,

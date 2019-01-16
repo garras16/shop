@@ -3,7 +3,7 @@ if (isset($_GET['act'])){
 	$act=0;
 	if ($_GET['act']=='1') $act=1;
 	if ($_GET['act']=='2') $act=2;
-	
+
 	if (isset($_GET['tbl']) && $_GET['tbl']=='1'){
 		$sql=mysqli_query($con, "UPDATE bayar_nota_jual SET status_giro=$act WHERE id_bayar=$id");
 		if ($sql){
@@ -47,6 +47,7 @@ if (isset($_GET['act'])){
                                                     <th>No Nota Jual</th>
                                                     <th>Nama Pelanggan</th>
                                                     <th>Tgl Jatuh Tempo</th>
+																										<th>Nominal</th>
                                                     <th>Status Giro</th>
                                                     <th></th>
                                                 </tr>
@@ -56,9 +57,9 @@ if (isset($_GET['act'])){
 $sql=mysqli_query($con, "SELECT *
 FROM
     bayar_nota_jual
-    INNER JOIN jual 
+    INNER JOIN jual
         ON (bayar_nota_jual.no_nota_jual = jual.invoice)
-    INNER JOIN pelanggan 
+    INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
 WHERE jenis='Giro' AND tgl_bayar BETWEEN NOW() - INTERVAL 30 DAY AND NOW()");
 while($row=mysqli_fetch_array($sql)){
@@ -71,6 +72,7 @@ while($row=mysqli_fetch_array($sql)){
                 <td>' .$row['no_nota_jual']. '</td>
                 <td>' .$row['nama_pelanggan']. '</td>
                 <td>' .date("d-m-Y",strtotime($row['jatuh_tempo'])). '</td>
+								<td class="uang">'.$row['jumlah'].'</td>
                 <td>' .$status_giro. '</td>';
     if ($row['status_giro']==0){
         echo '<td><a href="?page=penjualan&mode=pencairan_giro&id=' .$row['id_bayar']. '&act=1&tbl=1" class="btn btn-primary btn-xs"><i class="fa fa-times"></i> Terima</a>
@@ -84,9 +86,9 @@ while($row=mysqli_fetch_array($sql)){
 $sql=mysqli_query($con, "SELECT *
 FROM
     penagihan_detail
-    INNER JOIN jual 
+    INNER JOIN jual
         ON (penagihan_detail.id_jual = jual.id_jual)
-    INNER JOIN pelanggan 
+    INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
 WHERE jenis='Giro' AND tgl_bayar BETWEEN NOW() - INTERVAL 30 DAY AND NOW()");
 while($row=mysqli_fetch_array($sql)){
@@ -126,28 +128,36 @@ echo '				</tr>';
 
 <script>
     $(document).ready(function () {
-        $('#total_jual').inputmask('decimal', {
-            allowMinus: false,
-            autoGroup: true,
-            groupSeparator: '.',
-            rightAlign: false,
-            removeMaskOnSubmit: true
-        });
-        $('#diskon_nota').inputmask('decimal', {
-            allowMinus: false,
-            autoGroup: true,
-            groupSeparator: '.',
-            rightAlign: false,
-            removeMaskOnSubmit: true
-        });
-        $('#diskon_nota_rp').inputmask('decimal', {
-            allowMinus: false,
-            autoGroup: true,
-            groupSeparator: '.',
-            rightAlign: false,
-            removeMaskOnSubmit: true
-        });
-        $('#myModal').on('show.bs.modal', function (e) {});
-
+			$('.uang').inputmask('currency', {
+					prefix: "Rp ",
+					autoGroup: true,
+					allowMinus: false,
+					groupSeparator: '.',
+					rightAlign: false,
+					autoUnmask: true,
+					removeMaskOnSubmit: true
+			});
+      $('#total_jual').inputmask('decimal', {
+          allowMinus: false,
+          autoGroup: true,
+          groupSeparator: '.',
+          rightAlign: false,
+          removeMaskOnSubmit: true
+      });
+      $('#diskon_nota').inputmask('decimal', {
+          allowMinus: false,
+          autoGroup: true,
+          groupSeparator: '.',
+          rightAlign: false,
+          removeMaskOnSubmit: true
+      });
+      $('#diskon_nota_rp').inputmask('decimal', {
+          allowMinus: false,
+          autoGroup: true,
+          groupSeparator: '.',
+          rightAlign: false,
+          removeMaskOnSubmit: true
+      });
+      $('#myModal').on('show.bs.modal', function (e) {});
     });
 </script>

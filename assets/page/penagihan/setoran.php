@@ -84,12 +84,12 @@ $total_jual=0;
 	echo '<tr>
 			<td align="center">' .$row['nama_pelanggan']. '</td>
 			<td align="center">' .$row['invoice']. '</td>
-			<td align="center" class="uang">' .format_uang($total_jual). '</td>
+			<td align="center" class="uang">' .$total_jual. '</td>
 			<td align="center">' .$row['nama_karyawan']. '</td>
 			<td align="center">' .date("d-m-Y",strtotime($row['tanggal_tagih'])). '</td>
-			<td align="center" class="uang">' .format_uang($total_jual). '</td>
-			<td align="center" class="uang">' .format_uang($row['bayar']). '</td>
-			<td align="center" class="uang">' .format_uang($total_jual-$row['bayar']). '</td>
+			<td align="center" class="uang">' .$total_jual. '</td>
+			<td align="center" class="uang">' .$row['bayar']. '</td>
+			<td align="center" class="uang">' .$total_jual-$row['bayar']. '</td>
 			<td align="center" style="color: ' .$color2. '">' .$tgl_jb. '</td>
 			<td align="center" style="color: ' .$color. '">' .$status. '</td>
 			<td align="center">' .$status_nota. '</td>

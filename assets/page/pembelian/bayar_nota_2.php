@@ -9,9 +9,9 @@ $id_beli=$row['id_beli'];
 $sql2=mysqli_query($con, "SELECT SUM(harga*barang_masuk_rak.qty_di_rak) AS jumlah_nota
 		FROM
 			barang_masuk
-			INNER JOIN beli_detail 
+			INNER JOIN beli_detail
 				ON (barang_masuk.id_beli_detail = beli_detail.id_beli_detail)
-			INNER JOIN barang_masuk_rak 
+			INNER JOIN barang_masuk_rak
 				ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
 		WHERE id_beli=$id_beli");
 	$b2=mysqli_fetch_array($sql2);
@@ -21,11 +21,11 @@ $sql2=mysqli_query($con, "SELECT SUM(harga*barang_masuk_rak.qty_di_rak) AS jumla
 $sql2=mysqli_query($con, "SELECT diskon_all_persen,ppn_all_persen,SUM((harga-diskon_rp-diskon_rp_2-diskon_rp_3)*qty) AS jumlah_nota
 FROM
     beli_detail
-INNER JOIN 
-    beli 
-ON 
+INNER JOIN
+    beli
+ON
     (beli_detail.id_beli = beli.id_beli)
-WHERE 
+WHERE
     beli.id_beli=$id_beli");
 	$b2=mysqli_fetch_array($sql2);
 	$set_disk = $b2['jumlah_nota']-($b2['jumlah_nota']*($b2['diskon_all_persen']/100));
@@ -71,19 +71,26 @@ if (isset($tambah_bayar_nota_beli_post)){
 			_buat_pesan("Input Gagal","red");
 		}
 	}
-	
+
 	if (isset($no_retur)){
-		($jumlah_bayar+$jumlah_bayar_retur==$sisa_nota ? $status=1 : $status=2);
+		($jumlah_bayar+$jumlah_bayar_retur>=$sisa_nota ? $status=1 : $status=2);
 		$sql=mysqli_query($con, "UPDATE bayar_nota_beli SET status=$status WHERE no_nota_beli='$no_nota_beli'");
 		if ($jenis =='Transfer'){
-			$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','Retur',$jumlah_bayar_retur,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening',null)");
+            $sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','Retur',$jumlah_bayar_retur,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening',null)");
+            $last_id=mysqli_insert_id($con);
 		} else if ($jenis =='Giro'){
-			$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','Retur',$jumlah_bayar_retur,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening','$jatuh_tempo','$keterangan')");
+            $sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','Retur',$jumlah_bayar_retur,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening','$jatuh_tempo','$keterangan')");
+            $last_id=mysqli_insert_id($con);
 		} else {
 			$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','Retur',$jumlah_bayar_retur,$status,null,null,null,null,null,null,null.null)");
+<<<<<<< HEAD
 		}
 		$last_id=mysqli_insert_id($con);
 		
+=======
+            $last_id=mysqli_insert_id($con);
+        }
+>>>>>>> 6d76d948867780c20251d6b9c3de021b41a13332
 		for ($i=0;$i<count($no_retur)-1;$i++) {
 			$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli_detail VALUES(null,$last_id,'$no_retur[$i]')");
 			if ($sql){
@@ -94,9 +101,9 @@ if (isset($tambah_bayar_nota_beli_post)){
 		}
 	}
 	_direct("?page=pembelian&mode=bayar_nota");
-	
+
 }
-$sql=mysqli_query($con, "SELECT 
+$sql=mysqli_query($con, "SELECT
 	supplier.id_supplier
     , supplier.nama_supplier
     , beli.tanggal
@@ -104,15 +111,15 @@ $sql=mysqli_query($con, "SELECT
     , SUM((harga*qty)-diskon_rp-diskon_rp_2-diskon_rp_3) AS total
 FROM
     barang_masuk
-    INNER JOIN beli_detail 
+    INNER JOIN beli_detail
         ON (barang_masuk.id_beli_detail = beli_detail.id_beli_detail)
-    INNER JOIN barang_masuk_rak 
+    INNER JOIN barang_masuk_rak
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
-    INNER JOIN beli 
+    INNER JOIN beli
         ON (beli_detail.id_beli = beli.id_beli)
-    INNER JOIN supplier 
+    INNER JOIN supplier
         ON (beli.id_supplier = supplier.id_supplier)
-WHERE beli.no_nota_beli='$no_nota_beli' 
+WHERE beli.no_nota_beli='$no_nota_beli'
 GROUP BY beli_detail.id_beli");
 $row=mysqli_fetch_array($sql);
 $id_supplier=$row['id_supplier'];
@@ -187,11 +194,11 @@ $id_beli=$row['id_beli'];
                                         <small>Jml.</small>
                                     </span>
                                     <input
-                                        class="form-control"
+                                        class="form-control uang"
                                         style="padding: 20px 15px;"
                                         id="total_nota"
                                         value="<?php echo $jumlah_nota ?>"
-                                        title="Total Nota Beli (Rp)"
+                                        title="Total Nota Beli"
                                         readonly="readonly">
                                 </div>
                             </div>
@@ -318,7 +325,7 @@ $sql=mysqli_query($con, "SELECT
     , retur_beli.no_retur_beli
 FROM
     retur_beli
-    INNER JOIN beli 
+    INNER JOIN beli
         ON (retur_beli.id_beli = beli.id_beli)
 WHERE STATUS=1 AND id_supplier=$id_supplier AND no_retur_beli NOT IN (SELECT no_retur_beli FROM bayar_nota_beli_detail)");
 $c=0;
@@ -328,7 +335,7 @@ $c=0;
 		$b2=mysqli_fetch_array($sql2);
 		if ($b2['jumlah']!=''){
 			$c+=1;
-		}			
+		}
 	}
 	($c>0 ? $style="" : $style="display:none")
 ?>
@@ -414,16 +421,16 @@ $c=0;
         }
     }
     function valid2() {
-        var total_nota = parseInt($('#total_nota').val());
-        var sisa_nota = parseInt($('#sisa_nota').val());
-        var jumlah_bayar = parseInt($('#jumlah_bayar').val());
+        var total_nota = parseFloat($('#total_nota').val());
+        var sisa_nota = parseFloat($('#sisa_nota').val());
+        var jumlah_bayar = parseFloat($('#jumlah_bayar').val());
         if ($('#jenis').val() != 'Retur') {
             if (jumlah_bayar + jumlah_retur <= sisa_nota && jumlah_bayar > 0) {
                 return true;
             } else {
-                if (jumlah_bayar == 0) 
+                if (jumlah_bayar <= 0)
                     alert('Jumlah Bayar harus > 0');
-                if (jumlah_bayar + jumlah_retur >= sisa_nota) 
+                if (jumlah_bayar + jumlah_retur >= sisa_nota)
                     alert('Jumlah Bayar tidak boleh melebihi Sisa Nota Beli');
                 return false;
             }
@@ -441,7 +448,7 @@ $c=0;
         var jumlah = $('#select_retur')
             .find(':selected')
             .data('jumlah');
-        if (jumlah == '') 
+        if (jumlah == '')
             jumlah = 0;
         $('#retur_content').append(
             '<div class="col-xs-6 retur"><input class="form-control" style="width:100%" nam' +
@@ -463,6 +470,15 @@ $c=0;
         $('#myModal').modal('hide');
     }
     $(document).ready(function () {
+        $('.uang').inputmask('currency', {
+            prefix: "Rp ",
+            autoGroup: true,
+            allowMinus: false,
+            groupSeparator: '.',
+            rightAlign: false,
+            autoUnmask: true,
+            removeMaskOnSubmit: true
+        });
         $('#jumlah_bayar').inputmask('currency', {
             prefix: "Rp ",
             allowMinus: false,

@@ -65,7 +65,7 @@ if (isset($_GET['cari'])){
 								<td><div style="min-width:70px">' .$row['komponen']. '</div></td>
 								<td><div style="min-width:70px">' .$row['keterangan']. '</div></td>
 								<td align="right"><div style="min-width:70px">-</div></td>
-								<td align="right"><div style="min-width:70px" class="uang">' .format_uang($row['jumlah']). '</div></td>
+								<td align="right"><div style="min-width:70px" class="uang">' .$row['jumlah']. '</div></td>
 							</tr>';
 					}
 
@@ -80,15 +80,15 @@ if (isset($_GET['cari'])){
 								<td><div style="min-width:70px">' .date("d-m-Y",strtotime($row2['tanggal'])). '</div></td>
 								<td><div style="min-width:70px">' .$row2['komponen']. '</div></td>
 								<td><div style="min-width:70px">' .$row2['keterangan']. '</div></td>
-								<td align="right"><div style="min-width:70px" class="uang">' .format_uang($row2['jumlah']). '</div></td>
+								<td align="right"><div style="min-width:70px" class="uang">' .$row2['jumlah']. '</div></td>
 								<td align="right"><div style="min-width:70px">-</div></td>
 							</tr>';
 					}
 					if (mysqli_num_rows($sql)>0 || mysqli_num_rows($sql2)>0) {
 						echo '<tr style="background: aqua">
 								<td colspan="3"><b>TOTAL</b></td>
-								<td align="right" class="uang">' .format_uang($jumlah_masuk). '</td>
-								<td align="right" class="uang">' .format_uang($jumlah_keluar). '</td>
+								<td align="right" class="uang">' .$jumlah_masuk. '</td>
+								<td align="right" class="uang">' .$jumlah_keluar. '</td>
 							  </tr>';
 					}
 					?>

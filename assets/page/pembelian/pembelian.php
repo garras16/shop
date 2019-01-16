@@ -198,11 +198,11 @@ $total_datang=$s['total_datang']+($s['total_datang']*$s['ppn_all_persen']/100);
 						<td><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '"><div style="min-width:70px">' .date("d-m-Y", strtotime($row['tanggal'])). '</div></a></td>
 						<td><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '"><div style="min-width:70px">' .$row['no_nota_beli']. '</div></a></td>
 						<td><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '"><div style="min-width:70px">' .$row['nama_supplier']. '</div></a></td>
-						<td align="right"><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '"><div style="min-width:70px" class="uang">' .format_uang($total_beli). '</div></a></td>
-						<td align="right"><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '"><div style="min-width:70px" class="uang">' .format_uang($total_datang). '</div></a></td>
+						<td align="right"><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '"><div style="min-width:70px" class="uang">' .$total_beli. '</div></a></td>
+						<td align="right"><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '"><div style="min-width:70px" class="uang">' .$total_datang. '</div></a></td>
 						<td><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '"><div style="min-width:70px">' .$row['nama_ekspedisi']. '</div></a></td>
 						<!--td align="right"><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '"><div style="min-width:70px" class="uang">' .format_angka($row['berat_ekspedisi']). '</div></a></td>
-						<td align="right"><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '"><div style="min-width:70px" class="uang">' .format_uang($row['tarif_ekspedisi']). '</div></a></td-->
+						<td align="right"><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '"><div style="min-width:70px" class="uang">' .$row['tarif_ekspedisi']. '</div></a></td-->
 					</tr>';
 }
 ?>

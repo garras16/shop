@@ -46,6 +46,7 @@ if (isset($hapus_barang_supplier_post)){
 }
 ?>
 
+
 <!-- page content -->
 <div class="right_col" role="main">
     <div class="">
@@ -104,7 +105,7 @@ $sql=mysqli_query($con, "SELECT
     , satuan.nama_satuan
 FROM
     barang
-    INNER JOIN satuan 
+    INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan) $pro
 ORDER BY barang.id_barang DESC");
 $i=0;
@@ -208,12 +209,12 @@ $sql2=mysqli_query($con, "SELECT id_barang FROM barang_supplier WHERE id_barang=
                             </span>
                             <select class="select2 form-control" id="select_satuan" name="id_satuan">
                                 <option value="" disabled="disabled" selected="selected">Pilih Satuan</option>
-                                <?php 
+                                <?php
 									$brg=mysqli_query($con, "select * from satuan");
 									while($b=mysqli_fetch_array($brg)){
 								?>
                                 <option value="<?php echo $b['id_satuan']; ?>"><?php echo $b['nama_satuan'];?></option>
-                                <?php 
+                                <?php
 									}
 								?>
                             </select>

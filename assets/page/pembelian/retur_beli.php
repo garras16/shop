@@ -114,7 +114,7 @@ if ($row['status']=='1'){
 						<td><a href="?page=pembelian&mode=retur_beli_detail&id=' .$row['id_retur_beli']. '"><div style="min-width:70px">' .$row['no_retur_beli']. '</div></a></td>
 						<td><a href="?page=pembelian&mode=retur_beli_detail&id=' .$row['id_retur_beli']. '"><div style="min-width:70px">' .$row['no_nota_beli']. '</div></a></td>
 						<td><a href="?page=pembelian&mode=retur_beli_detail&id=' .$row['id_retur_beli']. '"><div style="min-width:70px">' .$row['nama_supplier']. '</div></a></td>
-						<td><a href="?page=pembelian&mode=retur_beli_detail&id=' .$row['id_retur_beli']. '"><div style="min-width:70px" class="uang">' .format_uang($jumlah_beli). '</div></a></td>
+						<td><a href="?page=pembelian&mode=retur_beli_detail&id=' .$row['id_retur_beli']. '"><div style="min-width:70px" class="uang">' .$jumlah_beli. '</div></a></td>
 						<td><a href="?page=pembelian&mode=retur_beli_detail&id=' .$row['id_retur_beli']. '" class="' .$style. '"><div style="min-width:70px;">' .$status. '</div></a></td>
 					</tr>';
 }

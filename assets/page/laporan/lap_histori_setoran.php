@@ -147,16 +147,16 @@ WHERE id_jual=" .$row['id_jual']);
 	echo '<tr>
 			<td align="center" style="width: 120px;">' .$row['nama_pelanggan']. '</td>
 			<td align="center" style="width: 120px;">' .$row['invoice']. '</td>
-			<td align="center" style="width: 120px;" class="uang">' .format_uang($total_jual). '</td>
+			<td align="center" style="width: 120px;" class="uang">' .$total_jual. '</td>
 			<td align="center" style="width: 100px;">' .$row['nama_karyawan']. '</td>
 			<td align="center" style="width: 100px;">' .date("d-m-Y",strtotime($row['tanggal_tagih'])). '</td>
-			<td align="center" style="width: 120px;" class="uang">' .format_uang($total_jual). '</td>
-			<td align="center" style="width: 120px;" class="uang">' .format_uang($total_bayar). '</td>
-			<td align="center" style="width: 130px;" class="uang">' .format_uang($total_jual-$total_bayar). '</td>
+			<td align="center" style="width: 120px;" class="uang">' .$total_jual. '</td>
+			<td align="center" style="width: 120px;" class="uang">' .$total_bayar. '</td>
+			<td align="center" style="width: 130px;" class="uang">' .($total_jual-$total_bayar). '</td>
 			<td align="center" style="color: ' .$color2. '; width: 105px;">' .$tgl_jb. '</td>
 			<td align="center" style="color: ' .$color. '; width: 100px;">' .$status. '</td>
 			<td align="center" style="width: 120px;">' .$status_nota. '</td>
-			<td align="center" style="width: 110px;" class="uang">' .format_uang($row['setor']). '</td>
+			<td align="center" style="width: 110px;" class="uang">' .$row['setor']. '</td>
 		</tr>';
 }
 ?>

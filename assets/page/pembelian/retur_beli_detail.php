@@ -253,8 +253,8 @@ WHERE barang_masuk.id_beli_detail=$tmp_id_beli_detail");
 while($r=mysqli_fetch_array($sql2)){
 $total_retur+=$r['harga_retur']*$r['qty_retur'];
 ($r['qty_keluar']=='' ? $qty_keluar='' : $qty_keluar=$r['qty_keluar']. ' ' .$row['nama_satuan']);
-$total_jual=$row['qty']*($row['harga']-$row['diskon_rp']-$row['diskon_rp_2']-$row['diskon_rp_3']);
-$total_jual=$total_jual+($total_jual*$ppn_all_persen/100);//-($total_jual*$diskon_all_persen/100);
+$totall_jual=$row['qty']*($row['harga']-$row['diskon_rp']-$row['diskon_rp_2']-$row['diskon_rp_3']);
+$total_jual=$totall_jual+($totall_jual*$ppn_all_persen/100);//-($total_jual*$diskon_all_persen/100);
 if ($status=="1" || $locked){
 	echo '			<tr>
 						<td>' .$row['nama_barang']. '</td>
@@ -313,11 +313,11 @@ if ($status=="1" || $locked){
                                         class="input-group-addon"
                                         style="padding:10px 0px;width:2px;text-align:left;color:#000; background: #fff; border: none; outline: none;">:</span>
                                     <input
-                                        class="form-control"
+                                        class="form-control uang"
                                         id="total_retur"
                                         style="border: none; background: #fff; outline: none;"
                                         name="total_retur"
-                                        value="<?php echo format_uang($total_retur) ?>"
+                                        value="<?php echo $total_retur ?>"
                                         readonly="readonly">
                                 </div>
                             </div>
