@@ -64,9 +64,9 @@ FROM
 WHERE jenis='Giro' AND tgl_bayar BETWEEN NOW() - INTERVAL 30 DAY AND NOW()");
 while($row=mysqli_fetch_array($sql)){
     //STATUS GIRO:
-    if ($row['status_giro']==0) $status_giro='GANTUNG';
-    if ($row['status_giro']==1) $status_giro='TERIMA';
-    if ($row['status_giro']==2) $status_giro='TOLAK';
+    if ($row['status_giro']==0) $status_giro='BELUM DICAIRKAN';
+    if ($row['status_giro']==1) $status_giro='DITERIMA';
+    if ($row['status_giro']==2) $status_giro='DITOLAK';
         echo '<tr>
                 <td>' .date("d-m-Y",strtotime($row['tgl_nota'])). '</td>
                 <td>' .$row['no_nota_jual']. '</td>
