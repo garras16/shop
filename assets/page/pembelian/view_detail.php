@@ -25,11 +25,11 @@ $sql3=mysqli_query($con, "SELECT
     harga,qty_di_rak,diskon_persen,diskon_persen_2,diskon_persen_3,diskon_rp,diskon_rp_2,diskon_rp_3
 FROM
     beli_detail
-    INNER JOIN beli 
+    INNER JOIN beli
         ON (beli_detail.id_beli = beli.id_beli)
-    LEFT JOIN barang_masuk 
+    LEFT JOIN barang_masuk
         ON (barang_masuk.id_beli_detail = beli_detail.id_beli_detail)
-    LEFT JOIN barang_masuk_rak 
+    LEFT JOIN barang_masuk_rak
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
 WHERE beli.id_beli=$id");
 $total_datang=0;
@@ -49,9 +49,9 @@ $ppn_all_persen=$row2['ppn_all_persen'];
 	$sql=mysqli_query($con, "SELECT *
 FROM
     beli
-    INNER JOIN supplier 
+    INNER JOIN supplier
         ON (beli.id_supplier = supplier.id_supplier)
-    LEFT JOIN ekspedisi 
+    LEFT JOIN ekspedisi
         ON (beli.id_ekspedisi = ekspedisi.id_ekspedisi) WHERE id_beli=$id");
 	$row=mysqli_fetch_array($sql);
 	$id_supplier=$row['id_supplier'];
@@ -118,7 +118,7 @@ FROM
                                         maxlength="15"
                                         readonly="readonly">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-star fa-fw" style="color:red"></i>
+                                        <i class="fa fa-star fa-fw" style="color:#FF0000"></i>
                                     </span>
                                 </div>
                                 <div class="input-group">
@@ -250,19 +250,19 @@ $sql=mysqli_query($con, "SELECT
     , satuan.nama_satuan
 FROM
     beli_detail
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (beli_detail.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-    INNER JOIN satuan 
+    INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
-    LEFT JOIN barang_masuk 
-        ON (barang_masuk.id_beli_detail = beli_detail.id_beli_detail) 
-	LEFT JOIN barang_masuk_rak 
+    LEFT JOIN barang_masuk
+        ON (barang_masuk.id_beli_detail = beli_detail.id_beli_detail)
+	LEFT JOIN barang_masuk_rak
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
 WHERE
-	beli_detail.id_beli=$id AND barang.status=1 
-GROUP BY 
+	beli_detail.id_beli=$id AND barang.status=1
+GROUP BY
 	beli_detail.id_beli_detail");
 $berat=0;
 $volume=0;
@@ -278,7 +278,7 @@ $val1="";$val2="";
 $sql2=mysqli_query($con, "SELECT * FROM barang_masuk WHERE id_beli_detail=$id_beli_detail");
 (mysqli_num_rows($sql2) > 0 ? $ada="1" : $ada="0");
 	($row['qty_di_rak']=='' ? $datang='0' : $datang=$row['qty_di_rak']);
-	
+
 	$diskon1=($row['harga']*$row['diskon_persen']/100);
 	$tot_set_disk_1=$row['qty']*($row['harga']-$diskon1);
 	$diskon2=($row['harga']-$diskon1)*$row['diskon_persen_2']/100;
@@ -293,7 +293,7 @@ $sql2=mysqli_query($con, "SELECT * FROM barang_masuk WHERE id_beli_detail=$id_be
 	}
 	echo '<tr>
 			<td><div style="min-width:70px; ' .$val. '">' .$row['nama_barang']. '</div></td>';
-	
+
 		if ($_SESSION['posisi']=="DIREKSI" or $_SESSION['posisi']=="OWNER" OR isset($tambah_pembelian_post)){
 		echo '<td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '">' .format_angka($row['qty']). ' ' .$row['nama_satuan']. '</div></a></td>
 			    <td><a data-toggle="modal" data-target="#myModal2" data-qty="' .$row['qty']. '" data-sat="' .$row['nama_satuan']. '" data-ada="' .$ada. '" data-id="' .$row['id_beli_detail']. '" data-harga="' .$row['harga']. '" data-diskon="' .$row['diskon_persen']. '" data-diskon2="' .$row['diskon_persen_2']. '" data-diskon3="' .$row['diskon_persen_3']. '" data-datang="' .$datang. '"><div style="min-width:70px; ' .$val. '">' .format_angka($row['berat']). '</div></a></td>
@@ -323,7 +323,7 @@ $sql2=mysqli_query($con, "SELECT * FROM barang_masuk WHERE id_beli_detail=$id_be
                 <td><div style="min-width:70px; ' .$val. '">' .$tgl_datang. '</div></td>
                 <td><div style="min-width:70px; ' .$val. '">' .format_angka($row['qty_di_rak']). ' ' .$row['nama_satuan']. '</div></td>';
 	}
-	
+
 	if (mysqli_num_rows($sql2) > 0){
 		echo '<td></td>';
 	} else {
@@ -481,11 +481,11 @@ $sql=mysqli_query($con, "SELECT
 	, satuan.nama_satuan
 FROM
     barang_supplier
-    INNER JOIN barang 
-        ON (barang_supplier.id_barang = barang.id_barang) 
+    INNER JOIN barang
+        ON (barang_supplier.id_barang = barang.id_barang)
 	INNER JOIN satuan
 		ON (satuan.id_satuan=barang.id_satuan)
-WHERE 
+WHERE
 	barang_supplier.id_supplier=$id_supplier");
 								while($row=mysqli_fetch_array($sql)){
 									echo '<option data-satuan="' .$row['nama_satuan']. '" value="' .$row['id_barang_supplier']. '">' .$row['nama_barang']. '</option>';
@@ -789,9 +789,9 @@ WHERE
         }
     }
     function handleChange(input) {
-        if (input.value < 0) 
+        if (input.value < 0)
             input.value = 0;
-        if (input.value > 100) 
+        if (input.value > 100)
             input.value = 100;
         }
     $(document).ready(function () {
