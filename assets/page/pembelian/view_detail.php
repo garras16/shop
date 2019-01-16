@@ -337,7 +337,7 @@ $sql2=mysqli_query($con, "SELECT * FROM barang_masuk WHERE id_beli_detail=$id_be
 }
 $ppn_all_rp=$jumlah*($ppn_all_persen/100);
 $diskon_all_rp=$jumlah*($diskon_all_persen/100);
-$jumlah=$jumlah+$ppn_all_rp;
+$jumlah=$jumlah-$diskon_all_rp+$ppn_all_rp;
 $total_datang=$total_datang+($total_datang*($ppn_all_persen/100));
 $total_datang=$total_datang-($total_datang*($diskon_all_persen/100));
 ?>
