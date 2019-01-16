@@ -30,7 +30,7 @@ if (isset($tambah_penjualan_post)){
 	}
 	$invoice="NJ-" .date("ymd"). '-' .sprintf("%03d",$CID+1);
 	$sql = mysqli_query($con, "INSERT INTO data_nota_jual VALUES(null,'$tanggal','$invoice')");
-	$sql = mysqli_query($con, "INSERT INTO jual VALUES(null,'$tanggal','$invoice',$id_pelanggan,$id_karyawan,'$jenis_bayar',$tenor,0,0,null,$diskon_all_persen)");
+	$sql = mysqli_query($con, "INSERT INTO jual VALUES(null,'$tanggal','$invoice',$id_pelanggan,$id_karyawan,'$jenis_bayar',$tenor,0,0,null,$diskon_all_persen,$ppn_all_persen)");
 	
 	$id_jual=mysqli_insert_id($con);
 	$id_harga_jual[] = implode(',',$id_harga_jual);
@@ -61,7 +61,6 @@ if (isset($tambah_penjualan_post)){
 			} else {
 				_buat_pesan("Input Gagal","red");
 			}
-			echo mysqli_error();
 		}
 	}
 	_direct("?page=sales&mode=menu_penjualan");
@@ -113,6 +112,11 @@ $plafon=$row['plafon'];
 								<div class="input-group">
 									<span class="input-group-addon">Diskon Nota Jual (%)</span>
 									<input type="text" max="100" min="0" onchange="handleChange(this);" class="form-control" maxlength="6" id="diskon" name="diskon_all_persen" value="0" required>
+									<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
+								</div>
+								<div class="input-group">
+									<span class="input-group-addon">PPN Nota Jual (%)</span>
+									<input type="text" max="100" min="0" onchange="handleChange(this);" class="form-control" maxlength="6" id="ppn" name="ppn_all_persen" value="0" required>
 									<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 								</div>
 								<div class="text-right">

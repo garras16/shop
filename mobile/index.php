@@ -91,6 +91,10 @@
 		$edit_diskon_nota_jual=true;
 		$diskon_all_persen=$_POST['diskon_all_persen'];
 	}
+	if (isset($_POST['edit_ppn_nota_jual'])){
+		$edit_ppn_nota_jual=true;
+		$ppn_all_persen=$_POST['ppn_all_persen'];
+	}
 	if (isset($_POST['tambah_gudang_jual_detail'])){
 		$tambah_gudang_jual_detail=true;
 		$id_harga_jual=$_POST['id_harga_jual'];
