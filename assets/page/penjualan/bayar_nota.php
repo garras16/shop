@@ -78,6 +78,7 @@ if (isset($_GET['del'])){
                                     <th>Jumlah Bayar Per Tgl</th>
                                     <th>Sisa Piutang Nota</th>
                                     <th>Status</th>
+																		<th>Stat. Giro</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -95,6 +96,7 @@ $sql=mysqli_query($con, "SELECT
     , bayar_nota_jual.tgl_bayar
     , bayar_nota_jual.no_nota_jual
     , bayar_nota_jual.jenis
+		, bayar_nota_jual.status_giro
 	, bayar_nota_jual.jumlah
     , bayar_nota_jual.status
     , pelanggan.nama_pelanggan
@@ -103,9 +105,9 @@ $sql=mysqli_query($con, "SELECT
 	, jual.diskon_all_persen
 FROM
     bayar_nota_jual
-    INNER JOIN jual 
+    INNER JOIN jual
         ON (bayar_nota_jual.no_nota_jual = jual.invoice)
-    INNER JOIN pelanggan 
+    INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
 $val
 ORDER BY id_bayar DESC");
@@ -113,18 +115,18 @@ while($row=mysqli_fetch_array($sql)){
 	$tmp_id_jual=$row['id_jual'];
 	$sql2=mysqli_query($con, "SELECT SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah_nota FROM jual_detail WHERE id_jual=$tmp_id_jual");
 	$b2=mysqli_fetch_array($sql2);
-	
+
 	$sqll = mysqli_query($con, "SELECT ppn_all_persen FROM jual WHERE id_jual=$tmp_id_jual");
 	$bb = mysqli_fetch_array($sqll);
 	$set_dis=$b2['jumlah_nota']-($b2['jumlah_nota']*$row['diskon_all_persen']/100);
 	$ppn = $set_dis*($bb['ppn_all_persen']/100);
 	$jumlah_nota = $set_dis+$ppn;
-//-----------------------------------------------------------------------------------------	
+//-----------------------------------------------------------------------------------------
 	$tmp_nota_jual=$row['no_nota_jual'];
 	$sql3=mysqli_query($con, "SELECT SUM(jumlah) AS jumlah_bayar FROM bayar_nota_jual WHERE no_nota_jual='$tmp_nota_jual'");
 	$b3=mysqli_fetch_array($sql3);
 	$jumlah_bayar=$b3['jumlah_bayar'];
-	
+
 	$sql3=mysqli_query($con, "SELECT SUM(jumlah) AS jumlah_bayar FROM bayar_nota_jual WHERE no_nota_jual='$tmp_nota_jual' AND jenis='Giro' AND status_giro<>1");
 	$b3=mysqli_fetch_array($sql3);
 	$jumlah_bayar-=$b3['jumlah_bayar'];
@@ -132,13 +134,20 @@ while($row=mysqli_fetch_array($sql)){
 	$sql3=mysqli_query($con, "SELECT SUM(bayar) AS jumlah_bayar FROM penagihan_detail WHERE id_jual=$tmp_id_jual");
 	$b3=mysqli_fetch_array($sql3);
 	$jumlah_bayar+=$b3['jumlah_bayar'];
-	
+
 	$sql3=mysqli_query($con, "SELECT SUM(bayar) AS jumlah_bayar FROM penagihan_detail WHERE id_jual=$tmp_id_jual AND jenis='Giro' AND status_giro<>1");
 	$b3=mysqli_fetch_array($sql3);
 	$jumlah_bayar-=$b3['jumlah_bayar'];
 //-------------------------------------------------------------------------------------------
-	
+
 $sisa_nota=$jumlah_nota-$jumlah_bayar;
+if($row['jenis'] == "Giro" && $row['status_giro'] == 1) {
+	$nilai = "DITERIMA";
+}else if($row['jenis'] == "Giro" && $row['status_giro'] == 2){
+	$nilai = "DITOLAK";
+}else{
+	$nilai = "";
+}
 if ($row['status']=='1'){
 	$status="LUNAS";
 } else if ($row['status']=='2'){
@@ -155,6 +164,7 @@ if ($row['status']=='1'){
 						<td align="right" style="width: 150px;" class="uang">' .$row['jumlah']. '</td>
 						<td align="right" style="width: 130px;" class="uang">' .$sisa_nota. '</td>
 						<td align="center" style="width: 110px;">' .$status. '</td>
+						<td align="center" style="width: 110px;">'.$nilai.'</td>
 						<td align="center" style="width: 20px;"><a href="?page=penjualan&mode=bayar_nota&del=' .$row['id_bayar']. '" class="btn btn-primary btn-xs"><i class="fa fa-trash"></i></a></td>
 					</tr>';
 }
@@ -198,17 +208,17 @@ if ($row['status']=='1'){
                             class="select2 form-control"
                             required="true">
                             <option value="" disabled="disabled" selected="selected">-= No Nota Jual | Nama Pelanggan | Jumlah Nota (Rp) =-</option>
-                            <?php 
-								$sql=mysqli_query($con, "SELECT 
+                            <?php
+								$sql=mysqli_query($con, "SELECT
     id_jual
     , jual.invoice
     , jual.diskon_all_persen
     , nama_pelanggan
 FROM
     bayar_nota_jual
-    RIGHT JOIN jual 
+    RIGHT JOIN jual
         ON (bayar_nota_jual.no_nota_jual = jual.invoice)
-    INNER JOIN pelanggan 
+    INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
 WHERE (bayar_nota_jual.status IS NULL OR bayar_nota_jual.status=2 OR bayar_nota_jual.status=0) AND jual.status_konfirm < 5
 GROUP BY id_jual");
@@ -217,18 +227,18 @@ GROUP BY id_jual");
 									$sql2=mysqli_query($con, "SELECT SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah_nota
 										FROM
 											jual
-											INNER JOIN jual_detail 
+											INNER JOIN jual_detail
 												ON (jual.id_jual = jual_detail.id_jual)
 									WHERE jual.id_jual=" .$b['id_jual']);
 									$row2=mysqli_fetch_array($sql2);
 									$jumlah_nota=$row2['jumlah_nota']-($row2['jumlah_nota']*$b['diskon_all_persen']/100);
 									$ppn = $jumlah_nota*($row2['ppn_all_persen']/100);
 									$sisaan = $jumlah_nota+$ppn;
-									
+
 									$sql2=mysqli_query($con, "SELECT SUM(jumlah) AS jumlah_bayar
 									FROM
 										bayar_nota_jual
-										INNER JOIN jual 
+										INNER JOIN jual
 											ON (bayar_nota_jual.no_nota_jual = jual.invoice)
 									WHERE jual.id_jual=" .$b['id_jual']);
 									$row2=mysqli_fetch_array($sql2);
@@ -237,7 +247,7 @@ GROUP BY id_jual");
 									$sql2=mysqli_query($con, "SELECT SUM(bayar) AS jumlah_bayar
 									FROM
 										penagihan_detail
-										INNER JOIN jual 
+										INNER JOIN jual
 											ON (penagihan_detail.id_jual = jual.id_jual)
 									WHERE jual.id_jual=" .$b['id_jual']);
 									$row2=mysqli_fetch_array($sql2);
