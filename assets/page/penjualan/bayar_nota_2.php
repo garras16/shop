@@ -1,9 +1,9 @@
 <?php
-$no_nota_jual=$_GET['no_nota_jual'];
-$jenis=$_GET['jenis'];
-$sql=mysqli_query($con, "SELECT id_jual FROM jual WHERE invoice='$no_nota_jual'");
-$row=mysqli_fetch_array($sql);
-$id_jual=$row['id_jual'];
+	$no_nota_jual=$_GET['no_nota_jual'];
+	$jenis=$_GET['jenis'];
+	$sql=mysqli_query($con, "SELECT id_jual FROM jual WHERE invoice='$no_nota_jual'");
+	$row=mysqli_fetch_array($sql);
+	$id_jual=$row['id_jual'];
 	$sql2=mysqli_query($con, "SELECT *, SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total
 		FROM
     		jual
