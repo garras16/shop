@@ -8,7 +8,30 @@ if (isset($tambah_bayar_ekspedisi_post)){
 		$sql2 = mysqli_query($con, "INSERT INTO bayar_ekspedisi VALUES(null,$id_beli,0)");
 		$id_bayar_ekspedisi=mysqli_insert_id($con);
 	}
-	$sql = mysqli_query($con, "INSERT INTO bayar_ekspedisi_detail VALUES(null,$id_bayar_ekspedisi,'$tanggal',$jumlah_bayar)");
+	$validasi = mysqli_query($con, "SELECT
+			*
+		FROM
+		    bayar_ekspedisi
+		    INNER JOIN bayar_ekspedisi_detail
+		        ON (bayar_ekspedisi.id_bayar_ekspedisi = bayar_ekspedisi_detail.id_bayar_ekspedisi)
+				WHERE id_beli=$id_beli
+	");
+	$result = mysqli_num_rows($validasi);
+	if($result == 0) {
+		$cari = mysqli_query($con, "SELECT tarif_ekspedisi AS tarif FROM beli WHERE id_beli=$id_beli");
+		$data = mysqli_fetch_array($cari);
+		$sisa = $data['tarif']-$jumlah_bayar;
+	}else{
+		$ab = mysqli_query($con, "SELECT sisa FROM bayar_ekspedisi_detail WHERE id_bayar_ekspedisi=$id_bayar_ekspedisi ORDER BY id_bayar_ekspedisi_detail DESC LIMIT 1");
+		$be = mysqli_fetch_array($ab);
+		$sisa = $be['sisa']-$jumlah_bayar;
+	}
+	if($sisa == 0) {
+		$stat = 2; // lunas
+	}else{
+		$stat = 1; // terbayar sebagian
+	}
+	$sql = mysqli_query($con, "INSERT INTO bayar_ekspedisi_detail VALUES(null,$id_bayar_ekspedisi,'$tanggal',$jumlah_bayar, $sisa, $stat)");
 	if ($sql){
 		_buat_pesan("Input Berhasil","green");
 	} else {
@@ -17,15 +40,15 @@ if (isset($tambah_bayar_ekspedisi_post)){
 	$sql = mysqli_query($con, "SELECT SUM(jumlah_bayar) AS total_bayar FROM bayar_ekspedisi_detail WHERE id_bayar_ekspedisi=$id_bayar_ekspedisi");
 	$row=mysqli_fetch_array($sql);
 	$total_bayar=$row['total_bayar'];
-	
+
 	$sql = mysqli_query($con, "SELECT tarif_ekspedisi FROM beli WHERE id_beli=$id_beli");
 	$row=mysqli_fetch_array($sql);
 	$tarif=$row['tarif_ekspedisi'];
-	
+
 	$status=0;
 	if ($total_bayar>0) $status=1;
 	if ($tarif <= $total_bayar) $status=2;
-	
+
 	$sql = mysqli_query($con, "UPDATE bayar_ekspedisi SET status=$status WHERE id_bayar_ekspedisi=$id_bayar_ekspedisi");
 	_direct("?page=ekspedisi&mode=bayar_hutang");
 }
@@ -83,25 +106,22 @@ if (isset($_GET['del'])){
 $sql=mysqli_query($con, "SELECT *,bayar_ekspedisi.status
 FROM
     bayar_ekspedisi
-    INNER JOIN bayar_ekspedisi_detail 
+    INNER JOIN bayar_ekspedisi_detail
         ON (bayar_ekspedisi.id_bayar_ekspedisi = bayar_ekspedisi_detail.id_bayar_ekspedisi)
-    INNER JOIN beli 
+    INNER JOIN beli
         ON (bayar_ekspedisi.id_beli = beli.id_beli)
-	INNER JOIN ekspedisi 
+	INNER JOIN ekspedisi
         ON (beli.id_ekspedisi = ekspedisi.id_ekspedisi)
 ORDER BY bayar_ekspedisi_detail.id_bayar_ekspedisi_detail DESC");
 while($row=mysqli_fetch_array($sql)){
-$sql2=mysqli_query($con, "SELECT SUM(jumlah_bayar) as total_bayar FROM bayar_ekspedisi_detail WHERE id_bayar_ekspedisi=" .$row['id_bayar_ekspedisi']);
-$row2=mysqli_fetch_array($sql2);
-$sisa_hutang=$row['tarif_ekspedisi']-$row2['total_bayar'];
 /*
 STATUS 0 : KOSONG
 STATUS 1 : TERBAYAR SEBAGIAN
 STATUS 2 : LUNAS
 */
-if ($row['status']==1){
+if ($row['stat']==1){
 	$status='TERBAYAR SEBAGIAN';
-} else if ($row['status']==2){
+} else if ($row['stat']==2){
 	$status='LUNAS';
 } else {
 	$status='';
@@ -112,7 +132,7 @@ if ($row['status']==1){
 						<td style="width: 200px;">' .$row['nama_ekspedisi']. '</td>
 						<td style="width: 150px;">' .date("d-m-Y",strtotime($row['tgl_bayar'])). '</td>
 						<td style="width: 200px;" class="uang">' .$row['jumlah_bayar']. '</td>
-						<td style="width: 200px;" class="uang">' .$sisa_hutang. '</td>
+						<td style="width: 200px;" class="uang">' .$row['sisa']. '</td>
 						<td style="width: 150px;">' .$status. '</td>
 						<td style="width: 30px;"><a class="btn btn-danger btn-xs" href="?page=ekspedisi&mode=bayar_hutang&del=' .$row['id_bayar_ekspedisi_detail']. '&id=' .$row['id_bayar_ekspedisi']. '"><i class="fa fa-trash"></i> Hapus</a></td>
 					</tr>';
@@ -170,7 +190,7 @@ if ($row['status']==1){
                             name="id_beli"
                             required="required">
                             <option value="" disabled="disabled" selected="selected">Nota Beli | Tarif (Rp) | Sisa Hutang (Rp)</option>
-                            <?php 
+                            <?php
 								$brg=mysqli_query($con, "SELECT id_beli,no_nota_beli,tarif_ekspedisi
 								FROM beli WHERE id_beli NOT IN (SELECT id_beli FROM bayar_ekspedisi WHERE STATUS=2)
 								AND tarif_ekspedisi>0");
@@ -178,7 +198,7 @@ if ($row['status']==1){
 								$sql=mysqli_query($con, "SELECT SUM(jumlah_bayar) as total_bayar
 FROM
     bayar_ekspedisi
-    INNER JOIN bayar_ekspedisi_detail 
+    INNER JOIN bayar_ekspedisi_detail
         ON (bayar_ekspedisi.id_bayar_ekspedisi = bayar_ekspedisi_detail.id_bayar_ekspedisi)
 WHERE id_beli=" .$b['id_beli']);
 $row2=mysqli_fetch_array($sql);
@@ -190,7 +210,7 @@ $sisa_hutang=$nilai['tarif_ekspedisi']-$row2['total_bayar'];
                             <option
                                 data-sisa="<?php echo $sisa_hutang; ?>"
                                 value="<?php echo $b['id_beli']; ?>"><?php echo $b['no_nota_beli']. ' | Rp ' .format_uang($b['tarif_ekspedisi']). ' | Rp ' .format_uang($sisa_hutang);?></option>
-                            <?php 
+                            <?php
 								}
 							?>
                         </select>
