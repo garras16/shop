@@ -62,20 +62,20 @@ if (isset($_GET['tolak'])){
 	$sql2=mysqli_query($con, "SELECT * FROM jual WHERE id_jual=" .$row['id_jual']. " GROUP BY id_jual ORDER BY id_jual DESC");
 	$row2=mysqli_fetch_array($sql2);
 	$invoice=$row2['invoice'];
-	
+
 	$sql2=mysqli_query($con, "SELECT nama_pelanggan
 FROM
     jual
-    INNER JOIN pelanggan 
+    INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
 	WHERE id_jual=" .$row['id_jual']. "");
 	$row2=mysqli_fetch_array($sql2);
 	$nama_pelanggan=$row2['nama_pelanggan'];
-	
+
 		$sql2=mysqli_query($con, "SELECT SUM(qty_ambil*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total_jual
 			FROM
 				jual_detail
-				INNER JOIN nota_siap_kirim_detail 
+				INNER JOIN nota_siap_kirim_detail
 					ON (jual_detail.id_jual_detail = nota_siap_kirim_detail.id_jual_detail)
 			WHERE id_jual=" .$row['id_jual']);
 		$r=mysqli_fetch_array($sql2);
@@ -83,12 +83,12 @@ FROM
 		$sql2=mysqli_query($con, "SELECT SUM(qty_ambil*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total_jual
 			FROM
 				jual_detail
-				INNER JOIN canvass_siap_kirim_detail 
+				INNER JOIN canvass_siap_kirim_detail
 					ON (jual_detail.id_jual_detail = canvass_siap_kirim_detail.id_jual_detail)
 			WHERE id_jual=" .$row['id_jual']);
 		$r=mysqli_fetch_array($sql2);
 		$total_jual+=$r['total_jual'];
-		
+
 		$sql2=mysqli_query($con, "SELECT * FROM retur_jual_detail WHERE id_retur_jual=" .$row['id_retur_jual']);
 		$total_retur=0;
 		while ($r=mysqli_fetch_array($sql2)){
@@ -98,11 +98,11 @@ FROM
 				$total_retur+=$r['harga_retur']*$r['qty_masuk'];
 			}
 		}
-		
+
 	$sql2=mysqli_query($con, "SELECT status_bayar
 FROM
     penagihan
-    INNER JOIN penagihan_detail 
+    INNER JOIN penagihan_detail
         ON (penagihan.id_penagihan = penagihan_detail.id_penagihan)
 WHERE id_jual=" .$row['id_jual']);
 	$r=mysqli_fetch_array($sql2);
@@ -110,7 +110,7 @@ WHERE id_jual=" .$row['id_jual']);
 	if ($r['status_bayar']=='1') {$status='Sedang Mengangsur'; $color='red';}
 	if ($r['status_bayar']=='2') {$status='Lunas'; $color='black';}
 	if ($r['status_bayar']=='3') {$status='Belum Tagih'; $color='black';}
-	
+	//if ($row['status']=='9') {$status='Belum Diproses'; $color='black';}
 	echo '<tr>
 				<td><div style="min-width:70px;text-align:center"><a target="_blank" href="?page=penjualan&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '">' .date("d-m-Y",strtotime($row['tgl_retur'])). '</div></a></td>
 				<td><div style="min-width:70px;text-align:center"><a target="_blank" href="?page=penjualan&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '">' .$nama_pelanggan. '</div></a></td>
@@ -119,10 +119,10 @@ WHERE id_jual=" .$row['id_jual']);
 				<td><div style="min-width:70px;text-align:center"><a target="_blank" href="?page=penjualan&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '">' .$status. '</div></a></td>
 				<td><div style="min-width:70px;text-align:center"><a target="_blank" href="?page=penjualan&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '" class="uang">' .$total_jual. '</div></a></td>
 				<td><div style="min-width:70px;text-align:center"><a target="_blank" href="?page=penjualan&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '" class="uang">' .$total_retur. '</div></a></td>
-				<td style="text-align:center"><a class="btn btn-xs btn-warning" href="?page=konfirmasi&mode=konfirmasi_admin&terima=' .$row['id_retur_jual']. '">Terima</a>
-				<a class="btn btn-xs btn-danger" href="?page=konfirmasi&mode=konfirmasi_admin&tolak=' .$row['id_retur_jual']. '">Tolak</a></td>
+				<td style="text-align:center"><a class="btn btn-xs btn-warning" href="?page=penjualan&mode=konfirmasi_admin_retur_jual&terima=' .$row['id_retur_jual']. '">Terima</a>
+				<a class="btn btn-xs btn-danger" href="?page=penjualan&mode=konfirmasi_admin_retur_jual&tolak=' .$row['id_retur_jual']. '">Tolak</a></td>
 			</tr>';
-	}	
+	}
 
 ?>
                                 </tbody>
