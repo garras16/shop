@@ -64,6 +64,10 @@ if (isset($edit_diskon_nota_jual) && !$locked){
 	$sql=mysqli_query($con, "UPDATE jual SET diskon_all_persen=$diskon_all_persen WHERE id_jual=$id");
 	_direct("?page=sales&mode=edit_penjualan&id=$id");
 }
+if (isset($edit_ppn_nota_jual) && !$locked){
+	$sql=mysqli_query($con, "UPDATE jual SET ppn_all_persen=$ppn_all_persen WHERE id_jual=$id");
+	_direct("?page=sales&mode=edit_penjualan&id=$id");
+}
 $id_karyawan=$_SESSION['id_karyawan'];
 $sql=mysqli_query($con, "SELECT
     jual.id_jual
@@ -73,6 +77,7 @@ $sql=mysqli_query($con, "SELECT
 	, jual.tenor
     , jual.status_konfirm
     , jual.diskon_all_persen
+    , jual.ppn_all_persen
     , pelanggan.id_pelanggan
     , pelanggan.nama_pelanggan
 FROM
@@ -83,6 +88,7 @@ WHERE id_jual=$id");
 $row=mysqli_fetch_array($sql);
 $jenis_bayar=$row['jenis_bayar'];
 $diskon_all_persen=$row['diskon_all_persen'];
+$ppn_all_persen=$row['ppn_all_persen'];
 ?>
 <div class="right_col loading" role="main">
 	<div class="">
@@ -126,13 +132,23 @@ $diskon_all_persen=$row['diskon_all_persen'];
 									<input id="tenor_view" name="tenor_view" title="Tenor" style="padding: 20px 15px;" type="text" class="form-control" placeholder="Tenor" value="<?php echo $row['tenor'] ?> hari" readonly>
 									<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 								</div>
-								<form method="post" onsubmit="return cek_valid()">
+								<form method="post" onsubmit="return edit_diskon()">
 								<div class="input-group">
 									<span class="input-group-addon">Diskon Nota Jual (%)</span>
 									<input type="number" max="100" min="0" class="form-control" id="diskon" name="diskon_all_persen" value="<?php echo $row['diskon_all_persen'] ?>" readonly required>
 									<span class="input-group-btn">
 										<input type="hidden" name="edit_diskon_nota_jual" value="true">
-										<input id="btn_save" type="submit" class="btn btn-primary" value="Edit Diskon Nota Jual">
+										<input id="btn_save_diskon" type="submit" class="btn btn-primary" value="Edit">
+									</span>
+								</div>
+								</form>
+								<form method="post" onsubmit="return edit_ppn()">
+								<div class="input-group">
+									<span class="input-group-addon">PPN (%)</span>
+									<input type="number" max="100" min="0" class="form-control" id="ppn" name="ppn_all_persen" value="<?php echo $row['ppn_all_persen'] ?>" readonly required>
+									<span class="input-group-btn">
+										<input type="hidden" name="edit_ppn_nota_jual" value="true">
+										<input id="btn_save_ppn" type="submit" class="btn btn-primary" value="Edit">
 									</span>
 								</div>
 								</form>
@@ -338,9 +354,9 @@ function getBack(){
 	}
 }
 
-function cek_valid(){
-	if ($('#btn_save').val()=='Edit Diskon Nota Jual'){
-		$('#btn_save:submit').val('Simpan Diskon Nota Jual');
+function edit_diskon(){
+	if ($('#btn_save_diskon').val()=='Edit'){
+		$('#btn_save_diskon:submit').val('Simpan');
 		$('#diskon').removeAttr('readonly');
 		return false;
 	} else {
@@ -348,6 +364,23 @@ function cek_valid(){
 	}
 }
 
+function edit_ppn(){
+	if ($('#btn_save_ppn').val()=='Edit'){
+		$('#btn_save_ppn:submit').val('Simpan');
+		$('#ppn').removeAttr('readonly');
+		return false;
+	} else {
+		return true;
+	}
+}
+
+function handleChange(input) {
+   if (input.value < 0) 
+        input.value = 0;
+   if (input.value > 100) 
+        input.value = 100;
+}
+		
 $(document).ready(function(){
 	$('#select_jenis').val('<?php echo $jenis_bayar ?>');
 	$('#myModal').on('show.bs.modal', function(e){

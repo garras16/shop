@@ -107,16 +107,20 @@ if ($row['status_konfirm']==0){
 }
 if ($row['jenis_bayar']=='Lunas'){
 	//$sql2=mysqli_query($con, "SELECT SUM(qty*(harga_jual-diskon_rp)) AS total_harga
-	$sql2=mysqli_query($con, "SELECT SUM(qty*(harga_jual-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total_harga
+	$sql2=mysqli_query($con, "SELECT SUM((qty*(harga_jual-diskon_rp-diskon_rp_2-diskon_rp_3))+((ppn_all_persen/100)*(qty*(harga_jual-diskon_rp-diskon_rp_2-diskon_rp_3)))) AS total_harga
 FROM
-    jual_detail
+    jual
+    INNER JOIN jual_detail 
+        ON (jual.id_jual = jual_detail.id_jual)
     INNER JOIN harga_jual 
         ON (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
 WHERE id_jual=" .$row['id_jual']);
 } else {
-$sql2=mysqli_query($con, "SELECT SUM(qty*(harga_kredit-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total_harga
+$sql2=mysqli_query($con, "SELECT SUM((qty*(harga_jual-diskon_rp-diskon_rp_2-diskon_rp_3))+((ppn_all_persen/100)*(qty*(harga_jual-diskon_rp-diskon_rp_2-diskon_rp_3)))) AS total_harga
 FROM
-    jual_detail
+    jual
+    INNER JOIN jual_detail 
+	    ON (jual.id_jual = jual_detail.id_jual)
     INNER JOIN harga_jual_kredit 
         ON (jual_detail.id_harga_jual = harga_jual_kredit.id_harga_jual)
 WHERE id_jual=" .$row['id_jual']);

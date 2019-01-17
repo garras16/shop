@@ -83,8 +83,14 @@ if (isset($tambah_bayar_nota_beli_post)){
             $last_id=mysqli_insert_id($con);
 		} else {
 			$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','Retur',$jumlah_bayar_retur,$status,null,null,null,null,null,null,null.null)");
+<<<<<<< HEAD
+		}
+		$last_id=mysqli_insert_id($con);
+		
+=======
             $last_id=mysqli_insert_id($con);
         }
+>>>>>>> 6d76d948867780c20251d6b9c3de021b41a13332
 		for ($i=0;$i<count($no_retur)-1;$i++) {
 			$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli_detail VALUES(null,$last_id,'$no_retur[$i]')");
 			if ($sql){

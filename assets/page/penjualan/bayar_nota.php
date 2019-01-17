@@ -78,7 +78,7 @@ if (isset($_GET['del'])){
                                     <th>Jumlah Bayar Per Tgl</th>
                                     <th>Sisa Piutang Nota</th>
                                     <th>Status</th>
-																		<th>Stat. Giro</th>
+									<th>Stat. Giro</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -96,7 +96,7 @@ $sql=mysqli_query($con, "SELECT
     , bayar_nota_jual.tgl_bayar
     , bayar_nota_jual.no_nota_jual
     , bayar_nota_jual.jenis
-		, bayar_nota_jual.status_giro
+	, bayar_nota_jual.status_giro
 	, bayar_nota_jual.jumlah
     , bayar_nota_jual.status
     , pelanggan.nama_pelanggan
