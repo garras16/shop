@@ -12,6 +12,8 @@ if (isset($_GET['act'])){
 		$update = $data['sisa']-$jml;
 		if($update == 0) {
 			$stat = 1;
+			$now = 1;
+			$sql=mysqli_query($con, "UPDATE bayar_nota_jual SET now=$now WHERE no_nota_jual='$no'");
 		}else{
 			$stat = 2;
 		}

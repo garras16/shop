@@ -9,7 +9,7 @@ if (isset($_GET['del'])){
 	$no_nota_beli=$row['no_nota_beli'];
 	$sql=mysqli_query($con, "DELETE FROM bayar_nota_beli_detail WHERE id_bayar=$del");
 	$sql=mysqli_query($con, "DELETE FROM bayar_nota_beli WHERE id_bayar=$del");
-	$sql=mysqli_query($con, "UPDATE bayar_nota_beli SET status=2 WHERE no_nota_beli='$no_nota_beli'");
+	$sql=mysqli_query($con, "UPDATE bayar_nota_beli SET now=2 WHERE no_nota_beli='$no_nota_beli'");
 /*	$del=$_GET['del'];
 	$sql=mysqli_query($con, "SELECT * FROM bayar_nota_beli WHERE id_bayar=$del");
 	$row=mysqli_fetch_array($sql);
@@ -214,13 +214,14 @@ if ($row['status']=='1'){
                                 <option value="" disabled="disabled" selected="selected">-= No Nota Beli | Nama Supplier | Jumlah Nota (Rp) =-</option>
                                 <?php
 								$sql=mysqli_query($con, "SELECT
-    beli.id_beli
-    , beli.no_nota_beli
-    , beli.diskon_all_persen
-    , beli.ppn_all_persen
-    , nama_supplier
-FROM
-    bayar_nota_beli
+	    beli.id_beli
+	    , beli.no_nota_beli
+	    , beli.diskon_all_persen
+	    , beli.ppn_all_persen
+			, beli.hidden
+	    , nama_supplier
+		FROM
+    	bayar_nota_beli
     RIGHT JOIN beli
         ON (bayar_nota_beli.no_nota_beli = beli.no_nota_beli)
     INNER JOIN supplier
@@ -229,7 +230,7 @@ FROM
         ON (beli_detail.id_beli = beli.id_beli)
     INNER JOIN barang_masuk
         ON (barang_masuk.id_beli_detail = beli_detail.id_beli_detail)
-WHERE bayar_nota_beli.status IS NULL OR bayar_nota_beli.status=2 OR bayar_nota_beli.status=0
+WHERE bayar_nota_beli.now IS NULL OR bayar_nota_beli.now=2 OR bayar_nota_beli.now=0
 GROUP BY beli.id_beli");
 								while($b=mysqli_fetch_array($sql)){
 									$tmp_id_beli=$b['id_beli'];

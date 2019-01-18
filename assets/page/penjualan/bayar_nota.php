@@ -9,7 +9,7 @@ if (isset($_GET['del'])){
 	$no_nota_beli=$row['no_nota_jual'];
 	$sql=mysqli_query($con, "DELETE FROM bayar_nota_jual_detail WHERE id_bayar=$del");
 	$sql=mysqli_query($con, "DELETE FROM bayar_nota_jual WHERE id_bayar=$del");
-	$sql=mysqli_query($con, "UPDATE bayar_nota_jual SET status=2 WHERE no_nota_jual='$no_nota_beli'");
+	$sql=mysqli_query($con, "UPDATE bayar_nota_jual SET now=2 WHERE no_nota_jual='$no_nota_beli'");
 	_direct("?page=penjualan&mode=bayar_nota");
 }
 ?>
@@ -93,7 +93,7 @@ if (isset($_GET['dari'])){
 }
 $sql=mysqli_query($con, "SELECT
     bayar_nota_jual.id_bayar
-		, bayar_nota_jual.sisa	
+		, bayar_nota_jual.sisa
     , bayar_nota_jual.tgl_bayar
     , bayar_nota_jual.no_nota_jual
     , bayar_nota_jual.jenis

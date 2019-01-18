@@ -12,6 +12,8 @@ if (isset($_GET['act'])){
 		$update = $data['sisa']-$jml;
 		if($update == 0) {
 			$stat = 1;
+			$now = 1;
+			$sql=mysqli_query($con, "UPDATE bayar_nota_beli SET now=$now WHERE no_nota_beli='$no'");
 		}else{
 			$stat = 2;
 		}
@@ -30,7 +32,7 @@ if (isset($_GET['act'])){
 		}
 	}
 	_alert($pesan);
-	_direct("?page=pembelian&mode=pencairan_giro");
+	//_direct("?page=pembelian&mode=pencairan_giro");
 }
 ?>
 

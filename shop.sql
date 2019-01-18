@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 18, 2019 at 06:35 AM
+-- Generation Time: Jan 18, 2019 at 09:31 AM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -384,17 +384,17 @@ CREATE TABLE `bayar_nota_beli` (
   `jatuh_tempo` date DEFAULT NULL,
   `keterangan` varchar(100) DEFAULT NULL,
   `sisa` double DEFAULT NULL,
-  `status_giro` tinyint(1) DEFAULT NULL
+  `status_giro` tinyint(1) DEFAULT NULL,
+  `now` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `bayar_nota_beli`
 --
 
-INSERT INTO `bayar_nota_beli` (`id_bayar`, `tgl_bayar`, `no_nota_beli`, `jenis`, `jumlah`, `status`, `pengirim_bank`, `pengirim_nama`, `pengirim_no`, `penerima_bank`, `penerima_nama`, `penerima_no`, `jatuh_tempo`, `keterangan`, `sisa`, `status_giro`) VALUES
-(13, '2019-01-18', 'NB-0001', 'Tunai', 625000, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 23000000, 0),
-(18, '2019-01-18', 'NB-0001', 'Tunai', 3000000, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20000000, NULL),
-(20, '2019-01-18', 'NB-0001', 'Giro', 20000000, 1, 'a', 'a', '1', 's', 's', '2', '2019-02-20', '', 0, 1);
+INSERT INTO `bayar_nota_beli` (`id_bayar`, `tgl_bayar`, `no_nota_beli`, `jenis`, `jumlah`, `status`, `pengirim_bank`, `pengirim_nama`, `pengirim_no`, `penerima_bank`, `penerima_nama`, `penerima_no`, `jatuh_tempo`, `keterangan`, `sisa`, `status_giro`, `now`) VALUES
+(13, '2019-01-18', 'NB-0001', 'Tunai', 625000, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 23000000, 0, 2),
+(18, '2019-01-18', 'NB-0001', 'Tunai', 3000000, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20000000, NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -430,16 +430,17 @@ CREATE TABLE `bayar_nota_jual` (
   `jatuh_tempo` date DEFAULT NULL,
   `keterangan` varchar(100) DEFAULT NULL,
   `status_giro` tinyint(1) DEFAULT NULL,
-  `sisa` double NOT NULL
+  `sisa` double NOT NULL,
+  `now` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `bayar_nota_jual`
 --
 
-INSERT INTO `bayar_nota_jual` (`id_bayar`, `tgl_bayar`, `no_nota_jual`, `jenis`, `jumlah`, `status`, `pengirim_bank`, `pengirim_nama`, `pengirim_no`, `penerima_bank`, `penerima_nama`, `penerima_no`, `jatuh_tempo`, `keterangan`, `status_giro`, `sisa`) VALUES
-(42, '2019-01-18', 'NJ-180907-002', 'Tunai', 9690000, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 30000000),
-(49, '2019-01-18', 'NJ-180907-002', 'Giro', 10000000, 2, 'a', 's', '2', 'a', 'a', '2', '2019-02-22', '', 1, 20000000);
+INSERT INTO `bayar_nota_jual` (`id_bayar`, `tgl_bayar`, `no_nota_jual`, `jenis`, `jumlah`, `status`, `pengirim_bank`, `pengirim_nama`, `pengirim_no`, `penerima_bank`, `penerima_nama`, `penerima_no`, `jatuh_tempo`, `keterangan`, `status_giro`, `sisa`, `now`) VALUES
+(42, '2019-01-18', 'NJ-180907-002', 'Tunai', 9690000, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 30000000, 2),
+(49, '2019-01-18', 'NJ-180907-002', 'Giro', 10000000, 2, 'a', 's', '2', 'a', 'a', '2', '2019-02-22', '', 1, 20000000, 2);
 
 -- --------------------------------------------------------
 
@@ -473,55 +474,56 @@ CREATE TABLE `beli` (
   `keterangan` varchar(100) DEFAULT NULL,
   `status_konfirm` tinyint(1) NOT NULL,
   `diskon_all_persen` double DEFAULT NULL,
-  `ppn_all_persen` double DEFAULT NULL
+  `ppn_all_persen` double DEFAULT NULL,
+  `hidden` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `beli`
 --
 
-INSERT INTO `beli` (`id_beli`, `no_nota_beli`, `tanggal`, `id_supplier`, `id_ekspedisi`, `id_karyawan`, `berat_ekspedisi`, `volume_ekspedisi`, `tarif_ekspedisi`, `keterangan`, `status_konfirm`, `diskon_all_persen`, `ppn_all_persen`) VALUES
-(26, 'NB-0001', '2018-02-15', 1, 1, 2, 8000, NULL, 1000000, NULL, 1, 10, 5),
-(27, 'NB-0002', '2018-02-15', 1, 1, 2, NULL, NULL, 1000000, NULL, 1, 0, 0),
-(28, 'NB-0003', '2018-02-15', 1, 1, 6, NULL, NULL, 1000000, NULL, 1, 0, 0),
-(29, 'NB-0004', '2018-02-15', 1, 1, 2, NULL, NULL, 1000000, NULL, 1, 0, 0),
-(31, 'INV-2387283', '2018-03-24', 1, 1, 2, NULL, NULL, 1000000, NULL, 1, 0, 0),
-(36, 'nb-9000', '2018-05-14', 1, 1, 2, NULL, NULL, 1000000, NULL, 2, 0, 0),
-(37, 'nb-000', '2018-05-31', 1, 1, 2, NULL, NULL, 1000000, NULL, 2, 0, 0),
-(39, 'nb-0000078', '2018-06-08', 1, 1, 2, NULL, NULL, 1000000, NULL, 1, 0, 0),
-(40, 'nb-89999', '2018-06-12', 1, 1, 3, NULL, NULL, 1000000, NULL, 1, 0, 0),
-(41, 'nb-009', '2018-06-12', 1, 1, 3, NULL, NULL, 1000000, NULL, 1, 0, 0),
-(42, 'nb-999ew3', '2018-06-12', 10, 1, 2, NULL, NULL, 1000000, NULL, 2, 0, 0),
-(43, 'NB-000087', '2018-06-22', 1, 1, 3, NULL, NULL, 1000000, NULL, 1, 0, 0),
-(44, 'NB-98U', '2018-06-22', 1, 1, 3, NULL, NULL, 1000000, NULL, 1, 0, 0),
-(45, 'nb-000478', '2018-06-22', 1, 1, 3, NULL, NULL, 1000000, NULL, 2, 0, 0),
-(46, 'nb-000234', '2018-06-22', 1, 1, 3, 8000, 0, 1000000, NULL, 1, 0, 0),
-(47, 'nb-098732', '2018-06-27', 1, 1, 2, NULL, NULL, 1000000, NULL, 0, 0, 0),
-(48, 'nb-987632', '2018-06-27', 1, 1, 2, NULL, NULL, 1000000, NULL, 0, 0, 0),
-(49, 'nb-11111', '2018-06-29', 1, 1, 2, NULL, NULL, 1000000, NULL, 2, 0, 0),
-(50, 'nb-745', '2018-06-29', 1, 1, 2, 300000, 1000000, 5500000, NULL, 1, 0, 0),
-(51, 'nb-74527', '2018-07-03', 1, 1, 5, 8000, 0, 500000, NULL, 1, 0, 0),
-(52, 'nb-4354656', '2018-07-03', 1, 1, 2, 1000, 0, 500000, NULL, 1, 0, 0),
-(53, 'NB-237236', '2018-07-04', 1, 1, 2, 0, 8000, 500000, NULL, 1, 0, 0),
-(54, 'NB-68778', '2018-07-04', 1, 1, 2, 8000, 0, 1000000, NULL, 1, 0, 0),
-(55, 'NB-00978776', '2018-07-04', 1, 1, 2, 8000, 0, 500000, NULL, 1, 0, 0),
-(56, 'NB-786', '2018-07-04', 1, 1, 2, 0, 8000, 500000, NULL, 1, 0, 0),
-(57, 'nb-06766554', '2018-07-09', 1, 1, 2, 16000, 0, 500000, NULL, 1, 0, 10),
-(58, 'nb-783646257', '2018-08-27', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0),
-(59, 'nb-6247563', '2018-08-27', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0),
-(60, 'nb-3974835', '2018-08-27', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0),
-(63, 'nb-ue74653', '2018-08-27', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0),
-(64, 'nb-000156b', '2018-09-12', 1, 1, 5, NULL, NULL, NULL, NULL, 0, 15, 10),
-(66, 'nb-93479', '2018-10-24', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 2.5, 10),
-(67, 'njnajnz', '2018-12-03', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 10, 10),
-(68, 'nb-9894234', '2018-12-08', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 10, 10),
-(69, 'nj-374863', '2018-12-19', 1, 1, 6, NULL, NULL, NULL, NULL, 0, 0, 0),
-(71, 'nb-3u28423847', '2018-12-28', 1, 1, 2, 120000, 0, 1000000, NULL, 1, 10, 0),
-(72, 'nb-092039829', '2018-12-28', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 7.6, 0),
-(74, 'GH-5350280', '2019-01-10', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 7.6, 10),
-(75, 'KT-8977979', '2019-01-11', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 8.7, 10),
-(76, 'UT-7698797', '2019-01-15', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 7, 10),
-(77, 'UG-6987897', '2019-01-15', 1, 1, 2, NULL, NULL, NULL, NULL, 0, 4.92, 1);
+INSERT INTO `beli` (`id_beli`, `no_nota_beli`, `tanggal`, `id_supplier`, `id_ekspedisi`, `id_karyawan`, `berat_ekspedisi`, `volume_ekspedisi`, `tarif_ekspedisi`, `keterangan`, `status_konfirm`, `diskon_all_persen`, `ppn_all_persen`, `hidden`) VALUES
+(26, 'NB-0001', '2018-02-15', 1, 1, 2, 8000, NULL, 1000000, NULL, 1, 10, 5, 1),
+(27, 'NB-0002', '2018-02-15', 1, 1, 2, NULL, NULL, 1000000, NULL, 1, 0, 0, 0),
+(28, 'NB-0003', '2018-02-15', 1, 1, 6, NULL, NULL, 1000000, NULL, 1, 0, 0, 0),
+(29, 'NB-0004', '2018-02-15', 1, 1, 2, NULL, NULL, 1000000, NULL, 1, 0, 0, 0),
+(31, 'INV-2387283', '2018-03-24', 1, 1, 2, NULL, NULL, 1000000, NULL, 1, 0, 0, 0),
+(36, 'nb-9000', '2018-05-14', 1, 1, 2, NULL, NULL, 1000000, NULL, 2, 0, 0, 0),
+(37, 'nb-000', '2018-05-31', 1, 1, 2, NULL, NULL, 1000000, NULL, 2, 0, 0, 0),
+(39, 'nb-0000078', '2018-06-08', 1, 1, 2, NULL, NULL, 1000000, NULL, 1, 0, 0, 0),
+(40, 'nb-89999', '2018-06-12', 1, 1, 3, NULL, NULL, 1000000, NULL, 1, 0, 0, 0),
+(41, 'nb-009', '2018-06-12', 1, 1, 3, NULL, NULL, 1000000, NULL, 1, 0, 0, 0),
+(42, 'nb-999ew3', '2018-06-12', 10, 1, 2, NULL, NULL, 1000000, NULL, 2, 0, 0, 0),
+(43, 'NB-000087', '2018-06-22', 1, 1, 3, NULL, NULL, 1000000, NULL, 1, 0, 0, 0),
+(44, 'NB-98U', '2018-06-22', 1, 1, 3, NULL, NULL, 1000000, NULL, 1, 0, 0, 0),
+(45, 'nb-000478', '2018-06-22', 1, 1, 3, NULL, NULL, 1000000, NULL, 2, 0, 0, 0),
+(46, 'nb-000234', '2018-06-22', 1, 1, 3, 8000, 0, 1000000, NULL, 1, 0, 0, 0),
+(47, 'nb-098732', '2018-06-27', 1, 1, 2, NULL, NULL, 1000000, NULL, 0, 0, 0, 0),
+(48, 'nb-987632', '2018-06-27', 1, 1, 2, NULL, NULL, 1000000, NULL, 0, 0, 0, 0),
+(49, 'nb-11111', '2018-06-29', 1, 1, 2, NULL, NULL, 1000000, NULL, 2, 0, 0, 0),
+(50, 'nb-745', '2018-06-29', 1, 1, 2, 300000, 1000000, 5500000, NULL, 1, 0, 0, 0),
+(51, 'nb-74527', '2018-07-03', 1, 1, 5, 8000, 0, 500000, NULL, 1, 0, 0, 0),
+(52, 'nb-4354656', '2018-07-03', 1, 1, 2, 1000, 0, 500000, NULL, 1, 0, 0, 0),
+(53, 'NB-237236', '2018-07-04', 1, 1, 2, 0, 8000, 500000, NULL, 1, 0, 0, 0),
+(54, 'NB-68778', '2018-07-04', 1, 1, 2, 8000, 0, 1000000, NULL, 1, 0, 0, 0),
+(55, 'NB-00978776', '2018-07-04', 1, 1, 2, 8000, 0, 500000, NULL, 1, 0, 0, 0),
+(56, 'NB-786', '2018-07-04', 1, 1, 2, 0, 8000, 500000, NULL, 1, 0, 0, 0),
+(57, 'nb-06766554', '2018-07-09', 1, 1, 2, 16000, 0, 500000, NULL, 1, 0, 10, 0),
+(58, 'nb-783646257', '2018-08-27', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0),
+(59, 'nb-6247563', '2018-08-27', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0),
+(60, 'nb-3974835', '2018-08-27', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0),
+(63, 'nb-ue74653', '2018-08-27', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0),
+(64, 'nb-000156b', '2018-09-12', 1, 1, 5, NULL, NULL, NULL, NULL, 0, 15, 10, 0),
+(66, 'nb-93479', '2018-10-24', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 2.5, 10, 0),
+(67, 'njnajnz', '2018-12-03', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 10, 10, 0),
+(68, 'nb-9894234', '2018-12-08', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 10, 10, 0),
+(69, 'nj-374863', '2018-12-19', 1, 1, 6, NULL, NULL, NULL, NULL, 0, 0, 0, 0),
+(71, 'nb-3u28423847', '2018-12-28', 1, 1, 2, 120000, 0, 1000000, NULL, 1, 10, 0, 0),
+(72, 'nb-092039829', '2018-12-28', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 7.6, 0, 0),
+(74, 'GH-5350280', '2019-01-10', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 7.6, 10, 0),
+(75, 'KT-8977979', '2019-01-11', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 8.7, 10, 0),
+(76, 'UT-7698797', '2019-01-15', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 7, 10, 0),
+(77, 'UG-6987897', '2019-01-15', 1, 1, 2, NULL, NULL, NULL, NULL, 0, 4.92, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -2932,7 +2934,7 @@ ALTER TABLE `bayar_ekspedisi_detail`
 -- AUTO_INCREMENT for table `bayar_nota_beli`
 --
 ALTER TABLE `bayar_nota_beli`
-  MODIFY `id_bayar` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_bayar` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `bayar_nota_beli_detail`
@@ -2944,7 +2946,7 @@ ALTER TABLE `bayar_nota_beli_detail`
 -- AUTO_INCREMENT for table `bayar_nota_jual`
 --
 ALTER TABLE `bayar_nota_jual`
-  MODIFY `id_bayar` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id_bayar` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `bayar_nota_jual_detail`
