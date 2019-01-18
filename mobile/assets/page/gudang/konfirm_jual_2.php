@@ -315,7 +315,7 @@ ORDER BY expire, nama_gudang, nama_rak, tgl_datang");
 		if ($row2['stok']==0 && mysqli_num_rows($sql2)>1) {
 			break;
 		}
-		if ($days<1) $barang_expire=true;
+		if ($days<7) $barang_expire=true;
 		echo '		<td align="center" style="min-width:85px;' .$color. '">' .$row2['stok']. ' ' .$row['nama_satuan']. '</td>
 					<td align="center" style="' .$color. '">' .$row2['nama_gudang']. '</td>
 					<td align="center" style="' .$color. '">' .$row2['nama_rak']. '</td>

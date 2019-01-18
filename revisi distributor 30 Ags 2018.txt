@@ -519,4 +519,17 @@ tutup harian
 
 ppn adalah jumlah setelah diskon
 
+retur beli detail, ada 2 kolom tambahan, jumlah retur dsn jumlah keluar
+penjualan, mobile, view penjualan utk 30 hari tarakhir
+buat timer di sales app, penjualan (10 menit tak ada aktivitas, maka langsung ke dashboard)
+gudang app, jika batal siapkan barang lalu hapus, harus dikembalikan ke rak.
+jika hanya hapus tak perlu dikembalikan ke rak.
+driver app, konfirm jual (canvass) tidak menyimpan penjualan & jumlah jual minus
+
+debt collector app
+- bisa bayar 0
+- yg disetor hrs sama dgn yg dibayar
+- jika lunas oleh debt collector maka saat setoran, tombol scan berubah tombol lunas
+
+
 >>>>>>> 320e3f2724ca93e545c1f5a55be6c4ec8bd7517c
