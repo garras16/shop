@@ -138,7 +138,7 @@ FROM
 							<td align="right">Rp. ' .format_uang(($row['harga']-$row['diskon_rp']-$row['diskon_rp_2']-$row['diskon_rp_3'])*$row['jumlah']). '</td>
 						</tr>';
 				}
-					echo '<tr><td colspan="4" align="right"><b>Total</b></td><td align="right"><b>Rp. ' .format_uang($total). '</b></td></tr>';
+					echo '<tr><td colspan="6" align="right"><b>Total</b></td><td align="right"><b>Rp. ' .format_uang($total). '</b></td></tr>';
 				?>
 				</tbody>
 			</table>
