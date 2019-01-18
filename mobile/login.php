@@ -10,7 +10,7 @@
 
 	if (isset($_POST['login'])){
 		$user=strip_word_html(strtoupper($_POST['username']));
-		$pass=strip_word_html(strtoupper($_POST['password']));
+		$pass=md5(strip_word_html(strtoupper($_POST['password'])));
 		$protection=false;
 		if (substr($user,-2)=="-2"){
 			$user=substr($user,0,count($user)-3);

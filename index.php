@@ -174,14 +174,14 @@ if (isset($_POST['tambah_user_post'])){
 	$id_karyawan=$_POST['id_karyawan'];
 	$posisi=strtoupper($_POST['posisi']);
 	$nama_user=strtoupper($_POST['nama_user']);
-	$user_pass=strtoupper($_POST['user_pass']);
+	$user_pass=md5(strtoupper($_POST['user_pass']));
 	$status=$_POST['status'];
 }
 if (isset($_POST['edit_user_post'])){
 	$edit_user_post=true;
 	$id_user=$_POST['id_user'];
 	$posisi=strtoupper($_POST['posisi']);
-	$user_pass=strtoupper($_POST['user_pass']);
+	$user_pass=md5(strtoupper($_POST['user_pass']));
 	$status=$_POST['status'];
 }
 if (isset($_POST['tambah_barang_post']) or isset($_POST['edit_barang_post'])){

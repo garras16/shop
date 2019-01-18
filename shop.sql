@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 18, 2019 at 04:37 AM
+-- Generation Time: Jan 18, 2019 at 06:35 AM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -438,12 +438,6 @@ CREATE TABLE `bayar_nota_jual` (
 --
 
 INSERT INTO `bayar_nota_jual` (`id_bayar`, `tgl_bayar`, `no_nota_jual`, `jenis`, `jumlah`, `status`, `pengirim_bank`, `pengirim_nama`, `pengirim_no`, `penerima_bank`, `penerima_nama`, `penerima_no`, `jatuh_tempo`, `keterangan`, `status_giro`, `sisa`) VALUES
-(3, '2019-01-04', 'NJ-180910-001', 'Tunai', 1233.22223, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(4, '2019-01-04', 'NJ-180910-003', 'Tunai', 12322.59, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(5, '2019-01-04', 'NJ-180910-003', 'Tunai', 87677.41, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(6, '2019-01-08', 'NJ-180910-001', 'Giro', 357865, 2, 'CTBANK', 'Andri Nugraha', '6796976976979', 'PT. Rahana Buana Jaya', 'PT Rahana Buana Jaya', '635252352', '2019-02-12', '', 1, 0),
-(7, '2019-01-10', 'NJ-180910-002', 'Giro', 6464446, 2, 'viygggiugi', 'iugbgig', '8708708787', 'ibiubou', 'bouhoh', '89797987', '2019-05-08', '', 1, 0),
-(8, '2019-01-10', 'NJ-180910-003', 'Transfer', 14900000, 1, 'uhbohoho', 'oughouhh', '7987897897', 'bkjbkjb', 'bkbuh', '998798', NULL, NULL, NULL, 0),
 (42, '2019-01-18', 'NJ-180907-002', 'Tunai', 9690000, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 30000000),
 (49, '2019-01-18', 'NJ-180907-002', 'Giro', 10000000, 2, 'a', 's', '2', 'a', 'a', '2', '2019-02-22', '', 1, 20000000);
 
@@ -459,13 +453,6 @@ CREATE TABLE `bayar_nota_jual_detail` (
   `no_retur_jual` varchar(13) DEFAULT NULL,
   `status` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `bayar_nota_jual_detail`
---
-
-INSERT INTO `bayar_nota_jual_detail` (`id_bayar_detail`, `id_bayar`, `no_retur_jual`, `status`) VALUES
-(1, 3, 'RJ-180901-001', 0);
 
 -- --------------------------------------------------------
 
@@ -534,7 +521,7 @@ INSERT INTO `beli` (`id_beli`, `no_nota_beli`, `tanggal`, `id_supplier`, `id_eks
 (74, 'GH-5350280', '2019-01-10', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 7.6, 10),
 (75, 'KT-8977979', '2019-01-11', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 8.7, 10),
 (76, 'UT-7698797', '2019-01-15', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 7, 10),
-(77, 'UG-6987897', '2019-01-15', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 4.92, 1);
+(77, 'UG-6987897', '2019-01-15', 1, 1, 2, NULL, NULL, NULL, NULL, 0, 4.92, 1);
 
 -- --------------------------------------------------------
 
@@ -1235,7 +1222,7 @@ INSERT INTO `jual` (`id_jual`, `tgl_nota`, `invoice`, `id_pelanggan`, `id_karyaw
 (6, '2018-09-10', 'NJ-180910-004', 1, 1, 'Lunas', 0, 2, 1, '2018-10-19', 0, 0),
 (7, '2018-09-11', 'NJ-180911-001', 1, 1, 'Lunas', 0, 2, 1, '2018-10-19', 0, 0),
 (8, '2018-09-12', 'NJ-180912-001', 1, 1, 'Lunas', 0, 7, 1, '2018-10-19', 0, 0),
-(9, '2018-09-12', 'NJ-180912-002', 1, 1, 'Lunas', 0, 1, 1, '2019-01-16', 0, 0),
+(9, '2018-09-12', 'NJ-180912-002', 1, 1, 'Lunas', 0, 1, 1, '2019-01-18', 0, 0),
 (10, '2018-11-28', 'NJ-181128-001', 1, 6, 'Lunas', 0, 0, 0, NULL, 10, 0),
 (11, '2018-12-07', 'NJ-181207-001', 1, 1, 'Lunas', 0, 0, 0, NULL, 10, 0),
 (15, '2018-12-21', 'NJ-181221-004', 1, 6, 'Lunas', 0, 0, 0, NULL, 0, 0),
@@ -1717,7 +1704,7 @@ INSERT INTO `nota_sudah_cek` (`id_nota_sudah_cek`, `tanggal`, `id_jual`, `jumlah
 (5, '2018-09-10', 4, 25246000, '3', 2, '2018-11-23', 'Kirim Sendiri'),
 (6, '2018-09-10', 3, 2469120, '3', 2, '2018-11-23', 'Kirim Sendiri'),
 (7, '2018-09-11', 7, 1234560, '3', 2, '2018-10-19', 'Kirim Sendiri'),
-(8, '2018-09-12', 9, 29100000, '2', 2, '2019-01-16', 'Kirim Sendiri');
+(8, '2018-09-12', 9, 29100000, '2', 2, '2019-01-18', 'Kirim Sendiri');
 
 -- --------------------------------------------------------
 
@@ -2335,7 +2322,7 @@ CREATE TABLE `users` (
   `id_karyawan` int(11) NOT NULL,
   `posisi` varchar(20) NOT NULL,
   `user` varchar(30) NOT NULL,
-  `password` varchar(30) NOT NULL,
+  `password` text NOT NULL,
   `status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -2344,14 +2331,16 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id_user`, `id_karyawan`, `posisi`, `user`, `password`, `status`) VALUES
-(1, 1, 'SALES', 'FLASH', '123', 1),
-(2, 2, 'GUDANG', 'RIN', '123', 1),
-(3, 3, 'DRIVER', 'ZEN', '123', 1),
-(4, 4, 'GUDANG', 'edfewf', '324234', 1),
-(5, 5, 'DIREKSI', 'ADMIN', 'ADMIN', 1),
-(6, 6, 'OWNER', 'OWNER', '123', 1),
-(7, 9, 'DRIVER', 'HI', '123', 0),
-(8, 10, 'DIREKSI', 'ADMIN2', 'ADMIN2', 1);
+(1, 1, 'SALES', 'FLASH', '202cb962ac59075b964b07152d234b70', 1),
+(2, 2, 'GUDANG', 'RIN', '202cb962ac59075b964b07152d234b70', 1),
+(3, 3, 'DRIVER', 'ZEN', '202cb962ac59075b964b07152d234b70', 1),
+(4, 4, 'GUDANG', 'edfewf', 'cd6a1a15421189de23d7309feebff8d7', 1),
+(5, 5, 'DIREKSI', 'ADMIN', '73acd9a5972130b75066c82595a1fae3', 1),
+(6, 6, 'OWNER', 'OWNER', '202cb962ac59075b964b07152d234b70', 1),
+(7, 9, 'DRIVER', 'HI', '202cb962ac59075b964b07152d234b70', 0),
+(8, 10, 'DIREKSI', 'ADMIN2', '63db3feba0befbb1d61a7e38ae0bf069', 1),
+(9, 11, 'SALES', 'BEAN', '202cb962ac59075b964b07152d234b70', 1),
+(10, 12, 'DRIVER', 'ANDRI', '202cb962ac59075b964b07152d234b70', 0);
 
 -- --------------------------------------------------------
 
@@ -2997,7 +2986,7 @@ ALTER TABLE `canvass_belum_siap`
 -- AUTO_INCREMENT for table `canvass_keluar`
 --
 ALTER TABLE `canvass_keluar`
-  MODIFY `id_canvass_keluar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_canvass_keluar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `canvass_keluar_barang`
@@ -3009,7 +2998,7 @@ ALTER TABLE `canvass_keluar_barang`
 -- AUTO_INCREMENT for table `canvass_keluar_karyawan`
 --
 ALTER TABLE `canvass_keluar_karyawan`
-  MODIFY `id_canvass_keluar_karyawan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_canvass_keluar_karyawan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `canvass_mutasi_mobil_gudang`
@@ -3327,7 +3316,7 @@ ALTER TABLE `supplier`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `varian_kendaraan`

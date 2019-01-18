@@ -57,7 +57,7 @@ if (isset($edit_user_post)){
                             </thead>
                             <tbody>
                                 <?php
-$sql=mysqli_query($con, "SELECT 
+$sql=mysqli_query($con, "SELECT
     karyawan.nama_karyawan
 	, users.posisi
 	, users.id_user
@@ -66,7 +66,7 @@ $sql=mysqli_query($con, "SELECT
     , users.status
 FROM
     users
-    INNER JOIN karyawan 
+    INNER JOIN karyawan
         ON (users.id_karyawan = karyawan.id_karyawan)
     WHERE karyawan.status=1 AND posisi <> 'OWNER'
 	ORDER BY id_user DESC");
@@ -119,12 +119,12 @@ while($row=mysqli_fetch_array($sql)){
                                 name="id_karyawan"
                                 required="required">
                                 <option value="" disabled="disabled" selected="selected">Pilih Karyawan</option>
-                                <?php 
+                                <?php
 									$brg=mysqli_query($con, "SELECT id_karyawan,nama_karyawan FROM karyawan WHERE id_karyawan NOT IN(SELECT id_karyawan FROM users) AND STATUS=1");
 									while($b=mysqli_fetch_array($brg)){
 								?>
                                 <option value="<?php echo $b['id_karyawan']; ?>"><?php echo $b['nama_karyawan'];?></option>
-                                <?php 
+                                <?php
 									}
 								?>
                             </select>
