@@ -1,29 +1,29 @@
-- tambah penjualan, saat klik back, total direset					OK
-- dua angka di belakang koma berlaku untuk semua					OK
-- retur jual, bisa nambah retur lebih dari sekali utk barang yg sama			OK
-- edit nota di gudang saat konfirm jual masih error					OK
+- tambah penjualan, saat klik back, total direset												OK
+- dua angka di belakang koma berlaku untuk semua												OK
+- retur jual, bisa nambah retur lebih dari sekali utk barang yg sama							OK
+- edit nota di gudang saat konfirm jual masih error												OK
 
 - canvass, saat gudang kembalikan barang, di driver periksa barang klik selesai
 
-beri notif.										OK
-- jika sudah so canvass, tidak bisa membuat nota jual lagi.				OK
+beri notif.																						OK
+- jika sudah so canvass, tidak bisa membuat nota jual lagi.										OK
 
 penagihan
-- jenis nota (dalam kota/canvass)							OK
-- sisa plafon										OK
-- penagihan, hapus scan									OK
-- nama driver, tgl jatuh tempo tagihan (set jumlah jual)				OK
-- jika tanggal jt kurang dr tgl hari ini, maka font warna merah				OK
-- status pembayaran dan status pengembalian nota					OK
+- jenis nota (dalam kota/canvass)																OK
+- sisa plafon																					OK
+- penagihan, hapus scan																			OK
+- nama driver, tgl jatuh tempo tagihan (set jumlah jual)										OK
+- jika tanggal jt kurang dr tgl hari ini, maka font warna merah									OK
+- status pembayaran dan status pengembalian nota												OK
 
 - harus bisa dibedakan, nota yg tak kembali karena dibawa debt collector dan yg
 
-nota lunas										OK
+nota lunas																						OK
 - yang tak tampil di daftar nota jual, adalah
 
 1. status sudah lunas										
 
-2. Nilai total Rp. 0									OK
+2. Nilai total Rp. 0																			OK
 
 ukuran tabel disesuaikan/dirapikan
 
@@ -127,29 +127,29 @@ berhubungan. (qty bisa 0)
 
 saat login, yg pertama dia harus lakukan adalah input jumlah uang (tak bisa
 
-melakukan transaksi yg lain)								OK
+melakukan transaksi yg lain)																	OK
 
-- jika total nota jual Rp. 0, maka jika discan tak masuk ke daftar nota penagihan	OK	
+- jika total nota jual Rp. 0, maka jika discan tak masuk ke daftar nota penagihan				OK	
 
 - admin app, setoran
 
 - penagihan, daftar nota jual, tambah kolom tanggal jatuh tempo, tgl kunjungan
 
-berikutnya, sisa piutang								OK	
+berikutnya, sisa piutang																		OK	
 
-- penagihan, admin app, tambah kolom tgl kunjungan berikutnya, sisa piutang		OK
+- penagihan, admin app, tambah kolom tgl kunjungan berikutnya, sisa piutang						OK
 
-- penagihan_2 web, tambah tombol back (next to tab penagihan)				OK
-- report penagihan berdasarkan nama debt collector dan pelanggam, bisa search tgl	OK
-- penagihan, search bulan tahun dihilangkan, diganti search datatable			OK
-- admin app, penagihan, ada histori penagihan						OK
-- penagihan_2, setelah jumlah jual, ada kolom sales					OK
+- penagihan_2 web, tambah tombol back (next to tab penagihan)									OK
+- report penagihan berdasarkan nama debt collector dan pelanggam, bisa search tgl				OK
+- penagihan, search bulan tahun dihilangkan, diganti search datatable							OK
+- admin app, penagihan, ada histori penagihan													OK
+- penagihan_2, setelah jumlah jual, ada kolom sales												OK
 
-penagihan, nama user admin yg scan nota							OK	
+penagihan, nama user admin yg scan nota															OK	
 
-penagihan_2, kolom plafon dan sisa plafon (disamping jumlah jual)			OK
+penagihan_2, kolom plafon dan sisa plafon (disamping jumlah jual)								OK
 
-- scan toko dulu (gps) (nota yg muncul berdasarkan toko tsb)				OK	
+- scan toko dulu (gps) (nota yg muncul berdasarkan toko tsb)									OK	
 
 - jika dalam 3x1 menit gps tidak fix, maka menggunakan last known location
 
@@ -159,33 +159,33 @@ penagihan_2, kolom plafon dan sisa plafon (disamping jumlah jual)			OK
 	
 	jika tagihan 9digit keatas, maka 4 digit terakhir bebas, mempengaruhi laporan keuangan
 
-- pembayaran tunai, transfer, cek/giro, retur						OK	
+- pembayaran tunai, transfer, cek/giro, retur													OK	
 
-- khusus cek/giro: no giro/cek, nama bank, tgl jatuh tempo, jumlah			OK	
+- khusus cek/giro: no giro/cek, nama bank, tgl jatuh tempo, jumlah								OK	
 
-- jumlah bayar lebih besar drpd sisa tagihan (invalid)					OK
+- jumlah bayar lebih besar drpd sisa tagihan (invalid)											OK
 
-- admin app, setoran, diantara jml bayar dan sisa tagihan ada tanggal bayar		OK	
+- admin app, setoran, diantara jml bayar dan sisa tagihan ada tanggal bayar						OK	
 
-- jika bayar lunas, tgl tagih berikutnya harus kosong					OK	
+- jika bayar lunas, tgl tagih berikutnya harus kosong											OK	
 
 - jika discan, lalu ketik 0, dan ketik tgl tagih berikutnya, maka tombol scan
 
-berubah jadi tombol hapus								OK	
+berubah jadi tombol hapus																		OK	
 
 
 
-histori ringkasan setoran utk owner							OK
+histori ringkasan setoran utk owner																OK
 
-status bayar: belum ditagih, belum dibayar (merah), sedang mengangsur (merah), lunas	OK	
-
-
-
-ada histori penagihan									OK	
+status bayar: belum ditagih, belum dibayar (merah), sedang mengangsur (merah), lunas			OK	
 
 
 
-setoran admin app, ada judul setoran tanggal hari ini					OK	
+ada histori penagihan																			OK	
+
+
+
+setoran admin app, ada judul setoran tanggal hari ini											OK	
 
 
 
@@ -194,7 +194,7 @@ yg mengangsur, tombol scan nota, kemudian isi jumlah yg dibayar
 
 yg blm bayar, tombol scan nota, tanpa isi apapun, hanya scan
 
-yg blm tagih, tombol scan nota, tanpa isi apapun, hanya scan				OK	
+yg blm tagih, tombol scan nota, tanpa isi apapun, hanya scan									OK	
 
 
 
@@ -273,68 +273,68 @@ mengubah input tagihan.
 
 pembelian
 
-- ada ppn di nota beli									OK	
+- ada ppn di nota beli																			OK	
 
-- diskon per barang (%) dan diskon nota (%)						OK	
+- diskon per barang (%) dan diskon nota (%)														OK	
 
 - cetak nota jual, tambah kolom pengirim, nama pemeriksa, hormat kami ditambah
 
-nama admin		
+nama admin																						OK	
 
-- setoran admin app, tambah tombol input no nota					OK
+- setoran admin app, tambah tombol input no nota												OK
 
 PENAGIHAN
 
-- sisa piutang per nota									OK	
+- sisa piutang per nota																			OK	
 
-- sisa plafon minus, warna merah							OK	
+- sisa plafon minus, warna merah																OK	
 
 
 
 - jika tgl jatuh tempo sudah sama dgn hari ini atau lewat, maka warna di
 
-jatuh tempo jadi merah									OK	
+jatuh tempo jadi merah																			OK	
 
 - jika tgl janji berikutnya sudah sama dgn hari ini maka, warna di janji
 
-berikutnya jadi merah									OK
+berikutnya jadi merah																			OK
 	
 
 
 - jika sisa piutang sudah 0 maka tidak muncul lg di daftar nota jual				
 
-- antara nama sales dan pelanggan, ada nama driver					OK
+- antara nama sales dan pelanggan, ada nama driver												OK
 
 bayar_nota_jual
 
-- tambah view sisa piutang								OK	
+- tambah view sisa piutang																		OK	
 
 
 
-admin app, penagihan, id_jual tidak boleh sama (tanpa notif)				OK
+admin app, penagihan, id_jual tidak boleh sama (tanpa notif)									OK
 
-penagihan_2, tambah nama driver diantara nama sales dan debt collector			OK	
+penagihan_2, tambah nama driver diantara nama sales dan debt collector							OK	
 
 
 
 debt collector app
 
-- antara jumlah jual dan jatuh tempo ada sisa piutang					OK	
+- antara jumlah jual dan jatuh tempo ada sisa piutang											OK	
 
-- hilangkan scan nota, langsung klik							OK	
+- hilangkan scan nota, langsung klik															OK	
 
-- bedakan icon sisa piutang dan total piutang (beri text)				OK	
+- bedakan icon sisa piutang dan total piutang (beri text)										OK	
 
-- judul Tambah setoran => metode bayar							OK	
+- judul Tambah setoran => metode bayar															OK	
 
-- combo metode bayar diganti tombol besar						OK	
-- bisa retur jual, proses konfirmasi admin						OK	
+- combo metode bayar diganti tombol besar														OK	
+- bisa retur jual, proses konfirmasi admin														OK	
 
 
 
 setoran app
 
-- hapus input nota jual, bisa scan							OK	
+- hapus input nota jual, bisa scan																OK	
 
 - jika status bayar belum tagih, pd saat scan nota, maka hanya input
 
@@ -350,13 +350,13 @@ masih bisa tracking gps
 
 
 
-web & app, lap_histori_penagihan_2 dipindah ke lap_histori_penagihan			OK	
+web & app, lap_histori_penagihan_2 dipindah ke lap_histori_penagihan							OK	
 
-penjualan, view_detail, tambah info total jual sementara, tgl jatuh tempo		OK	
+penjualan, view_detail, tambah info total jual sementara, tgl jatuh tempo						OK	
 
 
 
-penagihan_2, sisa plafon = plafon - jumlah sisa piutang pelanggan tsb			OK
+penagihan_2, sisa plafon = plafon - jumlah sisa piutang pelanggan tsb							OK
 
 jika sudah selesai setoran, admin harus tutup harian, lalu di tab penagihan,
 
@@ -364,21 +364,21 @@ pd tanggal tsb hilang penagihan bisa diubah di histori penagihan (owner)
 
 
 
-saat buat penagihan, jika nota sudah lunas maka saat discan ditolak			OK	-+
+saat buat penagihan, jika nota sudah lunas maka saat discan ditolak								OK	-+
 
 
 
-tagihan debt collector yg sudah lunas, tidak muncul lagi				OK	
+tagihan debt collector yg sudah lunas, tidak muncul lagi										OK	
 
 
 
-bila sisa piutang > 0 wajib menulis tgl kunjungan berikutnya				OK	
+bila sisa piutang > 0 wajib menulis tgl kunjungan berikutnya									OK	
 
-bila jml retur < sisa piutang, wajib menulis tgl kunjungan berikutnya			OK	
+bila jml retur < sisa piutang, wajib menulis tgl kunjungan berikutnya							OK	
 
-bila sisa piutang = 0 tak perlu isi tgl kunjungan					OK	
+bila sisa piutang = 0 tak perlu isi tgl kunjungan												OK	
 
-bila jml retur = sisa piutang tak perlu isi tgl kunjungan				OK	
+bila jml retur = sisa piutang tak perlu isi tgl kunjungan										OK	
 
 
 
@@ -390,15 +390,15 @@ setor admin, tambah kolom jenis bayar
 
 
 
-tagihan debt collector, retur jual masih error ( cek lg pembayaran nota pake retur )	OK	
+tagihan debt collector, retur jual masih error ( cek lg pembayaran nota pake retur )			OK	
 
 
 
 - admin app, setoran, jika debt collector setor 0, maka status bayar jd belum bayar,
 maka uang yg disetor boleh lebih gak boleh kurang bayar	dr jml uang dibayar			
 - jika debt collctor sudah scan toko, update status belum tagih ke belum bayar		
-- admin web, penagihan_2, status bayar tidak sinkron					OK	
-- histori penagihan, view utk 3bln terakhir (semua status)				OK	
+- admin web, penagihan_2, status bayar tidak sinkron											OK	
+- histori penagihan, view utk 3bln terakhir (semua status)										OK	
 
 
 - jika sales sudah memproses 1 tagihan, maka tak bisa dibatalkan				
@@ -407,26 +407,26 @@ maka uang yg disetor boleh lebih gak boleh kurang bayar	dr jml uang dibayar
 
 pembelian, berat, volume, total seb. diskon, diskon (%), diskon (Rp),
 
-total set diskon, ppn, tot set diskon & ppn, total datang set diskon & ppn		OK	
+total set diskon, ppn, tot set diskon & ppn, total datang set diskon & ppn						OK	
 
 
 
-pembelian, view_add, bisa edit diskon nota beli						OK
+pembelian, view_add, bisa edit diskon nota beli													OK
 
-penjualan, ada diskon nota jual								OK	
+penjualan, ada diskon nota jual																	OK	
 
 
 
 - collector app, tagihan, jika sudah lunas dan tgl kunjungan tetap di input,
 
-maka saat klik simpan ada notif menolak (jika lunas maka tgl kunjungan harus kosong)	OK	
+maka saat klik simpan ada notif menolak (jika lunas maka tgl kunjungan harus kosong)			OK	
 
 
 - admin app, setoran, jika sudah lunas dan tgl kunjungan tetap di input,
 
-maka saat klik simpan ada notif menolak							OK	
+maka saat klik simpan ada notif menolak															OK	
 
-- cetak nota jual, bila sudah dikirim, beri nama pengirim.				OK	
+- cetak nota jual, bila sudah dikirim, beri nama pengirim.										OK	
 
 
 
@@ -438,68 +438,63 @@ kedua br lunas (tanggal kunjungan diisi)
 
 - admin, setoran, di app, jika tgl janji berikutnya sudah sama dgn hari ini maka,
 
-warna di janji berikutnya jadi merah							OK	
+warna di janji berikutnya jadi merah															OK	
 
 
 
-- bayar nota jual giro, sisa piutang berkurang saat pencairan				OK	
+- bayar nota jual giro, sisa piutang berkurang saat pencairan									OK	
 
 
 
 - samakan bentuk notif yaitu bentuk popup							
 
-- debt collector app, tagihan, dibuat landscape						OK	
+- debt collector app, tagihan, dibuat landscape													OK	
 
 
 
 - retur jual yg melalui konfirm admin yg belum diproses, tidak ditampilkan di view
 
-retur jual										OK	
+retur jual																						OK	
 
 
 
-- konfirm admin, tambah nama pelanggan, no nota jual, status bayar,
+- konfirm admin, tambah nama pelanggan, no nota jual, status bayar,								
 
-jumlah jual, jumlah retur jual								OK
-- debt collector, tagihan, jika bayar retur tidak dihitung di tagihan_2			OK	-
+jumlah jual, jumlah retur jual																	OK
+- debt collector, tagihan, jika bayar retur tidak dihitung di tagihan_2							OK	-
 
-- debt collector, tagihan_2 (pembayaran tagihan), portrait				OK	
+- debt collector, tagihan_2 (pembayaran tagihan), portrait										OK	
 - pembelian, samping diskon nota beli, diberi keterangan kecil: "tidak mempengaruhi
 
-harga modal" (beri icon kecil, saat klik muncul notifikasi)				OK	
+harga modal" (beri icon kecil, saat klik muncul notifikasi)										OK	
 
-- diskon barang bisa 3 level (beli & jual)						OK	-
+- diskon barang bisa 3 level (beli & jual)														OK	-
 
-<<<<<<< HEAD
-- pembelian, view_detail, perhatikan layout tombol edit diskon nota beli		OK	
+- pembelian, view_detail, perhatikan layout tombol edit diskon nota beli						OK	-
 
-=======
-- pembelian, view_detail, perhatikan layout tombol edit diskon nota beli		OK	-
->>>>>>> ecf6a69e028288415b9f35162624791cae8e34f5
-- penjualan, beri total jual set diskon							OK
+- penjualan, beri total jual set diskon															OK
 
-- konfirmasi admin dipindah ke penjualan (konfirmasi retur jual)			OK	
+- konfirmasi admin dipindah ke penjualan (konfirmasi retur jual)								OK	
 
-- semua histori jd riwayat								OK	
+- semua histori jd riwayat																		OK	
 
 - penjualan, view detail kasih keterangan font kecil utk semua menu (yg kira2 user		
-tak paham)										OK	
--
+tak paham)																						OK	-
 
-- input diskon (%) 6 digit xxx.xx% (pembelian sudah)							*	
+- input diskon (%) 6 digit xxx.xx% (pembelian sudah)											OK	-	
 
-- ubah data diskon nota beli, jumlah diskon (rp) nya masih error			OK	-
+- ubah data diskon nota beli, jumlah diskon (rp) nya masih error								OK	-
 
-- hilangkan border/background di info tambahan di bawah				 	OK	-
+- hilangkan border/background di info tambahan di bawah				 							OK	-
 
-- jika angka minus, beri warna merah							OK	-
+- jika angka minus, beri warna merah															OK	-
 
-- javascript add_penjualan, format_uang masih error utk koma				OK	-
+- javascript add_penjualan, format_uang masih error utk koma									OK	-
 
-* penjualan ada ppn (boleh kosong / 0)							*	
+* penjualan ada ppn (boleh kosong / 0)															*	
 
-- penjualan, tampilan info bawah, rata kiri						OK	-
-<<<<<<< HEAD
+- penjualan, tampilan info bawah, rata kiri														OK	-
+
 
 tutup harian
 - muncul ringkasan yg berisi:
@@ -513,13 +508,13 @@ tutup harian
 	8. jumlah uang yg disetor
 	9. jumlah uang yg tidak dibayar
 	10. jumlah uang yg tidak disetor
+
 - 1 hari hanya 1x tutup harian
-=======
 - Tabel, isi nya jangan sampe wrap kebawah, tabel jadi scroll samping gpp
 
 ppn adalah jumlah setelah diskon
 
-retur beli detail, ada 2 kolom tambahan, jumlah retur dsn jumlah keluar
+retur beli detail, ada 2 kolom tambahan, jumlah retur dsn jumlah keluar							
 penjualan, mobile, view penjualan utk 30 hari tarakhir
 buat timer di sales app, penjualan (10 menit tak ada aktivitas, maka langsung ke dashboard)
 gudang app, jika batal siapkan barang lalu hapus, harus dikembalikan ke rak.
@@ -530,6 +525,3 @@ debt collector app
 - bisa bayar 0
 - yg disetor hrs sama dgn yg dibayar
 - jika lunas oleh debt collector maka saat setoran, tombol scan berubah tombol lunas
-
-
->>>>>>> 320e3f2724ca93e545c1f5a55be6c4ec8bd7517c
