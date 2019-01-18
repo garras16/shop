@@ -80,7 +80,7 @@ if (isset($tambah_bayar_nota_jual_post)){
 		if ($jenis =='Transfer'){
 			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','$jenis',$jumlah_bayar,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening',null,null,null,$sisa)");
 		} else if ($jenis =='Giro'){
-			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','$jenis',$jumlah_bayar,2,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening','$jatuh_tempo','$keterangan',0,$sis)");
+			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','$jenis',$jumlah_bayar,2,null,null,null,'$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening','$jatuh_tempo','$keterangan',0,$sis)");
 		} else {
 			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','$jenis',$jumlah_bayar,$status,null,null,null,null,null,null,null,null,null,$sisa)");
 		}
@@ -91,13 +91,13 @@ if (isset($tambah_bayar_nota_jual_post)){
 		}
 	}
 	if (isset($no_retur)){
-		($jumlah_bayar+$jumlah_bayar_retur==$sisa_nota ? $status=1 : $status=2);
+		($jumlah_bayar+$jumlah_bayar_retur==$sisa ? $status=1 : $status=2);
 		if ($jenis =='Transfer'){
-			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','Retur',$jumlah_bayar_retur,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening',null,null,$sisa_nota)");
+			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','Retur',$jumlah_bayar_retur,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening',null,null,$sisa)");
 		} else if ($jenis =='Giro'){
-			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','Retur',$jumlah_bayar_retur,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening','$jatuh_tempo','$keterangan',0,$sisa_nota)");
+			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','Retur',$jumlah_bayar_retur,$status,null,null,null,'$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening','$jatuh_tempo','$keterangan',0,$sis)");
 		} else {
-			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','Retur',$jumlah_bayar_retur,$status,null,null,null,null,null,null,null,null,null)");
+			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','Retur',$jumlah_bayar_retur,$status,null,null,null,null,null,null,null,null,null,$sisa)");
 		}
 		$last_id=mysqli_insert_id($con);
 		for ($i=0;$i<count($no_retur)-1;$i++) {
@@ -254,7 +254,7 @@ if ($jenis=='Retur'){
                                 </div>
                             </div>
                             <?php
-if ($jenis=='Transfer' || $jenis=='Giro'){
+if ($jenis=='Transfer'){
 	echo '<div class="col-md-6">
 			<br><b>Pengirim :</b><br>
 			<div class="input-group" style="margin-top:10px;">
@@ -273,6 +273,25 @@ if ($jenis=='Transfer' || $jenis=='Giro'){
 			<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 			</div>
 		</div>';
+		echo '<div class="col-md-6">
+			<br><b>Penerima :</b><br>
+			<div class="input-group" style="margin-top:10px;">
+			<span class="input-group-addon"><i class="fa fa-building fa-fw" style="width:61px;"></i><br><small>Nama Bank</small></span>
+			<input class="form-control" style="padding: 20px 15px;" id="sisa_nota" name="penerima_nama_bank" value="" placeHolder="Nama Bank" title="Nama Bank" maxlength="50" required>
+			<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
+			</div>
+			<div class="input-group">
+			<span class="input-group-addon"><i class="fa fa-user fa-fw" style="width:61px;"></i><br><small>Nama Rek.</small></span>
+			<input class="form-control" id="sisa_nota" style="padding: 20px 15px;" name="penerima_nama_rekening" value="" placeHolder="Nama Rekening" title="Nama Rekening" maxlength="100" required>
+			<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
+			</div>
+			<div class="input-group">
+			<span class="input-group-addon"><i class="fa fa-tag fa-fw" style="width:61px;"></i><br><small>No. Rek.</small></span>
+			<input class="form-control" id="sisa_nota" name="penerima_no_rekening" style="padding: 20px 15px;" value="" placeHolder="No Rekening" title="No Rekening" maxlength="20" required>
+			<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
+			</div>
+		</div>';
+}else if($jenis=='Giro') {
 		echo '<div class="col-md-6">
 			<br><b>Penerima :</b><br>
 			<div class="input-group" style="margin-top:10px;">

@@ -7,7 +7,7 @@ if (isset($_GET['act'])){
 	if (isset($_GET['tbl']) && $_GET['tbl']=='1'){
 		$no = $_GET['no'];
 		$jml = $_GET['jml'];
-		$bom = mysqli_query($con, "SELECT sisa FROM bayar_nota_jual WHERE no_nota_jual='$no'");
+		$bom = mysqli_query($con, "SELECT sisa FROM bayar_nota_jual WHERE no_nota_jual='$no' ORDER BY id_bayar DESC LIMIT 1");
 		$data = mysqli_fetch_array($bom);
 		$update = $data['sisa']-$jml;
 		if($update == 0) {

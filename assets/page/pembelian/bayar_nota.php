@@ -168,7 +168,7 @@ if ($row['status']=='1'){
             <td align="center" style="width: 170px;">' .date("d-m-Y", strtotime($row['tgl_bayar'])). '</td>
             <td align="right" style="width: 190px;" class="uang">' .$row['jumlah']. '</td>
             <td align="right" style="width: 190px;" class="uang">' .$row['sisa']. '</td>
-            <td align="center" style="width: 150px;">' .$status. '</td>
+            <td align="center" style="width: 190px;">' .$status. '</td>
 						<td align="center" style="width: 150px;">' .$nilai. '</td>
             <td align="center" style="width: 20px;"><a href="?page=pembelian&mode=bayar_nota&del=' .$row['id_bayar']. '" class="btn btn-primary btn-xs"><i class="fa fa-trash"></i></a></td>
         </tr>';
