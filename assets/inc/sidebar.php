@@ -59,6 +59,7 @@
 						<li <?php echo ($page=='pembelian' && $mode=='pembelian' ? ' class="current-page"' : '') ?> ><a href="?page=pembelian&mode=pembelian"><i class="fa fa-exchange" aria-hidden="true"></i> Transaksi Beli</a></li>
 						<li <?php echo ($page=='pembelian' && $mode=='retur_beli' ? ' class="current-page"' : '') ?> ><a href="?page=pembelian&mode=retur_beli"><i class="fa fa-chevron-right" aria-hidden="true"></i> Retur Beli</a></li>
 						<li <?php echo ($page=='pembelian' && $mode=='bayar_nota' ? ' class="current-page"' : '') ?> ><a href="?page=pembelian&mode=bayar_nota"><i class="fa fa-credit-card" aria-hidden="true"></i> Bayar Nota Beli</a></li>
+						<li <?php echo ($page=='penjualan' && $mode=='pencairan_giro' ? ' class="current-page"' : '') ?> ><a href="?page=pembelian&mode=pencairan_giro"><i class="fa fa-money" aria-hidden="true"></i> Pencairan Giro</a></li>
 					</ul>
 				  </li>
 				  <li <?php echo ($page=='gudang' ? ' class="active"' : '') ?> ><a><i class="fa fa-cubes"></i> GUDANG <span class="fa fa-chevron-down"></span></a>
@@ -100,7 +101,7 @@
 				  </li>
                 </ul>
               </div>
-            </div>  
+            </div>
             <!-- /sidebar menu -->
 
           </div>

@@ -88,6 +88,7 @@ if (isset($_GET['del'])){
                                     <th>Jumlah Bayar Per Tgl</th>
                                     <th>Sisa Nota</th>
                                     <th>Status</th>
+																		<th>Status Giro</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -102,6 +103,8 @@ if (isset($_GET['dari'])){
 }
 $sql=mysqli_query($con, "SELECT
     bayar_nota_beli.id_bayar
+		, bayar_nota_beli.status_giro
+		, bayar_nota_beli.sisa
     , bayar_nota_beli.tgl_bayar
     , bayar_nota_beli.no_nota_beli
     , bayar_nota_beli.jenis
@@ -114,17 +117,17 @@ $sql=mysqli_query($con, "SELECT
 	, beli.ppn_all_persen
 FROM
     bayar_nota_beli
-    INNER JOIN beli 
+    INNER JOIN beli
         ON (bayar_nota_beli.no_nota_beli = beli.no_nota_beli)
-    INNER JOIN supplier 
+    INNER JOIN supplier
         ON (beli.id_supplier = supplier.id_supplier)
 $val
-ORDER BY beli.id_beli DESC");
+ORDER BY id_bayar DESC");
 while($row=mysqli_fetch_array($sql)){
 	$tmp_id_beli=$row['id_beli'];
 	$sql2=mysqli_query($con, "SELECT SUM((harga-diskon_rp-diskon_rp_2-diskon_rp_3)*qty) AS jumlah_nota
 		FROM
-			beli_detail 
+			beli_detail
 		WHERE id_beli=$tmp_id_beli");
 	$b2=mysqli_fetch_array($sql2);
 
@@ -134,13 +137,22 @@ while($row=mysqli_fetch_array($sql)){
 	$ppn = $set_dis*($bb['ppn_all_persen']/100);
 	$jumlah_nota = $set_dis+$ppn;
 
-//-----------------------------------------------------------------------------------------	
+//-----------------------------------------------------------------------------------------
 	$tmp_nota_beli=$row['no_nota_beli'];
 	$sql3=mysqli_query($con, "SELECT SUM(jumlah) AS jumlah_bayar FROM bayar_nota_beli WHERE no_nota_beli='$tmp_nota_beli'");
 	$b3=mysqli_fetch_array($sql3);
 	$jumlah_bayar=$b3['jumlah_bayar'];
 //-------------------------------------------------------------------------------------------
 $sisa_nota=$jumlah_nota-$jumlah_bayar;
+if($row['jenis'] == "Giro" && $row['status_giro'] == 1) {
+	$nilai = "DITERIMA";
+}else if($row['jenis'] == "Giro" && $row['status_giro'] == 2) {
+	$nilai = "DITOLAK";
+}else if($row['jenis'] == "Giro" && $row['status_giro'] == 0) {
+	$nilai = "BELUM DICAIRKAN";
+}else{
+	$nilai = "-";
+}
 if ($row['status']=='1'){
 	$status="LUNAS";
 } else if ($row['status']=='2'){
@@ -155,8 +167,9 @@ if ($row['status']=='1'){
             <td align="center" style="width: 100px;">' .$row['jenis']. '</td>
             <td align="center" style="width: 170px;">' .date("d-m-Y", strtotime($row['tgl_bayar'])). '</td>
             <td align="right" style="width: 190px;" class="uang">' .$row['jumlah']. '</td>
-            <td align="right" style="width: 190px;" class="uang">' .$sisa_nota. '</td>
+            <td align="right" style="width: 190px;" class="uang">' .$row['sisa']. '</td>
             <td align="center" style="width: 150px;">' .$status. '</td>
+						<td align="center" style="width: 150px;">' .$nilai. '</td>
             <td align="center" style="width: 20px;"><a href="?page=pembelian&mode=bayar_nota&del=' .$row['id_bayar']. '" class="btn btn-primary btn-xs"><i class="fa fa-trash"></i></a></td>
         </tr>';
 }
@@ -199,8 +212,8 @@ if ($row['status']=='1'){
                                 class="select2 form-control"
                                 required="true">
                                 <option value="" disabled="disabled" selected="selected">-= No Nota Beli | Nama Supplier | Jumlah Nota (Rp) =-</option>
-                                <?php 
-								$sql=mysqli_query($con, "SELECT 
+                                <?php
+								$sql=mysqli_query($con, "SELECT
     beli.id_beli
     , beli.no_nota_beli
     , beli.diskon_all_persen
@@ -208,13 +221,13 @@ if ($row['status']=='1'){
     , nama_supplier
 FROM
     bayar_nota_beli
-    RIGHT JOIN beli 
+    RIGHT JOIN beli
         ON (bayar_nota_beli.no_nota_beli = beli.no_nota_beli)
-    INNER JOIN supplier 
+    INNER JOIN supplier
         ON (beli.id_supplier = supplier.id_supplier)
-	INNER JOIN beli_detail 
+	INNER JOIN beli_detail
         ON (beli_detail.id_beli = beli.id_beli)
-    INNER JOIN barang_masuk 
+    INNER JOIN barang_masuk
         ON (barang_masuk.id_beli_detail = beli_detail.id_beli_detail)
 WHERE bayar_nota_beli.status IS NULL OR bayar_nota_beli.status=2 OR bayar_nota_beli.status=0
 GROUP BY beli.id_beli");

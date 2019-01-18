@@ -4,7 +4,6 @@ $jenis=$_GET['jenis'];
 $sql=mysqli_query($con, "SELECT id_beli FROM beli WHERE no_nota_beli='$no_nota_beli'");
 $row=mysqli_fetch_array($sql);
 $id_beli=$row['id_beli'];
-
 /*UNTUK BAYAR KE EKSPEDISI BERDSRKAN QTY DATANG
 $sql2=mysqli_query($con, "SELECT SUM(harga*barang_masuk_rak.qty_di_rak) AS jumlah_nota
 		FROM
@@ -16,7 +15,6 @@ $sql2=mysqli_query($con, "SELECT SUM(harga*barang_masuk_rak.qty_di_rak) AS jumla
 		WHERE id_beli=$id_beli");
 	$b2=mysqli_fetch_array($sql2);
 	$jumlah_nota=$b2['jumlah_nota'];*/
-
 //UNTUK BAYAR KE SUPPLIER BERDSRKAN QTY BELI
 $sql2=mysqli_query($con, "SELECT diskon_all_persen,ppn_all_persen,SUM((harga-diskon_rp-diskon_rp_2-diskon_rp_3)*qty) AS jumlah_nota
 FROM
@@ -32,15 +30,12 @@ WHERE
 	$ppn = $set_disk*($b2['ppn_all_persen']/100);
     $jumlah_nota=$set_disk+$ppn;
     //-($s['total_datang']*$s['diskon_all_persen']/100);
-
 //-----------------------------------------------------------------------------------------
-
 	$sql3=mysqli_query($con, "SELECT SUM(jumlah) AS jumlah_bayar FROM bayar_nota_beli WHERE no_nota_beli='$no_nota_beli'");
 	$b3=mysqli_fetch_array($sql3);
 	$jumlah_bayar_x=$b3['jumlah_bayar'];
 //-------------------------------------------------------------------------------------------
 $sisa_nota=$jumlah_nota-$jumlah_bayar_x;
-
 if (isset($jatuh_tempo)){
 	$tgl = explode("/", $jatuh_tempo);
 	$jatuh_tempo = $tgl[2] ."-". $tgl[1] ."-". $tgl[0];
@@ -54,16 +49,37 @@ if (isset($tambah_bayar_nota_beli_post)){
 			$jumlah_bayar_retur+=$jumlah_retur[$i];
 		}
 	}
-
 	if ($jenis !='Retur'){
 		($jumlah_bayar>=$sisa_nota ? $status=1 : $status=2);
-		$sql=mysqli_query($con, "UPDATE bayar_nota_beli SET status=$status WHERE no_nota_beli='$no_nota_beli'");
+		//$sql=mysqli_query($con, "UPDATE bayar_nota_beli SET status=$status WHERE no_nota_beli='$no_nota_beli'");
+    $sql=mysqli_query($con, "SELECT *, SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total
+		FROM
+		    beli
+		    INNER JOIN beli_detail
+		        ON (beli.id_beli = beli_detail.id_beli)
+		WHERE beli.no_nota_beli='$no_nota_beli'
+		GROUP BY beli_detail.id_beli");
+		$row=mysqli_fetch_array($sql);
+		$id_beli=$row['id_beli'];
+		$total_nota=$row['total']-($row['total']*$row['diskon_all_persen']/100);
+		$grand = $total_nota+($total_nota*($row['ppn_all_persen']/100));
+
+		$validasi = mysqli_query($con, "SELECT no_nota_beli FROM bayar_nota_beli WHERE no_nota_beli='$no_nota_beli'");
+		$result = mysqli_num_rows($validasi);
+		$cek = mysqli_query($con, "SELECT sisa FROM bayar_nota_beli WHERE no_nota_beli='$no_nota_beli' ORDER BY id_bayar DESC LIMIT 1");
+		$na = mysqli_fetch_array($cek);
+		if($result == 0) {
+			$sisa=$grand-$jumlah_bayar;
+		}else{
+			$sisa = $na['sisa']-$jumlah_bayar;
+		}
+		$sis = $na['sisa'];
 		if ($jenis =='Transfer'){
-			$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','$jenis',$jumlah_bayar,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening',null,null)");
+			$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','$jenis',$jumlah_bayar,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening',null,null,$sisa)");
 		} else if ($jenis =='Giro'){
-			$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','$jenis',$jumlah_bayar,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening','$jatuh_tempo','$keterangan')");
+			$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','$jenis',$jumlah_bayar,2,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening','$jatuh_tempo','$keterangan',$sis)");
 		} else {
-			$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','$jenis',$jumlah_bayar,$status,null,null,null,null,null,null,null,null)");
+			$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','$jenis',$jumlah_bayar,$status,null,null,null,null,null,null,null,null,$sisa)")or die (mysqli_error($con));
 		}
 		if ($sql){
 			_buat_pesan("Input Berhasil","green");
@@ -73,24 +89,16 @@ if (isset($tambah_bayar_nota_beli_post)){
 	}
 
 	if (isset($no_retur)){
-		($jumlah_bayar+$jumlah_bayar_retur>=$sisa_nota ? $status=1 : $status=2);
-		$sql=mysqli_query($con, "UPDATE bayar_nota_beli SET status=$status WHERE no_nota_beli='$no_nota_beli'");
+		($jumlah_bayar+$jumlah_bayar_retur==$sisa_nota ? $status=1 : $status=2);
+		//$sql=mysqli_query($con, "UPDATE bayar_nota_beli SET status=$status WHERE no_nota_beli='$no_nota_beli'");
 		if ($jenis =='Transfer'){
-            $sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','Retur',$jumlah_bayar_retur,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening',null)");
-            $last_id=mysqli_insert_id($con);
+			$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','Retur',$jumlah_bayar_retur,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening',null)");
 		} else if ($jenis =='Giro'){
-            $sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','Retur',$jumlah_bayar_retur,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening','$jatuh_tempo','$keterangan')");
-            $last_id=mysqli_insert_id($con);
+			$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','Retur',$jumlah_bayar_retur,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening','$jatuh_tempo','$keterangan')");
 		} else {
 			$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','Retur',$jumlah_bayar_retur,$status,null,null,null,null,null,null,null.null)");
-<<<<<<< HEAD
 		}
 		$last_id=mysqli_insert_id($con);
-		
-=======
-            $last_id=mysqli_insert_id($con);
-        }
->>>>>>> 6d76d948867780c20251d6b9c3de021b41a13332
 		for ($i=0;$i<count($no_retur)-1;$i++) {
 			$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli_detail VALUES(null,$last_id,'$no_retur[$i]')");
 			if ($sql){
@@ -194,11 +202,11 @@ $id_beli=$row['id_beli'];
                                         <small>Jml.</small>
                                     </span>
                                     <input
-                                        class="form-control uang"
+                                        class="form-control"
                                         style="padding: 20px 15px;"
                                         id="total_nota"
                                         value="<?php echo $jumlah_nota ?>"
-                                        title="Total Nota Beli"
+                                        title="Total Nota Beli (Rp)"
                                         readonly="readonly">
                                 </div>
                             </div>
@@ -315,7 +323,7 @@ if ($jenis=='Giro'){
                                         <h5>No Retur Beli</h5>
                                     </div>
                                     <div class="col-xs-6 bg-blue">
-                                        <h5>Jumlah Retur</h5>
+                                        <h5>Jumlah Retur (Rp)</h5>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div><br/>
@@ -352,7 +360,7 @@ $c=0;
                                 <div class="clearfix"></div><br/>
                                 <div class="col-xs-12">
                                     <div class="col-xs-6 bg-blue">
-                                        <h5>Total Retur</h5>
+                                        <h5>Total Retur (Rp)</h5>
                                     </div>
                                     <div class="col-xs-6 bg-blue">
                                         <input
@@ -421,14 +429,14 @@ $c=0;
         }
     }
     function valid2() {
-        var total_nota = parseFloat($('#total_nota').val());
-        var sisa_nota = parseFloat($('#sisa_nota').val());
-        var jumlah_bayar = parseFloat($('#jumlah_bayar').val());
+        var total_nota = parseInt($('#total_nota').val());
+        var sisa_nota = parseInt($('#sisa_nota').val());
+        var jumlah_bayar = parseInt($('#jumlah_bayar').val());
         if ($('#jenis').val() != 'Retur') {
             if (jumlah_bayar + jumlah_retur <= sisa_nota && jumlah_bayar > 0) {
                 return true;
             } else {
-                if (jumlah_bayar <= 0)
+                if (jumlah_bayar == 0)
                     alert('Jumlah Bayar harus > 0');
                 if (jumlah_bayar + jumlah_retur >= sisa_nota)
                     alert('Jumlah Bayar tidak boleh melebihi Sisa Nota Beli');
@@ -470,15 +478,6 @@ $c=0;
         $('#myModal').modal('hide');
     }
     $(document).ready(function () {
-        $('.uang').inputmask('currency', {
-            prefix: "Rp ",
-            autoGroup: true,
-            allowMinus: false,
-            groupSeparator: '.',
-            rightAlign: false,
-            autoUnmask: true,
-            removeMaskOnSubmit: true
-        });
         $('#jumlah_bayar').inputmask('currency', {
             prefix: "Rp ",
             allowMinus: false,
@@ -505,20 +504,19 @@ $c=0;
             autoUnmask: true,
             removeMaskOnSubmit: true
         });
-        $('#tot_retur').inputmask('currency', {
-            prefix: "Rp ",
-            autoGroup: true,
-            allowMinus: false,
-            groupSeparator: '.',
-            rightAlign: false,
-            autoUnmask: true,
-            removeMaskOnSubmit: true
-        });
         $('#myModal').on('show.bs.modal', function (e) {
             $('#content').load(
                 'assets/page/pembelian/get-retur.php?id_supplier=' +
                 <?php echo $id_supplier ?> + '&id=' + rb
             );
+            $('#tot_retur').inputmask('decimal', {
+                allowMinus: false,
+                autoGroup: true,
+                groupSeparator: '.',
+                rightAlign: false,
+                autoUnmask: true,
+                removeMaskOnSubmit: true
+            });
         });
         $('#jatuh_tempo').inputmask("datetime", {
             inputFormat: "dd/mm/yyyy",
