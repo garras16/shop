@@ -38,7 +38,7 @@ $sql=mysqli_query($con, "SELECT
     , pelanggan.nama_pelanggan
 FROM
     jual
-    INNER JOIN pelanggan 
+    INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
 WHERE id_jual=$id");
 $row=mysqli_fetch_array($sql);
@@ -46,7 +46,7 @@ $jenis_bayar=$row['jenis_bayar'];
 ?>
 <div class="right_col loading" role="main">
 	<div class="">
-	
+
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
@@ -96,11 +96,11 @@ $jenis_bayar=$row['jenis_bayar'];
 										<thead>
 											<th>Nama Barang</th>
 											<th>Qty</th>
-											<th>Harga Jual (Rp)</th>
-											<th>Diskon 1 (Rp)</th>
-											<th>Diskon 2 (Rp)</th>
-											<th>Diskon 3 (Rp)</th>
-											<th>Subtotal (Rp)</th>
+											<th>Harga Jual</th>
+											<th>Diskon 1</th>
+											<th>Diskon 2</th>
+											<th>Diskon 3</th>
+											<th>Subtotal</th>
 											<th></th>
 										</thead>
 										<tbody>
@@ -118,13 +118,13 @@ $jenis_bayar=$row['jenis_bayar'];
     , satuan.nama_satuan
 FROM
     jual_detail
-    INNER JOIN harga_jual 
+    INNER JOIN harga_jual
         ON (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-	INNER JOIN satuan 
+	INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE id_jual=$id");
 $total=0;
@@ -150,10 +150,10 @@ if ($x=='0'){
 	echo '		<td></td>';
 }
 echo '		  </tr>';
-}	
+}
 ?>
 											<tr id="info">
-												<td colspan="4">Total</td>
+												<td colspan="6">Total</td>
 												<td id="info_total">Rp. <?php echo format_uang($total) ?></td>
 												<td></td>
 											</tr>
@@ -182,14 +182,14 @@ echo '		  </tr>';
 			<div class="modal-body">
 				<form method="post" onsubmit="return add_barang()">
 				<div id="get_barang" class="col-xs-12">
-					
+
 				</div>
 			</div>
 			<div class="clearfix"></div><br/>
 			<div class="modal-footer">
 				<input type="submit" class="btn btn-primary" value="Tambah">
 			</div>
-			</form>			
+			</form>
 		</div>
 	</div>
 </div>

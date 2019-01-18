@@ -14,11 +14,11 @@ if (isset($buat_nota_siap_kirim_post)){
 	$sql=mysqli_query($con, "SELECT *
 FROM
     jual_detail
-    INNER JOIN harga_jual 
+    INNER JOIN harga_jual
         ON (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
  WHERE id_jual_detail=$id_jual_detail AND barang.status=0");
 	if (mysqli_num_rows($sql)>0){
@@ -34,17 +34,17 @@ FROM
 	$sql=mysqli_query($con, "SELECT *
 FROM
     barang_supplier
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-    INNER JOIN beli_detail 
+    INNER JOIN beli_detail
         ON (beli_detail.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang_masuk 
+    INNER JOIN barang_masuk
         ON (barang_masuk.id_beli_detail = beli_detail.id_beli_detail)
-    INNER JOIN barang_masuk_rak 
+    INNER JOIN barang_masuk_rak
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
-    INNER JOIN rak 
+    INNER JOIN rak
         ON (barang_masuk_rak.id_rak = rak.id_rak)
-    INNER JOIN gudang 
+    INNER JOIN gudang
         ON (rak.id_gudang = gudang.id_gudang)
 WHERE barang.id_barang=" .$id_barang. " AND barang_masuk_rak.id_rak=" .$id_rak. " AND barang.status=1 AND expire='" .$expire. "' AND barang.status=1
 ORDER BY expire, nama_gudang, nama_rak, tgl_datang");
@@ -88,17 +88,17 @@ if (isset($selesai_nota_siap_kirim_post)){
 	$sql=mysqli_query($con, "SELECT *,SUM(qty_ambil) AS qty_ambil
 FROM
     nota_siap_kirim
-    INNER JOIN nota_siap_kirim_detail 
+    INNER JOIN nota_siap_kirim_detail
         ON (nota_siap_kirim.id_nota_siap_kirim = nota_siap_kirim_detail.id_nota_siap_kirim)
-    INNER JOIN jual_detail 
+    INNER JOIN jual_detail
         ON (nota_siap_kirim_detail.id_jual_detail = jual_detail.id_jual_detail)
-    INNER JOIN harga_jual 
+    INNER JOIN harga_jual
         ON (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-	INNER JOIN satuan 
+	INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE nota_siap_kirim.id_jual=$id AND barang.status=0
 GROUP BY barang.id_barang");
@@ -111,7 +111,7 @@ if (mysqli_num_rows($sql)>0){
 	$tanggal=date("Y-m-d H:i:s");
 	$judul='Ada barang yang tidak disimpan karena non aktif';
 	$pesan='Nama Toko : ' .$pelanggan. '\r\nNo Nota Jual : ' .$invoice. '\r\nTipe: Dalam Kota\r\n\r\n';
-	
+
 	while ($row=mysqli_fetch_array($sql)){
 		$pesan.=$row['nama_barang']. '\r\n\t' .$row['qty_ambil']. ' ' .$row['nama_satuan']. '\r\n' ;
 	}
@@ -119,7 +119,7 @@ if (mysqli_num_rows($sql)>0){
 	$sql2=mysqli_query($con, "DELETE FROM nota_siap_kirim_detail WHERE id_jual_detail=" .$row['id_jual_detail']);
 	_alert("Ada barang yang tidak disimpan karena non aktif");
 }
-	$sql=mysqli_query($con, "SELECT * FROM nota_siap_kirim INNER JOIN nota_siap_kirim_detail 
+	$sql=mysqli_query($con, "SELECT * FROM nota_siap_kirim INNER JOIN nota_siap_kirim_detail
 		ON (nota_siap_kirim.id_nota_siap_kirim = nota_siap_kirim_detail.id_nota_siap_kirim) WHERE id_jual=$id");
 	while ($row=mysqli_fetch_array($sql)){
 		$sql2=mysqli_query($con, "SELECT * FROM barang_masuk_rak WHERE id_barang_masuk_rak=" .$row['id_barang_masuk_rak']. "");
@@ -140,7 +140,7 @@ if (mysqli_num_rows($sql)>0){
 $sql=mysqli_query($con, "SELECT *
 FROM
     nota_siap_kirim
-    INNER JOIN nota_siap_kirim_detail 
+    INNER JOIN nota_siap_kirim_detail
         ON (nota_siap_kirim.id_nota_siap_kirim = nota_siap_kirim_detail.id_nota_siap_kirim)
 WHERE id_jual=$id");
 if (mysqli_num_rows($sql)=='0'){
@@ -150,9 +150,9 @@ if (mysqli_num_rows($sql)=='0'){
 	$sql=mysqli_query($con, "SELECT *
 FROM
     jual
-    INNER JOIN pelanggan 
+    INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
-    INNER JOIN karyawan 
+    INNER JOIN karyawan
         ON (jual.id_karyawan = karyawan.id_karyawan)
 	WHERE id_jual=$id");
 	$row=mysqli_fetch_array($sql);
@@ -168,7 +168,7 @@ FROM
 	$sql3=mysqli_query($con, "SELECT SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah_nota
 FROM
     jual
-    INNER JOIN jual_detail 
+    INNER JOIN jual_detail
         ON (jual.id_jual = jual_detail.id_jual)
 WHERE jual.id_pelanggan=" .$row['id_pelanggan']);
 $row3=mysqli_fetch_array($sql3);
@@ -176,7 +176,7 @@ $jumlah_nota=$row3['jumlah_nota'];
 		$sql3=mysqli_query($con, "SELECT SUM(jumlah) AS jumlah_bayar
 FROM
     bayar_nota_jual
-    INNER JOIN jual 
+    INNER JOIN jual
         ON (bayar_nota_jual.no_nota_jual = jual.invoice)
 WHERE jual.id_pelanggan=" .$row['id_pelanggan']);
 $row3=mysqli_fetch_array($sql3);
@@ -188,7 +188,7 @@ $jml_nota=format_angka(mysqli_num_rows($sql4));
 ?>
 <div class="right_col loading" role="main">
 	<div class="">
-	
+
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
@@ -222,7 +222,7 @@ $jml_nota=format_angka(mysqli_num_rows($sql4));
 						</div>
 						<div class="clearfix"></div>
 						<div class="table-responsive">
-						<table class="table table-bordered table-striped">
+						<table class="table table-bordered table-striped" style="width: 1500px;">
 							<thead>
 								<tr>
 									<th>Nama Barang</th>
@@ -246,13 +246,13 @@ $jml_nota=format_angka(mysqli_num_rows($sql4));
 	$sql=mysqli_query($con, "SELECT *
 FROM
     jual_detail
-    INNER JOIN harga_jual 
+    INNER JOIN harga_jual
         ON (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-	INNER JOIN satuan 
+	INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE id_jual=$id AND barang.status=1");
 $total=0;$total_=0;
@@ -260,7 +260,7 @@ $total=0;$total_=0;
 	$sql4=mysqli_query($con, "SELECT SUM(qty_ambil) AS qty_ambil
 		FROM
 			nota_siap_kirim
-			INNER JOIN nota_siap_kirim_detail 
+			INNER JOIN nota_siap_kirim_detail
 				ON (nota_siap_kirim.id_nota_siap_kirim = nota_siap_kirim_detail.id_nota_siap_kirim)
 		WHERE id_jual_detail=" .$row['id_jual_detail']. "");
 	$row4=mysqli_fetch_array($sql4);
@@ -274,20 +274,20 @@ $total=0;$total_=0;
 	$sql2=mysqli_query($con, "SELECT *, SUM(stok) as stok
 FROM
     barang_supplier
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-    INNER JOIN beli_detail 
+    INNER JOIN beli_detail
         ON (beli_detail.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang_masuk 
+    INNER JOIN barang_masuk
         ON (barang_masuk.id_beli_detail = beli_detail.id_beli_detail)
-    INNER JOIN barang_masuk_rak 
+    INNER JOIN barang_masuk_rak
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
-    INNER JOIN rak 
+    INNER JOIN rak
         ON (barang_masuk_rak.id_rak = rak.id_rak)
-    INNER JOIN gudang 
+    INNER JOIN gudang
         ON (rak.id_gudang = gudang.id_gudang)
 WHERE barang.id_barang=" .$row['id_barang']. " AND barang.status=1 AND stok>0
-GROUP BY barang_masuk_rak.id_rak, barang_masuk_rak.expire 
+GROUP BY barang_masuk_rak.id_rak, barang_masuk_rak.expire
 ORDER BY expire, nama_gudang, nama_rak, tgl_datang");
 	(mysqli_num_rows($sql2)==0 ? $n=1 : $n=mysqli_num_rows($sql2));
 	$total+=($row['harga']-$row['diskon_rp']-$row['diskon_rp_2']-$row['diskon_rp_3'])*$row['qty'];
@@ -299,19 +299,19 @@ ORDER BY expire, nama_gudang, nama_rak, tgl_datang");
 				<td style="vertical-align:middle;text-align:center;' .$color. '" rowspan="' .$n. '">' .format_uang($row['diskon_rp_2']). '</td>
 				<td style="vertical-align:middle;text-align:center;' .$color. '" rowspan="' .$n. '">' .format_uang($row['diskon_rp_3']). '</td>
 				<td style="vertical-align:middle;text-align:center;' .$color. '" rowspan="' .$n. '">' .format_uang(($row['harga']-$row['diskon_rp']-$row['diskon_rp_2']-$row['diskon_rp_3'])*$row['qty']). '</td>';
-	
+
 	while ($row2=mysqli_fetch_array($sql2)){
 		$sql3=mysqli_query($con, "SELECT id_nota_siap_kirim_detail, SUM(qty_ambil) AS qty_ambil
 		FROM
 			nota_siap_kirim
-			INNER JOIN nota_siap_kirim_detail 
+			INNER JOIN nota_siap_kirim_detail
 				ON (nota_siap_kirim.id_nota_siap_kirim = nota_siap_kirim_detail.id_nota_siap_kirim)
 		WHERE id_jual_detail=" .$row['id_jual_detail']. " AND id_rak=" .$row2['id_rak']. " AND expire='" .$row2['expire']. "'");
 		$row3=mysqli_fetch_array($sql3);
 		$expire=strtotime($row2['expire']);
 		$now=strtotime(date("Y-m-d"));
 		$days=ceil(($expire-$now)/86400);
-		
+
 		if ($row2['stok']==0 && mysqli_num_rows($sql2)>1) {
 			break;
 		}
@@ -320,7 +320,7 @@ ORDER BY expire, nama_gudang, nama_rak, tgl_datang");
 					<td align="center" style="' .$color. '">' .$row2['nama_gudang']. '</td>
 					<td align="center" style="' .$color. '">' .$row2['nama_rak']. '</td>
 					<td align="center" style="' .$color. '">' .date("d-m-Y",strtotime($row2['expire'])). '</td>';
-		
+
 		if ($row3['qty_ambil']==''){
 				echo '		<td></td>
 							<td></td>';
@@ -340,7 +340,7 @@ echo '		</tr>';
 	}
 }
 echo '<tr>
-		<td colspan="4"><b>Total (Rp)</b></td>
+		<td colspan="6"><b>Total (Rp)</b></td>
 		<td align="center"><b>' .format_uang($total). '</b></td>
 		<td colspan="5"></td>
 		<td align="center"><b>' .format_uang($total_). '</b></td>
@@ -361,7 +361,7 @@ if ($barang_expire) _alert("Ada barang yang akan / sudah expire.");
 				</div>
 			<div id="dummy"></div>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
@@ -373,7 +373,7 @@ if ($barang_expire) _alert("Ada barang yang akan / sudah expire.");
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title">Pilih Barang</h4>
 			</div>
-			<div class="modal-body">				
+			<div class="modal-body">
 				<form action="" method="post" onsubmit="return cek_valid();">
 					<input type="hidden" name="buat_nota_siap_kirim_post" value="true">
 					<input type="hidden" id="id_jual" name="id_jual" value="<?php echo $id ?>">
@@ -508,10 +508,10 @@ $(document).ready(function(){
 		var today = x.getDate() + "/" + parseInt(x.getMonth()+1) + "/" + x.getFullYear();
 		var x = new Date(x.getFullYear() + "/" + parseInt(x.getMonth()+1) + "/" + x.getDate());
 		var input = $(this).val();
-		var i = input.split("/");	
+		var i = input.split("/");
 		var y = new Date(i[2] + "/" + i[1] + "/" + i[0]);
 		if (y >= x){
-			
+
 		} else {
 			$(this).val('');
 			AndroidFunction.showToast('Tanggal harus \u2265 ' + today + '.');

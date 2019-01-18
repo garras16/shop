@@ -3,14 +3,13 @@ $sql=mysqli_query($con, "SELECT * FROM canvass_keluar WHERE id_canvass_keluar=$i
 if (mysqli_num_rows($sql)=='0'){
 	_alert("Input Gagal. Barang sudah selesai diperiksa.");
 	_direct("?page=canvass_keluar&mode=ambil_gudang");
-	break;
 }
 if (isset($tambah_ambil_gudang_mobil_post)){
 	$sql = mysqli_query($con, "UPDATE canvass_keluar SET id_mobil=$id_mobil WHERE id_canvass_keluar=$id");
 	$sql = mysqli_query($con, "SELECT id_canvass_keluar_barang
 FROM
     canvass_keluar_barang
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (canvass_keluar_barang.id_barang = barang.id_barang)
 WHERE id_canvass_keluar=$id AND barang.status=0");
 $nonaktif=false;
@@ -19,7 +18,7 @@ $nonaktif=false;
 		$sql2=mysqli_query($con, "DELETE FROM canvass_keluar_barang WHERE id_canvass_keluar_barang=" .$row['id_canvass_keluar_barang']. "");
 	}
 	if ($nonaktif) _alert("Ada barang yang tidak disimpan.");
-	
+
 	$sql=mysqli_query($con, "SELECT * FROM canvass_keluar_barang WHERE id_canvass_keluar=$id");
 	while ($row=mysqli_fetch_array($sql)){
 		$id_barang=$row['id_barang'];
@@ -28,7 +27,7 @@ $nonaktif=false;
 		$sql2=mysqli_query($con, "SELECT stok FROM barang_masuk_rak WHERE id_barang_masuk_rak=$id_barang_masuk_rak");
 		$row2=mysqli_fetch_array($sql2);
 		$stok=$row2['stok']-$stok_mobil;
-		
+
 		if ($stok<0){
 			tulis_log(date('d-m-Y H;i'). ' Stok minus selesai imput_ambil_gudang&id=' .$id);
 			tulis_log('stok=' .$row2['stok']. ' stok_mobil=' .$stok_mobil);
@@ -46,17 +45,17 @@ if (isset($tambah_ambil_gudang_barang_post)){
 	$sql=mysqli_query($con, "SELECT *
 FROM
     barang_supplier
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-    INNER JOIN beli_detail 
+    INNER JOIN beli_detail
         ON (beli_detail.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang_masuk 
+    INNER JOIN barang_masuk
         ON (barang_masuk.id_beli_detail = beli_detail.id_beli_detail)
-    INNER JOIN barang_masuk_rak 
+    INNER JOIN barang_masuk_rak
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
-    INNER JOIN rak 
+    INNER JOIN rak
         ON (barang_masuk_rak.id_rak = rak.id_rak)
-    INNER JOIN gudang 
+    INNER JOIN gudang
         ON (rak.id_gudang = gudang.id_gudang)
 WHERE stok > 0 AND barang.id_barang=" .$id_barang. " AND barang.status=1 AND barang_masuk_rak.id_rak=" .$id_rak. " AND barang_masuk_rak.expire='$expire'");// AND barang_masuk_rak.id_barang_masuk_rak >= $id_barang_masuk_rak");
 	$total_qty_ambil=0;
@@ -84,17 +83,17 @@ if (isset($update_ambil_gudang_barang_post)){
 	$sql=mysqli_query($con, "SELECT *
 FROM
     barang_supplier
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-    INNER JOIN beli_detail 
+    INNER JOIN beli_detail
         ON (beli_detail.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang_masuk 
+    INNER JOIN barang_masuk
         ON (barang_masuk.id_beli_detail = beli_detail.id_beli_detail)
-    INNER JOIN barang_masuk_rak 
+    INNER JOIN barang_masuk_rak
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
-    INNER JOIN rak 
+    INNER JOIN rak
         ON (barang_masuk_rak.id_rak = rak.id_rak)
-    INNER JOIN gudang 
+    INNER JOIN gudang
         ON (rak.id_gudang = gudang.id_gudang)
 WHERE stok > 0 AND barang.id_barang=" .$id_barang. " AND barang.status=1 AND barang_masuk_rak.id_rak=" .$id_rak. " AND barang_masuk_rak.expire='$expire'");// AND barang_masuk_rak.id_barang_masuk_rak >= $id_barang_masuk_rak");
 	$total_qty_ambil=0;
@@ -201,12 +200,12 @@ $sql3 = mysqli_query($con, "SELECT * FROM canvass_keluar_barang WHERE id_canvass
 									<span class="input-group-addon"><i class="fa fa-truck fa-fw"></i></span>
 									<select class="form-control" id="select_mobil" name="id_mobil" required>
 										<option value="" disabled selected>Pilih Mobil Canvass</option>
-										<?php 
+										<?php
 											$sql=mysqli_query($con, "SELECT * FROM kendaraan WHERE status=1 AND canvass=1");
 											while($row=mysqli_fetch_array($sql)){
-										?>	
+										?>
 										<option value="<?php echo $row['id_kendaraan']; ?>" <?php echo ($row['id_kendaraan']==$id_mobil ? 'selected' : '') ?> ><?php echo $row['nama_kendaraan']. ' | ' .$row['plat'];?></option>
-										<?php 
+										<?php
 											}
 										?>
 									</select>
@@ -231,9 +230,9 @@ $sql3 = mysqli_query($con, "SELECT * FROM canvass_keluar_barang WHERE id_canvass
 											$sql=mysqli_query($con, "SELECT *
 FROM
     canvass_keluar_karyawan
-    INNER JOIN karyawan 
+    INNER JOIN karyawan
         ON (canvass_keluar_karyawan.id_karyawan = karyawan.id_karyawan)
-    INNER JOIN users 
+    INNER JOIN users
         ON (karyawan.id_karyawan = users.id_karyawan) WHERE id_canvass_keluar=$id");
 											while ($row=mysqli_fetch_array($sql)){
 												echo '<input type="hidden" name="id_karyawan" value="' .$row['id_karyawan']. '">';
@@ -246,7 +245,7 @@ FROM
 													echo '<td><a class="btn btn-danger btn-xs" href="?page=canvass_keluar&mode=input_ambil_gudang&id=' .$id. '&del_karyawan=' .$row['id_canvass_keluar_karyawan']. '"><i class="fa fa-trash"></i> HAPUS</a></td>';
 												}
 												echo '</tr>';
-												
+
 											}
 										?>
 									</tbody>
@@ -267,13 +266,13 @@ FROM
 											$sql=mysqli_query($con, "SELECT *, SUM(qty) AS qty, SUM(qty_cek) AS qty_cek
 FROM
     canvass_keluar_barang
-    INNER JOIN rak 
+    INNER JOIN rak
         ON (canvass_keluar_barang.id_rak = rak.id_rak)
-	INNER JOIN barang 
+	INNER JOIN barang
         ON (canvass_keluar_barang.id_barang = barang.id_barang)
-    INNER JOIN gudang 
+    INNER JOIN gudang
         ON (rak.id_gudang = gudang.id_gudang)
-	INNER JOIN satuan 
+	INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE id_canvass_keluar=$id
 GROUP BY canvass_keluar_barang.id_barang,canvass_keluar_barang.id_rak,canvass_keluar_barang.expire");
@@ -330,19 +329,19 @@ if ($status!=9){
 					<span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
 					<select class="form-control" id="select_karyawan" name="id_karyawan" required>
 						<option value="" disabled selected>Pilih Karyawan</option>
-						<?php 
+						<?php
 							$sql=mysqli_query($con, "SELECT * FROM karyawan INNER JOIN users ON (karyawan.id_karyawan = users.id_karyawan) WHERE karyawan.id_karyawan NOT IN (SELECT id_karyawan FROM canvass_keluar_karyawan WHERE id_canvass_keluar=$id)");
 							while($row=mysqli_fetch_array($sql)){
 							$sql2=mysqli_query($con, "SELECT *
 FROM
     canvass_keluar
-    INNER JOIN canvass_keluar_karyawan 
+    INNER JOIN canvass_keluar_karyawan
         ON (canvass_keluar.id_canvass_keluar = canvass_keluar_karyawan.id_canvass_keluar)
 WHERE STATUS <> 4 AND id_karyawan=". $row['id_karyawan']);
 							if (mysqli_num_rows($sql2)==0){
-						?>	
+						?>
 						<option data-nama="<?php echo $row['nama_karyawan'];?>" data-posisi="<?php echo $row['posisi'];?>" value="<?php echo $row['id_karyawan']; ?>"><?php echo $row['nama_karyawan']. ' | ' .$row['posisi'];?></option>
-						<?php 
+						<?php
 							}
 							}
 						?>
@@ -376,12 +375,12 @@ WHERE STATUS <> 4 AND id_karyawan=". $row['id_karyawan']);
 						echo '<input type="hidden" name="tambah_ambil_gudang_barang_post" value="true">';
 					}
 				?>
-				
+
 				<div id="get_rak" class="col-xs-12">
-					
+
 				</div>
 				<div id="get_barang" class="col-xs-12">
-					
+
 				</div>
 			</div>
 			<div class="clearfix"></div><br/>
@@ -409,7 +408,7 @@ WHERE STATUS <> 4 AND id_karyawan=". $row['id_karyawan']);
 				<input type="hidden" id="qty_ambil_2" name="qty_ambil" value="">
 				<input type="hidden" id="barcode_barang_2" value="">
 				<div id="get_rak_2" class="col-xs-12">
-					
+
 				</div>
 				<div class="form-group col-sm-12">
 					<div class="input-group">
@@ -444,7 +443,7 @@ WHERE STATUS <> 4 AND id_karyawan=". $row['id_karyawan']);
 function cek_valid_barang2(){
 	var tot_qty_ambil = Number($('#tot_qty_ambil').val());
 	var qty_balik = Number($('#qty_balik').val());
-	
+
 	if (qty_balik == '0') {
 		AndroidFunction.showToast("Qty Kembali Ke Gudang harus lebih dari 0.");
 		return false;
@@ -477,7 +476,7 @@ function cek_valid_barang(){
 	var min_order = $('#get_barang').find('#min').val();
 	var id = $('#get_barang').find('#select_barang').val();
 	var qty = $('#get_barang').find('#qty').val();
-	
+
 	if (Number(stok) >= Number(qty) && Number(qty) >= Number(min_order)){
 		return true;
 	} else {
@@ -579,21 +578,21 @@ $(document).ready(function(){
 	})
 	$('#input_karyawan').on('click', '.remove_cart', function(e) {
 		e.preventDefault();
-		$(this).parent().closest('#list').remove();		
+		$(this).parent().closest('#list').remove();
 	});
 	$('#input_barang').on('click', '.remove_cart', function(e) {
 		e.preventDefault();
-		$(this).parent().closest('#list').remove();		
+		$(this).parent().closest('#list').remove();
 	});
 	$('#expire_2').inputmask("datetime",{inputFormat: "dd/mm/yyyy",oncomplete: function(){
 		var x = new Date();
 		var today = x.getDate() + "/" + parseInt(x.getMonth()+1) + "/" + x.getFullYear();
 		var x = new Date(x.getFullYear() + "/" + parseInt(x.getMonth()+1) + "/" + x.getDate());
 		var input = $(this).val();
-		var i = input.split("/");	
+		var i = input.split("/");
 		var y = new Date(i[2] + "/" + i[1] + "/" + i[0]);
 		if (y >= x){
-			
+
 		} else {
 			$(this).val('');
 			AndroidFunction.showToast('Tanggal harus \u2265 ' + today + '.');

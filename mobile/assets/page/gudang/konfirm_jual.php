@@ -26,7 +26,7 @@ if (isset($batal_cek_barang_post)){
 ?>
 <div class="right_col loading" role="main">
 	<div class="">
-	
+
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
@@ -37,7 +37,7 @@ if (isset($batal_cek_barang_post)){
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-				
+
 						<div class="" role="tabpanel">
 						  <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
 							<li role="presentation" class="active"><a href="#tab_content1" id="tab1" role="tab" data-toggle="tab" aria-expanded="true">Nota Jual</a>
@@ -49,7 +49,7 @@ if (isset($batal_cek_barang_post)){
 							<div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="tab1">
 							<a class="btn btn-danger btn-xs" style="width:10px;height:10px">&nbsp;</a><font color="red">Sisa Plafon < Jumlah Jual</font>
 								<div class="table-responsive">
-								<table id="table_belum_siap" class="table table-bordered table-striped">
+								<table id="table_belum_siap" class="table table-bordered table-striped" style="width: 1000px;">
 									<thead>
 										<tr>
 											<th>Tgl Nota Jual</th>
@@ -69,9 +69,9 @@ if (isset($batal_cek_barang_post)){
 	$sql=mysqli_query($con, "SELECT *
 FROM
     jual
-    INNER JOIN pelanggan 
+    INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
-    INNER JOIN karyawan 
+    INNER JOIN karyawan
         ON (jual.id_karyawan = karyawan.id_karyawan) WHERE id_jual NOT IN (SELECT id_jual FROM nota_siap_kirim
 WHERE status='1') AND status_konfirm=0
 ORDER BY id_jual DESC");
@@ -80,24 +80,24 @@ ORDER BY id_jual DESC");
 				$sql2=mysqli_query($con, "SELECT SUM(qty*(harga_jual-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total_harga
 			FROM
 				jual_detail
-				INNER JOIN harga_jual 
+				INNER JOIN harga_jual
 					ON (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
-				INNER JOIN barang_supplier 
+				INNER JOIN barang_supplier
 					ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-				INNER JOIN barang 
+				INNER JOIN barang
 					ON (barang_supplier.id_barang = barang.id_barang)
 			WHERE id_jual=" .$row['id_jual']. " AND barang.status=1");
 		} else {
 			$sql2=mysqli_query($con, "SELECT SUM(qty*(harga_kredit-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total_harga
 			FROM
 				jual_detail
-				INNER JOIN harga_jual 
+				INNER JOIN harga_jual
 					ON (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
-				INNER JOIN harga_jual_kredit 
+				INNER JOIN harga_jual_kredit
 					ON (harga_jual.id_harga_jual = harga_jual_kredit.id_harga_jual)
-				INNER JOIN barang_supplier 
+				INNER JOIN barang_supplier
 					ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-				INNER JOIN barang 
+				INNER JOIN barang
 					ON (barang_supplier.id_barang = barang.id_barang)
 			WHERE id_jual=" .$row['id_jual']. " AND barang.status=1");
 		}
@@ -105,13 +105,13 @@ ORDER BY id_jual DESC");
 		$sql3=mysqli_query($con, "SELECT SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah_nota
 FROM
     jual
-    INNER JOIN jual_detail 
+    INNER JOIN jual_detail
         ON (jual.id_jual = jual_detail.id_jual)
-	INNER JOIN harga_jual 
+	INNER JOIN harga_jual
 		ON (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
-	INNER JOIN barang_supplier 
+	INNER JOIN barang_supplier
 		ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-	INNER JOIN barang 
+	INNER JOIN barang
 		ON (barang_supplier.id_barang = barang.id_barang)
 WHERE jual.id_pelanggan=" .$row['id_pelanggan']. " AND barang.status=1");
 $row3=mysqli_fetch_array($sql3);
@@ -119,7 +119,7 @@ $jumlah_nota=$row3['jumlah_nota'];
 		$sql3=mysqli_query($con, "SELECT SUM(jumlah) AS jumlah_bayar
 FROM
     bayar_nota_jual
-    INNER JOIN jual 
+    INNER JOIN jual
         ON (bayar_nota_jual.no_nota_jual = jual.invoice)
 WHERE jual.id_pelanggan=" .$row['id_pelanggan']);
 $row3=mysqli_fetch_array($sql3);
@@ -129,7 +129,7 @@ $jml_nota=format_angka(mysqli_num_rows($sql4));
 (($row['plafon']-$jumlah_gantung) < $r['total_harga'] ? $style="color:red" : $style="");
 		echo '<tr>
 				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_2&id=' .$row['id_jual']. '"><div style="min-width:70px">' .date("d-m-Y",strtotime($row['tgl_nota'])). '</div></a></td>
-				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_2&id=' .$row['id_jual']. '"><div style="min-width:70px">' .$row['invoice']. '</div></a></td>
+				<td align="center" style="width:100px;"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_2&id=' .$row['id_jual']. '"><div style="min-width:70px">' .$row['invoice']. '</div></a></td>
 				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_2&id=' .$row['id_jual']. '"><div style="min-width:70px">' .$row['nama_karyawan']. '</div></a></td>
 				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_2&id=' .$row['id_jual']. '"><div style="min-width:70px">' .$row['nama_pelanggan']. '</div></a></td>
 				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_2&id=' .$row['id_jual']. '"><div style="min-width:70px">' .$row['jenis_bayar']. '</div></a></td>
@@ -154,7 +154,7 @@ $jml_nota=format_angka(mysqli_num_rows($sql4));
 							<form method="post" onsubmit="return cek_valid()">
 			  <input type="hidden" name="batal_cek_barang_post" value="true">
 			  <?php
-			  (isset($_GET['cari']) ? $batal="disabled" : $batal=""); 
+			  (isset($_GET['cari']) ? $batal="disabled" : $batal="");
 			  ?>
 			  <center><input class="btn btn-primary" type="submit" value="Batalkan Periksa Barang" <?php echo $batal ?> ></center><br/>
 								<a class="btn btn-danger btn-xs" style="width:10px;height:10px">&nbsp;</a><font color="red">Sisa Plafon < Jumlah Jual</font>
@@ -191,15 +191,15 @@ if (isset($_GET['cari'])){
 	$sql=mysqli_query($con, "SELECT *
 FROM
     jual
-    INNER JOIN nota_siap_kirim 
+    INNER JOIN nota_siap_kirim
         ON (jual.id_jual = nota_siap_kirim.id_jual)
-    INNER JOIN pelanggan 
+    INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
-    INNER JOIN karyawan 
+    INNER JOIN karyawan
         ON (jual.id_karyawan = karyawan.id_karyawan)
-    INNER JOIN nota_siap_kirim_detail 
+    INNER JOIN nota_siap_kirim_detail
         ON (nota_siap_kirim.id_nota_siap_kirim = nota_siap_kirim_detail.id_nota_siap_kirim)
-    INNER JOIN jual_detail 
+    INNER JOIN jual_detail
         ON (nota_siap_kirim_detail.id_jual_detail = jual_detail.id_jual_detail)
 WHERE $val
 GROUP BY jual.id_jual
@@ -208,17 +208,17 @@ ORDER BY jual.id_jual DESC");
 	$sql6=mysqli_query($con, "SELECT SUM(qty_ambil*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) as total_harga
 FROM
     jual
-    INNER JOIN nota_siap_kirim 
+    INNER JOIN nota_siap_kirim
         ON (jual.id_jual = nota_siap_kirim.id_jual)
-    INNER JOIN nota_siap_kirim_detail 
+    INNER JOIN nota_siap_kirim_detail
         ON (nota_siap_kirim.id_nota_siap_kirim = nota_siap_kirim_detail.id_nota_siap_kirim)
-    INNER JOIN jual_detail 
+    INNER JOIN jual_detail
         ON (nota_siap_kirim_detail.id_jual_detail = jual_detail.id_jual_detail)
-	INNER JOIN harga_jual 
+	INNER JOIN harga_jual
 		ON (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
-	INNER JOIN barang_supplier 
+	INNER JOIN barang_supplier
 		ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-	INNER JOIN barang 
+	INNER JOIN barang
 		ON (barang_supplier.id_barang = barang.id_barang)
 WHERE jual.id_jual=" .$row['id_jual']. " AND barang.status=1");
 $row6=mysqli_fetch_array($sql6);
@@ -227,7 +227,7 @@ $total_harga=$row6['total_harga'];
 			$sql3=mysqli_query($con, "SELECT SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah_nota
 	FROM
 		jual
-		INNER JOIN jual_detail 
+		INNER JOIN jual_detail
 			ON (jual.id_jual = jual_detail.id_jual)
 	WHERE jual.id_pelanggan=" .$row['id_pelanggan']);
 	$row3=mysqli_fetch_array($sql3);
@@ -235,7 +235,7 @@ $total_harga=$row6['total_harga'];
 			$sql3=mysqli_query($con, "SELECT SUM(jumlah) AS jumlah_bayar
 	FROM
 		bayar_nota_jual
-		INNER JOIN jual 
+		INNER JOIN jual
 			ON (bayar_nota_jual.no_nota_jual = jual.invoice)
 	WHERE jual.id_pelanggan=" .$row['id_pelanggan']);
 	$row3=mysqli_fetch_array($sql3);
@@ -269,7 +269,7 @@ $total_harga=$row6['total_harga'];
 			</tr>';
 		}
 	}
-?>										
+?>
 									</tbody>
 								</table>
 								</div>
@@ -277,13 +277,13 @@ $total_harga=$row6['total_harga'];
 							</div>
 						  </div>
 						</div>
-			
+
 					</div>
 				</div>
 			<div id="dummy"></div>
 			</div>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
