@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 12, 2019 at 04:20 AM
+-- Generation Time: Jan 18, 2019 at 04:37 AM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -331,11 +331,12 @@ CREATE TABLE `bayar_ekspedisi` (
 --
 
 INSERT INTO `bayar_ekspedisi` (`id_bayar_ekspedisi`, `id_beli`, `status`) VALUES
-(1, 27, 1),
-(2, 31, 1),
+(1, 27, 2),
+(2, 31, 0),
 (3, 50, 0),
 (4, 29, 0),
-(5, 28, 1);
+(5, 28, 0),
+(6, 26, 0);
 
 -- --------------------------------------------------------
 
@@ -347,19 +348,19 @@ CREATE TABLE `bayar_ekspedisi_detail` (
   `id_bayar_ekspedisi_detail` int(11) NOT NULL,
   `id_bayar_ekspedisi` int(11) DEFAULT NULL,
   `tgl_bayar` date DEFAULT NULL,
-  `jumlah_bayar` float DEFAULT NULL
+  `jumlah_bayar` float DEFAULT NULL,
+  `sisa` double NOT NULL,
+  `stat` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `bayar_ekspedisi_detail`
 --
 
-INSERT INTO `bayar_ekspedisi_detail` (`id_bayar_ekspedisi_detail`, `id_bayar_ekspedisi`, `tgl_bayar`, `jumlah_bayar`) VALUES
-(2, 1, '2019-01-04', 87988.9),
-(4, 1, '2019-01-04', 3251.56),
-(5, 5, '2019-01-04', 2500),
-(6, 2, '2019-01-04', 50003.5),
-(7, 2, '2019-01-04', 533569);
+INSERT INTO `bayar_ekspedisi_detail` (`id_bayar_ekspedisi_detail`, `id_bayar_ekspedisi`, `tgl_bayar`, `jumlah_bayar`, `sisa`, `stat`) VALUES
+(19, 1, '2019-01-17', 500, 999500, 1),
+(20, 1, '2019-01-17', 1000, 998500, 1),
+(22, 1, '2019-01-17', 998500, 0, 2);
 
 -- --------------------------------------------------------
 
@@ -381,15 +382,19 @@ CREATE TABLE `bayar_nota_beli` (
   `penerima_nama` varchar(100) DEFAULT NULL,
   `penerima_no` varchar(20) DEFAULT NULL,
   `jatuh_tempo` date DEFAULT NULL,
-  `keterangan` varchar(100) DEFAULT NULL
+  `keterangan` varchar(100) DEFAULT NULL,
+  `sisa` double DEFAULT NULL,
+  `status_giro` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `bayar_nota_beli`
 --
 
-INSERT INTO `bayar_nota_beli` (`id_bayar`, `tgl_bayar`, `no_nota_beli`, `jenis`, `jumlah`, `status`, `pengirim_bank`, `pengirim_nama`, `pengirim_no`, `penerima_bank`, `penerima_nama`, `penerima_no`, `jatuh_tempo`, `keterangan`) VALUES
-(3, '2019-01-05', 'INV-2387283', 'Tunai', 156325.23, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `bayar_nota_beli` (`id_bayar`, `tgl_bayar`, `no_nota_beli`, `jenis`, `jumlah`, `status`, `pengirim_bank`, `pengirim_nama`, `pengirim_no`, `penerima_bank`, `penerima_nama`, `penerima_no`, `jatuh_tempo`, `keterangan`, `sisa`, `status_giro`) VALUES
+(13, '2019-01-18', 'NB-0001', 'Tunai', 625000, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 23000000, 0),
+(18, '2019-01-18', 'NB-0001', 'Tunai', 3000000, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20000000, NULL),
+(20, '2019-01-18', 'NB-0001', 'Giro', 20000000, 1, 'a', 'a', '1', 's', 's', '2', '2019-02-20', '', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -424,23 +429,23 @@ CREATE TABLE `bayar_nota_jual` (
   `penerima_no` varchar(20) DEFAULT NULL,
   `jatuh_tempo` date DEFAULT NULL,
   `keterangan` varchar(100) DEFAULT NULL,
-  `status_giro` tinyint(1) DEFAULT NULL
+  `status_giro` tinyint(1) DEFAULT NULL,
+  `sisa` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `bayar_nota_jual`
 --
 
-INSERT INTO `bayar_nota_jual` (`id_bayar`, `tgl_bayar`, `no_nota_jual`, `jenis`, `jumlah`, `status`, `pengirim_bank`, `pengirim_nama`, `pengirim_no`, `penerima_bank`, `penerima_nama`, `penerima_no`, `jatuh_tempo`, `keterangan`, `status_giro`) VALUES
-(2, '2018-12-28', 'NJ-180907-002', 'Transfer', 1000000, 2, 'a', 'a', '1', 'a', 'a', '1', NULL, NULL, NULL),
-(3, '2019-01-04', 'NJ-180910-001', 'Tunai', 1233.22223, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(4, '2019-01-04', 'NJ-180910-003', 'Tunai', 12322.59, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(5, '2019-01-04', 'NJ-180910-003', 'Tunai', 87677.41, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(6, '2019-01-08', 'NJ-180910-001', 'Giro', 357865, 2, 'CTBANK', 'Andri Nugraha', '6796976976979', 'PT. Rahana Buana Jaya', 'PT Rahana Buana Jaya', '635252352', '2019-02-12', '', 1),
-(7, '2019-01-10', 'NJ-180910-002', 'Giro', 6464446, 2, 'viygggiugi', 'iugbgig', '8708708787', 'ibiubou', 'bouhoh', '89797987', '2019-05-08', '', 1),
-(8, '2019-01-10', 'NJ-180910-003', 'Transfer', 14900000, 1, 'uhbohoho', 'oughouhh', '7987897897', 'bkjbkjb', 'bkbuh', '998798', NULL, NULL, NULL),
-(9, '2019-01-11', 'NJ-180907-002', 'Giro', 8690000, 2, 'a', 'a', '1', 's', 's', '2', '2019-01-12', '', 1),
-(10, '2019-01-11', 'NJ-180907-002', 'Giro', 200000, 2, 'as', 'as', '1', 'as', 'as', '1', '2019-01-13', '', 1);
+INSERT INTO `bayar_nota_jual` (`id_bayar`, `tgl_bayar`, `no_nota_jual`, `jenis`, `jumlah`, `status`, `pengirim_bank`, `pengirim_nama`, `pengirim_no`, `penerima_bank`, `penerima_nama`, `penerima_no`, `jatuh_tempo`, `keterangan`, `status_giro`, `sisa`) VALUES
+(3, '2019-01-04', 'NJ-180910-001', 'Tunai', 1233.22223, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(4, '2019-01-04', 'NJ-180910-003', 'Tunai', 12322.59, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(5, '2019-01-04', 'NJ-180910-003', 'Tunai', 87677.41, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(6, '2019-01-08', 'NJ-180910-001', 'Giro', 357865, 2, 'CTBANK', 'Andri Nugraha', '6796976976979', 'PT. Rahana Buana Jaya', 'PT Rahana Buana Jaya', '635252352', '2019-02-12', '', 1, 0),
+(7, '2019-01-10', 'NJ-180910-002', 'Giro', 6464446, 2, 'viygggiugi', 'iugbgig', '8708708787', 'ibiubou', 'bouhoh', '89797987', '2019-05-08', '', 1, 0),
+(8, '2019-01-10', 'NJ-180910-003', 'Transfer', 14900000, 1, 'uhbohoho', 'oughouhh', '7987897897', 'bkjbkjb', 'bkbuh', '998798', NULL, NULL, NULL, 0),
+(42, '2019-01-18', 'NJ-180907-002', 'Tunai', 9690000, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 30000000),
+(49, '2019-01-18', 'NJ-180907-002', 'Giro', 10000000, 2, 'a', 's', '2', 'a', 'a', '2', '2019-02-22', '', 1, 20000000);
 
 -- --------------------------------------------------------
 
@@ -451,15 +456,16 @@ INSERT INTO `bayar_nota_jual` (`id_bayar`, `tgl_bayar`, `no_nota_jual`, `jenis`,
 CREATE TABLE `bayar_nota_jual_detail` (
   `id_bayar_detail` bigint(20) NOT NULL,
   `id_bayar` bigint(20) DEFAULT NULL,
-  `no_retur_jual` varchar(13) DEFAULT NULL
+  `no_retur_jual` varchar(13) DEFAULT NULL,
+  `status` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `bayar_nota_jual_detail`
 --
 
-INSERT INTO `bayar_nota_jual_detail` (`id_bayar_detail`, `id_bayar`, `no_retur_jual`) VALUES
-(1, 3, 'RJ-180901-001');
+INSERT INTO `bayar_nota_jual_detail` (`id_bayar_detail`, `id_bayar`, `no_retur_jual`, `status`) VALUES
+(1, 3, 'RJ-180901-001', 0);
 
 -- --------------------------------------------------------
 
@@ -526,7 +532,9 @@ INSERT INTO `beli` (`id_beli`, `no_nota_beli`, `tanggal`, `id_supplier`, `id_eks
 (71, 'nb-3u28423847', '2018-12-28', 1, 1, 2, 120000, 0, 1000000, NULL, 1, 10, 0),
 (72, 'nb-092039829', '2018-12-28', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 7.6, 0),
 (74, 'GH-5350280', '2019-01-10', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 7.6, 10),
-(75, 'KT-8977979', '2019-01-11', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 8.7, 10);
+(75, 'KT-8977979', '2019-01-11', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 8.7, 10),
+(76, 'UT-7698797', '2019-01-15', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 7, 10),
+(77, 'UG-6987897', '2019-01-15', 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 4.92, 1);
 
 -- --------------------------------------------------------
 
@@ -629,11 +637,13 @@ INSERT INTO `beli_detail` (`id_beli_detail`, `id_beli`, `id_barang_supplier`, `q
 (217, 72, 10, 65, 5464, 0, 1, 54.64, 5.89, 318.611304, 13, 661.79733048),
 (218, 72, 10, 675, 134568, 0, 10, 13456.8, 5, 6055.56, 6, 6903.3384),
 (219, 72, 13, 9, 8844, 0, 58.68, 5189.6592, 0, 0, 0, 0),
-(220, 74, 3, 65, 5464, 0, 1, 54.64, 5.89, 318.611304, 13, 661.79733048),
+(220, 74, 3, 65, 5464.78, 0, 1, 54.6478, 5.89, 318.65678658, 13, 661.8918037446),
 (221, 74, 10, 10, 100000.15, 0, 20.68, 20680.03102, 4.78, 3791.501687244, 1.99, 1503.0194841258),
 (222, 74, 11, 675, 134568, 0, 10, 13456.8, 5, 6055.56, 6, 6903.3384),
 (223, 74, 12, 9, 8844, 0, 58.68, 5189.6592, 0, 0, 0, 0),
-(224, 75, 12, 8, 15336.36, 0, 5.7, 874.17252, 7, 1012.3531236, 10, 1344.98343564);
+(224, 75, 12, 8, 15336.36, 0, 5.7, 874.17252, 7, 1012.3531236, 10, 1344.98343564),
+(225, 76, 10, 8, 152300, 0, 1, 1523, 2, 3015.54, 3, 4432.8438),
+(226, 77, 3, 5, 563000, 0, 1, 5630, 2, 11147.4, 3, 16386.678);
 
 -- --------------------------------------------------------
 
@@ -1225,7 +1235,7 @@ INSERT INTO `jual` (`id_jual`, `tgl_nota`, `invoice`, `id_pelanggan`, `id_karyaw
 (6, '2018-09-10', 'NJ-180910-004', 1, 1, 'Lunas', 0, 2, 1, '2018-10-19', 0, 0),
 (7, '2018-09-11', 'NJ-180911-001', 1, 1, 'Lunas', 0, 2, 1, '2018-10-19', 0, 0),
 (8, '2018-09-12', 'NJ-180912-001', 1, 1, 'Lunas', 0, 7, 1, '2018-10-19', 0, 0),
-(9, '2018-09-12', 'NJ-180912-002', 1, 1, 'Lunas', 0, 1, 1, '2018-12-27', 0, 0),
+(9, '2018-09-12', 'NJ-180912-002', 1, 1, 'Lunas', 0, 1, 1, '2019-01-16', 0, 0),
 (10, '2018-11-28', 'NJ-181128-001', 1, 6, 'Lunas', 0, 0, 0, NULL, 10, 0),
 (11, '2018-12-07', 'NJ-181207-001', 1, 1, 'Lunas', 0, 0, 0, NULL, 10, 0),
 (15, '2018-12-21', 'NJ-181221-004', 1, 6, 'Lunas', 0, 0, 0, NULL, 0, 0),
@@ -1707,7 +1717,7 @@ INSERT INTO `nota_sudah_cek` (`id_nota_sudah_cek`, `tanggal`, `id_jual`, `jumlah
 (5, '2018-09-10', 4, 25246000, '3', 2, '2018-11-23', 'Kirim Sendiri'),
 (6, '2018-09-10', 3, 2469120, '3', 2, '2018-11-23', 'Kirim Sendiri'),
 (7, '2018-09-11', 7, 1234560, '3', 2, '2018-10-19', 'Kirim Sendiri'),
-(8, '2018-09-12', 9, 29100000, '2', 2, '2018-12-27', 'Kirim Sendiri');
+(8, '2018-09-12', 9, 29100000, '2', 2, '2019-01-16', 'Kirim Sendiri');
 
 -- --------------------------------------------------------
 
@@ -1739,7 +1749,7 @@ INSERT INTO `pelanggan` (`id_pelanggan`, `nama_pelanggan`, `alamat`, `lat`, `lng
 (2, 'afsadcfasc', 'asafsfas', '', '', '145436', '1ggegeb', '1432543545', 0, '1768678687687', 1, 1),
 (3, 'sqcxsqcq', 'sxscsq', '', '', '223123123', '213123123', '2313123', 2147483647, '3211231', 1, 0),
 (4, '1421242', 'scsacascsacsc', '', '', '121414124124', 'dfdfdsfg', '121421414124', 0, '1343243414214', 1, 0),
-(5, 'sgfggegf', 'ewgfegveg', '-5.439263', '105.268318', '3243', '4656', '08120000', 0, '4970129727514', 1, 1),
+(5, 'sgfggegf', 'ewgfegveg', '-5.439263', '105.268318', '3243', '4656', '08120000', 89368.69, '4970129727514', 1, 1),
 (6, 'sdascdf', 'dsfsdfdsf', '', '', '3424342434', '3242344', '3243242', 2342342, '22342354235345', 1, 0),
 (7, '111111111111111111111', '11111111111111111111111111111111', '8656677878,989009', '3242342,42342354', '11111111111111111111', '11111111111111', '11111111111111111111', 1, '11111111111111111111', 0, 1),
 (8, 'efvefvfev', 'edvfcevev', 'evefvefv', 'ervefvefv', '43543534534545', '435646435455', '45345345', 435345345, '433534534543545', 0, 0),
@@ -2147,7 +2157,7 @@ CREATE TABLE `retur_beli_detail` (
 --
 
 INSERT INTO `retur_beli_detail` (`id_retur_beli_detail`, `id_retur_beli`, `id_beli_detail`, `id_barang_masuk_rak`, `qty_retur`, `harga_retur`, `qty_keluar`) VALUES
-(5, 1, 90, 16, 1, 166666.26, NULL);
+(6, 1, 90, 16, 5, 500000, NULL);
 
 -- --------------------------------------------------------
 
@@ -2171,7 +2181,7 @@ INSERT INTO `retur_jual` (`id_retur_jual`, `tgl_retur`, `no_retur_jual`, `id_jua
 (2, '2018-09-01', 'RJ-180901-001', 4, 2),
 (3, '2018-09-01', 'RJ-180901-002', 4, 0),
 (5, '2018-11-23', 'RJ-181123-001', 3, 0),
-(6, '2018-11-23', 'RJ-181123-002', 1, 9);
+(6, '2018-11-23', 'RJ-181123-002', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -2202,7 +2212,7 @@ INSERT INTO `retur_jual_detail` (`id_retur_jual_detail`, `id_retur_jual`, `id_ju
 (6, 6, 2, 1, 100000, NULL, NULL, NULL, NULL),
 (7, 6, 1, 1, 10000, NULL, NULL, NULL, NULL),
 (8, 7, 1, 1, 10000, NULL, NULL, NULL, NULL),
-(9, 3, 6, 1, 1513.12, NULL, NULL, NULL, NULL);
+(10, 3, 6, 1, 160698, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2921,19 +2931,19 @@ ALTER TABLE `batal_kirim_detail_2`
 -- AUTO_INCREMENT for table `bayar_ekspedisi`
 --
 ALTER TABLE `bayar_ekspedisi`
-  MODIFY `id_bayar_ekspedisi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_bayar_ekspedisi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `bayar_ekspedisi_detail`
 --
 ALTER TABLE `bayar_ekspedisi_detail`
-  MODIFY `id_bayar_ekspedisi_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_bayar_ekspedisi_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `bayar_nota_beli`
 --
 ALTER TABLE `bayar_nota_beli`
-  MODIFY `id_bayar` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_bayar` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `bayar_nota_beli_detail`
@@ -2945,7 +2955,7 @@ ALTER TABLE `bayar_nota_beli_detail`
 -- AUTO_INCREMENT for table `bayar_nota_jual`
 --
 ALTER TABLE `bayar_nota_jual`
-  MODIFY `id_bayar` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_bayar` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `bayar_nota_jual_detail`
@@ -2957,13 +2967,13 @@ ALTER TABLE `bayar_nota_jual_detail`
 -- AUTO_INCREMENT for table `beli`
 --
 ALTER TABLE `beli`
-  MODIFY `id_beli` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `id_beli` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT for table `beli_detail`
 --
 ALTER TABLE `beli_detail`
-  MODIFY `id_beli_detail` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=225;
+  MODIFY `id_beli_detail` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=227;
 
 --
 -- AUTO_INCREMENT for table `bonus`
@@ -3275,7 +3285,7 @@ ALTER TABLE `retur_beli`
 -- AUTO_INCREMENT for table `retur_beli_detail`
 --
 ALTER TABLE `retur_beli_detail`
-  MODIFY `id_retur_beli_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_retur_beli_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `retur_jual`
@@ -3287,7 +3297,7 @@ ALTER TABLE `retur_jual`
 -- AUTO_INCREMENT for table `retur_jual_detail`
 --
 ALTER TABLE `retur_jual_detail`
-  MODIFY `id_retur_jual_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_retur_jual_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `satuan`

@@ -63,7 +63,6 @@ if (isset($tambah_bayar_nota_beli_post)){
 		$id_beli=$row['id_beli'];
 		$total_nota=$row['total']-($row['total']*$row['diskon_all_persen']/100);
 		$grand = $total_nota+($total_nota*($row['ppn_all_persen']/100));
-
 		$validasi = mysqli_query($con, "SELECT no_nota_beli FROM bayar_nota_beli WHERE no_nota_beli='$no_nota_beli'");
 		$result = mysqli_num_rows($validasi);
 		$cek = mysqli_query($con, "SELECT sisa FROM bayar_nota_beli WHERE no_nota_beli='$no_nota_beli' ORDER BY id_bayar DESC LIMIT 1");
@@ -75,11 +74,11 @@ if (isset($tambah_bayar_nota_beli_post)){
 		}
 		$sis = $na['sisa'];
 		if ($jenis =='Transfer'){
-			$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','$jenis',$jumlah_bayar,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening',null,null,$sisa)");
+			$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','$jenis',$jumlah_bayar,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening',null,null,$sisa,null)");
 		} else if ($jenis =='Giro'){
-			$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','$jenis',$jumlah_bayar,2,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening','$jatuh_tempo','$keterangan',$sis)");
+			$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','$jenis',$jumlah_bayar,2,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening','$jatuh_tempo','$keterangan',$sis,0)")or die(mysqli_error($con));
 		} else {
-			$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','$jenis',$jumlah_bayar,$status,null,null,null,null,null,null,null,null,$sisa)")or die (mysqli_error($con));
+			$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','$jenis',$jumlah_bayar,$status,null,null,null,null,null,null,null,null,$sisa,null)")or die (mysqli_error($con));
 		}
 		if ($sql){
 			_buat_pesan("Input Berhasil","green");
@@ -87,7 +86,6 @@ if (isset($tambah_bayar_nota_beli_post)){
 			_buat_pesan("Input Gagal","red");
 		}
 	}
-
 	if (isset($no_retur)){
 		($jumlah_bayar+$jumlah_bayar_retur==$sisa_nota ? $status=1 : $status=2);
 		//$sql=mysqli_query($con, "UPDATE bayar_nota_beli SET status=$status WHERE no_nota_beli='$no_nota_beli'");
@@ -109,7 +107,6 @@ if (isset($tambah_bayar_nota_beli_post)){
 		}
 	}
 	_direct("?page=pembelian&mode=bayar_nota");
-
 }
 $sql=mysqli_query($con, "SELECT
 	supplier.id_supplier
