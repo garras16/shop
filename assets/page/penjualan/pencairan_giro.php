@@ -5,7 +5,17 @@ if (isset($_GET['act'])){
 	if ($_GET['act']=='2') $act=2;
 
 	if (isset($_GET['tbl']) && $_GET['tbl']=='1'){
-		$sql=mysqli_query($con, "UPDATE bayar_nota_jual SET status_giro=$act WHERE id_bayar=$id");
+		$no = $_GET['no'];
+		$jml = $_GET['jml'];
+		$bom = mysqli_query($con, "SELECT sisa FROM bayar_nota_jual WHERE no_nota_jual='$no'");
+		$data = mysqli_fetch_array($bom);
+		$update = $data['sisa']-$jml;
+		if($update == 0) {
+			$stat = 1;
+		}else{
+			$stat = 2;
+		}
+		$sql=mysqli_query($con, "UPDATE bayar_nota_jual SET status_giro=$act, sisa=$update, status=$stat WHERE id_bayar=$id");
 		if ($sql){
 			$pesan="INPUT BERHASIL";
 		} else {
@@ -75,7 +85,7 @@ while($row=mysqli_fetch_array($sql)){
 								<td class="uang">'.$row['jumlah'].'</td>
                 <td>' .$status_giro. '</td>';
     if ($row['status_giro']==0){
-        echo '<td><a href="?page=penjualan&mode=pencairan_giro&id=' .$row['id_bayar']. '&act=1&tbl=1" class="btn btn-primary btn-xs"><i class="fa fa-times"></i> Terima</a>
+        echo '<td><a href="?page=penjualan&mode=pencairan_giro&id=' .$row['id_bayar']. '&act=1&tbl=1&no='.$row['no_nota_jual'].'&jml='.$row['jumlah'].'" class="btn btn-primary btn-xs"><i class="fa fa-times"></i> Terima</a>
                 <a href="?page=penjualan&mode=pencairan_giro&id=' .$row['id_bayar']. '&act=2&tbl=1" class="btn btn-danger btn-xs"><i class="fa fa-times"></i> Tolak</a></td>';
     } else {
         echo '<td></td>';

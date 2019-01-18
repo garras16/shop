@@ -51,13 +51,38 @@ if (isset($tambah_bayar_nota_jual_post)){
 
 	if ($jenis !='Retur'){
 		($jumlah_bayar>=$sisa_nota ? $status=1 : $status=2);
-		$sql=mysqli_query($con, "UPDATE bayar_nota_jual SET status=$status WHERE no_nota_jual='$no_nota_jual'");
+		$sql=mysqli_query($con, "SELECT *, SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total
+		FROM
+		    jual
+		    INNER JOIN jual_detail
+		        ON (jual.id_jual = jual_detail.id_jual)
+		    INNER JOIN pelanggan
+		        ON (jual.id_pelanggan = pelanggan.id_pelanggan)
+		WHERE jual.invoice='$no_nota_jual'
+		GROUP BY jual_detail.id_jual");
+		$row=mysqli_fetch_array($sql);
+		$id_pelanggan=$row['id_pelanggan'];
+		$id_jual=$row['id_jual'];
+		$total_nota=$row['total']-($row['total']*$row['diskon_all_persen']/100);
+		$grand = $total_nota+($total_nota*($row['ppn_all_persen']/100));
+
+		$validasi = mysqli_query($con, "SELECT no_nota_jual FROM bayar_nota_jual WHERE no_nota_jual='$no_nota_jual'");
+		$result = mysqli_num_rows($validasi);
+		$cek = mysqli_query($con, "SELECT sisa FROM bayar_nota_jual WHERE no_nota_jual='$no_nota_jual' ORDER BY id_bayar DESC LIMIT 1");
+		$na = mysqli_fetch_array($cek);
+		if($result == 0) {
+			$sisa=$grand-$jumlah_bayar;
+		}else{
+			$sisa = $na['sisa']-$jumlah_bayar;
+		}
+		$sis = $na['sisa'];
+
 		if ($jenis =='Transfer'){
-			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','$jenis',$jumlah_bayar,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening',null,null,null)");
+			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','$jenis',$jumlah_bayar,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening',null,null,null,$sisa)");
 		} else if ($jenis =='Giro'){
-			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','$jenis',$jumlah_bayar,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening','$jatuh_tempo','$keterangan',0)");
+			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','$jenis',$jumlah_bayar,2,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening','$jatuh_tempo','$keterangan',0,$sis)");
 		} else {
-			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','$jenis',$jumlah_bayar,$status,null,null,null,null,null,null,null,null,null)");
+			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','$jenis',$jumlah_bayar,$status,null,null,null,null,null,null,null,null,null,$sisa)");
 		}
 		if ($sql){
 			_buat_pesan("Input Berhasil","green");
@@ -65,14 +90,12 @@ if (isset($tambah_bayar_nota_jual_post)){
 			_buat_pesan("Input Gagal","red");
 		}
 	}
-
 	if (isset($no_retur)){
 		($jumlah_bayar+$jumlah_bayar_retur==$sisa_nota ? $status=1 : $status=2);
-		$sql=mysqli_query($con, "UPDATE bayar_nota_jual SET status=$status WHERE no_nota_jual='$no_nota_jual'");
 		if ($jenis =='Transfer'){
-			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','Retur',$jumlah_bayar_retur,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening',null,null)");
+			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','Retur',$jumlah_bayar_retur,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening',null,null,$sisa_nota)");
 		} else if ($jenis =='Giro'){
-			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','Retur',$jumlah_bayar_retur,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening','$jatuh_tempo','$keterangan',0)");
+			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','Retur',$jumlah_bayar_retur,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening','$jatuh_tempo','$keterangan',0,$sisa_nota)");
 		} else {
 			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','Retur',$jumlah_bayar_retur,$status,null,null,null,null,null,null,null,null,null)");
 		}
