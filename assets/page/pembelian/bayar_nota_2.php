@@ -67,26 +67,28 @@ if (isset($tambah_bayar_nota_beli_post)){
 		$grand = $total_nota+($total_nota*($row['ppn_all_persen']/100));
 		$validasi = mysqli_query($con, "SELECT no_nota_beli FROM bayar_nota_beli WHERE no_nota_beli='$no_nota_beli'");
 		$result = mysqli_num_rows($validasi);
+
 		$cek = mysqli_query($con, "SELECT sisa FROM bayar_nota_beli WHERE no_nota_beli='$no_nota_beli' ORDER BY id_bayar DESC LIMIT 1");
 		$na = mysqli_fetch_array($cek);
 		if($result == 0) {
 			$sisa=$grand-$jumlah_bayar;
-      if($sisa == 0) {
+      $sis =$grand;
+      if($sisa == 0 OR $sis ==0) {
         $now = 1;
-        $sql=mysqli_query($con, "UPDATE bayar_nota_beli SET now=$now WHERE no_nota_beli='$no_nota_beli'");
       }else{
         $now = 2;
       }
 		}else{
-			$sisa = $na['sisa']-$jumlah_bayar;
-      if($sisa == 0) {
-        $now = 1;
-        $sql=mysqli_query($con, "UPDATE bayar_nota_beli SET now=$now WHERE no_nota_beli='$no_nota_beli'");
-      }else{
-        $now = 2;
-      }
+        if($sisa == 0 OR $sis == 0) {
+          $now = 1;
+          $sql=mysqli_query($con, "UPDATE bayar_nota_beli SET now=$now WHERE no_nota_beli='$no_nota_beli'");
+        }else{
+          $now = 2;
+        }
+
+        $sisa = $na['sisa']-$jumlah_bayar;
+        $sis = $na['sisa'];
 		}
-		$sis = $na['sisa'];
 		if ($jenis =='Transfer'){
 			$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','$jenis',$jumlah_bayar,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening',null,null,$sisa,null,$now)");
 		} else if ($jenis =='Giro'){
@@ -254,7 +256,7 @@ $id_beli=$row['id_beli'];
                                         id="sisa_nota"
                                         name="sisa_nota"
                                         style="padding: 20px 15px;"
-                                        value="<?php echo $sisa_nota ?>"
+                                        value="<?php if($sisa_nota == 0){$sisa_nota=$jumlah_nota;} echo $sisa_nota; ?>"
                                         title="Sisa Nota (Rp)"
                                         readonly="readonly">
                                 </div>

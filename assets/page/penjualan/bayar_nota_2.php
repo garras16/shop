@@ -51,7 +51,6 @@ if (isset($tambah_bayar_nota_jual_post)){
 	}
 
 	if ($jenis !='Retur'){
-		($jumlah_bayar>=$sisa_nota ? $status=1 : $status=2);
 		$sql=mysqli_query($con, "SELECT *, SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total
 		FROM
 		    jual
@@ -71,24 +70,28 @@ if (isset($tambah_bayar_nota_jual_post)){
 		$result = mysqli_num_rows($validasi);
 		$cek = mysqli_query($con, "SELECT sisa FROM bayar_nota_jual WHERE no_nota_jual='$no_nota_jual' ORDER BY id_bayar DESC LIMIT 1");
 		$na = mysqli_fetch_array($cek);
+		$sisa = $na['sisa']-$jumlah_bayar;
+		$sis = $na['sisa'];
 		if($result == 0) {
 			$sisa=$grand-$jumlah_bayar;
-			if($sisa == 0) {
+      $sis =$grand;
+      if($sisa == 0 OR $sis ==0) {
         $now = 1;
-        $sql=mysqli_query($con, "UPDATE bayar_nota_jual SET now=$now WHERE no_nota_jual='$no_nota_jual'");
+				$status = 1;
       }else{
         $now = 2;
+				$status = 2;
       }
 		}else{
-			$sisa = $na['sisa']-$jumlah_bayar;
-			if($sisa == 0) {
-        $now = 1;
+			if($sisa == 0 OR $sis == 0) {
+				$now = 1;
+				$status = 1;
         $sql=mysqli_query($con, "UPDATE bayar_nota_jual SET now=$now WHERE no_nota_jual='$no_nota_jual'");
       }else{
         $now = 2;
+				$status = 2;
       }
 		}
-		$sis = $na['sisa'];
 
 		if ($jenis =='Transfer'){
 			$sql=mysqli_query($con, "INSERT INTO bayar_nota_jual VALUES(null,'$tanggal','$no_nota_jual','$jenis',$jumlah_bayar,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening',null,null,null,$sisa,$now)");
@@ -252,7 +255,7 @@ $grand = $total_nota+($total_nota*($row['ppn_all_persen']/100));
                                         style="padding: 20px 15px;"
                                         id="sisa_nota"
                                         name="sisa_nota"
-                                        value="<?php echo $sisa_nota ?>"
+                                        value="<?php if($sisa_nota==0){$sisa_nota=$grand;} echo $sisa_nota; ?>"
                                         title="Sisa Nota (Rp)"
                                         readonly="readonly">
                                 </div>

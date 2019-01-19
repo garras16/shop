@@ -1,5 +1,5 @@
 <?php
-if (isset($tambah_barang_post)){
+if (isset($tambah_barang_post)) {
 	$sql = mysqli_query($con, "SELECT COUNT(id_barang) AS MaxID FROM barang WHERE kode_barang like '%" .date('ymd'). "%'");
 	$row = mysqli_fetch_array($sql);
 	$idx=$row["MaxID"]+1;
@@ -24,7 +24,7 @@ if (isset($edit_barang_post)){
 	}
 	_direct("?page=master&mode=barang");
 }
-if (isset($tambah_barang_supplier_post)){
+if (isset($tambah_barang_supplier_post)) {
 	$sql = "INSERT INTO barang_supplier VALUES(null,$id_barang,$id_supplier)";
 	$q = mysqli_query($con, $sql);
 	if ($q){
