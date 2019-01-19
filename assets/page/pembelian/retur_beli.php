@@ -66,7 +66,7 @@ if (isset($tambah_retur_beli_post)){
                             </p>
                         </div>
                         <div class="clearfix" style="margin-bottom: 20px;"></div>
-                        <table id="table1" class="table table-bordered table-striped" style="width:1200px;">
+                        <table id="table1" class="table table-bordered table-striped" style="min-width:800px;">
                             <thead>
                                 <tr>
                                     <th>Tgl. Retur</th>

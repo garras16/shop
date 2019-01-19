@@ -207,7 +207,7 @@ FROM
                             <table
                                 id="table1"
                                 class="table table-bordered table-striped"
-                                style="width: 2200px;">
+                                style="min-width: 1800px;">
                                 <thead>
                                     <tr>
                                         <th>Nama Barang</th>

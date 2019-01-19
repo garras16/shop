@@ -212,7 +212,7 @@ WHERE id_jual=$id");
                         <table
                             id="table1"
                             class="table table-bordered table-striped"
-                            style="width: 2200px;">
+                            style="min-width: 1500px;">
                             <thead>
                                 <tr>
                                     <th>Barcode</th>
