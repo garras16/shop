@@ -218,7 +218,6 @@ if ($row['status']=='1'){
 	    , beli.no_nota_beli
 	    , beli.diskon_all_persen
 	    , beli.ppn_all_persen
-			, beli.hidden
 	    , nama_supplier
 		FROM
     	bayar_nota_beli
