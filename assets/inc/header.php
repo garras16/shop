@@ -31,16 +31,16 @@
     <!-- bootstrap-daterangepicker -->
     <link href="vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 	<link href="vendors/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
-	
+
 	<!-- Malihu Custom Scrollbar -->
 	<link href="vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet">
-	
+
 	<!-- SELECT2  -->
 	<link href="vendors/select2/dist/css/select2.min.css" rel="stylesheet">
-	
+
 	<!-- jQuery -->
     <script src="vendors/jquery/dist/jquery.min.js"></script>
-	
+
     <!-- Custom Theme Style -->
     <link href="css/custom.min.css" rel="stylesheet">
 	<link href="css/shop.css" rel="stylesheet">

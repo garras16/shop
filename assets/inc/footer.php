@@ -1,12 +1,12 @@
 	<!-- footer content -->
         <footer>
           <div class="pull-right">
-            
+
           </div>
           <div class="clearfix"></div>
         </footer>
     <!-- /footer content -->
-	
+
     <!-- Bootstrap -->
     <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- FastClick -->
@@ -62,5 +62,5 @@
     <script src="js/shop.js"></script>
     <script src="vendors/numeric/numeric.js"></script>
 	</body>
-  
+
 </html>
