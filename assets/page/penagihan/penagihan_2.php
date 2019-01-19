@@ -24,7 +24,7 @@ $thn_sql="YEAR(CURRENT_DATE())";
                                 Kembali</a>
                         </p>
                         <div class="table responsive">
-                            <table id="table1" class="table table-bordered table-striped">
+                            <table id="table1" class="table table-bordered table-striped" style="width:2800px;">
                                 <thead>
                                     <tr>
                                         <th>Nama Pelanggan</th>
@@ -50,15 +50,15 @@ $thn_sql="YEAR(CURRENT_DATE())";
 $sql=mysqli_query($con, "SELECT *
 FROM
     penagihan
-    INNER JOIN karyawan 
+    INNER JOIN karyawan
         ON (penagihan.id_karyawan = karyawan.id_karyawan)
-    INNER JOIN penagihan_detail 
+    INNER JOIN penagihan_detail
         ON (penagihan.id_penagihan = penagihan_detail.id_penagihan)
-    INNER JOIN jual 
+    INNER JOIN jual
         ON (penagihan_detail.id_jual = jual.id_jual)
-    INNER JOIN pelanggan 
+    INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
-    INNER JOIN jual_detail 
+    INNER JOIN jual_detail
         ON (jual.id_jual = jual_detail.id_jual)
 WHERE penagihan.id_penagihan=$id
 GROUP BY jual.id_jual");
@@ -69,7 +69,7 @@ while ($row=mysqli_fetch_array($sql)){
 		$sql2=mysqli_query($con, "SELECT tenor, tgl_nota, SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah_nota
 FROM
     jual
-    INNER JOIN jual_detail 
+    INNER JOIN jual_detail
         ON (jual.id_jual = jual_detail.id_jual)
 WHERE jual.id_jual=" .$row['id_jual']);
 $row2=mysqli_fetch_array($sql2);
@@ -81,7 +81,7 @@ $tgl_jt_tempo=date('d-m-Y', strtotime($tgl_nota. ' + ' .$tenor. ' days'));
 		$sql2=mysqli_query($con, "SELECT SUM(jumlah) AS jumlah_bayar
 FROM
     bayar_nota_jual
-    INNER JOIN jual 
+    INNER JOIN jual
         ON (bayar_nota_jual.no_nota_jual = jual.invoice)
 WHERE jual.id_jual=" .$row['id_jual']);
 $row2=mysqli_fetch_array($sql2);
@@ -90,7 +90,7 @@ $jumlah_bayar=$row2['jumlah_bayar'];
 $sql2=mysqli_query($con, "SELECT SUM(bayar) AS jumlah_bayar
 FROM
     penagihan_detail
-    INNER JOIN jual 
+    INNER JOIN jual
         ON (penagihan_detail.id_jual = jual.id_jual)
 WHERE jual.id_jual=" .$row['id_jual']);
 $row2=mysqli_fetch_array($sql2);
@@ -99,7 +99,7 @@ $jumlah_bayar+=$row2['jumlah_bayar'];
 	$sql2=mysqli_query($con, "SELECT (qty_ambil*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total
 FROM
     jual_detail
-    INNER JOIN nota_siap_kirim_detail 
+    INNER JOIN nota_siap_kirim_detail
         ON (jual_detail.id_jual_detail = nota_siap_kirim_detail.id_jual_detail)
 WHERE id_jual=" .$row['id_jual']);
 $total_jual=0;
@@ -116,7 +116,7 @@ $total_jual=0;
 	if ($row['status_nota_kembali']=='1') $status_nota='Diterima Admin';
 	if ($row['status_nota_kembali']=='2') $status_nota='Lunas';
 	($row['tgl_janji_next']=='' ? $tgl_jb='' : $tgl_jb=date('d-m-Y',strtotime($row['tgl_janji_next'])));
-	
+
 	$sql3=mysqli_query($con, "SELECT nama_karyawan FROM jual INNER JOIN karyawan ON (jual.id_karyawan = karyawan.id_karyawan) WHERE id_jual=" .$row['id_jual']);
 	$row3=mysqli_fetch_array($sql3);
 	$nama_sales=$row3['nama_karyawan'];
@@ -125,7 +125,7 @@ $total_jual=0;
 	$nama_driver=$row3['nama_karyawan'];
 	($sisa_plafon<0 ? $color1='red' : $color1='black');
 	(strtotime($row['tgl_janji_next'])<=strtotime(date("Y-m-d")) ? $color2='red' : $color2='black');
-	
+
 	if ($total_jual-$row['bayar']==0) continue;
 	echo '<tr>
 			<td align="center">' .$row['nama_pelanggan']. '</td>
@@ -140,7 +140,7 @@ $total_jual=0;
 			<td align="center">' .date("d-m-Y",strtotime($row['tanggal_tagih'])). '</td>
 			<td align="center" class="uang">' .$total_jual. '</td>
 			<td align="center" class="uang">' .$row['bayar']. '</td>
-			<td align="center" class="uang">' .$total_jual-$row['bayar']. '</td>
+			<td align="center" class="uang">' .($total_jual-$row['bayar']). '</td>
 			<td align="center" style="color:' .$color2. '">' .$tgl_jb. '</td>
 			<td align="center" style="color: ' .$color. '">' .$status. '</td>
 			<td align="center">' .$status_nota. '</td>
@@ -166,7 +166,7 @@ function cari() {
     var tanggal = $('#datepicker').val();
     var url = "?page=penagihan&mode=penagihan_2&id=<?php echo $id; ?>&cari=" +
             tanggal;
-    if (tanggal != '') 
+    if (tanggal != '')
         window.location = url;
     }
 function reset() {
