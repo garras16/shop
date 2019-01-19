@@ -55,8 +55,8 @@ $thn_sql="YEAR(CURRENT_DATE())";
                                 Tambah</button>
                         </p>
                         <div class="clearfix"></div>
-                        <div class="table responsive">
-                            <table id="table1" class="table table-bordered table-striped">
+                        <div class="table-responsive">
+                            <table id="table1" class="table table-bordered table-striped" style="min-width: 900px;">
                                 <thead>
                                     <tr>
                                         <th>Tanggal</th>
@@ -85,11 +85,11 @@ if (mysqli_num_rows($sql)>0) echo '<tr style="background: red">
 while($row=mysqli_fetch_array($sql)){
 $jumlah_keluar+=$row['jumlah'];
 	echo '			<tr>
-						<td><div style="min-width:70px">' .date("d-m-Y", strtotime($row['tanggal'])). '</div></td>
-						<td><div style="min-width:70px">' .$row['komponen']. '</div></td>
-						<td><div style="min-width:70px"></div></td>
-						<td><div style="min-width:70px" align="right" class="uang">' .$row['jumlah']. '</div></td>
-						<td><div style="min-width:70px">' .$row['keterangan']. '</div></td>';
+						<td><div>' .date("d-m-Y", strtotime($row['tanggal'])). '</div></td>
+						<td><div>' .$row['komponen']. '</div></td>
+						<td><div></div></td>
+						<td><div align="right" class="uang">' .$row['jumlah']. '</div></td>
+						<td><div>' .$row['keterangan']. '</div></td>';
 	if ($_SESSION['posisi']=='OWNER'){
 		echo '			<td align="center"><a class="btn btn-primary btn-xs" href="?page=keuangan&mode=kas_kecil&del=' .$row['id_kas_kecil']. '"><i class="fa fa-trash"></i> HAPUS</a></td>';
 	} else {
@@ -104,11 +104,11 @@ if (mysqli_num_rows($sql2)>0) echo '<tr style="background: blue">
 while($row=mysqli_fetch_array($sql2)){
 $jumlah_masuk+=$row['jumlah'];
 	echo '			<tr>
-						<td><div style="min-width:70px">' .date("d-m-Y", strtotime($row['tanggal'])). '</div></td>
-						<td><div style="min-width:70px">' .$row['komponen']. '</div></td>
-						<td><div style="min-width:70px" align="right" class="uang">' .$row['jumlah']. '</div></td>
-						<td><div style="min-width:70px"></div></td>
-						<td><div style="min-width:70px">' .$row['keterangan']. '</div></td>';
+						<td><div>' .date("d-m-Y", strtotime($row['tanggal'])). '</div></td>
+						<td><div>' .$row['komponen']. '</div></td>
+						<td><div align="right" class="uang">' .$row['jumlah']. '</div></td>
+						<td><div></div></td>
+						<td><div>' .$row['keterangan']. '</div></td>';
 	if ($_SESSION['posisi']=='OWNER'){
 		echo '			<td align="center"><a class="btn btn-primary btn-xs" href="?page=keuangan&mode=kas_kecil&del=' .$row['id_kas_kecil']. '"><i class="fa fa-trash"></i> HAPUS</a></td>';
 	} else {
@@ -255,7 +255,7 @@ if (mysqli_num_rows($sql)>0 || mysqli_num_rows($sql2)>0) {
 function cari() {
     var tanggal = $('#datepicker').val();
     var url = "?page=keuangan&mode=kas_kecil&cari=" + tanggal;
-    if (tanggal != '') 
+    if (tanggal != '')
         window.location = url;
     }
 function reset() {

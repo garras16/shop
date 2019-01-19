@@ -22,7 +22,7 @@ $sql=mysqli_query($con, "DELETE FROM canvass_keluar_barang WHERE qty=0 AND qty_c
                         </div>
                         <div class="clearfix" style="margin-bottom: 20px;"></div>
                         <div class="table responsive">
-                            <table id="table1" class="table table-bordered table-striped">
+                            <table id="table1" class="table table-bordered table-striped" style="min-width: 358px;">
                                 <thead>
                                     <tr>
                                         <th>Tgl Canvass</th>
@@ -35,11 +35,11 @@ $sql=mysqli_query($con, "DELETE FROM canvass_keluar_barang WHERE qty=0 AND qty_c
 $sql=mysqli_query($con, "SELECT canvass_keluar.id_canvass_keluar,tanggal_canvass,nama_kendaraan,plat,canvass_keluar.status
 FROM
     canvass_keluar
-    INNER JOIN kendaraan 
+    INNER JOIN kendaraan
         ON (canvass_keluar.id_mobil = kendaraan.id_kendaraan)
-	INNER JOIN canvass_keluar_barang 
+	INNER JOIN canvass_keluar_barang
         ON (canvass_keluar.id_canvass_keluar = canvass_keluar_barang.id_canvass_keluar)
-	LEFT JOIN lap_stock_opname 
+	LEFT JOIN lap_stock_opname
         ON (canvass_keluar.id_canvass_keluar = lap_stock_opname.id_canvass_keluar)
 WHERE canvass_keluar.status>0 AND canvass_keluar.status<=4
 GROUP BY canvass_keluar.id_canvass_keluar

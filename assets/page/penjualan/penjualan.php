@@ -72,7 +72,7 @@
                         class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa
                         fa-plus"></i> Tambah</button></p> </div> -->
                         <div class="clearfix"></div>
-                        <table id="table1" class="table table-bordered table-striped">
+                        <table id="table1" class="table table-bordered table-striped" style="width: 1000px;">
                             <thead>
                                 <tr>
                                     <th>No.</th>
@@ -113,19 +113,19 @@ $sql=mysqli_query($con, "SELECT
     , nota_sudah_cek.status
 FROM
     jual
-    INNER JOIN jual_detail 
+    INNER JOIN jual_detail
         ON (jual.id_jual = jual_detail.id_jual)
-    INNER JOIN pelanggan 
+    INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
-    INNER JOIN karyawan 
+    INNER JOIN karyawan
         ON (jual.id_karyawan = karyawan.id_karyawan)
-	LEFT JOIN nota_sudah_cek 
+	LEFT JOIN nota_sudah_cek
         ON (jual.id_jual = nota_sudah_cek.id_jual)
-    INNER JOIN harga_jual 
+    INNER JOIN harga_jual
         ON (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
 $val
 GROUP BY jual.id_jual
@@ -136,7 +136,7 @@ $i+=1;
 if ($row['cetak']=='1'){
 	$status_cetak='SUDAH CETAK';
 	$style='badge bg-green';
-} else{	
+} else{
 	$status_cetak='';
 	$style='';
 }
@@ -290,9 +290,9 @@ function cari_barang() {
     window.location = "?page=penjualan&mode=penjualan&cari=" + $('#cari').val();
 }
 function handleChange(input) {
-    if (input.value < 0) 
+    if (input.value < 0)
         input.value = 0;
-    if (input.value > 100) 
+    if (input.value > 100)
         input.value = 100;
     }
 $(document).ready(function () {

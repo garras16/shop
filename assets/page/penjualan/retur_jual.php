@@ -55,7 +55,7 @@ $q = mysqli_query($con, $sql);
                                 RESET</a>
                         </div>
                         <div class="clearfix"></div><br/>
-                        <table id="table1" class="table table-bordered table-striped">
+                        <table id="table1" class="table table-bordered table-striped" style="width:1000px;">
                             <thead>
                                 <tr>
                                     <th>Tgl. Retur</th>
@@ -88,11 +88,11 @@ $sql=mysqli_query($con, "SELECT
     , karyawan.nama_karyawan
 FROM
     retur_jual
-    INNER JOIN jual 
+    INNER JOIN jual
         ON (retur_jual.id_jual = jual.id_jual)
-    INNER JOIN pelanggan 
+    INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
-    INNER JOIN karyawan 
+    INNER JOIN karyawan
         ON (jual.id_karyawan = karyawan.id_karyawan)
 $val
 ORDER BY retur_jual.id_retur_jual DESC");
@@ -103,7 +103,7 @@ $jumlah_jual=$r['jumlah'];
 $sql2=mysqli_query($con, "SELECT SUM(qty_retur * harga_retur) AS jumlah
 FROM
     retur_jual
-    INNER JOIN retur_jual_detail 
+    INNER JOIN retur_jual_detail
         ON (retur_jual.id_retur_jual = retur_jual_detail.id_retur_jual)
 WHERE retur_jual.id_retur_jual=" .$row['id_retur_jual']);
 $r=mysqli_fetch_array($sql2);

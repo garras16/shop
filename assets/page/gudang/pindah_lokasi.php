@@ -19,7 +19,7 @@
                         </div>
                         <div class="clearfix" style="margin-bottom: 20px;"></div>
                         <div class="table responsive">
-                            <table id="table1" class="table table-bordered table-striped">
+                            <table id="table1" class="table table-bordered table-striped" style="min-width:355px;">
                                 <thead>
                                     <tr>
                                         <th>Nama Barang</th>
@@ -34,7 +34,7 @@ $sql=mysqli_query($con, "SELECT
     , satuan.nama_satuan
 FROM
     barang
-    INNER JOIN satuan 
+    INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE barang.status=1");
 while($row=mysqli_fetch_array($sql)){
@@ -43,13 +43,13 @@ $sql2=mysqli_query($con, "SELECT
     SUM(barang_masuk_rak.stok) AS total
 FROM
     barang_supplier
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-    INNER JOIN beli_detail 
+    INNER JOIN beli_detail
         ON (beli_detail.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang_masuk 
+    INNER JOIN barang_masuk
         ON (barang_masuk.id_beli_detail = beli_detail.id_beli_detail)
-    INNER JOIN barang_masuk_rak 
+    INNER JOIN barang_masuk_rak
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
 WHERE barang.id_barang=$id_barang AND barang_masuk_rak.stok>0");
 $r=mysqli_fetch_array($sql2);
