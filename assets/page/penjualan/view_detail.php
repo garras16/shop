@@ -261,7 +261,7 @@ while($row=mysqli_fetch_array($sql)){
 	$diskon3=$row['qty']*($row['harga_jual']-$diskon1-$diskon2)*$row['diskon_persen_3']/100;
 	$tot_set_disk_3=($row['harga_jual']-$diskon1-$diskon2-$diskon3);
 	$total_jual+=$tot_set_disk_3;
-	if($tot_set_disk_1 < 0 || $tot_set_disk_2 < 0 || $tot_set_disk_3 < 0) {
+	if($tot_set_disk_1 < -1 OR $tot_set_disk_2 < -1 OR $tot_set_disk_3 < 0) {
 		$val = "color: red;";
 	}else{
 		$val = "color: black;";

@@ -66,7 +66,7 @@ if (isset($tambah_retur_beli_post)){
                             </p>
                         </div>
                         <div class="clearfix" style="margin-bottom: 20px;"></div>
-                        <table id="table1" class="table table-bordered table-striped">
+                        <table id="table1" class="table table-bordered table-striped" style="width:1200px;">
                             <thead>
                                 <tr>
                                     <th>Tgl. Retur</th>
@@ -91,9 +91,9 @@ $sql=mysqli_query($con, "SELECT
     , supplier.nama_supplier
 FROM
     retur_beli
-    INNER JOIN beli 
+    INNER JOIN beli
         ON (retur_beli.id_beli = beli.id_beli)
-    INNER JOIN supplier 
+    INNER JOIN supplier
         ON (beli.id_supplier = supplier.id_supplier)
 $val
 ORDER BY retur_beli.id_retur_beli DESC");
@@ -152,7 +152,7 @@ if ($row['status']=='1'){
                             </span>
                             <select name="id_beli" class="select2 form-control" required="true">
                                 <option value="" disabled="disabled" selected="selected">-= Pilih Nota Beli =-</option>
-                                <?php 
+                                <?php
 								$sql=mysqli_query($con, "SELECT
     beli.id_beli
     , beli.no_nota_beli
@@ -161,7 +161,7 @@ if ($row['status']=='1'){
     , supplier.nama_supplier
 FROM
     beli
-    INNER JOIN supplier 
+    INNER JOIN supplier
         ON (beli.id_supplier = supplier.id_supplier)
 WHERE beli.id_beli NOT IN (SELECT id_beli FROM retur_beli)
 ORDER BY beli.id_beli ASC");
@@ -192,7 +192,7 @@ ORDER BY beli.id_beli ASC");
     function cari() {
         var tanggal = $('#datepicker').val();
         var url = "?page=pembelian&mode=retur_beli&cari=" + tanggal;
-        if (tanggal != '') 
+        if (tanggal != '')
             window.location = url;
         }
     function reset() {

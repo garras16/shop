@@ -3,9 +3,8 @@ if (isset($_GET['act'])){
 	$act=0;
 	if ($_GET['act']=='1') $act=1;
 	if ($_GET['act']=='2') $act=2;
-
-	if (isset($_GET['tbl']) && $_GET['tbl']=='1'){
-		$no = $_GET['no'];
+	$no = $_GET['no'];
+	if (isset($_GET['tbl']) && $_GET['tbl']=='1' && $act=='1'){
 		$jml = $_GET['jml'];
 		$bom = mysqli_query($con, "SELECT sisa FROM bayar_nota_jual WHERE no_nota_jual='$no' ORDER BY id_bayar DESC LIMIT 1");
 		$data = mysqli_fetch_array($bom);
@@ -23,6 +22,13 @@ if (isset($_GET['act'])){
 		} else {
 			$pesan="INPUT GAGAL";
 		}
+	}else if(isset($_GET['tbl']) && $_GET['tbl']=='1' && $act =='2'){
+		$sql=mysqli_query($con, "UPDATE bayar_nota_jual SET status_giro=$act WHERE no_nota_jual='$no'");
+		if ($sql){
+			$pesan="INPUT BERHASIL";
+		} else {
+			$pesan="INPUT GAGAL";
+		}
 	} else {
 		$sql=mysqli_query($con, "UPDATE penagihan_detail SET status_giro=$act WHERE id_penagihan_detail=$id");
 		if ($sql){
@@ -32,7 +38,7 @@ if (isset($_GET['act'])){
 		}
 	}
 	_alert($pesan);
-	_direct("?page=penjualan&mode=pencairan_giro");
+	//_direct("?page=penjualan&mode=pencairan_giro");
 }
 ?>
 
@@ -52,7 +58,7 @@ if (isset($_GET['act'])){
                                 <div class="x_panel">
                                     <div class="x_content">
 
-                                        <table id="table1" class="table table-bordered table-striped table-responsive">
+                                        <table id="table1" class="table table-bordered table-striped table-responsive" style="width:950px;">
                                             <thead>
                                                 <tr>
                                                     <th>Tanggal Nota Jual</th>
@@ -73,7 +79,7 @@ FROM
         ON (bayar_nota_jual.no_nota_jual = jual.invoice)
     INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
-WHERE jenis='Giro' AND tgl_bayar BETWEEN NOW() - INTERVAL 30 DAY AND NOW()");
+WHERE jenis='Giro' AND tgl_bayar BETWEEN NOW() - INTERVAL 30 DAY AND NOW() ORDER BY id_bayar DESC");
 while($row=mysqli_fetch_array($sql)){
     //STATUS GIRO:
     if ($row['status_giro']==0) $status_giro='BELUM DICAIRKAN';
@@ -88,7 +94,7 @@ while($row=mysqli_fetch_array($sql)){
                 <td>' .$status_giro. '</td>';
     if ($row['status_giro']==0){
         echo '<td><a href="?page=penjualan&mode=pencairan_giro&id=' .$row['id_bayar']. '&act=1&tbl=1&no='.$row['no_nota_jual'].'&jml='.$row['jumlah'].'" class="btn btn-primary btn-xs"><i class="fa fa-times"></i> Terima</a>
-                <a href="?page=penjualan&mode=pencairan_giro&id=' .$row['id_bayar']. '&act=2&tbl=1" class="btn btn-danger btn-xs"><i class="fa fa-times"></i> Tolak</a></td>';
+                <a href="?page=penjualan&mode=pencairan_giro&id=' .$row['id_bayar']. '&act=2&tbl=1&no='.$row['no_nota_jual'].'&jml='.$row['jumlah'].'" class="btn btn-danger btn-xs"><i class="fa fa-times"></i> Tolak</a></td>';
     } else {
         echo '<td></td>';
     }

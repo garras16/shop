@@ -32,8 +32,9 @@
 	$b3=mysqli_fetch_array($sql3);
 	$jumlah_bayar_x+=$b3['jumlah_bayar'];
 //-------------------------------------------------------------------------------------------
-
-$sisa_nota=$jumlah_nota-$jumlah_bayar_x;
+$ci = mysqli_query($con, "SELECT sisa FROM bayar_nota_jual WHERE no_nota_jual='$no_nota_jual' ORDER BY id_bayar DESC LIMIT 1");
+$data = mysqli_fetch_array($ci);
+$sisa_nota=$data['sisa'];
 if (isset($jatuh_tempo)){
 	$tgl = explode("/", $jatuh_tempo);
 	$jatuh_tempo = $tgl[2] ."-". $tgl[1] ."-". $tgl[0];

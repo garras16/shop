@@ -88,15 +88,13 @@ FROM
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-calendar fa-fw"></i><br>
-                                        <small>Tgl. Nota</small>
+                                        <small style="font-size: 12px;">Tgl. Nota</small>
                                     </span>
                                     <input
                                         class="form-control"
                                         id="tanggal"
                                         name="tanggal"
                                         type="date"
-                                        style="padding: 20px 15px;"
                                         value="<?php echo $row['tanggal']; ?>"
                                         readonly="readonly">
                                     <span class="input-group-addon">

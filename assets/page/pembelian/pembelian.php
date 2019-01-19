@@ -96,7 +96,7 @@ if (isset($tambah_pembelian_post)){
                             </p>
                         </div>
                         <div class="clearfix" style="margin-bottom: 30px;"></div>
-                        <table id="table1" class="table table-bordered table-striped">
+                        <table id="table1" class="table table-bordered table-striped" style="width: 1000px;">
                             <thead>
                                 <tr>
                                     <th>Tgl. Nota Beli</th>
@@ -137,15 +137,15 @@ $sql=mysqli_query($con, "SELECT
     , barang.nama_barang
 FROM
     beli
-    LEFT JOIN supplier 
+    LEFT JOIN supplier
         ON (beli.id_supplier = supplier.id_supplier)
-    LEFT JOIN ekspedisi 
+    LEFT JOIN ekspedisi
         ON (beli.id_ekspedisi = ekspedisi.id_ekspedisi)
-    LEFT JOIN beli_detail 
+    LEFT JOIN beli_detail
         ON (beli_detail.id_beli = beli.id_beli)
-    LEFT JOIN barang_supplier 
+    LEFT JOIN barang_supplier
         ON (beli_detail.id_barang_supplier = barang_supplier.id_barang_supplier)
-    LEFT JOIN barang 
+    LEFT JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
     $val
     GROUP BY beli.id_beli
@@ -162,9 +162,9 @@ $sql=mysqli_query($con, "SELECT
     , ekspedisi.nama_ekspedisi
 FROM
     beli
-    INNER JOIN supplier 
+    INNER JOIN supplier
         ON (beli.id_supplier = supplier.id_supplier)
-	LEFT JOIN ekspedisi 
+	LEFT JOIN ekspedisi
         ON (beli.id_ekspedisi = ekspedisi.id_ekspedisi)
 $val
 ORDER BY beli.id_beli DESC");
@@ -176,7 +176,7 @@ $sql2=mysqli_query($con, "SELECT
     ppn_all_persen,SUM(qty * (harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total_beli
 FROM
     beli_detail
-    INNER JOIN beli 
+    INNER JOIN beli
         ON (beli_detail.id_beli = beli.id_beli)
 WHERE beli.id_beli=$id_beli");
 $r=mysqli_fetch_array($sql2);
@@ -185,11 +185,11 @@ $sql3=mysqli_query($con, "SELECT
     ppn_all_persen,SUM(qty_di_rak * (harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total_datang
 FROM
     beli_detail
-    INNER JOIN beli 
+    INNER JOIN beli
         ON (beli_detail.id_beli = beli.id_beli)
-    LEFT JOIN barang_masuk 
+    LEFT JOIN barang_masuk
         ON (barang_masuk.id_beli_detail = beli_detail.id_beli_detail)
-    LEFT JOIN barang_masuk_rak 
+    LEFT JOIN barang_masuk_rak
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
 WHERE beli.id_beli=$id_beli");
 $s=mysqli_fetch_array($sql3);
@@ -257,7 +257,7 @@ $total_datang=$s['total_datang']+($s['total_datang']*$s['ppn_all_persen']/100);
                             </span>
                             <select name="id_supplier" class="select2 form-control" required="true">
                                 <option value="" disabled="disabled" selected="selected">-= Pilih Supplier =-</option>
-                                <?php 
+                                <?php
 								$cust=mysqli_query($con, "SELECT id_supplier, nama_supplier FROM supplier");
 								while($b=mysqli_fetch_array($cust)){
 									echo '<option value="' .$b['id_supplier']. '">' .$b['nama_supplier']. '</option>';
@@ -333,9 +333,9 @@ $total_datang=$s['total_datang']+($s['total_datang']*$s['ppn_all_persen']/100);
         window.location = "?page=pembelian&mode=pembelian&cari=" + $('#cari').val();
     }
     function handleChange(input) {
-        if (input.value < 0) 
+        if (input.value < 0)
             input.value = 0;
-        if (input.value > 100) 
+        if (input.value > 100)
             input.value = 100;
         }
     $(document).ready(function () {

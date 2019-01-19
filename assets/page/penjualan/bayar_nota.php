@@ -1,17 +1,18 @@
 <?php
-if (isset($tambah_bayar_nota_jual_post)){
-	_direct("?page=penjualan&mode=bayar_nota_2&no_nota_jual=$no_nota_jual&jenis=$jenis");
-}
-if (isset($_GET['del'])){
-	$del=$_GET['del'];
-	$sql=mysqli_query($con, "SELECT * FROM bayar_nota_jual WHERE id_bayar=$del");
-	$row=mysqli_fetch_array($sql);
-	$no_nota_beli=$row['no_nota_jual'];
-	$sql=mysqli_query($con, "DELETE FROM bayar_nota_jual_detail WHERE id_bayar=$del");
-	$sql=mysqli_query($con, "DELETE FROM bayar_nota_jual WHERE id_bayar=$del");
-	$sql=mysqli_query($con, "UPDATE bayar_nota_jual SET now=2 WHERE no_nota_jual='$no_nota_beli'");
-	_direct("?page=penjualan&mode=bayar_nota");
-}
+	if (isset($tambah_bayar_nota_jual_post)) {
+		_direct("?page=penjualan&mode=bayar_nota_2&no_nota_jual=$no_nota_jual&jenis=$jenis");
+	}
+
+	if (isset($_GET['del'])) {
+		$del=$_GET['del'];
+		$sql=mysqli_query($con, "SELECT * FROM bayar_nota_jual WHERE id_bayar=$del");
+		$row=mysqli_fetch_array($sql);
+		$no_nota_beli=$row['no_nota_jual'];
+		$sql=mysqli_query($con, "DELETE FROM bayar_nota_jual_detail WHERE id_bayar=$del");
+		$sql=mysqli_query($con, "DELETE FROM bayar_nota_jual WHERE id_bayar=$del");
+		$sql=mysqli_query($con, "UPDATE bayar_nota_jual SET now=2 WHERE no_nota_jual='$no_nota_beli'");
+		_direct("?page=penjualan&mode=bayar_nota");
+	}
 ?>
 <!-- page content -->
 <div class="right_col" role="main">
@@ -247,7 +248,7 @@ GROUP BY id_jual");
 									$row2=mysqli_fetch_array($sql2);
 									$jumlah_bayar=$row2['jumlah_bayar'];
 
-									$sql2=mysqli_query($con, "SELECT SUM(bayar) AS jumlah_bayar
+									$sql2=mysqli_query($con, "SELECT invoice,SUM(bayar) AS jumlah_bayar
 									FROM
 										penagihan_detail
 										INNER JOIN jual
@@ -255,6 +256,9 @@ GROUP BY id_jual");
 									WHERE jual.id_jual=" .$b['id_jual']);
 									$row2=mysqli_fetch_array($sql2);
 									$jumlah_bayar+=$row2['jumlah_bayar'];
+									$no_nota = $row2['invoice'];
+									$ci =mysqli_query($con, "SELECT sisa FROM bayar_nota_jual WHERE no_nota_jual='$no_nota' ORDER BY id_bayar DESC LIMIT 1");
+									$so = mysqli_fetch_array($ci);
 
 									$sisa_piutang=$sisaan-$jumlah_bayar;
 									$sql2=mysqli_query($con, "SELECT SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah_nota FROM jual_detail WHERE id_jual=$tmp_id_jual");
@@ -265,7 +269,7 @@ GROUP BY id_jual");
 									$ppn = $set_dis*($bb['ppn_all_persen']/100);
 									$jumlah_nota = $set_dis+$ppn;
 									$piutang = $jumlah_nota-$jumlah_bayar;
-									if ($sisa_piutang>0) echo '<option data-piutang="' .$piutang. '" data-jumlah="' .$b2['jumlah']. '" value="' .$b['invoice']. '">' .$b['invoice']. ' | ' .$b['nama_pelanggan']. ' | Rp ' .format_uang($jumlah_nota). '</option>';
+									if ($sisa_piutang>0) echo '<option data-piutang="' .$so['sisa']. '" data-jumlah="' .$b2['jumlah']. '" value="' .$b['invoice']. '">' .$b['invoice']. ' | ' .$b['nama_pelanggan']. ' | Rp ' .format_uang($jumlah_nota). '</option>';
 								}
 							?>
                         </select>
