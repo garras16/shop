@@ -82,7 +82,7 @@ $sql=mysqli_query($con, "SELECT
     , retur_jual.id_retur_jual
     , retur_jual.no_retur_jual
     , retur_jual.status
-	, jual.id_jual
+    , jual.id_jual
     , jual.invoice
     , pelanggan.nama_pelanggan
     , karyawan.nama_karyawan
