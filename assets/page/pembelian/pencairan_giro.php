@@ -22,8 +22,45 @@ if (isset($_GET['act'])){
 		} else {
 			$pesan="INPUT GAGAL";
 		}
+
 	}else if(isset($_GET['tbl']) && $_GET['tbl']=='1' && $act =='2'){
-		$sql=mysqli_query($con, "UPDATE bayar_nota_beli SET status_giro=$act WHERE no_nota_beli='$no'");
+		$validasi = mysqli_query($con, "SELECT status FROM bayar_nota_beli WHERE no_nota_beli='$no'");
+		$result = mysqli_num_rows($validasi);
+		if($result == 0) {
+			$status = 4;
+		}else{
+			$bb = mysqli_query($con, "SELECT sisa FROM bayar_nota_beli WHERE no_nota_beli='$no' ORDER BY id_bayar DESC LIMIT 1");
+			$cc = mysqli_fetch_array($bb);
+			if($cc['sisa']==NULL) {
+				$status =4;
+			}else{
+				$sql=mysqli_query($con, "SELECT id_beli FROM beli WHERE no_nota_beli='$no'");
+				$row=mysqli_fetch_array($sql);
+				$id_beli=$row['id_beli'];
+				$sql2=mysqli_query($con, "SELECT *, SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total
+					FROM
+			    		beli
+			    	INNER JOIN beli_detail
+			        	ON (beli.id_beli = beli_detail.id_beli)
+			    	INNER JOIN supplier
+			        	ON (beli.id_supplier = supplier.id_supplier)
+					WHERE beli.no_nota_beli='$no'
+					GROUP BY beli_detail.id_beli");
+				$row=mysqli_fetch_array($sql2);
+				$id_supplier=$row['id_supplier'];
+				$id_beli=$row['id_beli'];
+				$total_nota=$row['total']-($row['total']*$row['diskon_all_persen']/100);
+				$grand = $total_nota+($total_nota*($row['ppn_all_persen']/100));
+				$jumlah_nota=$grand;
+
+				if($jumlah_nota-$cc['sisa'] != 0) {
+					$status=2;
+				}else{
+					$status=4;
+				}
+			}
+		}
+		$sql=mysqli_query($con, "UPDATE bayar_nota_beli SET status=$status, status_giro=$act WHERE id_bayar='$id'");
 		if ($sql){
 			$pesan="INPUT BERHASIL";
 		} else {

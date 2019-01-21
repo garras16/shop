@@ -52,7 +52,6 @@ if (isset($tambah_bayar_nota_beli_post)){
 		}
 	}
 	if ($jenis !='Retur'){
-		($jumlah_bayar>=$sisa_nota ? $status=1 : $status=2);
 		//$sql=mysqli_query($con, "UPDATE bayar_nota_beli SET status=$status WHERE no_nota_beli='$no_nota_beli'");
     $sql=mysqli_query($con, "SELECT *, SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total
 		FROM
@@ -70,29 +69,34 @@ if (isset($tambah_bayar_nota_beli_post)){
 
 		$cek = mysqli_query($con, "SELECT sisa FROM bayar_nota_beli WHERE no_nota_beli='$no_nota_beli' ORDER BY id_bayar DESC LIMIT 1");
 		$na = mysqli_fetch_array($cek);
+    $sisa = $na['sisa']-$jumlah_bayar;
+		$sis = $na['sisa'];
 		if($result == 0) {
 			$sisa=$grand-$jumlah_bayar;
       $sis =$grand;
       if($sisa == 0 OR $sis ==0) {
         $now = 1;
+        $status = 1;
       }else{
         $now = 2;
+        $status = 2;
       }
 		}else{
         if($sisa == 0 OR $sis == 0) {
           $now = 1;
+          $status = 1;
           $sql=mysqli_query($con, "UPDATE bayar_nota_beli SET now=$now WHERE no_nota_beli='$no_nota_beli'");
         }else{
           $now = 2;
+          $status =2;
         }
-
         $sisa = $na['sisa']-$jumlah_bayar;
         $sis = $na['sisa'];
 		}
 		if ($jenis =='Transfer'){
 			$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','$jenis',$jumlah_bayar,$status,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening',null,null,$sisa,null,$now)");
 		} else if ($jenis =='Giro'){
-			$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','$jenis',$jumlah_bayar,2,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening','$jatuh_tempo','$keterangan',$sis,0,2)")or die(mysqli_error($con));
+			$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','$jenis',$jumlah_bayar,3,'$pengirim_nama_bank','$pengirim_nama_rekening','$pengirim_no_rekening','$penerima_nama_bank','$penerima_nama_rekening','$penerima_no_rekening','$jatuh_tempo','$keterangan',$sis,0,2)")or die(mysqli_error($con));
 		} else {
 			$sql=mysqli_query($con, "INSERT INTO bayar_nota_beli VALUES(null,'$tanggal','$no_nota_beli','$jenis',$jumlah_bayar,$status,null,null,null,null,null,null,null,null,$sisa,null,$now)")or die (mysqli_error($con));
 		}

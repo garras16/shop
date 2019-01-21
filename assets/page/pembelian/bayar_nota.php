@@ -157,6 +157,12 @@ if ($row['status']=='1'){
 	$status="LUNAS";
 } else if ($row['status']=='2'){
 	$status="TERBAYAR SEBAGIAN";
+}else if ($row['status']=='3') {
+	$status="PENDING";
+}else if ($row['status']=='3') {
+	$status="DIBATALKAN";
+}else if ($row['status']=='4') {
+	$status="BELUM TERBAYAR";
 } else {
 	$status="";
 }
