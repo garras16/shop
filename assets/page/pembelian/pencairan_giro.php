@@ -42,12 +42,9 @@ if (isset($_GET['act'])){
 			    		beli
 			    	INNER JOIN beli_detail
 			        	ON (beli.id_beli = beli_detail.id_beli)
-			    	INNER JOIN supplier
-			        	ON (beli.id_supplier = supplier.id_supplier)
 					WHERE beli.no_nota_beli='$no'
 					GROUP BY beli_detail.id_beli");
 				$row=mysqli_fetch_array($sql2);
-				$id_supplier=$row['id_supplier'];
 				$id_beli=$row['id_beli'];
 				$total_nota=$row['total']-($row['total']*$row['diskon_all_persen']/100);
 				$grand = $total_nota+($total_nota*($row['ppn_all_persen']/100));

@@ -43,12 +43,9 @@ if (isset($_GET['act'])){
 			    		jual
 			    	INNER JOIN jual_detail
 			        	ON (jual.id_jual = jual_detail.id_jual)
-			    	INNER JOIN pelanggan
-			        	ON (jual.id_pelanggan = pelanggan.id_pelanggan)
 					WHERE jual.invoice='$no'
 					GROUP BY jual_detail.id_jual");
 				$row=mysqli_fetch_array($sql2);
-				$id_pelanggan=$row['id_pelanggan'];
 				$id_jual=$row['id_jual'];
 				$total_nota=$row['total']-($row['total']*$row['diskon_all_persen']/100);
 				$grand = $total_nota+($total_nota*($row['ppn_all_persen']/100));
