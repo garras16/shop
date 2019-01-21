@@ -8,8 +8,10 @@ if (isset($_GET['act'])){
 		$jml = $_GET['jml'];
 		$bom = mysqli_query($con, "SELECT sisa FROM bayar_nota_jual WHERE no_nota_jual='$no' ORDER BY id_bayar DESC LIMIT 1");
 		$data = mysqli_fetch_array($bom);
+		$validasi = mysqli_query($con, "SELECT status FROM bayar_nota_jual WHERE no_nota_jual='$no'");
+		$result = mysqli_num_rows($validasi);
 		$update = $data['sisa']-$jml;
-		if($update == 0) {
+		if(($update==0 && $result==0) OR ($update==0 && $result!=0)) {
 			$stat = 1;
 			$now = 1;
 			$sql=mysqli_query($con, "UPDATE bayar_nota_jual SET now=$now WHERE no_nota_jual='$no'");
@@ -23,7 +25,43 @@ if (isset($_GET['act'])){
 			$pesan="INPUT GAGAL";
 		}
 	}else if(isset($_GET['tbl']) && $_GET['tbl']=='1' && $act =='2'){
-		$sql=mysqli_query($con, "UPDATE bayar_nota_jual SET status_giro=$act WHERE no_nota_jual='$no'");
+		$validasi = mysqli_query($con, "SELECT status FROM bayar_nota_jual WHERE no_nota_jual='$no'");
+		$result = mysqli_num_rows($validasi);
+		if($result == 0) {
+			$status = 4;
+		}else{
+			$bb = mysqli_query($con, "SELECT sisa FROM bayar_nota_jual WHERE no_nota_jual='$no' ORDER BY id_bayar DESC LIMIT 1");
+			$cc = mysqli_fetch_array($bb);
+			if($cc['sisa']==NULL) {
+				$status =4;
+			}else{
+				$sql=mysqli_query($con, "SELECT id_jual FROM jual WHERE invoice='$no'");
+				$row=mysqli_fetch_array($sql);
+				$id_jual=$row['id_jual'];
+				$sql2=mysqli_query($con, "SELECT *, SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total
+					FROM
+			    		jual
+			    	INNER JOIN jual_detail
+			        	ON (jual.id_jual = jual_detail.id_jual)
+			    	INNER JOIN pelanggan
+			        	ON (jual.id_pelanggan = pelanggan.id_pelanggan)
+					WHERE jual.invoice='$no'
+					GROUP BY jual_detail.id_jual");
+				$row=mysqli_fetch_array($sql2);
+				$id_pelanggan=$row['id_pelanggan'];
+				$id_jual=$row['id_jual'];
+				$total_nota=$row['total']-($row['total']*$row['diskon_all_persen']/100);
+				$grand = $total_nota+($total_nota*($row['ppn_all_persen']/100));
+				$jumlah_nota=$grand;
+
+				if($jumlah_nota-$cc['sisa'] != 0) {
+					$status=2;
+				}else{
+					$status=4;
+				}
+			}
+		}
+		$sql=mysqli_query($con, "UPDATE bayar_nota_jual SET status=$status, status_giro=$act WHERE id_bayar='$id'");
 		if ($sql){
 			$pesan="INPUT BERHASIL";
 		} else {
