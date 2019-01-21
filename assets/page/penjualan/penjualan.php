@@ -72,7 +72,7 @@
                         class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa
                         fa-plus"></i> Tambah</button></p> </div> -->
                         <div class="clearfix"></div>
-                        <table id="table1" class="table table-bordered table-striped" style="width: 1000px;">
+                        <table id="table1" class="table table-bordered table-striped" style="min-width: 1000px;">
                             <thead>
                                 <tr>
                                     <th>No.</th>

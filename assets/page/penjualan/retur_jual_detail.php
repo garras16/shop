@@ -243,7 +243,7 @@ if ($row['status_bayar']=='1'){
                         <table
                             id="table1"
                             class="table table-bordered table-striped"
-                            style="width: 2200px;">
+                            style="min-width: 2200px;">
                             <thead>
                                 <tr>
                                     <th>Nama Barang</th>

@@ -77,7 +77,7 @@ if (isset($_GET['del'])){
                         <table
                             id="table1"
                             class="table table-bordered table-striped"
-                            style="width: 1500px;">
+                            style="min-width: 1500px;">
                             <thead>
                                 <tr>
                                     <th>Tgl. Nota Beli</th>

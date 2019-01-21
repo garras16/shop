@@ -92,7 +92,7 @@ if (isset($_GET['act'])){
                                 <div class="x_panel">
                                     <div class="x_content">
 
-                                        <table id="table1" class="table table-bordered table-striped table-responsive" style="width: 950px;">
+                                        <table id="table1" class="table table-bordered table-striped table-responsive" style="min-width: 950px;">
                                             <thead>
                                                 <tr>
                                                     <th>Tanggal Nota Jual</th>

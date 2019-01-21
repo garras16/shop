@@ -16,11 +16,11 @@ $sql3=mysqli_query($con, "SELECT
     harga,qty_di_rak,diskon_persen,diskon_persen_2,diskon_persen_3,diskon_rp,diskon_rp_2,diskon_rp_3
 FROM
     beli_detail
-    INNER JOIN beli 
+    INNER JOIN beli
         ON (beli_detail.id_beli = beli.id_beli)
-    LEFT JOIN barang_masuk 
+    LEFT JOIN barang_masuk
         ON (barang_masuk.id_beli_detail = beli_detail.id_beli_detail)
-    LEFT JOIN barang_masuk_rak 
+    LEFT JOIN barang_masuk_rak
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
 WHERE beli.id_beli=$id");
 $total_datang=0;
@@ -111,7 +111,7 @@ $ppn_all_persen=$row2['ppn_all_persen'];
                                     </span>
                                     <select name="id_pelanggan" class="form-control" disabled="disabled">
                                         <option value="0" disabled="disabled" selected="selected">-= Pilih Supplier =-</option>
-                                        <?php 
+                                        <?php
 								$cust=mysqli_query($con, "SELECT id_supplier, nama_supplier FROM supplier");
 								while($b=mysqli_fetch_array($cust)){
 									$selected = ($b['id_supplier'] == $row['id_supplier'] ? 'selected' : '');
@@ -131,7 +131,7 @@ $ppn_all_persen=$row2['ppn_all_persen'];
                                     </span>
                                     <select name="id_ekspedisi" class="form-control" disabled="disabled">
                                         <option>-= Pilih Ekspedisi =-</option>
-                                        <?php 
+                                        <?php
 								$eks=mysqli_query($con, "SELECT id_ekspedisi, nama_ekspedisi FROM ekspedisi");
 								while($b=mysqli_fetch_array($eks)){
 									$selected = ($b['id_ekspedisi'] == $row['id_ekspedisi'] ? 'selected="selected"' : '');
@@ -201,7 +201,7 @@ $ppn_all_persen=$row2['ppn_all_persen'];
                             <table
                                 id="table1"
                                 class="table table-bordered table-striped"
-                                style="width: 1950px;">
+                                style="min-width: 1950px;">
                                 <thead>
                                     <tr>
                                         <th>Nama Barang</th>
@@ -240,14 +240,14 @@ $sql=mysqli_query($con, "SELECT
     , satuan.nama_satuan
 FROM
     beli_detail
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (beli_detail.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-    INNER JOIN satuan 
+    INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
-    LEFT JOIN barang_masuk 
-        ON (barang_masuk.id_beli_detail = beli_detail.id_beli_detail) 
+    LEFT JOIN barang_masuk
+        ON (barang_masuk.id_beli_detail = beli_detail.id_beli_detail)
 	WHERE
 		beli_detail.id_beli=$id AND barang.status=1");
 $berat=0;
@@ -265,7 +265,7 @@ $volume+=$row['volume'];
 	$diskon3=($row['harga']-$diskon1-$diskon2)*$row['diskon_persen_3']/100;
 	$tot_set_disk_3=$row['qty'] * ($row['harga']-$diskon1-$diskon2-$diskon3);
 	$jumlah+=$tot_set_disk_3;
-	
+
 	echo '			<tr>
 						<td style="width: 120px;">' .$row['nama_barang']. '</td>
 						<td style="width: 90px;">' .format_angka($row['qty']). ' ' .$row['nama_satuan']. '</td>
@@ -415,11 +415,11 @@ $sql=mysqli_query($con, "SELECT
 	, satuan.nama_satuan
 FROM
     barang_supplier
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
 	INNER JOIN satuan
 		ON (satuan.id_satuan=barang.id_satuan)
-WHERE 
+WHERE
 	barang_supplier.id_supplier=$id_supplier
 	AND barang.status=1");
 								while($row=mysqli_fetch_array($sql)){
@@ -582,9 +582,9 @@ WHERE
                 // document.getElementById("table1").deleteRow(i);
             }
             function handleChange(input) {
-                if (input.value < 0) 
+                if (input.value < 0)
                     input.value = 0;
-                if (input.value > 100) 
+                if (input.value > 100)
                     input.value = 100;
                 }
             $(document).ready(function () {

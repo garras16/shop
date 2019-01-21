@@ -179,7 +179,7 @@ $ppn_all_persen=$row['ppn_all_persen'];
                         <table
                             id="table1"
                             class="table table-bordered table-striped"
-                            style="width: 2200px;">
+                            style="min-width: 2200px;">
                             <thead>
                                 <tr>
                                     <th>Nama Barang</th>

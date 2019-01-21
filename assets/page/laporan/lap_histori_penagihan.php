@@ -49,7 +49,7 @@ $id_karyawan=$_SESSION['id_karyawan'];
                             <table
                                 id="table1"
                                 class="table table-bordered table-striped"
-                                style="width: 2050px;">
+                                style="min-width: 2050px;">
                                 <thead>
                                     <tr>
                                         <th>Nama Pelanggan</th>
@@ -87,15 +87,15 @@ if (!isset($_GET['tanggal']) && !isset($_GET['debt']) && !isset($_GET['pelangan'
 	$sql=mysqli_query($con, "SELECT *
 FROM
     penagihan
-    INNER JOIN karyawan 
+    INNER JOIN karyawan
         ON (penagihan.id_karyawan = karyawan.id_karyawan)
-    INNER JOIN penagihan_detail 
+    INNER JOIN penagihan_detail
         ON (penagihan.id_penagihan = penagihan_detail.id_penagihan)
-    INNER JOIN jual 
+    INNER JOIN jual
         ON (penagihan_detail.id_jual = jual.id_jual)
-    INNER JOIN pelanggan 
+    INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
-    INNER JOIN jual_detail 
+    INNER JOIN jual_detail
         ON (jual.id_jual = jual_detail.id_jual)
 WHERE penagihan.id_penagihan>0 $val
 GROUP BY jual.id_jual");
@@ -103,7 +103,7 @@ while ($row=mysqli_fetch_array($sql)){
 	$sql2=mysqli_query($con, "SELECT (qty_ambil*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total
 FROM
     jual_detail
-    INNER JOIN nota_siap_kirim_detail 
+    INNER JOIN nota_siap_kirim_detail
         ON (jual_detail.id_jual_detail = nota_siap_kirim_detail.id_jual_detail)
 WHERE id_jual=" .$row['id_jual']);
 $total_jual=0;
@@ -132,7 +132,7 @@ $total_jual=0;
 	$sql3=mysqli_query($con, "SELECT nama_karyawan FROM pengiriman INNER JOIN karyawan ON (pengiriman.id_karyawan = karyawan.id_karyawan) WHERE id_jual=" .$row['id_jual']);
 	$row3=mysqli_fetch_array($sql3);
 	$nama_driver=$row3['nama_karyawan'];
-	
+
 	echo '<tr>
 			<td align="center" style="width: 400px;">' .$row['nama_pelanggan']. '</td>
 			<td align="center" style="width: 300px;">' .$row['invoice']. '</td>
@@ -168,7 +168,7 @@ $total_jual=0;
         var tanggal = $('#datepicker').val();
         var url = "?page=laporan&mode=lap_histori_penagihan&tanggal=" + tanggal + "&deb" +
                 "t=" + debt + "&pelanggan=" + pelanggan;
-        if (debt != '' || pelanggan != '' || tanggal != '') 
+        if (debt != '' || pelanggan != '' || tanggal != '')
             window.location = url;
         }
     function reset() {

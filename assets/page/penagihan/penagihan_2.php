@@ -24,7 +24,7 @@ $thn_sql="YEAR(CURRENT_DATE())";
                                 Kembali</a>
                         </p>
                         <div class="table responsive">
-                            <table id="table1" class="table table-bordered table-striped" style="width:2800px;">
+                            <table id="table1" class="table table-bordered table-striped" style="min-width:2800px;">
                                 <thead>
                                     <tr>
                                         <th>Nama Pelanggan</th>

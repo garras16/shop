@@ -55,7 +55,7 @@ $q = mysqli_query($con, $sql);
                                 RESET</a>
                         </div>
                         <div class="clearfix"></div><br/>
-                        <table id="table1" class="table table-bordered table-striped" style="width:1000px;">
+                        <table id="table1" class="table table-bordered table-striped" style="min-width:1000px;">
                             <thead>
                                 <tr>
                                     <th>Tgl. Retur</th>

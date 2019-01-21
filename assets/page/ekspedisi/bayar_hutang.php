@@ -88,7 +88,7 @@ if (isset($_GET['del'])){
                         </p>
                         <div class="clearfix"></div>
                         <div class="table responsive">
-                            <table id="table1" class="table table-bordered table-striped" style="width: 1300px;">
+                            <table id="table1" class="table table-bordered table-striped" style="min-width: 1300px;">
                                 <thead>
                                     <tr>
                                         <th>Tgl. Nota Beli</th>

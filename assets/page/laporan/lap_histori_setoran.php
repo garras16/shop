@@ -44,7 +44,7 @@ $id_karyawan=$_SESSION['id_karyawan'];
                             <table
                                 id="table1"
                                 class="table table-bordered table-striped"
-                                style="width: 2300px;">
+                                style="min-width: 2300px;">
                                 <thead>
                                     <tr>
                                         <th>Nama Pelanggan</th>
@@ -81,15 +81,15 @@ if (!isset($_GET['tanggal']) && !isset($_GET['debt']) && !isset($_GET['pelangan'
 	$sql=mysqli_query($con, "SELECT *, SUM(bayar) as bayar
 FROM
     penagihan
-    INNER JOIN karyawan 
+    INNER JOIN karyawan
         ON (penagihan.id_karyawan = karyawan.id_karyawan)
-    INNER JOIN penagihan_detail 
+    INNER JOIN penagihan_detail
         ON (penagihan.id_penagihan = penagihan_detail.id_penagihan)
-    INNER JOIN jual 
+    INNER JOIN jual
         ON (penagihan_detail.id_jual = jual.id_jual)
-    INNER JOIN pelanggan 
+    INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
-    INNER JOIN jual_detail 
+    INNER JOIN jual_detail
         ON (jual.id_jual = jual_detail.id_jual)
 WHERE penagihan.status_tagih<>2 $val
 GROUP BY jual.id_jual");
@@ -98,7 +98,7 @@ GROUP BY jual.id_jual");
 	$sql2=mysqli_query($con, "SELECT SUM(bayar) as bayar
 FROM
     penagihan
-    INNER JOIN penagihan_detail 
+    INNER JOIN penagihan_detail
         ON (penagihan.id_penagihan = penagihan_detail.id_penagihan)
 WHERE id_jual=" .$row['id_jual']);
 	$row2=mysqli_fetch_array($sql2);
@@ -108,7 +108,7 @@ if ($row['status_konfirm']>=5){
 	$sql2=mysqli_query($con, "SELECT (qty_ambil*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total
 FROM
     jual_detail
-    INNER JOIN canvass_siap_kirim_detail 
+    INNER JOIN canvass_siap_kirim_detail
         ON (jual_detail.id_jual_detail = canvass_siap_kirim_detail.id_jual_detail)
 WHERE id_jual=" .$row['id_jual']);
 	while ($row2=mysqli_fetch_array($sql2)){
@@ -118,15 +118,15 @@ WHERE id_jual=" .$row['id_jual']);
 	$sql2=mysqli_query($con, "SELECT (qty_ambil*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total
 FROM
     jual_detail
-    INNER JOIN nota_siap_kirim_detail 
+    INNER JOIN nota_siap_kirim_detail
         ON (jual_detail.id_jual_detail = nota_siap_kirim_detail.id_jual_detail)
 WHERE id_jual=" .$row['id_jual']);
 	while ($row2=mysqli_fetch_array($sql2)){
 		$total_jual+=$row2['total'];
 	}
 }
-	
-	
+
+
 	$status='';
 	if ($row['status_bayar']=='0') {$status='Belum Bayar'; $color='red';}
 	if ($row['status_bayar']=='1') {$status='Sedang Mengangsur'; $color='red';}
@@ -178,7 +178,7 @@ WHERE id_jual=" .$row['id_jual']);
         var tanggal = $('#datepicker').val();
         var url = "?page=laporan&mode=lap_histori_setoran&tanggal=" + tanggal +
                 "&debt=" + debt + "&pelanggan=" + pelanggan;
-        if (debt != '' || pelanggan != '' || tanggal != '') 
+        if (debt != '' || pelanggan != '' || tanggal != '')
             window.location = url;
         }
     function reset() {

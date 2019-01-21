@@ -68,7 +68,7 @@
                         <table
                             id="table1"
                             class="table table-bordered table-striped"
-                            style="width: 1600px;">
+                            style="min-width: 1600px;">
                             <thead>
                                 <tr>
                                     <th>Tgl. Nota Jual</th>
