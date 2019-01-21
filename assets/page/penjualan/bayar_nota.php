@@ -90,7 +90,7 @@ if (isset($_GET['dari'])){
 	$sampai=date("Y-m-d", strtotime($_GET['sampai']));
 	$val="WHERE (tgl_bayar BETWEEN '$dari' AND '$sampai')";
 } else {
-	$val="WHERE tgl_bayar > DATE_SUB(now(), INTERVAL 6 MONTH)";
+	$val="WHERE tgl_bayar BETWEEN NOW() - INTERVAL 6 MONTH AND NOW()";
 }
 $sql=mysqli_query($con, "SELECT
     bayar_nota_jual.id_bayar

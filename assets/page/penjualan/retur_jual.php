@@ -75,7 +75,7 @@ if (isset($_GET['dari'])){
 	$sampai=date("Y-m-d", strtotime($_GET['sampai']));
 	$val="WHERE (tgl_retur BETWEEN '$dari' AND '$sampai') AND retur_jual.status <= 2";
 } else {
-	$val="WHERE retur_jual.status <= 2";
+	$val="WHERE retur_jual.status <= 2 AND tgl_retur BETWEEN NOW() - INTERVAL 30 DAY AND NOW()";
 }
 $sql=mysqli_query($con, "SELECT
     retur_jual.tgl_retur

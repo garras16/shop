@@ -121,7 +121,7 @@ if (isset($_GET['dari'])){
 		$val="WHERE barang.nama_barang LIKE '%$cari%'";
 	}
 } else {
-	$val="WHERE MONTH(beli.tanggal)=MONTH(CURRENT_DATE()) AND YEAR(beli.tanggal)=YEAR(CURRENT_DATE())";
+	$val="WHERE beli.tanggal BETWEEN NOW() - INTERVAL 30 DAY AND NOW()";
 }
 
 if (isset($_GET['cari'])){

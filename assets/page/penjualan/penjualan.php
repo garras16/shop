@@ -99,7 +99,7 @@ if (isset($_GET['dari'])){
 		$val="WHERE barang.nama_barang LIKE '%$cari%'";
 	}
 } else {
-	$val="WHERE MONTH(jual.tgl_nota)=MONTH(CURRENT_DATE()) AND YEAR(jual.tgl_nota)=YEAR(CURRENT_DATE())";
+	$val="WHERE jual.tgl_nota BETWEEN NOW() - INTERVAL 30 DAY AND NOW()";
 }
 
 $sql=mysqli_query($con, "SELECT

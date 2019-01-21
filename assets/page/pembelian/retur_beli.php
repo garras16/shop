@@ -9,7 +9,7 @@ if (isset($_GET['cari'])){
 	$bln = date("m"); $bln_sql="MONTH(CURRENT_DATE())";
 	$thn = date("Y"); $thn_sql="YEAR(CURRENT_DATE())";
 	$bulan_ini=date("Y-m") . "-01";
-	$val="WHERE retur_beli.status=0 OR tgl_retur BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW()";
+	$val="WHERE retur_beli.status=0 OR tgl_retur BETWEEN NOW() - INTERVAL 30 DAY AND NOW()";
 }
 if (isset($tambah_retur_beli_post)){
 	$sql=mysqli_query($con, "SELECT COUNT(id_beli) AS cID FROM retur_beli WHERE tgl_retur='" .date('Y-m-d'). "'");
