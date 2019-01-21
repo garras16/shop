@@ -56,6 +56,7 @@ FROM
 	$row=mysqli_fetch_array($sql);
 	$id_supplier=$row['id_supplier'];
 	$diskon_nota=$row['diskon_all_persen']/100;
+	$no = $row['no_nota_beli'];
 ?>
 
 <div class="right_col" role="main">
@@ -374,24 +375,46 @@ $total_datang=$total_datang-($total_datang*($diskon_all_persen/100));
                                             readonly="readonly">
                                     </div>
                                     <div class="input-group">
-                                        <span
-                                            data-toggle="modal"
-                                            data-target="#myModal3"
-                                            class="input-group-addon"
-                                            style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;">
-                                            <small style="color: red;">Diskon Nota Beli</small>
-                                            <a title="">
-                                                <small style="font-size: 10px; color: blue;">
-                                                    [UBAH]</small>
-                                            </a>
-                                        </span>
-                                        <input
-                                            class="form-control"
-                                            id="diskon"
-                                            name="total"
-                                            style="background: #fff; outline: none; border: none;"
-                                            value="<?php echo $diskon_all_rp ?>"
-                                            readonly="readonly">
+																			<?php
+			$cek = mysqli_query($con, "SELECT id_bayar FROM bayar_nota_beli WHERE no_nota_beli='$no'");
+			$res = mysqli_num_rows($cek);
+			if($res == 0) {
+				echo '<span
+						data-toggle="modal"
+						data-target="#myModal3"
+						class="input-group-addon"
+						style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;">
+						<small style="color: red;">Diskon Nota Beli</small>
+						<a title="">
+								<small style="font-size: 10px; color: blue;">
+										[UBAH]</small>
+						</a>
+				</span>
+				<input
+						class="form-control"
+						id="diskon"
+						name="total"
+						style="background: #fff; outline: none; border: none;"
+						value="'.$diskon_all_rp.'"
+						readonly="readonly">';
+			}else{
+				echo '<span
+						data-toggle="modal"
+						data-target=""
+						class="input-group-addon"
+						style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;">
+						<small>Diskon Nota Beli</small>
+				</span>
+				<input
+						class="form-control"
+						id="diskon"
+						name="total"
+						style="background: #fff; outline: none; border: none;"
+						value="'.$diskon_all_rp.'"
+						readonly="readonly">';
+			}
+																			?>
+
                                     </div>
                                     <div class="input-group">
                                         <span
