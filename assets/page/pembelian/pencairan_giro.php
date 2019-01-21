@@ -42,18 +42,18 @@ if (isset($_GET['act'])){
 			    		beli
 			    	INNER JOIN beli_detail
 			        	ON (beli.id_beli = beli_detail.id_beli)
-					WHERE beli.no_nota_beli='$no'
+					WHERE beli.no_nota_beli = '$no'
 					GROUP BY beli_detail.id_beli");
-				$row=mysqli_fetch_array($sql2);
-				$id_beli=$row['id_beli'];
-				$total_nota=$row['total']-($row['total']*$row['diskon_all_persen']/100);
+				$row = mysqli_fetch_array($sql2);
+				$id_beli = $row['id_beli'];
+				$total_nota = $row['total']-($row['total']*$row['diskon_all_persen']/100);
 				$grand = $total_nota+($total_nota*($row['ppn_all_persen']/100));
-				$jumlah_nota=$grand;
+				$jumlah_nota = $grand;
 
 				if($jumlah_nota-$cc['sisa'] != 0) {
-					$status=2;
+					$status = 2;
 				}else{
-					$status=4;
+					$status = 4;
 				}
 			}
 		}
@@ -72,7 +72,7 @@ if (isset($_GET['act'])){
 		}
 	}
 	_alert($pesan);
-	//_direct("?page=pembelian&mode=pencairan_giro");
+	_direct("?page=pembelian&mode=pencairan_giro");
 }
 ?>
 

@@ -73,7 +73,7 @@ if (isset($_GET['act'])){
 		}
 	}
 	_alert($pesan);
-	//_direct("?page=penjualan&mode=pencairan_giro");
+	_direct("?page=penjualan&mode=pencairan_giro");
 }
 ?>
 
