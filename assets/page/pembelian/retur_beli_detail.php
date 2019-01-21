@@ -59,9 +59,9 @@ $sql=mysqli_query($con, "SELECT
     , retur_beli.tgl_retur
 FROM
     beli
-    INNER JOIN supplier 
+    INNER JOIN supplier
         ON (beli.id_supplier = supplier.id_supplier)
-    INNER JOIN retur_beli 
+    INNER JOIN retur_beli
         ON (retur_beli.id_beli = beli.id_beli)
 WHERE retur_beli.id_retur_beli=$id");
 $row=mysqli_fetch_array($sql);
@@ -185,9 +185,9 @@ $ppn_all_persen=$row['ppn_all_persen'];
                                     <th>Nama Barang</th>
                                     <th>Qty Beli</th>
                                     <th>Harga Beli</th>
-                                    <th>Diskon 1</th>
-                                    <th>Diskon 2</th>
-                                    <th>Diskon 3</th>
+                                    <th>Disc 1</th>
+                                    <th>Disc 2</th>
+                                    <th>Disc 3</th>
                                     <th>Jumlah Beli</th>
                                     <th>Gudang</th>
                                     <th>Rak</th>
@@ -213,17 +213,17 @@ $sql=mysqli_query($con, "SELECT
     , beli_detail.diskon_rp_3
 FROM
     beli_detail
-    LEFT JOIN retur_beli_detail 
+    LEFT JOIN retur_beli_detail
         ON (retur_beli_detail.id_beli_detail = beli_detail.id_beli_detail)
-    INNER JOIN barang_masuk 
+    INNER JOIN barang_masuk
         ON (barang_masuk.id_beli_detail = beli_detail.id_beli_detail)
-    INNER JOIN barang_masuk_rak 
+    INNER JOIN barang_masuk_rak
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (beli_detail.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-    INNER JOIN satuan 
+    INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
  WHERE retur_beli_detail.id_retur_beli=$id
  GROUP BY id_beli_detail");
@@ -241,13 +241,13 @@ $sql2=mysqli_query($con, "SELECT
     , gudang.nama_gudang
 FROM
     retur_beli_detail
-    INNER JOIN barang_masuk_rak 
+    INNER JOIN barang_masuk_rak
         ON (retur_beli_detail.id_barang_masuk_rak = barang_masuk_rak.id_barang_masuk_rak)
-    INNER JOIN barang_masuk 
+    INNER JOIN barang_masuk
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
-    INNER JOIN rak 
+    INNER JOIN rak
         ON (barang_masuk_rak.id_rak = rak.id_rak)
-    INNER JOIN gudang 
+    INNER JOIN gudang
         ON (rak.id_gudang = gudang.id_gudang)
 WHERE barang_masuk.id_beli_detail=$tmp_id_beli_detail");
 while($r=mysqli_fetch_array($sql2)){
@@ -362,7 +362,7 @@ if ($status=="1" || $locked){
                                 class="select2 form-control"
                                 required="true">
                                 <option value="" disabled="disabled" selected="selected">-= Pilih Barang Retur =-</option>
-                                <?php 
+                                <?php
 								$cust=mysqli_query($con, "SELECT
     barang.nama_barang
     , barang_masuk.id_beli_detail
@@ -371,19 +371,19 @@ if ($status=="1" || $locked){
 	, satuan.nama_satuan
 FROM
     barang_masuk
-    INNER JOIN beli_detail 
+    INNER JOIN beli_detail
         ON (barang_masuk.id_beli_detail = beli_detail.id_beli_detail)
-    INNER JOIN barang_masuk_rak 
+    INNER JOIN barang_masuk_rak
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
-    INNER JOIN rak 
+    INNER JOIN rak
         ON (barang_masuk_rak.id_rak = rak.id_rak)
-    INNER JOIN gudang 
+    INNER JOIN gudang
         ON (rak.id_gudang = gudang.id_gudang)
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (beli_detail.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-	INNER JOIN satuan 
+	INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE id_beli=$id_beli");
 								while($b=mysqli_fetch_array($cust)){
@@ -478,7 +478,7 @@ WHERE id_beli=$id_beli");
                                 disabled="disabled"
                                 required="true">
                                 <option value="" disabled="disabled" selected="selected">-= Pilih Barang Retur =-</option>
-                                <?php 
+                                <?php
 								$cust=mysqli_query($con, "SELECT
     barang_masuk_rak.stok
     , retur_beli_detail.id_barang_masuk_rak
@@ -487,15 +487,15 @@ WHERE id_beli=$id_beli");
     , retur_beli_detail.id_retur_beli_detail
 FROM
     retur_beli_detail
-    INNER JOIN beli_detail 
+    INNER JOIN beli_detail
         ON (retur_beli_detail.id_beli_detail = beli_detail.id_beli_detail)
-    INNER JOIN barang_masuk_rak 
+    INNER JOIN barang_masuk_rak
         ON (retur_beli_detail.id_barang_masuk_rak = barang_masuk_rak.id_barang_masuk_rak)
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (beli_detail.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-    INNER JOIN satuan 
+    INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE id_beli=$id_beli");
 								while($b=mysqli_fetch_array($cust)){

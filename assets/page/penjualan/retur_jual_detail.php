@@ -30,7 +30,7 @@ if (isset($tambah_retur_jual_detail_post)){
 		_buat_pesan("Input Gagal. Barang sudah pernah dipilih.","red");
 	}
 	_direct("?page=penjualan&mode=retur_jual_detail&id=$id");
-}	
+}
 if (isset($edit_retur_jual_detail_post)){
 	if ($locked) {
 		_buat_pesan("Input Gagal. Barang sudah diproses di gudang.","red");
@@ -71,11 +71,11 @@ $sql=mysqli_query($con, "SELECT
     , bayar_nota_jual.status AS status_bayar
 FROM
     jual
-    INNER JOIN pelanggan 
+    INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
-    INNER JOIN retur_jual 
+    INNER JOIN retur_jual
         ON (retur_jual.id_jual = jual.id_jual)
-	LEFT JOIN bayar_nota_jual 
+	LEFT JOIN bayar_nota_jual
         ON (jual.invoice = bayar_nota_jual.no_nota_jual)
 WHERE retur_jual.id_retur_jual=$id");
 $row=mysqli_fetch_array($sql);
@@ -248,18 +248,18 @@ if ($row['status_bayar']=='1'){
                                 <tr>
                                     <th>Nama Barang</th>
                                     <th>Qty Jual</th>
-                                    <th>Harga Jual (Rp)</th>
-                                    <th>Tot. Seb. Diskon (Rp)</th>
-                                    <th>Disc 1 (Rp)</th>
-                                    <th>Tot. set. disc 1 (Rp)</th>
+                                    <th>Harga Jual</th>
+                                    <th>Tot. Seb. Diskon</th>
+                                    <th>Disc 1</th>
+                                    <th>Tot. set. disc 1</th>
                                     <th>Disc 2 (Rp)</th>
-                                    <th>Tot. set. disc 2 (Rp)</th>
-                                    <th>Disc 3 (Rp)</th>
-                                    <th>Tot. set. disc 3 (Rp)</th>
+                                    <th>Tot. set. disc 2</th>
+                                    <th>Disc 3</th>
+                                    <th>Tot. set. disc 3</th>
                                     <th>Qty Retur Jual</th>
-                                    <th>Harga Retur Jual (Rp)</th>
+                                    <th>Harga Retur Jual</th>
                                     <th>Qty Masuk</th>
-                                    <th>Jumlah Retur Jual (Rp)</th>
+                                    <th>Jumlah Retur Jual</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -268,27 +268,27 @@ if ($row['status_bayar']=='1'){
 $sql=mysqli_query($con, "SELECT status_konfirm
 FROM
     retur_jual
-    INNER JOIN jual 
+    INNER JOIN jual
         ON (retur_jual.id_jual = jual.id_jual)
  WHERE id_retur_jual=$id");
 $row=mysqli_fetch_array($sql);
 if ($row['status_konfirm']>=0 && $row['status_konfirm']<=2) $tipe='nota_siap_kirim_detail';
 if ($row['status_konfirm']>=5 && $row['status_konfirm']<=7) $tipe='canvass_siap_kirim_detail';
-		
+
 $sql=mysqli_query($con, "SELECT *, SUM(qty_ambil) AS qty
 FROM
     jual_detail
-    LEFT JOIN retur_jual_detail 
+    LEFT JOIN retur_jual_detail
         ON (jual_detail.id_jual_detail = retur_jual_detail.id_jual_detail)
-    INNER JOIN harga_jual 
+    INNER JOIN harga_jual
         ON (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
-    INNER JOIN $tipe 
+    INNER JOIN $tipe
         ON (retur_jual_detail.id_jual_detail = $tipe.id_jual_detail)
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-    INNER JOIN satuan 
+    INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
  WHERE retur_jual_detail.id_retur_jual=$id AND cek=1
  GROUP BY retur_jual_detail.id_jual_detail");
@@ -415,17 +415,17 @@ if ($status=="1" or $locked){
                                 class="select2 form-control"
                                 required="true">
                                 <option value="" disabled="disabled" selected="selected">-= Pilih Barang Retur =-</option>
-                                <?php 
+                                <?php
 								$cust=mysqli_query($con, "SELECT *
 FROM
     jual_detail
-    INNER JOIN harga_jual 
+    INNER JOIN harga_jual
         ON (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-    INNER JOIN satuan 
+    INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE id_jual=$id_jual");
 								while($b=mysqli_fetch_array($cust)){
@@ -513,23 +513,23 @@ WHERE id_jual=$id_jual");
                                 disabled="disabled"
                                 required="true">
                                 <option value="" disabled="disabled" selected="selected">-= Pilih Barang Retur =-</option>
-                                <?php 
-								$cust=mysqli_query($con, "SELECT 
+                                <?php
+								$cust=mysqli_query($con, "SELECT
     barang.nama_barang
 	, jual_detail.qty
     , satuan.nama_satuan
     , retur_jual_detail.id_retur_jual_detail
 FROM
     retur_jual_detail
-    INNER JOIN jual_detail 
+    INNER JOIN jual_detail
         ON (retur_jual_detail.id_jual_detail = jual_detail.id_jual_detail)
-    INNER JOIN harga_jual 
+    INNER JOIN harga_jual
         ON (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-    INNER JOIN satuan 
+    INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE id_jual=$id_jual");
 								while($b=mysqli_fetch_array($cust)){
@@ -607,7 +607,7 @@ WHERE id_jual=$id_jual");
                     $tmp_id_jual=$row['id_jual'];
                     $sql2=mysqli_query($con, "SELECT SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah_nota FROM jual_detail WHERE id_jual=$id_jual");
                     $b2=mysqli_fetch_array($sql2);
-                    
+
                     $sqll = mysqli_query($con, "SELECT ppn_all_persen FROM jual WHERE id_jual=$id_jual");
                     $bb = mysqli_fetch_array($sqll);
                     $set_dis=$b2['jumlah_nota']-($b2['jumlah_nota']*$row['diskon_all_persen']/100);
@@ -635,7 +635,7 @@ WHERE id_jual=$id_jual");
                         </tr>
                     </thead>
                     <tbody>
-                        <?php 
+                        <?php
 							$sql=mysqli_query($con, "SELECT * FROM bayar_nota_jual WHERE no_nota_jual='$no_nota_jual'");
 							$total_bayar=0;
 							while($row=mysqli_fetch_array($sql)){
