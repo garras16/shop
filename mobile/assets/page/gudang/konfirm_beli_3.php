@@ -42,13 +42,13 @@ $brg=mysqli_query($con, "SELECT
     , users.user
 FROM
     beli
-    LEFT JOIN supplier 
+    LEFT JOIN supplier
         ON (beli.id_supplier = supplier.id_supplier)
-    LEFT JOIN ekspedisi 
+    LEFT JOIN ekspedisi
         ON (beli.id_ekspedisi = ekspedisi.id_ekspedisi)
-    LEFT JOIN users 
+    LEFT JOIN users
         ON (beli.id_karyawan = users.id_karyawan)
-    LEFT JOIN beli_detail 
+    LEFT JOIN beli_detail
         ON (beli_detail.id_beli = beli.id_beli) WHERE beli.id_beli=$id");
 $row=mysqli_fetch_array($brg);
 $status_konfirm=$row['status_konfirm'];
@@ -65,7 +65,7 @@ if ($row['user']==null){
 ?>
 <div class="right_col loading" role="main">
 	<div class="">
-	
+
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
@@ -93,7 +93,7 @@ if ($row['user']==null){
 								<input class="form-control" id="tanggal" name="tanggal" placeholder="Tanggal Nota Beli" value="<?php echo date("d-m-Y",strtotime($row['tanggal'])) ?>" maxlength="50" readonly>
 								<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 							</div>
-						</div>						
+						</div>
 						<div class="col-xs-6">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-building fa-fw"></i></span>
@@ -156,17 +156,17 @@ $sql=mysqli_query($con, "SELECT
     , satuan.nama_satuan
 FROM
     beli_detail
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (beli_detail.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-    INNER JOIN satuan 
+    INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
-    LEFT JOIN barang_masuk 
+    LEFT JOIN barang_masuk
         ON (barang_masuk.id_beli_detail = beli_detail.id_beli_detail)
-    LEFT JOIN barang_masuk_rak 
+    LEFT JOIN barang_masuk_rak
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
-WHERE id_beli=$id   
+WHERE id_beli=$id
 GROUP BY beli_detail.id_beli_detail");
 /*
 	STATUS BARANG
@@ -191,11 +191,12 @@ if ($row['qty_datang']>0) $x+=1;
 						<td><a data-toggle="modal" data-target="#myModal" data-id="' .$row['id_beli_detail']. '"><div style="height:100%;width:100%">&nbsp;' .$row['qty']. ' ' .$row['nama_satuan']. '</div></a></td>
 						<td><a data-toggle="modal" data-target="#myModal" data-id="' .$row['id_beli_detail']. '"><div style="height:100%;width:100%">&nbsp;' .$qty_datang. '</div></a></td>';
 if ($row['status_barang']==0 && $status_konfirm <> 1){
-	echo '				<td><div style="text-align:center"><a data-barcode="' .$row['barcode']. '" class="btn btn-primary btn-xs barcode" onClick="AndroidFunction.scan_barang(&quot;' .$row['barcode']. '&quot;,&quot;' .$row['id_beli_detail']. '&quot;);"><div style="width:70px"><i class="fa fa-barcode"></i></div></a></div></td>';
+// AndroidFunction.scan_barang();
+echo '<td><div style="text-align:center"><a data-barcode="' .$row['barcode']. '" class="btn btn-primary btn-xs barcode" onClick="AndroidFunction.scan_barang(&quot;' .$row['barcode']. '&quot;,&quot;' .$row['id_beli_detail']. '&quot;);"><div style="width:70px"><i class="fa fa-barcode"></i></div></a></div></td>';
 } else if ($row['status_barang']==2 && $status_konfirm <> 1){
-	echo '				<td><div style="text-align:center"><a data-barcode="' .$row['barcode']. '" class="btn btn-warning btn-xs barcode" onClick="AndroidFunction.scan_barang(&quot;' .$row['barcode']. '&quot;,&quot;' .$row['id_beli_detail']. '&quot;);"><div style="width:70px"><i class="fa fa-barcode"></i></div></a></div></td>';
+	echo '<td><div style="text-align:center"><a data-barcode="' .$row['barcode']. '" class="btn btn-warning btn-xs barcode" onClick="AndroidFunction.scan_barang(&quot;' .$row['barcode']. '&quot;,&quot;' .$row['id_beli_detail']. '&quot;);"><div style="width:70px"><i class="fa fa-barcode"></i></div></a></div></td>';
 } else {
-	echo '				<td><div style="text-align:center"><i class="fa fa-check fa-fw" style="color:green"></i><div style="height:100%;width:100%"></div></div></td>';
+	echo '<td><div style="text-align:center"><i class="fa fa-check fa-fw" style="color:green"></i><div style="height:100%;width:100%"></div></div></td>';
 }
 	if ($status_konfirm <> 1){
 	if($row['berat']<>'') {
@@ -218,7 +219,7 @@ if ($row['status_barang']==0 && $status_konfirm <> 1){
 	} else {
 	($row['berat']<>'' ? $berat=format_angka($row['berat']). ' gr' : $berat='');
 	($row['volume']<>'' ? $volume=format_angka($row['volume']). ' cm<sup>3</sup>' : $volume='');
-	
+
 		echo '<td align="right">' .$berat. '</td>
 			<td align="right">' .$volume. '</td>
 		</tr>';
@@ -257,7 +258,7 @@ if ($row['status_barang']==0 && $status_konfirm <> 1){
 				</div>
 			</div>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
@@ -269,11 +270,11 @@ if ($row['status_barang']==0 && $status_konfirm <> 1){
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&times;</button>
 				<h4 class="modal-title">LIHAT DETAIL RAK</h4>
 			</div>
-			<div class="modal-body">				
+			<div class="modal-body">
 				<form action="" method="">
 					<div style="overflow-x: auto">
 						<div id="get_detail" class="col-md-12">
-							
+
 						</div>
 					</div>
 				</form>
@@ -303,6 +304,6 @@ $(document).ready(function(){
 			$('#get_detail').html('<center><i class="fa fa-spinner fa-spin" style="font-size:24px"></i></center>');
 			$('#get_detail').load('assets/page/gudang/get-rak-detail.php?id_beli_detail=' + id,function(){
 		});
-	})
+	});
 });
 </script>

@@ -11,7 +11,7 @@
 			$tgl_janji_next = $tgl[2] ."-". $tgl[1] ."-". $tgl[0];
 			$sql = mysqli_query($con, "UPDATE penagihan_detail SET setor=$setor,status_nota_kembali=$status_nota,tgl_janji_next='$tgl_janji_next' WHERE id_penagihan_detail=$id_penagihan_detail");
 		}
-		
+
 		if ($sql){
 			_buat_pesan("Input Berhasil.","green");
 		} else {
@@ -48,7 +48,7 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-					<div class="table responsive">
+					<div class="table-responsive">
 						<table id="table1" class="table table-bordered table-striped">
 							<thead>
 								<tr>
@@ -73,15 +73,15 @@
 	$sql=mysqli_query($con, "SELECT *, SUM(bayar) as bayar
 			FROM
 				penagihan
-			INNER JOIN karyawan 
+			INNER JOIN karyawan
 				ON (penagihan.id_karyawan = karyawan.id_karyawan)
-			INNER JOIN penagihan_detail 
+			INNER JOIN penagihan_detail
 				ON (penagihan.id_penagihan = penagihan_detail.id_penagihan)
-			INNER JOIN jual 
+			INNER JOIN jual
 				ON (penagihan_detail.id_jual = jual.id_jual)
-			INNER JOIN pelanggan 
+			INNER JOIN pelanggan
 				ON (jual.id_pelanggan = pelanggan.id_pelanggan)
-			INNER JOIN jual_detail 
+			INNER JOIN jual_detail
 				ON (jual.id_jual = jual_detail.id_jual)
 			WHERE penagihan.status_tagih <>2
 			GROUP BY jual.id_jual");
@@ -89,7 +89,7 @@
 		$sql2=mysqli_query($con, "SELECT SUM(bayar) as bayar
 			FROM
 				penagihan
-			INNER JOIN penagihan_detail 
+			INNER JOIN penagihan_detail
 				ON (penagihan.id_penagihan = penagihan_detail.id_penagihan)
 			WHERE id_jual=" .$row['id_jual']);
 		$row2=mysqli_fetch_array($sql2);
@@ -99,7 +99,7 @@
 			$sql2=mysqli_query($con, "SELECT (qty_ambil*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total
 					FROM
 						jual_detail
-					INNER JOIN canvass_siap_kirim_detail 
+					INNER JOIN canvass_siap_kirim_detail
 						ON (jual_detail.id_jual_detail = canvass_siap_kirim_detail.id_jual_detail)
 					WHERE id_jual=" .$row['id_jual']);
 			while ($row2=mysqli_fetch_array($sql2)){
@@ -109,7 +109,7 @@
 			$sql2=mysqli_query($con, "SELECT (qty_ambil*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total
 					FROM
 						jual_detail
-					INNER JOIN nota_siap_kirim_detail 
+					INNER JOIN nota_siap_kirim_detail
 						ON (jual_detail.id_jual_detail = nota_siap_kirim_detail.id_jual_detail)
 					WHERE id_jual=" .$row['id_jual']);
 			while ($row2=mysqli_fetch_array($sql2)){
@@ -317,7 +317,7 @@ $(document).ready(function () {
         $('#bayar').val(bayar);
         $('#tgl_janji_next').val(tgl_jb);
 
-        if (status_nota != 2) 
+        if (status_nota != 2)
             $('#scan_nota').click();
         if (status_bayar == 3) {
             $('#bayar').val('0');

@@ -10,7 +10,7 @@ if (!isset($_GET['id'])){
 ?>
 <div class="right_col loading" role="main">
 	<div class="">
-	
+
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
@@ -21,12 +21,12 @@ if (!isset($_GET['id'])){
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-						<p align="center"><a id="scan_rak" onClick="AndroidFunction.scan_rak()" class="btn btn-primary"><i class="fa fa-barcode"></i> Scan Rak</a></p>
+						<p align="center"><a id="scan_rak" onclick="AndroidFunction.scan_rak();" class="btn btn-primary"><i class="fa fa-barcode"></i> Scan Rak</a></p>
 					</div>
 				</div>
 			<div id="dummy" style="display:none"></div>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
@@ -49,6 +49,6 @@ function batal_scan(){
 	getBack();
 }
 $(document).ready(function(){
-	$('#scan_rak').click();
+
 })
 </script>

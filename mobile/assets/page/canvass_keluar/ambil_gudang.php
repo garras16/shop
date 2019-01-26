@@ -11,12 +11,12 @@
 			_direct("?page=canvass_keluar&mode=ambil_gudang");
 		}
 	} else {
-		$sql = mysqli_query($con, "DELETE FROM canvass_keluar 
+		$sql = mysqli_query($con, "DELETE FROM canvass_keluar
 			WHERE id_canvass_keluar NOT IN (SELECT id_canvass_keluar FROM canvass_keluar_barang)
 			OR id_canvass_keluar NOT IN (SELECT id_canvass_keluar FROM canvass_keluar_karyawan)");
-		$sql = mysqli_query($con, "DELETE FROM canvass_keluar_karyawan 
+		$sql = mysqli_query($con, "DELETE FROM canvass_keluar_karyawan
 			WHERE id_canvass_keluar NOT IN (SELECT id_canvass_keluar FROM canvass_keluar)");
-		$sql = mysqli_query($con, "DELETE FROM canvass_keluar_barang 
+		$sql = mysqli_query($con, "DELETE FROM canvass_keluar_barang
 			WHERE id_canvass_keluar NOT IN (SELECT id_canvass_keluar FROM canvass_keluar)");
 	}
 
@@ -59,14 +59,14 @@ while($row=mysqli_fetch_array($sql)){
 					</tr>';
 }
 ?>
-					
+
 				</tbody>
 			</table>
 			</div>
 		</div>
 		<!-- /page content -->
 
-        
+
 					</div>
 				</div>
 			</div>
@@ -89,12 +89,12 @@ while($row=mysqli_fetch_array($sql)){
 					<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-truck fa-fw"></i><br><small>Mobil</small></span>
 					<select class="form-control" id="select_mobil" name="id_mobil" required>
 						<option value="" disabled selected>Pilih Mobil Canvass</option>
-						<?php 
+						<?php
 							$sql=mysqli_query($con, "SELECT * FROM kendaraan WHERE STATUS=1 AND canvass=1 AND id_kendaraan NOT IN (SELECT id_mobil FROM canvass_keluar WHERE STATUS <> 4)");
 							while($row=mysqli_fetch_array($sql)){
-						?>	
+						?>
 							<option value="<?php echo $row['id_kendaraan']; ?>"><?php echo $row['nama_kendaraan']. ' | ' .$row['plat'];?></option>
-						<?php 
+						<?php
 							}
 						?>
 					</select>
@@ -112,6 +112,6 @@ while($row=mysqli_fetch_array($sql)){
 
 <script>
 $(document).ready(function(){
-	
+
 });
 </script>

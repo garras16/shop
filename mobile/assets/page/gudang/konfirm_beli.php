@@ -1,7 +1,7 @@
 
 <div class="right_col loading" role="main">
 	<div class="">
-	
+
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
@@ -17,7 +17,7 @@
 								echo '<span class="badge bg-' .$warna. '">' .$pesan. '</span><br><br>';
 							}
 					?>
-					
+
 					<div style="margin-bottom:50px">
 							<table align="left">
 								<tr>
@@ -58,8 +58,8 @@ $sql=mysqli_query($con, "SELECT
 	, ekspedisi.nama_ekspedisi
 FROM
     beli
-	LEFT JOIN ekspedisi 
-        ON (beli.id_ekspedisi = ekspedisi.id_ekspedisi) 
+	LEFT JOIN ekspedisi
+        ON (beli.id_ekspedisi = ekspedisi.id_ekspedisi)
 WHERE $val");
 $i=0;
 while($row=mysqli_fetch_array($sql)){
@@ -83,16 +83,16 @@ if ($row['status_konfirm']==0){
 	echo '				</tr>';
 }
 ?>
-					
+
 				</tbody>
 			</table>
-			
+
 			</div>
 			</div>
 			<div id="dummy"></div>
 			</div>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
@@ -137,5 +137,5 @@ $(document).ready(function(){
 		validasi();
 	});
 //	$("#isi").load("assets/api/konfirm_beli.php");
-})
+});
 </script>

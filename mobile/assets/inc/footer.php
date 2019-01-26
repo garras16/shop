@@ -56,5 +56,5 @@
     <script src="../vendors/numeric/numeric.js"></script>
 
 	</body>
-  
+
 </html>

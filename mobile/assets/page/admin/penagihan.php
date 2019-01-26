@@ -3,7 +3,7 @@
 	if (isset($buat_penagihan_post)){
 		$sql = mysqli_query($con, "INSERT INTO penagihan VALUES(null,$penagih,'$tanggal','DALAM KOTA',0,$id_karyawan)");
 		$id_tagih=mysqli_insert_id($con);
-		
+
 		foreach ($id_jual as $key => $value) {
 			$sql=mysqli_query($con, "INSERT INTO penagihan_detail VALUES(null,$id_tagih,$value,null,3,null,0,0,null,null,null,null,null,null,null,null,0,null,null)");
 			echo mysqli_error();
@@ -44,7 +44,7 @@
 									?>
                                 </select>
                                 <span class="input-group-btn">
-                                    <a onclick="AndroidFunction.scan_nota()" class="btn btn-primary">
+                                    <a onclick="AndroidFunction.scan_barang()" class="btn btn-primary">
                                         <i class="fa fa-barcode"></i>
                                         Scan Nota</a>
                                     <a data-toggle="modal" data-target="#myModal" class="btn btn-warning">
@@ -54,7 +54,7 @@
                             </div>
                             <div class=="clearfix"></div>
                             <div class="table-responsive">
-                                <table class="table table-bordered table-striped">
+                                <table class="table table-bordered table-striped" style="min-width: 2000px;">
                                     <thead>
                                         <tr>
                                             <th>Tgl Nota Jual</th>

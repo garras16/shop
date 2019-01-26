@@ -36,14 +36,14 @@
 	}
 	if (isset($_POST['edit_konfirm_retur_beli_2_post'])){
 		if (isset($_POST['edit_konfirm_retur_beli_2_post'])) $edit_konfirm_retur_beli_2_post=true;
-		
+
 	}
 	if (isset($_POST['edit_konfirm_retur_beli_3_post'])){
 		if (isset($_POST['edit_konfirm_retur_beli_3_post'])) $edit_konfirm_retur_beli_3_post=true;
 		$qty_keluar=$_POST['qty_keluar'];
 	}
 	if (isset($_POST['edit_konfirm_retur_jual_2_post'])){
-		if (isset($_POST['edit_konfirm_retur_jual_2_post'])) $edit_konfirm_retur_jual_2_post=true;	
+		if (isset($_POST['edit_konfirm_retur_jual_2_post'])) $edit_konfirm_retur_jual_2_post=true;
 	}
 	if (isset($_POST['edit_konfirm_retur_jual_3_post'])){
 		if (isset($_POST['edit_konfirm_retur_jual_3_post'])) $edit_konfirm_retur_jual_3_post=true;

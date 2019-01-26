@@ -9,7 +9,7 @@ $sql = "SELECT
     barang_masuk.edit
 FROM
     barang_masuk
-    INNER JOIN beli_detail 
+    INNER JOIN beli_detail
         ON (barang_masuk.id_beli_detail = beli_detail.id_beli_detail)
 WHERE beli_detail.id_beli_detail=$id AND barang_masuk.edit=1";
 $q = mysqli_query($con, $sql);
@@ -27,9 +27,9 @@ $sql = mysqli_query($con, "SELECT
     , barang_masuk_rak.qty_di_rak
 FROM
     beli_detail
-    LEFT JOIN barang_masuk 
+    LEFT JOIN barang_masuk
         ON (barang_masuk.id_beli_detail = beli_detail.id_beli_detail)
-    LEFT JOIN barang_masuk_rak 
+    LEFT JOIN barang_masuk_rak
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
 WHERE beli_detail.id_beli_detail=$id
 ORDER BY barang_masuk.id_barang_masuk ASC");
@@ -37,7 +37,6 @@ $qty2=0;
 if (mysqli_num_rows($sql)=='0'){
 	_alert("Barang sudah dihapus. Proses digagalkan.");
 	_direct("?page=gudang&mode=konfirm_beli");
-	break 2;
 }
 while ($r=mysqli_fetch_array($sql)){
 $qty1=$r['qty'];
@@ -66,11 +65,11 @@ $sql = "SELECT
     satuan.nama_satuan
 FROM
     beli_detail
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (beli_detail.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-    INNER JOIN satuan 
+    INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE id_beli_detail=$id";
 $q = mysqli_query($con, $sql);
@@ -79,7 +78,7 @@ $r=mysqli_fetch_array($q);
 
 <div class="right_col loading" role="main">
 	<div class="">
-	
+
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
@@ -108,7 +107,7 @@ $r=mysqli_fetch_array($q);
 				</div>
 			</div>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
