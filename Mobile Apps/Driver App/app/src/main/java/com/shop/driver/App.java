@@ -14,7 +14,7 @@ public class App extends Application {
     }
 	
 	public static String getHOST(){
-		String host = "192.168.100.8";
+		String host = "192.168.100.7";
 		return host;
 	}
 	public static String getWeb(){

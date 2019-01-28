@@ -26,7 +26,7 @@ if (isset($checkin_post)){
 ?>
 <div class="right_col loading" role="main">
 	<div class="">
-	
+
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
@@ -60,7 +60,7 @@ if (isset($checkin_post)){
 					<div id="dummy" style="display:none"></div>
 				</div>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
@@ -127,4 +127,3 @@ $('document').ready(function(){
 	AndroidFunction.getLokasi();
 });
 </script>
-

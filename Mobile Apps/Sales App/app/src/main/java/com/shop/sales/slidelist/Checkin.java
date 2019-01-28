@@ -223,7 +223,7 @@ public class Checkin extends Fragment
 	
 	public boolean checkGPS(){
 		ContentResolver cr = getActivity().getBaseContext().getContentResolver();
-		boolean gpsStatus = Settings.Secure.isLocationProviderEnabled(cr, locationManager.GPS_PROVIDER);
+		boolean gpsStatus = Settings.Secure.isLocationProviderEnabled(cr, LocationManager.GPS_PROVIDER);
 		return gpsStatus;
 	}
 	
@@ -240,19 +240,6 @@ public class Checkin extends Fragment
         }
 		@Override
 		public void onPageStarted(WebView view, String url, Bitmap favicon) {
-			quit_handler();
-			timeout=true;
-			myHandler = new Handler(Looper.myLooper());
-			myHandler.postDelayed(run, 10000);
-			if (dialog !=null && dialog.isShowing()) dialog.dismiss();
-			dialog = ProgressDialog.show(getActivity(),null,"Silahkan menunggu.",true);
-			super.onPageStarted(view, url, favicon);
-		}
-		@Override
-        public void onPageFinished(WebView view, String url){
-			if (!handle) timeout=false;
-			if (!handle) eror = false;
-			if (dialog !=null && dialog.isShowing()) dialog.dismiss();
 			view.addJavascriptInterface(new Object()
 			{
 				@JavascriptInterface
@@ -299,6 +286,19 @@ public class Checkin extends Fragment
 					scan_barcode("Toko");
 				}
 			}, "AndroidFunction");
+			quit_handler();
+			timeout=true;
+			myHandler = new Handler(Looper.myLooper());
+			myHandler.postDelayed(run, 10000);
+			if (dialog !=null && dialog.isShowing()) dialog.dismiss();
+			dialog = ProgressDialog.show(getActivity(),null,"Silahkan menunggu.",true);
+			super.onPageStarted(view, url, favicon);
+		}
+		@Override
+        public void onPageFinished(WebView view, String url){
+			if (!handle) timeout=false;
+			if (!handle) eror = false;
+			if (dialog !=null && dialog.isShowing()) dialog.dismiss();
 		}
 		
 		@Override

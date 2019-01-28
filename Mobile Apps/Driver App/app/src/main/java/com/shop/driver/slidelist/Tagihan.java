@@ -52,8 +52,7 @@ public class Tagihan extends Fragment
 	private static Runnable run,run2;
 	private LocationManager locationManager;
 	private LocationListener locationListener;
-
-
+	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
@@ -239,14 +238,14 @@ public class Tagihan extends Fragment
             return true;
         }
 		@Override
-		public void onPageStarted(WebView web, String url, Bitmap favicon) {
+		public void onPageStarted(WebView view, String url, Bitmap favicon) {
 			quit_handler();
 			timeout=true;
 			myHandler = new Handler(Looper.myLooper());
 			myHandler.postDelayed(run, 10000);
 			if (dialog !=null && dialog.isShowing()) dialog.dismiss();
 			dialog = ProgressDialog.show(getActivity(),null,"Silahkan menunggu.",true);
-			super.onPageStarted(web, url, favicon);
+			super.onPageStarted(view, url, favicon);
 		}
 		@Override
         public void onPageFinished(WebView view, String url){

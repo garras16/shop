@@ -155,7 +155,7 @@ public class StockOpname extends Fragment
 	
 	public boolean checkGPS(){
 		ContentResolver cr = getActivity().getBaseContext().getContentResolver();
-		boolean gpsStatus = Settings.Secure.isLocationProviderEnabled(cr, LocationManager.GPS_PROVIDER);
+		boolean gpsStatus = Settings.Secure.isLocationProviderEnabled(cr, locationManager.GPS_PROVIDER);
 		return gpsStatus;
 	}
 	

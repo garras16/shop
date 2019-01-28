@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
 	package="com.shop.driver"
 	>
+	<uses-sdk
+        android:minSdkVersion="19"
+        android:targetSdkVersion="19" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -15,8 +17,7 @@
         android:allowBackup="false"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.Holo.Light"
-		tools:ignore="GoogleAppIndexingWarning">
+        android:theme="@android:style/Theme.Holo.Light" >
 		<meta-data android:name = "android.max_aspect"
 			android:value = "2.1" />
         <activity
