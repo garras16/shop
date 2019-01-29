@@ -22,9 +22,9 @@ if (isset($buat_nota_sudah_cek_post)){
 	$sql=mysqli_query($con, "SELECT *
 FROM
     jual
-    INNER JOIN pelanggan 
+    INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
-    INNER JOIN karyawan 
+    INNER JOIN karyawan
         ON (jual.id_karyawan = karyawan.id_karyawan)
 	WHERE id_jual=$id");
 	$row=mysqli_fetch_array($sql);
@@ -38,7 +38,7 @@ FROM
 	$sql3=mysqli_query($con, "SELECT SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah_nota
 FROM
     jual
-    INNER JOIN jual_detail 
+    INNER JOIN jual_detail
         ON (jual.id_jual = jual_detail.id_jual)
 WHERE jual.id_pelanggan=" .$row['id_pelanggan']);
 $row3=mysqli_fetch_array($sql3);
@@ -46,7 +46,7 @@ $jumlah_nota=$row3['jumlah_nota'];
 		$sql3=mysqli_query($con, "SELECT SUM(jumlah) AS jumlah_bayar
 FROM
     bayar_nota_jual
-    INNER JOIN jual 
+    INNER JOIN jual
         ON (bayar_nota_jual.no_nota_jual = jual.invoice)
 WHERE jual.id_pelanggan=" .$row['id_pelanggan']);
 $row3=mysqli_fetch_array($sql3);
@@ -65,7 +65,7 @@ $row4=mysqli_fetch_array($sql4);
 ?>
 <div class="right_col loading" role="main">
 	<div class="">
-	
+
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
@@ -93,7 +93,7 @@ $row4=mysqli_fetch_array($sql4);
 $sql=mysqli_query($con, "SELECT *
 FROM
     nota_siap_kirim
-    INNER JOIN nota_siap_kirim_detail 
+    INNER JOIN nota_siap_kirim_detail
         ON (nota_siap_kirim.id_nota_siap_kirim = nota_siap_kirim_detail.id_nota_siap_kirim)
 WHERE id_jual=$id AND cek=0");
 $row=mysqli_fetch_array($sql);
@@ -103,7 +103,7 @@ echo '						<tr><td width="40%">Pengiriman</td>
 	if($tipe_kirim=='Kirim Sendiri') echo 'checked';
 	echo						' required> Kirim Sendiri
 								<input type="radio" name="jenis_kirim" value="Via Ekspedisi" ';
-	if($tipe_kirim=='Via Ekspedisi') echo 'checked'; 
+	if($tipe_kirim=='Via Ekspedisi') echo 'checked';
 	echo						' style="margin-left:10px" required> Via Ekspedisi</td>
 								</tr>';
 }
@@ -111,17 +111,17 @@ echo '						<tr><td width="40%">Pengiriman</td>
 						</tbody>
 						</table>
 						<div class="table-responsive">
-						<table class="table table-bordered table-striped">
+						<table class="table table-bordered table-striped" style="min-width: 1200px;">
 							<thead>
 								<tr>
 									<th>Nama Barang</th>
 									<th>Jumlah</th>
-									<th>Harga (Rp)</th>
-									<th>Diskon 1 (Rp)</th>
-									<th>Diskon 2 (Rp)</th>
-									<th>Diskon 3 (Rp)</th>
+									<th>Harga</th>
+									<th>Diskon 1</th>
+									<th>Diskon 2</th>
+									<th>Diskon 3</th>
 									<th>Qty Ambil</th>
-									<th>Sub Total (Rp)</th>
+									<th>Sub Total</th>
 									<th>Periksa</th>
 									<th></th>
 								</tr>
@@ -131,13 +131,13 @@ echo '						<tr><td width="40%">Pengiriman</td>
 	$sql=mysqli_query($con, "SELECT *
 FROM
     jual_detail
-    INNER JOIN harga_jual 
+    INNER JOIN harga_jual
         ON (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-	INNER JOIN satuan 
+	INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE id_jual=$id AND barang.status=1");
 $total=0;
@@ -147,7 +147,7 @@ $total_volume=0;
 		$sql2=mysqli_query($con, "SELECT cek, SUM(qty_ambil) as qty_ambil
 FROM
     nota_siap_kirim
-    INNER JOIN nota_siap_kirim_detail 
+    INNER JOIN nota_siap_kirim_detail
         ON (nota_siap_kirim.id_nota_siap_kirim = nota_siap_kirim_detail.id_nota_siap_kirim)
 WHERE id_jual_detail=" .$row['id_jual_detail']. "");
 		$row2=mysqli_fetch_array($sql2);
@@ -155,13 +155,13 @@ WHERE id_jual_detail=" .$row['id_jual_detail']. "");
 			echo '<tr>
 					<td style="vertical-align:middle;text-align:center">' .$row['nama_barang']. '</td>
 					<td style="vertical-align:middle;text-align:center">' .$row['qty']. ' ' .$row['nama_satuan']. '</td>
-					<td style="vertical-align:middle;text-align:center">' .format_uang($row['harga']). '</td>
-					<td style="vertical-align:middle;text-align:center">' .format_uang($row['diskon_rp']). '</td>
-					<td style="vertical-align:middle;text-align:center">' .format_uang($row['diskon_rp_2']). '</td>
-					<td style="vertical-align:middle;text-align:center">' .format_uang($row['diskon_rp_3']). '</td>';
+					<td style="vertical-align:middle;text-align:center">Rp ' .format_uang($row['harga']). '</td>
+					<td style="vertical-align:middle;text-align:center">Rp ' .format_uang($row['diskon_rp']). '</td>
+					<td style="vertical-align:middle;text-align:center">Rp ' .format_uang($row['diskon_rp_2']). '</td>
+					<td style="vertical-align:middle;text-align:center">Rp ' .format_uang($row['diskon_rp_3']). '</td>';
 			$total+=$row2['qty_ambil']*($row['harga']-$row['diskon_rp']-$row['diskon_rp_2']-$row['diskon_rp_3']);
 			echo '	<td align="center">' .$row2['qty_ambil']. ' ' .$row['nama_satuan']. '</td>
-					<td align="right">' .format_uang($row2['qty_ambil']*($row['harga']-$row['diskon_rp']-$row['diskon_rp_2']-$row['diskon_rp_3'])). '</td>';
+					<td align="right">Rp ' .format_uang($row2['qty_ambil']*($row['harga']-$row['diskon_rp']-$row['diskon_rp_2']-$row['diskon_rp_3'])). '</td>';
 			if ($row2['cek']=='1'){
 				echo '<td align="center"><i class="fa fa-check"></i></td>';
 				if (!$locked) {
@@ -177,21 +177,21 @@ WHERE id_jual_detail=" .$row['id_jual_detail']. "");
 		}
 	}
 	echo '<tr>
-			<td colspan="4" align="center"><b>TOTAL (RP)</b></td>
-			<td align="right"><b>' .format_uang($total). '</b></td>
+			<td colspan="4" align="center"><b>TOTAL</b></td>
+			<td align="right"><b>Rp ' .format_uang($total). '</b></td>
 		 </tr>';
 ?>
 							</tbody>
 						</table>
 						</div>
-						
+
 							<input type="hidden" name="buat_nota_sudah_cek_post" value="true">
 							<input type="hidden" name="total_harga" value="<?php echo $total ?>">
 <?php
 	$sql=mysqli_query($con, "SELECT *
 FROM
     nota_siap_kirim
-    INNER JOIN nota_siap_kirim_detail 
+    INNER JOIN nota_siap_kirim_detail
         ON (nota_siap_kirim.id_nota_siap_kirim = nota_siap_kirim_detail.id_nota_siap_kirim)
 WHERE id_jual=$id AND cek=0");
 $row=mysqli_fetch_array($sql);
@@ -202,7 +202,7 @@ $row=mysqli_fetch_array($sql);
 				</div>
 			<div id="dummy"></div>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
@@ -214,7 +214,7 @@ $row=mysqli_fetch_array($sql);
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title">Pilih Barang</h4>
 			</div>
-			<div class="modal-body">				
+			<div class="modal-body">
 				<form action="" method="post" onsubmit="return cek_valid();">
 					<input type="hidden" name="cek_nota_siap_kirim_post" value="true">
 					<input type="hidden" id="id_jual_detail" name="id_jual_detail" value="">
@@ -222,14 +222,14 @@ $row=mysqli_fetch_array($sql);
 					<div class="text-center" style="margin-bottom:10px"><a id="scan_barang" class="btn btn-primary" onClick="AndroidFunction.scan_barang();">Scan Barang</a></div>
 					<div class="form-group col-sm-12">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-tags fa-fw"></i> Qty Ambil</span>
-							<input class="form-control" id="qty_ambil" name="qty_ambil" placeholder="Qty Ambil" value="" readonly required>
+							<span class="input-group-addon"><i class="fa fa-tags fa-fw" style="width: 52px;"></i><br><small>Qty Ambil</small></span>
+							<input class="form-control" id="qty_ambil" name="qty_ambil" style="padding: 19px 10px;" placeholder="Qty Ambil" value="" readonly required>
 							<span class="input-group-addon satuan"></span>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-bookmark fa-fw"></i></span>
-							<input class="form-control" type="tel" id="qty_cek" name="qty_cek" placeholder="Qty Periksa" value="" required>
+							<span class="input-group-addon"><i class="fa fa-bookmark fa-fw"></i><br><small>Qty Periksa</small></span>
+							<input class="form-control" type="tel" id="qty_cek" name="qty_cek" style="padding: 19px 10px;" placeholder="Qty Periksa" value="" required>
 							<span class="input-group-addon satuan"></span>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
@@ -248,7 +248,7 @@ $row=mysqli_fetch_array($sql);
 function getBack(){
 	if ($('#myModal').is(':visible')){
 		$('#myModal').modal('hide');
-	} else {	
+	} else {
 		window.location='index.php?page=gudang&mode=konfirm_jual';
 	}
 }

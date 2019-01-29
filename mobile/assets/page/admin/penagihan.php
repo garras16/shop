@@ -44,7 +44,7 @@
 									?>
                                 </select>
                                 <span class="input-group-btn">
-                                    <a onclick="AndroidFunction.scan_barang()" class="btn btn-primary">
+                                    <a onclick="AndroidFunction.scan_nota()" class="btn btn-primary">
                                         <i class="fa fa-barcode"></i>
                                         Scan Nota</a>
                                     <a data-toggle="modal" data-target="#myModal" class="btn btn-warning">
@@ -63,10 +63,10 @@
                                             <th>Nama Driver</th>
                                             <th>Nama Pelanggan</th>
                                             <th>Nama Administrator</th>
-                                            <th>Jumlah Jual (Rp)</th>
+                                            <th>Jumlah Jual</th>
                                             <th>Tgl Jatuh Tempo</th>
                                             <th>Tgl Kunjungan Berikutnya</th>
-                                            <th>Sisa Piutang (Rp)</th>
+                                            <th>Sisa Piutang</th>
                                             <th></th>
                                         </tr>
                                     </thead>

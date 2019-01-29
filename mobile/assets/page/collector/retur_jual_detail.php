@@ -71,11 +71,11 @@ $sql=mysqli_query($con, "SELECT
     , bayar_nota_jual.status AS status_bayar
 FROM
     jual
-    INNER JOIN pelanggan 
+    INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
-    INNER JOIN retur_jual 
+    INNER JOIN retur_jual
         ON (retur_jual.id_jual = jual.id_jual)
-	LEFT JOIN bayar_nota_jual 
+	LEFT JOIN bayar_nota_jual
         ON (jual.invoice = bayar_nota_jual.no_nota_jual)
 WHERE retur_jual.id_retur_jual=$id");
 $row=mysqli_fetch_array($sql);
@@ -163,20 +163,20 @@ if ($row['status_bayar']=='1'){
 			}
 			?>
 			</div>
-			<table id="table1" class="table table-bordered table-striped">
+			<table id="table1" class="table table-bordered table-striped" style="min-width:1500px;">
 				<thead>
 					<tr>
 						<th>Nama Barang</th>
 						<th>Qty Jual</th>
-						<th>Harga Jual (Rp)</th>
-						<th>Diskon 1 (Rp)</th>
-						<th>Diskon 2 (Rp)</th>
-						<th>Diskon 3 (Rp)</th>
-						<th>Jumlah Jual (Rp)</th>
+						<th>Harga Jual</th>
+						<th>Diskon 1</th>
+						<th>Diskon 2</th>
+						<th>Diskon 3</th>
+						<th>Jumlah Jual</th>
 						<th>Qty Retur Jual</th>
-						<th>Harga Retur Jual (Rp)</th>
+						<th>Harga Retur Jual</th>
 						<th>Qty Masuk</th>
-						<th>Jumlah Retur Jual (Rp)</th>
+						<th>Jumlah Retur Jual</th>
 						<th></th>
 					</tr>
 				</thead>
@@ -185,17 +185,17 @@ if ($row['status_bayar']=='1'){
 $sql=mysqli_query($con, "SELECT *, SUM(qty_ambil) AS qty
 FROM
     jual_detail
-    LEFT JOIN retur_jual_detail 
+    LEFT JOIN retur_jual_detail
         ON (jual_detail.id_jual_detail = retur_jual_detail.id_jual_detail)
-    INNER JOIN harga_jual 
+    INNER JOIN harga_jual
         ON (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
-    INNER JOIN nota_siap_kirim_detail 
+    INNER JOIN nota_siap_kirim_detail
         ON (retur_jual_detail.id_jual_detail = nota_siap_kirim_detail.id_jual_detail)
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-    INNER JOIN satuan 
+    INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
  WHERE retur_jual_detail.id_retur_jual=$id AND cek=1
  GROUP BY retur_jual_detail.id_jual_detail");
@@ -213,15 +213,15 @@ if ($status=="1" or $locked){
 	echo '			<tr>
 						<td>' .$row['nama_barang']. '</td>
 						<td>' .$row['qty']. ' ' .$row['nama_satuan']. '</td>
-						<td>' .format_uang($row['harga']). '</td>
-						<td>' .format_uang($row['diskon_rp']). '</td>
-						<td>' .format_uang($row['diskon_rp_2']). '</td>
-						<td>' .format_uang($row['diskon_rp_3']). '</td>
-						<td>' .format_uang($row['qty']*($row['harga']-$row['diskon_rp']-$row['diskon_rp_2']-$row['diskon_rp_3'])). '</td>
+						<td class="uang">' .$row['harga']. '</td>
+						<td class="uang">' .$row['diskon_rp']. '</td>
+						<td class="uang">' .$row['diskon_rp_2']. '</td>
+						<td class="uang">' .$row['diskon_rp_3']. '</td>
+						<td class="uang">' .($row['qty']*($row['harga']-$row['diskon_rp']-$row['diskon_rp_2']-$row['diskon_rp_3'])). '</td>
 						<td>' .$row['qty_retur']. ' ' .$row['nama_satuan']. '</td>
-						<td>' .format_uang($row['harga_retur']). '</td>
+						<td class="uang">' .$row['harga_retur']. '</td>
 						<td>' .$qty_masuk. '</td>
-						<td>' .format_uang($jml_retur). '</td>';
+						<td class="uang">' .$jml_retur. '</td>';
 	if ($qty_masuk!='') {
 		echo '<td><i class="fa fa-check"></i></td>';
 	} else {
@@ -232,24 +232,24 @@ if ($status=="1" or $locked){
 	echo '			<tr>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px">' .$row['nama_barang']. '</div></a></td>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px">' .$row['qty']. ' ' .$row['nama_satuan']. '</div></a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px">' .format_uang($row['harga']). '</div></a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px">' .format_uang($row['diskon_rp']). '</div></a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px">' .format_uang($row['diskon_rp_2']). '</div></a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px">' .format_uang($row['diskon_rp_2']). '</div></a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px">' .format_uang($row['qty']*($row['harga']-$row['diskon_rp']-$row['diskon_rp_2']-$row['diskon_rp_3'])). '</div></a></td>
+						<td class="uang"><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px">' .$row['harga']. '</div></a></td>
+						<td class="uang"><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px">' .$row['diskon_rp']. '</div></a></td>
+						<td class="uang"><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px">' .$row['diskon_rp_2']. '</div></a></td>
+						<td class="uang"><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px">' .$row['diskon_rp_2']. '</div></a></td>
+						<td class="uang"><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px">' .($row['qty']*($row['harga']-$row['diskon_rp']-$row['diskon_rp_2']-$row['diskon_rp_3'])). '</div></a></td>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px">' .$row['qty_retur']. ' ' .$row['nama_satuan']. '</div></a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px">' .format_uang($row['harga_retur']). '</div></a></td>
+						<td class="uang"><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px">' .$row['harga_retur']. '</div></a></td>
 						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px">' .$qty_masuk. '</div></a></td>
-						<td><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px">' .format_uang($jml_retur). '</div></a></td>
+						<td class="uang"><a data-toggle="modal" data-target="#myModal2" data-id-rjd="' .$row['id_retur_jual_detail']. '" data-qty="' .$row['qty_retur']. '" data-harga="' .$row['harga_retur']. '"><div style="min-width:50px">' .$jml_retur. '</div></a></td>
 						<td><a href="?page=collector&mode=retur_jual_detail&id=' .$id. '&del=' .$row['id_retur_jual_detail']. '" class="btn btn-warning btn-xs" title="Hapus"><i class="fa fa-trash"></i></a></td>
 					</tr>';
 }
 }
 ?>
-					
+
 				</tbody>
 			</table>
-			
+
 			<div class="col-md-12">
 				<div class="col-md-4">
 				</div>
@@ -262,19 +262,19 @@ if ($status=="1" or $locked){
 					</div>
 				</div>
 			</div>
-			
+
 			</div>
 			</div>
 			</div>
 		</div>
 		<!-- /page content -->
 
-        
+
       </div>
     </div>
 
 
-	
+
 <!-- modal input -->
 <div id="myModal" class="modal fade">
 	<div class="modal-dialog">
@@ -283,7 +283,7 @@ if ($status=="1" or $locked){
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><div style="min-width:50px">&times;</div></button>
 				<h4 class="modal-title">Tambah Retur Jual Detail</h4>
 			</div>
-			<div class="modal-body">				
+			<div class="modal-body">
 				<form action="" method="post" onsubmit="return valid();">
 					<input type="hidden" name="tambah_retur_jual_detail_post" value="true">
 					<div class="col-md-12">
@@ -291,17 +291,17 @@ if ($status=="1" or $locked){
 						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-file fa-fw"></i><br><small>Barang</small></span>
 						<select id="select_barang" name="id_jual_detail" class="select2 form-control" required="true">
 							<option value="" disabled selected>-= Pilih Barang Retur =-</option>
-							<?php 
+							<?php
 								$cust=mysqli_query($con, "SELECT *
 FROM
     jual_detail
-    INNER JOIN harga_jual 
+    INNER JOIN harga_jual
         ON (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-    INNER JOIN satuan 
+    INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE id_jual=$id_jual");
 								while($b=mysqli_fetch_array($cust)){
@@ -340,7 +340,7 @@ WHERE id_jual=$id_jual");
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><div style="min-width:50px">&times;</div></button>
 				<h4 class="modal-title">Ubah Retur Jual Detail</h4>
 			</div>
-			<div class="modal-body">				
+			<div class="modal-body">
 				<form action="" method="post" onsubmit="return valid2()">
 					<input type="hidden" name="edit_retur_jual_detail_post" value="true">
 					<input type="hidden" id="id_retur_jual_detail" name="id_retur_jual_detail" value="">
@@ -348,28 +348,28 @@ WHERE id_jual=$id_jual");
 					<div class="input-group">
 						<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-file fa-fw"></i><br><small>Barang</small></span>
 						<select id="select_barang_2" class="select2 form-control" disabled required="true">
-							<option value="" disabled selected>-= Pilih Barang Retur =-</option>
-							<?php 
-								$cust=mysqli_query($con, "SELECT 
+							<option value="" disabled>-= Pilih Barang Retur =-</option>
+							<?php
+								$cust=mysqli_query($con, "SELECT
     barang.nama_barang
 	, jual_detail.qty
     , satuan.nama_satuan
     , retur_jual_detail.id_retur_jual_detail
 FROM
     retur_jual_detail
-    INNER JOIN jual_detail 
+    INNER JOIN jual_detail
         ON (retur_jual_detail.id_jual_detail = jual_detail.id_jual_detail)
-    INNER JOIN harga_jual 
+    INNER JOIN harga_jual
         ON (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-    INNER JOIN satuan 
+    INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE id_jual=$id_jual");
 								while($b=mysqli_fetch_array($cust)){
-									echo '<option data-qty-jual="' .$b['qty']. '" data-satuan="' .$b['nama_satuan']. '" data-id-rjd="' .$b['id_retur_jual_detail']. '" value="' .$b['id_retur_jual_detail']. '">' .$b['nama_barang']. ' | Qty Jual : ' .$b['qty']. ' ' .$b['nama_satuan']. '</option>';
+									echo '<option data-qty-jual="'.$b['qty'].'" data-satuan="'.$b['nama_satuan'].'" data-id-rjd="'.$b['id_retur_jual_detail'].'" value="'.$b['id_retur_jual_detail'].'">'.$b['nama_barang'].' | Qty Jual : '.$b['qty'].' '.$b['nama_satuan'].'</option>';
 								}
 							?>
 						</select>
@@ -423,7 +423,7 @@ WHERE id_jual=$id_jual");
 						</tr>
 					</thead>
 					<tbody>
-						<?php 
+						<?php
 							$sql=mysqli_query($con, "SELECT * FROM bayar_nota_jual WHERE no_nota_jual='$no_nota_jual'");
 							$total_bayar=0;
 							while($row=mysqli_fetch_array($sql)){
@@ -472,10 +472,19 @@ function valid2(){
 	}
 }
 $(document).ready(function(){
+	$('.uang').inputmask('currency', {
+			prefix: "Rp ",
+			autoGroup: true,
+			allowMinus: false,
+			groupSeparator: '.',
+			rightAlign: false,
+			autoUnmask: true,
+			removeMaskOnSubmit: true
+	});
 	$('#qty_retur').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-	$('#harga_retur').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+	$('#harga_retur').inputmask('currency', {prefix: "Rp ", allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#qty_retur_2').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-	$('#harga_retur_2').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+	$('#harga_retur_2').inputmask('currency', {prefix: "Rp ", allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#select_barang').on('change', function(){
 		var qty_jual = $(this).find(":selected").data('qty-jual');
 		var sat = $(this).find(":selected").data('satuan');

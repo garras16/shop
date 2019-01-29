@@ -4,9 +4,9 @@ $id_karyawan=$_SESSION['id_karyawan'];
 $sql=mysqli_query($con, "SELECT tgl_nota,invoice,nama_pelanggan,nama_karyawan,nama_pelanggan,status_konfirm
 FROM
     jual
-    INNER JOIN pelanggan 
+    INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
-    INNER JOIN karyawan 
+    INNER JOIN karyawan
         ON (jual.id_karyawan = karyawan.id_karyawan)
 WHERE (status_konfirm=0 or status_konfirm=5) AND id_jual NOT IN (SELECT id_jual FROM jual_detail)");
 if (mysqli_num_rows($sql)>0){
@@ -27,7 +27,7 @@ $sql=mysqli_query($con, "DELETE FROM jual WHERE (status_konfirm=0 or status_konf
 ?>
 <div class="right_col loading" role="main">
 	<div class="">
-	
+
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
@@ -47,8 +47,8 @@ $sql=mysqli_query($con, "DELETE FROM jual WHERE (status_konfirm=0 or status_konf
 						<input style="width:210px" id="cari_barang" type="text" value="" placeholder="Nama Barang">&nbsp;<a class="btn btn-primary btn-xs" id="btn_acri_barang" onClick="submit2();"><i class="fa fa-search"></i></a>
 					</div>
 					<div class="clearfix"></div><br/>
-				
-				<table id="table1" class="table table-bordered table-striped">
+
+				<table id="table1" class="table table-bordered table-striped" style="min-width: 1200px;">
 				<thead>
 					<tr>
 						<th>Tgl. Nota Jual</th>
@@ -82,16 +82,16 @@ $sql=mysqli_query($con, "SELECT
 	, pelanggan.nama_pelanggan
 FROM
     jual
-    INNER JOIN jual_detail 
+    INNER JOIN jual_detail
         ON (jual.id_jual = jual_detail.id_jual)
-    INNER JOIN pelanggan 
+    INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
-    LEFT JOIN harga_jual 
+    LEFT JOIN harga_jual
         ON (harga_jual.id_pelanggan = pelanggan.id_pelanggan) AND (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
-    LEFT JOIN barang_supplier 
+    LEFT JOIN barang_supplier
         ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-    LEFT JOIN barang 
-        ON (barang_supplier.id_barang = barang.id_barang) 
+    LEFT JOIN barang
+        ON (barang_supplier.id_barang = barang.id_barang)
 $val
 GROUP BY jual.id_jual
 ORDER BY jual.id_jual DESC");
@@ -110,18 +110,18 @@ if ($row['jenis_bayar']=='Lunas'){
 	$sql2=mysqli_query($con, "SELECT SUM((qty*(harga_jual-diskon_rp-diskon_rp_2-diskon_rp_3))+((ppn_all_persen/100)*(qty*(harga_jual-diskon_rp-diskon_rp_2-diskon_rp_3)))) AS total_harga
 FROM
     jual
-    INNER JOIN jual_detail 
+    INNER JOIN jual_detail
         ON (jual.id_jual = jual_detail.id_jual)
-    INNER JOIN harga_jual 
+    INNER JOIN harga_jual
         ON (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
 WHERE jual.id_jual=" .$row['id_jual']);
 } else {
 $sql2=mysqli_query($con, "SELECT SUM((qty*(harga_kredit-diskon_rp-diskon_rp_2-diskon_rp_3))+((ppn_all_persen/100)*(qty*(harga_kredit-diskon_rp-diskon_rp_2-diskon_rp_3)))) AS total_harga
 FROM
     jual
-    INNER JOIN jual_detail 
+    INNER JOIN jual_detail
 	    ON (jual.id_jual = jual_detail.id_jual)
-    INNER JOIN harga_jual_kredit 
+    INNER JOIN harga_jual_kredit
         ON (jual_detail.id_harga_jual = harga_jual_kredit.id_harga_jual)
 WHERE jual.id_jual=" .$row['id_jual']);
 }
@@ -141,16 +141,16 @@ $r=mysqli_fetch_array($sql2);
 	echo '				</tr>';
 }
 ?>
-					
+
 				</tbody>
 			</table>
-			
+
 			</div>
 			</div>
 			<div id="dummy"></div>
 			</div>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 

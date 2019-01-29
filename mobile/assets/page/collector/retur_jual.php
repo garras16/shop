@@ -22,13 +22,13 @@ $q = mysqli_query($con, $sql);
 					  <strong>Klik kolom pada tabel untuk detail.</strong>
 					</div>
 			<p align="right"><a class="btn btn-primary" href="?page=collector&mode=cari_nota_retur"><i class="fa fa-plus"></i> Tambah</a></p>
-					
+
 					<div class="col-xs-12" style="background:gray; padding-top:10px;padding-bottom:10px">
 						<font color="white">Cari Tanggal Retur : </font><br/>
 						<input style="width:100px;height:30px" id="tgl_dari" type="text" value="" placeholder="Tanggal" readonly><font color="white"> - </font><input style="width:100px;height:30px" id="tgl_sampai" type="text" value="" placeholder="Tanggal" readonly>&nbsp;<a class="btn btn-primary" id="btn_dari_sampai" onClick="submit();"><i class="fa fa-search"></i> CARI</a><a class="btn btn-primary" id="btn_dari_sampai" onClick="reset();"><i class="fa fa-refresh"></i> RESET</a>
 					</div>
 			<div class="clearfix"></div><br/>
-			<table id="table1" class="table table-bordered table-striped">
+			<table id="table1" class="table table-bordered table-striped" style="min-width: 1000px;">
 				<thead>
 					<tr>
 						<th>Tgl. Retur</th>
@@ -36,8 +36,8 @@ $q = mysqli_query($con, $sql);
 						<th>No Nota Jual</th>
 						<th>Nama Pelanggan</th>
 						<th>Nama Sales</th>
-						<th>Jumlah Jual (Rp)</th>
-						<th>Jumlah Retur (Rp)</th>
+						<th>Jumlah Jual</th>
+						<th>Jumlah Retur</th>
 						<th>Status Retur</th>
 					</tr>
 				</thead>
@@ -61,11 +61,11 @@ $sql=mysqli_query($con, "SELECT
     , karyawan.nama_karyawan
 FROM
     retur_jual
-    INNER JOIN jual 
+    INNER JOIN jual
         ON (retur_jual.id_jual = jual.id_jual)
-    INNER JOIN pelanggan 
+    INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
-    INNER JOIN karyawan 
+    INNER JOIN karyawan
         ON (jual.id_karyawan = karyawan.id_karyawan)
 $val
 ORDER BY jual.id_jual DESC");
@@ -76,7 +76,7 @@ $jumlah_jual=$r['jumlah'];
 $sql2=mysqli_query($con, "SELECT SUM(qty_retur * harga_retur) AS jumlah
 FROM
     retur_jual
-    INNER JOIN retur_jual_detail 
+    INNER JOIN retur_jual_detail
         ON (retur_jual.id_retur_jual = retur_jual_detail.id_retur_jual)
 WHERE retur_jual.id_retur_jual=" .$row['id_retur_jual']);
 $r=mysqli_fetch_array($sql2);
@@ -94,13 +94,13 @@ if ($row['status']=='1'){
 						<td><a href="?page=collector&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '"><div style="min-width:70px">' .$row['invoice']. '</div></a></td>
 						<td><a href="?page=collector&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '"><div style="min-width:70px">' .$row['nama_pelanggan']. '</div></a></td>
 						<td><a href="?page=collector&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '"><div style="min-width:70px">' .$row['nama_karyawan']. '</div></a></td>
-						<td><a href="?page=collector&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '"><div style="min-width:70px">' .format_uang($jumlah_jual). '</div></a></td>
-						<td><a href="?page=collector&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '"><div style="min-width:70px">' .format_uang($jumlah_retur). '</div></a></td>
+						<td><a href="?page=collector&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '"><div style="min-width:70px" class="uang">' .$jumlah_jual. '</div></a></td>
+						<td><a href="?page=collector&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '"><div style="min-width:70px" class="uang">' .$jumlah_retur. '</div></a></td>
 						<td><a href="?page=collector&mode=retur_jual_detail&id=' .$row['id_retur_jual']. '"><div style="min-width:70px" class="badge bg-green">' .$status. '</div></a></td>
 					</tr>';
 }
 ?>
-					
+
 				</tbody>
 			</table>
 			</div>
@@ -109,7 +109,7 @@ if ($row['status']=='1'){
 		</div>
 		<!-- /page content -->
 
-        
+
       </div>
     </div>
 
@@ -133,6 +133,15 @@ function reset(){
 	window.location="?page=collector&mode=retur_jual";
 }
 $(document).ready(function(){
+	$('.uang').inputmask('currency', {
+			prefix: "Rp ",
+			autoGroup: true,
+			allowMinus: false,
+			groupSeparator: '.',
+			rightAlign: false,
+			autoUnmask: true,
+			removeMaskOnSubmit: true
+	});
 	$('#tgl_dari').daterangepicker({
 		locale: {
 			format: 'DD-MM-YYYY'

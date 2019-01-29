@@ -96,8 +96,8 @@ $r=mysqli_fetch_array($q);
 					<form action="" method="post" onsubmit="cek_valid();">
 					<input type="hidden" name="edit_konfirm_beli_4_post" value="true">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-tags fa-fw"></i></span>
-							<input class="form-control" id="qty_datang" type="tel" name="qty_datang" placeholder="Qty Datang" value="" maxlength="50" required>
+							<span class="input-group-addon"><i class="fa fa-tags fa-fw"></i><br><small>Qty. Datang</small></span>
+							<input class="form-control" id="qty_datang" type="tel" style="padding: 19px 10px;" name="qty_datang" placeholder="Qty Datang" value="" maxlength="50" required>
 							<span class="input-group-addon"><?php echo $r['nama_satuan'] ?></span>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>

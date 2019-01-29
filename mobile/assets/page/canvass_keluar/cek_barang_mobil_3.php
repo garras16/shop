@@ -3,7 +3,7 @@ $id_karyawan=$_SESSION['id_karyawan'];
 	$sql=mysqli_query($con, "SELECT *
 FROM
     canvass_keluar
-    LEFT JOIN kendaraan 
+    LEFT JOIN kendaraan
         ON (canvass_keluar.id_mobil = kendaraan.id_kendaraan)
 	WHERE id_canvass_keluar=$id");
 	$row=mysqli_fetch_array($sql);
@@ -14,16 +14,16 @@ FROM
 	$sql2=mysqli_query($con, "SELECT *
 FROM
     canvass_keluar_karyawan
-    INNER JOIN karyawan 
+    INNER JOIN karyawan
         ON (canvass_keluar_karyawan.id_karyawan = karyawan.id_karyawan)
-	INNER JOIN users 
+	INNER JOIN users
         ON (karyawan.id_karyawan = users.id_karyawan)
 	WHERE id_canvass_keluar=$id");
 	$baris=mysqli_num_rows($sql2);
 ?>
 <div class="right_col loading" role="main">
 	<div class="">
-	
+
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
@@ -40,7 +40,7 @@ FROM
 	echo '					<tr><td width="40%">Tanggal Canvass</td><td>' .date("d-m-Y", strtotime($tgl_canvass)). '</td></tr>
 							<tr><td width="40%">Nama Mobil</td><td>' .$nama_mobil. '</td></tr>
 							<tr><td width="40%">No Pol</td><td>' .$plat. '</td></tr>';
-	
+
 	echo '					<tr><td rowspan="' .$baris. '">Nama Karyawan</td>';
 	while ($row2=mysqli_fetch_array($sql2)){
 		echo '				<td>- ' .$row2['nama_karyawan']. ' ( ' .$row2['posisi']. ' )</td></tr>';
@@ -63,13 +63,13 @@ FROM
 	$sql=mysqli_query($con, "SELECT *,SUM(qty) as qty, SUM(qty_cek) as qty_cek
 FROM
     canvass_keluar_barang
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (canvass_keluar_barang.id_barang = barang.id_barang)
-    INNER JOIN rak 
+    INNER JOIN rak
         ON (canvass_keluar_barang.id_rak = rak.id_rak)
-    INNER JOIN gudang 
+    INNER JOIN gudang
         ON (rak.id_gudang = gudang.id_gudang)
-    INNER JOIN satuan 
+    INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE id_canvass_keluar=$id
 GROUP BY canvass_keluar_barang.id_barang,canvass_keluar_barang.id_rak");
@@ -79,7 +79,7 @@ GROUP BY canvass_keluar_barang.id_barang,canvass_keluar_barang.id_rak");
 				<td style="vertical-align:middle;text-align:center;' .$style. '">' .$row['nama_barang']. '</td>
 				<td align="center" style="vertical-align:middle;text-align:center;' .$style. '">' .format_angka($row['qty_cek']). ' ' .$row['nama_satuan']. '</td>';
 echo '		</tr>';
-	}	
+	}
 
 ?>
 							</tbody>
@@ -89,7 +89,7 @@ echo '		</tr>';
 				</div>
 			<div id="dummy"></div>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
@@ -98,6 +98,6 @@ function getBack(){
 	window.location='index.php?page=canvass_keluar&mode=cek_barang_mobil&reset';
 }
 $(document).ready(function(){
-	
+
 })
 </script>

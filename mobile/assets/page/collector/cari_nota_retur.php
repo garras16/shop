@@ -25,33 +25,33 @@ if (isset($id)){
 					<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-			
+
 			<center>
 				<form action="" method="post">
 				<input type="hidden" name="cari_nota_retur_jual_post" value="true">
 				<div class="col-xs-12">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-building fa-fw"></i></span>
-						<input class="form-control" type="text" name="pelanggan" placeHolder="Cari Pelanggan" value="<?php if (isset($pelanggan)) echo $pelanggan ?>" required>
+						<span class="input-group-addon"><i class="fa fa-building fa-fw"></i><br><small>Pelanggan</small></span>
+						<input class="form-control" style="padding: 19px 10px;" type="text" name="pelanggan" placeHolder="Cari Pelanggan" value="<?php if (isset($pelanggan)) echo $pelanggan ?>" required>
 						<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 					</div>
 				</div>
 				<div class="col-xs-12">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-file fa-fw"></i></span>
-						<input class="form-control" type="text" name="tgl_nota" placeHolder="Cari Tanggal Nota Jual" value="<?php if (isset($tgl_nota)) echo $tgl_nota ?>">
+						<span class="input-group-addon"><i class="fa fa-file fa-fw" style="width: 48px;"><br><small>Tgl. Nota</small></i></span>
+						<input class="form-control" type="text" style="padding: 19px 10px;" name="tgl_nota" placeHolder="Cari Tanggal Nota Jual" value="<?php if (isset($tgl_nota)) echo $tgl_nota ?>">
 					</div>
 				</div>
 				<div class="col-xs-12">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-truck fa-fw"></i></span>
-						<input class="form-control" type="text" name="tgl_kirim" placeHolder="Cari Tanggal Kirim" value="<?php if (isset($tgl_kirim)) echo $tgl_kirim ?>">
+						<span class="input-group-addon"><i class="fa fa-truck fa-fw" style="width: 48px;"></i><br><small>Tgl. Kirim</small></span>
+						<input class="form-control" type="text" name="tgl_kirim" style="padding: 19px 10px;" placeHolder="Cari Tanggal Kirim" value="<?php if (isset($tgl_kirim)) echo $tgl_kirim ?>">
 					</div>
 				</div>
 				<div class="col-xs-12">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-bookmark fa-fw"></i></span>
-						<input class="form-control" type="text" name="barang" placeHolder="Cari Barang" value="<?php if (isset($barang)) echo $barang ?>">
+						<span class="input-group-addon"><i class="fa fa-bookmark fa-fw" style="width: 48px;"></i><br><small>Barang</smal></span>
+						<input class="form-control" type="text" name="barang" style="padding: 19px 10px;" placeHolder="Cari Barang" value="<?php if (isset($barang)) echo $barang ?>">
 					</div>
 				</div>
 				<div class="clearfix"></div>
@@ -64,12 +64,12 @@ if (isset($id)){
 			</div>
 		</div>
 		<!-- /page content -->
-		
+
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
 					<div id="table_content" class="x_content">
-						<table id="table2" class="table table-bordered table-striped">
+						<table id="table2" class="table table-bordered table-striped" style="width: 500px;">
 							<thead>
 								<tr>
 									<th>Tgl. Nota Jual</th>
@@ -110,19 +110,19 @@ $val.=" AND barang.nama_barang LIKE '%" .$barang. "%'";
 $sql=mysqli_query($con, "SELECT *
 FROM
     jual
-    INNER JOIN pelanggan 
+    INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
-    LEFT JOIN pengiriman 
+    LEFT JOIN pengiriman
         ON (pengiriman.id_jual = jual.id_jual)
-    INNER JOIN jual_detail 
+    INNER JOIN jual_detail
         ON (pengiriman.id_jual = jual_detail.id_jual)
-    INNER JOIN harga_jual 
+    INNER JOIN harga_jual
         ON (harga_jual.id_pelanggan = pelanggan.id_pelanggan) AND (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
- WHERE $val  
+ WHERE $val
  GROUP BY jual.id_jual
  ORDER BY jual.id_jual DESC");
 	while ($row=mysqli_fetch_array($sql)){

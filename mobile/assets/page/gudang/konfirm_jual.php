@@ -49,7 +49,7 @@ if (isset($batal_cek_barang_post)){
 							<div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="tab1">
 							<a class="btn btn-danger btn-xs" style="width:10px;height:10px">&nbsp;</a><font color="red">Sisa Plafon < Jumlah Jual</font>
 								<div class="table-responsive">
-								<table id="table_belum_siap" class="table table-bordered table-striped" style="width: 1000px;">
+								<table id="table_belum_siap" class="table table-bordered table-striped" style="min-width: 1000px;">
 									<thead>
 										<tr>
 											<th>Tgl Nota Jual</th>
@@ -58,10 +58,10 @@ if (isset($batal_cek_barang_post)){
 											<th>Nama Pelanggan</th>
 											<th>Jenis Bayar</th>
 											<th>Tenor</th>
-											<th>Jml Nota Gantung (Rp)</th>
-											<th>Plafon (Rp)</th>
-											<th>Sisa Plafon (Rp)</th>
-											<th>Jumlah Jual (Rp)</th>
+											<th>Jml Nota Gantung</th>
+											<th>Plafon</th>
+											<th>Sisa Plafon</th>
+											<th>Jumlah Jual</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -134,10 +134,10 @@ $jml_nota=format_angka(mysqli_num_rows($sql4));
 				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_2&id=' .$row['id_jual']. '"><div style="min-width:70px">' .$row['nama_pelanggan']. '</div></a></td>
 				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_2&id=' .$row['id_jual']. '"><div style="min-width:70px">' .$row['jenis_bayar']. '</div></a></td>
 				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_2&id=' .$row['id_jual']. '"><div style="min-width:70px">' .$row['tenor']. ' hari</div></a></td>
-				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_2&id=' .$row['id_jual']. '"><div style="min-width:70px">' .format_uang($jumlah_gantung). '<br/> (' .$jml_nota. ' nota)</div></a></td>
-				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_2&id=' .$row['id_jual']. '"><div style="min-width:70px">' .format_uang($row['plafon']). '</div></a></td>
-				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_2&id=' .$row['id_jual']. '"><div style="min-width:70px">' .format_uang($row['plafon']-$jumlah_gantung). '</div></a></td>
-				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_2&id=' .$row['id_jual']. '"><div style="min-width:70px">' .format_uang($r['total_harga']). '</div></a></td>
+				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_2&id=' .$row['id_jual']. '"><div style="min-width:70px">Rp ' .format_uang($jumlah_gantung). '<br/> (' .$jml_nota. ' nota)</div></a></td>
+				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_2&id=' .$row['id_jual']. '"><div style="min-width:70px">Rp ' .format_uang($row['plafon']). '</div></a></td>
+				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_2&id=' .$row['id_jual']. '"><div style="min-width:70px">Rp ' .format_uang($row['plafon']-$jumlah_gantung). '</div></a></td>
+				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_2&id=' .$row['id_jual']. '"><div style="min-width:70px">Rp ' .format_uang($r['total_harga']). '</div></a></td>
 			</tr>';
 	}
 ?>
@@ -159,7 +159,7 @@ $jml_nota=format_angka(mysqli_num_rows($sql4));
 			  <center><input class="btn btn-primary" type="submit" value="Batalkan Periksa Barang" <?php echo $batal ?> ></center><br/>
 								<a class="btn btn-danger btn-xs" style="width:10px;height:10px">&nbsp;</a><font color="red">Sisa Plafon < Jumlah Jual</font>
 							  <div class="table-responsive">
-							  <table id="table_belum_cek" class="table table-bordered table-striped">
+							  <table id="table_belum_cek" class="table table-bordered table-striped" style="min-width:1500px;">
 									<thead>
 										<tr>
 											<th>Pilih</th>
@@ -168,10 +168,10 @@ $jml_nota=format_angka(mysqli_num_rows($sql4));
 											<th>Nama Pelanggan</th>
 											<th>Jenis Bayar</th>
 											<th>Tenor</th>
-											<th>Jml Nota Gantung (Rp)</th>
-											<th>Plafon (Rp)</th>
-											<th>Sisa Plafon (Rp)</th>
-											<th>Jumlah Jual (Rp)</th>
+											<th>Jml Nota Gantung</th>
+											<th>Plafon</th>
+											<th>Sisa Plafon</th>
+											<th>Jumlah Jual</th>
 											<th>Nama Sales</th>
 											<th>Disiapkan Oleh</th>
 											<th>Diperiksa Oleh</th>
@@ -258,10 +258,10 @@ $total_harga=$row6['total_harga'];
 				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_3&id=' .$row['id_jual']. '"><div style="min-width:70px">' .$row['nama_pelanggan']. '</div></a></td>
 				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_3&id=' .$row['id_jual']. '"><div style="min-width:70px">' .$row['jenis_bayar']. '</div></a></td>
 				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_3&id=' .$row['id_jual']. '"><div style="min-width:70px">' .$row['tenor']. ' hari</div></a></td>
-				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_3&id=' .$row['id_jual']. '"><div style="min-width:70px">' .format_uang($jumlah_gantung). '<br/> (' .$jml_nota. ' nota)</div></a></td>
-				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_3&id=' .$row['id_jual']. '"><div style="min-width:70px">' .format_uang($row['plafon']). '</div></a></td>
-				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_3&id=' .$row['id_jual']. '"><div style="min-width:70px">' .format_uang($row['plafon']-$jumlah_gantung). '</div></a></td>
-				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_3&id=' .$row['id_jual']. '"><div style="min-width:70px">' .format_uang($total_harga). '</div></a></td>
+				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_3&id=' .$row['id_jual']. '"><div style="min-width:70px">Rp ' .format_uang($jumlah_gantung). '<br/> (' .$jml_nota. ' nota)</div></a></td>
+				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_3&id=' .$row['id_jual']. '"><div style="min-width:70px">Rp ' .format_uang($row['plafon']). '</div></a></td>
+				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_3&id=' .$row['id_jual']. '"><div style="min-width:70px">Rp ' .format_uang($row['plafon']-$jumlah_gantung). '</div></a></td>
+				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_3&id=' .$row['id_jual']. '"><div style="min-width:70px">Rp ' .format_uang($total_harga). '</div></a></td>
 				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_3&id=' .$row['id_jual']. '"><div style="min-width:70px">' .$row['nama_karyawan']. '</div></a></td>
 				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_3&id=' .$row['id_jual']. '"><div style="min-width:70px">' .$row4['nama_siap']. '</div></a></td>
 				<td align="center"><a style="' .$style. '" href="?page=gudang&mode=konfirm_jual_3&id=' .$row['id_jual']. '"><div style="min-width:70px">' .$row5['nama_pemeriksa']. '</div></a></td>

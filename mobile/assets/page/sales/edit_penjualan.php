@@ -8,9 +8,9 @@ if (isset($edit_penjualan_post) && !$locked){
 	$sql=mysqli_query($con, "SELECT *
 	FROM
 		harga_jual
-		INNER JOIN barang_supplier 
+		INNER JOIN barang_supplier
 			ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-		INNER JOIN barang 
+		INNER JOIN barang
 			ON (barang_supplier.id_barang = barang.id_barang)
 	WHERE id_harga_jual=" .$id_harga_jual. " AND status=1");
 		if (mysqli_num_rows($sql)=='0'){
@@ -32,25 +32,25 @@ if (isset($_GET['del']) && !$locked){
 	$sql=mysqli_query($con, "SELECT id_karyawan FROM users WHERE posisi='OWNER'");
 	$row=mysqli_fetch_array($sql);
 	$id_owner=$row['id_karyawan'];
-	
+
 	$sql=mysqli_query($con, "SELECT tgl_nota, invoice, nama_pelanggan, nama_barang, nama_satuan, qty
 FROM
     jual
-    INNER JOIN jual_detail 
+    INNER JOIN jual_detail
         ON (jual.id_jual = jual_detail.id_jual)
-    INNER JOIN harga_jual 
+    INNER JOIN harga_jual
         ON (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
-	INNER JOIN pelanggan 
+	INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-    INNER JOIN satuan 
+    INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
 	WHERE jual_detail.id_jual_detail=" .$_GET['del']);
 	$row=mysqli_fetch_array($sql);
-	
+
 	$judul='Ada barang yang dihapus sales.';
 	$pesan='Tipe: Dalam Kota\r\nTgl Nota Jual : ' .date("d-m-Y",strtotime($row['tgl_nota'])). '\r\nNo Nota Jual : ' .$row['invoice']. '\r\nNama Pelanggan : ' .$row['nama_pelanggan']. '\r\n';
 	$pesan.='Nama Sales : ' .$_SESSION['user']. '\r\nNama Barang : ' .$row['nama_barang']. '\r\n\t' .$row['qty']. ' ' .$row['nama_satuan']. '\r\n';
@@ -82,7 +82,7 @@ $sql=mysqli_query($con, "SELECT
     , pelanggan.nama_pelanggan
 FROM
     jual
-    INNER JOIN pelanggan 
+    INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
 WHERE id_jual=$id");
 $row=mysqli_fetch_array($sql);
@@ -92,7 +92,7 @@ $ppn_all_persen=$row['ppn_all_persen'];
 ?>
 <div class="right_col loading" role="main">
 	<div class="">
-	
+
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
@@ -118,7 +118,7 @@ $ppn_all_persen=$row['ppn_all_persen'];
 									<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 								</div>
 								<div class="input-group">
-									<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-dollar fa-fw"></i><br><small>Pembayaran</small></span>
+									<span class="input-group-addon" style="padding: 2px 12px; width:93px;"><i class="fa fa-dollar fa-fw"></i><br><small>Pembayaran</small></span>
 									<select class="select2 form-control" id="select_jenis" disabled required>
 										<option value="" disabled selected>Pilih Jenis Bayar</option>
 										<option value="Lunas">Lunas</option>
@@ -144,7 +144,7 @@ $ppn_all_persen=$row['ppn_all_persen'];
 								</form>
 								<form method="post" onsubmit="return edit_ppn()">
 								<div class="input-group">
-									<span class="input-group-addon">PPN (%)</span>
+									<span class="input-group-addon" style="width: 135px;">PPN (%)</span>
 									<input type="number" max="100" min="0" class="form-control" id="ppn" name="ppn_all_persen" value="<?php echo $row['ppn_all_persen'] ?>" readonly required>
 									<span class="input-group-btn">
 										<input type="hidden" name="edit_ppn_nota_jual" value="true">
@@ -160,18 +160,18 @@ $ppn_all_persen=$row['ppn_all_persen'];
 								</div>
 								<div id="input_brg" class="col-xs-12">
 									<div style="overflow-x: auto">
-									<table class="table table-bordered table-striped">
+									<table class="table table-bordered table-striped" style="min-width:1200px;">
 										<thead>
 											<th>Nama Barang</th>
 											<th>Qty</th>
-											<th>Harga Jual (Rp)</th>
-											<th>Tot. Seb. Diskon (Rp)</th>
-											<th>Disc 1 (Rp)</th>
-											<th>Tot. set. disc 1 (Rp)</th>
-											<th>Disc 2 (Rp)</th>
-											<th>Tot. set. disc 2 (Rp)</th>
-											<th>Disc 3 (Rp)</th>
-											<th>Tot. set. disc 3 (Rp)</th>
+											<th>Harga Jual</th>
+											<th>Tot. Seb. Diskon</th>
+											<th>Disc 1</th>
+											<th>Tot. set. disc 1</th>
+											<th>Disc 2</th>
+											<th>Tot. set. disc 2</th>
+											<th>Disc 3</th>
+											<th>Tot. set. disc 3</th>
 											<th></th>
 										</thead>
 										<tbody>
@@ -192,13 +192,13 @@ $ppn_all_persen=$row['ppn_all_persen'];
     , satuan.nama_satuan
 FROM
     jual_detail
-    INNER JOIN harga_jual 
+    INNER JOIN harga_jual
         ON (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-	INNER JOIN satuan 
+	INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE id_jual=$id");
 $total=0;
@@ -223,14 +223,14 @@ $st=$tot_set_disk_3;
 			<input type="hidden" name="diskon_rp_3[]" value="' .$row['diskon_rp_3']. '">
 			<td style="min-width:150px">' .$row['nama_barang']. '</td>
 			<td style="min-width:100px">' .$row['qty']. ' ' .$row['nama_satuan']. '</td>
-			<td style="min-width:70px">' .format_uang($row['harga_jual']). '</td>
-			<td style="min-width:70px">' .format_uang($row['qty']*$row['harga_jual']). '</td>
-			<td style="min-width:70px">' .format_uang($diskon1). '</td>
-			<td style="min-width:70px">' .format_uang($tot_set_disk_1). '</td>
-			<td style="min-width:70px">' .format_uang($diskon2). '</td>
-			<td style="min-width:70px">' .format_uang($tot_set_disk_2). '</td>
-			<td style="min-width:70px">' .format_uang($diskon3). '</td>
-			<td id="st" data-st="' .$st. '">' .format_uang($st). '</td>';
+			<td style="min-width:70px">Rp ' .format_uang($row['harga_jual']). '</td>
+			<td style="min-width:70px">Rp ' .format_uang($row['qty']*$row['harga_jual']). '</td>
+			<td style="min-width:70px">Rp ' .format_uang($diskon1). '</td>
+			<td style="min-width:70px">Rp ' .format_uang($tot_set_disk_1). '</td>
+			<td style="min-width:70px">Rp ' .format_uang($diskon2). '</td>
+			<td style="min-width:70px">Rp ' .format_uang($tot_set_disk_2). '</td>
+			<td style="min-width:70px">Rp ' .format_uang($diskon3). '</td>
+			<td id="st" data-st="' .$st. '">Rp ' .format_uang($st). '</td>';
 	if (!$locked) {
 		echo '	<td><a href="?page=sales&mode=edit_penjualan&id=' .$id. ' &del=' .$row['id_jual_detail']. '" class="btn btn-primary btn-xs">Hapus</a></td>';
 	} else {
@@ -241,13 +241,13 @@ $st=$tot_set_disk_3;
 $diskon_all_rp=($diskon_all_persen/100)*$total;
 ?>
 											<tr id="info2">
-												<td colspan="9">Diskon Nota Jual (Rp)</td>
-												<td id="info_diskon_all"><?php echo format_uang($diskon_all_rp) ?></td>
+												<td colspan="9">Diskon Nota Jual</td>
+												<td id="info_diskon_all">Rp <?php echo format_uang($diskon_all_rp) ?></td>
 												<td></td>
 											</tr>
 											<tr id="info">
-												<td colspan="9">Total Jual(Rp)</td>
-												<td id="info_total"><?php echo format_uang($total) ?></td>
+												<td colspan="9">Total Jual</td>
+												<td id="info_total">Rp <?php echo format_uang($total) ?></td>
 												<td></td>
 											</tr>
 										</tbody>
@@ -278,7 +278,7 @@ $diskon_all_rp=($diskon_all_persen/100)*$total;
 				<input type="hidden" name="edit_penjualan_post" value="true">
 				<input type="hidden" id="id_harga_jual" name="id_harga_jual" value="">
 				<div id="get_barang" class="col-xs-12">
-					
+
 				</div>
 			</div>
 			<div class="clearfix"></div><br/>
@@ -327,7 +327,7 @@ function cek_add_barang(){
 	var harga = $('#harga_jual').val();
 	var qty = $('#qty').val();
 	$('#id_harga_jual').val(id_harga_jual);
-	
+
 	if ($('#input_brg').html().search('name="id_harga_jual[]" value="' + id_harga_jual + '"')=='-1' && $('#input_brg').html().search(nama)=='-1' && stok >= qty && qty >= min_order){
 		valid=true;
 	} else {
@@ -375,12 +375,12 @@ function edit_ppn(){
 }
 
 function handleChange(input) {
-   if (input.value < 0) 
+   if (input.value < 0)
         input.value = 0;
-   if (input.value > 100) 
+   if (input.value > 100)
         input.value = 100;
 }
-		
+
 $(document).ready(function(){
 	$('#select_jenis').val('<?php echo $jenis_bayar ?>');
 	$('#myModal').on('show.bs.modal', function(e){

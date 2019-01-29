@@ -39,20 +39,20 @@ $id_karyawan=$_SESSION['id_karyawan'];
                         </div>
                         <div class="clearfix"></div><br>
                         <div class="table-responsive">
-                            <table id="table1" class="table table-bordered table-striped">
+                            <table id="table1" class="table table-bordered table-striped" style="min-width: 2000px;">
                                 <thead>
                                     <tr>
                                         <th>Nama Pelanggan</th>
                                         <th>No Nota Jual</th>
-                                        <th>Jumlah Jual (Rp)</th>
+                                        <th>Jumlah Jual</th>
                                         <th>Sales</th>
                                         <th>Driver</th>
                                         <th>Debt Collector</th>
                                         <th>Admin</th>
                                         <th>Tgl Tagih</th>
-                                        <th>Jumlah Tagih (Rp)</th>
-                                        <th>Jumlah Bayar (Rp)</th>
-                                        <th>Sisa Piutang (Rp)</th>
+                                        <th>Jumlah Tagih</th>
+                                        <th>Jumlah Bayar</th>
+                                        <th>Sisa Piutang (</th>
                                         <th>Tgl Kunjungan Berikutnya</th>
                                         <th>Status Bayar</th>
                                         <th>Status Kembali Nota</th>
@@ -78,15 +78,15 @@ $id_karyawan=$_SESSION['id_karyawan'];
 	$sql=mysqli_query($con, "SELECT *
 			FROM
 				penagihan
-				INNER JOIN karyawan 
+				INNER JOIN karyawan
 					ON (penagihan.id_karyawan = karyawan.id_karyawan)
-				INNER JOIN penagihan_detail 
+				INNER JOIN penagihan_detail
 					ON (penagihan.id_penagihan = penagihan_detail.id_penagihan)
-				INNER JOIN jual 
+				INNER JOIN jual
 					ON (penagihan_detail.id_jual = jual.id_jual)
-				INNER JOIN pelanggan 
+				INNER JOIN pelanggan
 					ON (jual.id_pelanggan = pelanggan.id_pelanggan)
-				INNER JOIN jual_detail 
+				INNER JOIN jual_detail
 					ON (jual.id_jual = jual_detail.id_jual)
 			WHERE penagihan.id_penagihan>0 $val
 			GROUP BY jual.id_jual");
@@ -94,23 +94,23 @@ $id_karyawan=$_SESSION['id_karyawan'];
 		$sql2=mysqli_query($con, "SELECT (qty_ambil*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total
 				FROM
 					jual_detail
-					INNER JOIN nota_siap_kirim_detail 
+					INNER JOIN nota_siap_kirim_detail
 						ON (jual_detail.id_jual_detail = nota_siap_kirim_detail.id_jual_detail)
 				WHERE id_jual=" .$row['id_jual']);
 		$total_jual=0;
 		while ($row2=mysqli_fetch_array($sql2)){
 			$total_jual+=$row2['total'];
 		}
-		
+
 		$sql2=mysqli_query($con, "SELECT nama_karyawan
 				FROM
 					penagihan
-					INNER JOIN karyawan 
+					INNER JOIN karyawan
 						ON (penagihan.id_admin = karyawan.id_karyawan)
 				WHERE penagihan.id_penagihan=" .$row['id_penagihan']);
 		$row2=mysqli_fetch_array($sql2);
 		$nama_admin=$row2['nama_karyawan'];
-		
+
 		$status='';
 		if ($row['status_bayar']=='0') {$status='Belum Bayar'; $color='red';}
 		if ($row['status_bayar']=='1') {$status='Sedang Mengangsur'; $color='red';}
@@ -127,26 +127,26 @@ $id_karyawan=$_SESSION['id_karyawan'];
 		} else {
 			$color2='black';
 		}
-		
+
 		$sql3=mysqli_query($con, "SELECT nama_karyawan FROM jual INNER JOIN karyawan ON (jual.id_karyawan = karyawan.id_karyawan) WHERE id_jual=" .$row['id_jual']);
 		$row3=mysqli_fetch_array($sql3);
 		$nama_sales=$row3['nama_karyawan'];
 		$sql3=mysqli_query($con, "SELECT nama_karyawan FROM pengiriman INNER JOIN karyawan ON (pengiriman.id_karyawan = karyawan.id_karyawan) WHERE id_jual=" .$row['id_jual']);
 		$row3=mysqli_fetch_array($sql3);
 		$nama_driver=$row3['nama_karyawan'];
-		
+
 		echo '<tr>
 				<td align="center">' .$row['nama_pelanggan']. '</td>
 				<td align="center">' .$row['invoice']. '</td>
-				<td align="center">' .format_uang($total_jual). '</td>
+				<td align="center">Rp ' .format_uang($total_jual). '</td>
 				<td align="center">' .$nama_sales. '</td>
 				<td align="center">' .$nama_driver. '</td>
 				<td align="center">' .$row['nama_karyawan']. '</td>
 				<td align="center">' .$nama_admin. '</td>
 				<td align="center">' .date("d-m-Y",strtotime($row['tanggal_tagih'])). '</td>
-				<td align="center">' .format_uang($total_jual). '</td>
-				<td align="center">' .format_uang($row['bayar']). '</td>
-				<td align="center">' .format_uang($total_jual-$row['bayar']). '</td>
+				<td align="center">Rp ' .format_uang($total_jual). '</td>
+				<td align="center">Rp ' .format_uang($row['bayar']). '</td>
+				<td align="center">Rp ' .format_uang($total_jual-$row['bayar']). '</td>
 				<td align="center" style="color: ' .$color2. '">' .$tgl_jb. '</td>
 				<td align="center" style="color: ' .$color. '">' .$status. '</td>
 				<td align="center">' .$status_nota. '</td>
@@ -171,7 +171,7 @@ $id_karyawan=$_SESSION['id_karyawan'];
         var tanggal = $('#datepicker').val();
         var url = "?page=admin&mode=lap_histori_penagihan&tanggal=" + tanggal +
                 "&debt=" + debt + "&pelanggan=" + pelanggan;
-        if (debt != '' || pelanggan != '' || tanggal != '') 
+        if (debt != '' || pelanggan != '' || tanggal != '')
             window.location = url;
         }
     function reset() {

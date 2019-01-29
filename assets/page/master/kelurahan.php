@@ -68,13 +68,13 @@ $sql=mysqli_query($con, "SELECT
     , kelurahan.nama_kel
 FROM
     kabupaten
-    INNER JOIN provinsi 
+    INNER JOIN provinsi
         ON (kabupaten.id_prov = provinsi.id_prov)
-    INNER JOIN kecamatan 
+    INNER JOIN kecamatan
         ON (kabupaten.id_kab = kecamatan.id_kab)
-    INNER JOIN negara 
+    INNER JOIN negara
         ON (negara.id_negara = provinsi.id_negara)
-    INNER JOIN kelurahan 
+    INNER JOIN kelurahan
         ON (kecamatan.id_kec = kelurahan.id_kec)
 ORDER BY kelurahan.id_kel DESC");
 $i=0;
@@ -177,21 +177,21 @@ while($row=mysqli_fetch_array($sql)){
                                     required="required">
                                     <option value="" disabled="disabled" selected="selected">Pilih Kecamatan</option>
                                     <?php
-								$sql=mysqli_query($con, "SELECT 
+								$sql=mysqli_query($con, "SELECT
 									negara.nama_negara , provinsi.id_prov , provinsi.nama_prov, kabupaten.nama_kab, kabupaten.id_kab, kecamatan.nama_kec, kecamatan.id_kec
-								FROM 
-									negara 
-								INNER JOIN 
-									provinsi 
-									ON 
-										(negara.id_negara = provinsi.id_negara) 
-								INNER JOIN 
-									kabupaten 
+								FROM
+									negara
+								INNER JOIN
+									provinsi
+									ON
+										(negara.id_negara = provinsi.id_negara)
+								INNER JOIN
+									kabupaten
 									ON (kabupaten.id_prov = provinsi.id_prov)
 								INNER JOIN
 									kecamatan
-									ON (kecamatan.id_kab = kabupaten.id_kab) 
-								ORDER BY 
+									ON (kecamatan.id_kab = kabupaten.id_kab)
+								ORDER BY
 									kecamatan.nama_kec");
 								while ($row=mysqli_fetch_array($sql)){
 									echo '<option negara="' .$row['nama_negara']. '" prov="' .$row['nama_prov']. '" kab="' .$row['nama_kab']. '" value="' .$row['id_kec']. '">' .$row['nama_kec']. '</option>';

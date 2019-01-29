@@ -197,7 +197,7 @@ $sql3 = mysqli_query($con, "SELECT * FROM canvass_keluar_barang WHERE id_canvass
 							<input type="hidden" name="tambah_ambil_gudang_mobil_post" value="true">
 							<div class="col-md-12">
 								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-truck fa-fw"></i></span>
+									<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-truck fa-fw"></i><br><small>Mobil</small></span>
 									<select class="form-control" id="select_mobil" name="id_mobil" required>
 										<option value="" disabled selected>Pilih Mobil Canvass</option>
 										<?php
@@ -326,7 +326,7 @@ if ($status!=9){
 				<form method="post" action="" onsubmit="return cek_valid_karyawan()">
 				<input type="hidden" name="tambah_ambil_gudang_karyawan_post" value="true">
 				<div class="input-group">
-					<span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+					<span class="input-group-addon" style="padding: 2px 12px;"><i class="fa fa-user fa-fw"></i><br><small>Karyawan</small></span>
 					<select class="form-control" id="select_karyawan" name="id_karyawan" required>
 						<option value="" disabled selected>Pilih Karyawan</option>
 						<?php

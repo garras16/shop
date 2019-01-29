@@ -18,7 +18,7 @@ if (isset($_GET['del'])){
 ?>
 <div class="right_col loading" role="main">
 	<div class="">
-	
+
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
@@ -35,8 +35,8 @@ if (isset($_GET['del'])){
 										<th>No Nota Jual</th>
 										<th>Nama Sales</th>
 										<th>Nama Pelanggan</th>
-										<th>Jumlah Jual (Rp)</th>
-										<th>Sisa Piutang (Rp)</th>
+										<th>Jumlah Jual</th>
+										<th>Sisa Piutang</th>
 										<th>Tgl Jatuh Tempo</th>
 										<th>Jumlah Bayar</th>
 										<th></th>
@@ -47,11 +47,11 @@ if (isset($_GET['del'])){
 								$sql=mysqli_query($con, "SELECT *,SUM(bayar) AS bayar
 FROM
     penagihan
-    INNER JOIN penagihan_detail 
+    INNER JOIN penagihan_detail
         ON (penagihan.id_penagihan = penagihan_detail.id_penagihan)
-	INNER JOIN jual 
+	INNER JOIN jual
         ON (penagihan_detail.id_jual = jual.id_jual)
-    INNER JOIN pelanggan 
+    INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
 WHERE penagihan.id_karyawan=$id_karyawan AND pelanggan.id_pelanggan='$id_pelanggan'
 GROUP BY jual.id_jual");
@@ -61,13 +61,13 @@ if ($row['status_konfirm']>=5){
 	$sql2=mysqli_query($con, "SELECT jual.id_jual,invoice,tgl_nota,tenor,nama_karyawan,nama_pelanggan, SUM(qty_ambil*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total
 FROM
     jual
-    INNER JOIN jual_detail 
+    INNER JOIN jual_detail
         ON (jual.id_jual = jual_detail.id_jual)
-	INNER JOIN pelanggan 
+	INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
-    INNER JOIN karyawan 
+    INNER JOIN karyawan
         ON (jual.id_karyawan = karyawan.id_karyawan)
-    INNER JOIN canvass_siap_kirim_detail 
+    INNER JOIN canvass_siap_kirim_detail
         ON (jual_detail.id_jual_detail = canvass_siap_kirim_detail.id_jual_detail)
 WHERE jual.id_jual=" .$row['id_jual']);
 		while ($row2=mysqli_fetch_array($sql2)){
@@ -83,13 +83,13 @@ WHERE jual.id_jual=" .$row['id_jual']);
 	$sql2=mysqli_query($con, "SELECT jual.id_jual,invoice,tgl_nota,tenor,nama_karyawan,nama_pelanggan, SUM(qty_ambil*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS total
 FROM
     jual
-    INNER JOIN jual_detail 
+    INNER JOIN jual_detail
         ON (jual.id_jual = jual_detail.id_jual)
-	INNER JOIN pelanggan 
+	INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
-    INNER JOIN karyawan 
+    INNER JOIN karyawan
         ON (jual.id_karyawan = karyawan.id_karyawan)
-    INNER JOIN nota_siap_kirim_detail 
+    INNER JOIN nota_siap_kirim_detail
         ON (jual_detail.id_jual_detail = nota_siap_kirim_detail.id_jual_detail)
 WHERE jual.id_jual=" .$row['id_jual']);
 		while ($row2=mysqli_fetch_array($sql2)){
@@ -105,20 +105,20 @@ WHERE jual.id_jual=" .$row['id_jual']);
 	$sql2=mysqli_query($con, "SELECT SUM(bayar) AS total_bayar FROM penagihan_detail WHERE id_penagihan=" .$row['id_penagihan']. " AND id_jual=$id_jual");
 	$row2=mysqli_fetch_array($sql2);
 	$total_bayar=$row2['total_bayar'];
-	
+
 	$sql2=mysqli_query($con, "SELECT SUM(jumlah_retur) AS jumlah_bayar
 FROM
     penagihan_detail
-    INNER JOIN penagihan_retur_detail 
+    INNER JOIN penagihan_retur_detail
         ON (penagihan_detail.id_penagihan_detail = penagihan_retur_detail.id_penagihan_detail)
 WHERE id_penagihan=" .$row['id_penagihan']. " AND id_jual=" .$row['id_jual']);
 $row2=mysqli_fetch_array($sql2);
 $total_bayar+=$row2['jumlah_bayar'];
-	
+
 	$sql2=mysqli_query($con, "SELECT *
 FROM
     bayar_nota_jual
-    INNER JOIN jual 
+    INNER JOIN jual
         ON (bayar_nota_jual.no_nota_jual = jual.invoice)
 WHERE jual.id_jual=" .$row['id_jual']);
 $jumlah_bayar=0;
@@ -133,7 +133,7 @@ while ($row2=mysqli_fetch_array($sql2)){
 $sql2=mysqli_query($con, "SELECT *
 FROM
     penagihan_detail
-    INNER JOIN jual 
+    INNER JOIN jual
         ON (penagihan_detail.id_jual = jual.id_jual)
 WHERE jual.id_jual=" .$row['id_jual']);
 while ($row2=mysqli_fetch_array($sql2)){
@@ -147,7 +147,7 @@ while ($row2=mysqli_fetch_array($sql2)){
 $sql2=mysqli_query($con, "SELECT SUM(jumlah_retur) AS jumlah_bayar
 FROM
     penagihan_detail
-    INNER JOIN penagihan_retur_detail 
+    INNER JOIN penagihan_retur_detail
         ON (penagihan_detail.id_penagihan_detail = penagihan_retur_detail.id_penagihan_detail)
 WHERE id_jual=" .$row['id_jual']);
 $row2=mysqli_fetch_array($sql2);
@@ -161,10 +161,10 @@ if ($sisa_piutang==0) continue;
 											<td>' .$invoice. '</td>
 											<td>' .$nama_sales. '</td>
 											<td>' .$nama_pelanggan. '</td>
-											<td>' .format_uang($total_jual). '</td>
-											<td>' .format_uang($sisa_piutang). '</td>
+											<td>Rp ' .format_uang($total_jual). '</td>
+											<td>Rp ' .format_uang($sisa_piutang). '</td>
 											<td>' .date('d-m-Y',strtotime($tgl_jt_tempo)). '</td>
-											<td>' .format_uang($total_bayar). '</td>';
+											<td>Rp ' .format_uang($total_bayar). '</td>';
 	if ($total_bayar==0){
 		echo '								<td><a data-toggle="modal" data-target="#myModal" data-id-penagihan-detail="' .$row['id_penagihan_detail']. '" data-id-jual="' .$id_jual. '" data-invoice="' .$invoice. '" data-jumlah-jual="' .$total_jual. '" data-total-bayar="' .$total_bayar. '" class="btn btn-xs btn-warning"><i class="fa fa-check"></i> Tagih</a></td>';
 	} else {
@@ -172,17 +172,17 @@ if ($sisa_piutang==0) continue;
 	}
 	echo '								</tr>';
 }
-										
+
 									?>
 									</tbody>
 								</table>
 							</div>
-							
+
 						<div id="dummy" style="display:none"></div>
 					</div>
 				</div>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
@@ -194,7 +194,7 @@ if ($sisa_piutang==0) continue;
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title">Metode Bayar</h4>
 			</div>
-			<div class="modal-body">				
+			<div class="modal-body">
 				<form action="" method="post">
 					<input type="hidden" name="tambah_setoran_post" value="true">
 					<input type="hidden" id="id_jual" name="id_jual" value="">
@@ -232,7 +232,7 @@ function batal_scan(){
 function cek_scan_nota(barcode){
 	var invoice = $('#invoice').val();
 	if (invoice == barcode){
-		
+
 	} else {
 		$('#myModal').modal('hide');
 		AndroidFunction.showToast('Barcode Nota salah.');

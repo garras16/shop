@@ -7,9 +7,9 @@ if (isset($tambah_penjualan_post)){
 		$sql=mysqli_query($con, "SELECT *
 	FROM
 		harga_jual
-		INNER JOIN barang_supplier 
+		INNER JOIN barang_supplier
 			ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-		INNER JOIN barang 
+		INNER JOIN barang
 			ON (barang_supplier.id_barang = barang.id_barang)
 	WHERE id_harga_jual=" .$id_harga_jual[$i]. " AND status=1");
 		if (mysqli_num_rows($sql)=='0'){
@@ -18,7 +18,7 @@ if (isset($tambah_penjualan_post)){
 			break 2;
 		}
 	}*/
-	 
+
 	$sql=mysqli_query($con, "DELETE FROM data_nota_jual WHERE tgl_nota < '" .date("Y-m-d"). "'");
 	$sql=mysqli_query($con, "SELECT MAX(invoice) AS cID FROM data_nota_jual WHERE tgl_nota='" .date('Y-m-d'). "'");
 	$r=mysqli_fetch_array($sql);
@@ -31,7 +31,7 @@ if (isset($tambah_penjualan_post)){
 	$invoice="NJ-" .date("ymd"). '-' .sprintf("%03d",$CID+1);
 	$sql = mysqli_query($con, "INSERT INTO data_nota_jual VALUES(null,'$tanggal','$invoice')");
 	$sql = mysqli_query($con, "INSERT INTO jual VALUES(null,'$tanggal','$invoice',$id_pelanggan,$id_karyawan,'$jenis_bayar',$tenor,0,0,null,$diskon_all_persen,$ppn_all_persen)");
-	
+
 	$id_jual=mysqli_insert_id($con);
 	$id_harga_jual[] = implode(',',$id_harga_jual);
 	$harga[] = implode(',',$harga);
@@ -46,9 +46,9 @@ if (isset($tambah_penjualan_post)){
 		$sql=mysqli_query($con, "SELECT *
 	FROM
 		harga_jual
-		INNER JOIN barang_supplier 
+		INNER JOIN barang_supplier
 			ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-		INNER JOIN barang 
+		INNER JOIN barang
 			ON (barang_supplier.id_barang = barang.id_barang)
 	WHERE id_harga_jual=" .$id_harga_jual[$i]. " AND status=0");
 		if (mysqli_num_rows($sql)>0){
@@ -72,7 +72,7 @@ $plafon=$row['plafon'];
 ?>
 <div class="right_col loading" role="main">
 	<div class="">
-	
+
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
@@ -111,12 +111,12 @@ $plafon=$row['plafon'];
 								</div>
 								<div class="input-group">
 									<span class="input-group-addon">Diskon Nota Jual (%)</span>
-									<input type="text" max="100" min="0" onchange="handleChange(this);" class="form-control" maxlength="6" id="diskon" name="diskon_all_persen" value="0" required>
+									<input type="text" max="100" min="0" onchange="handleChange(this);" maxlength="6" class="form-control" maxlength="6" id="diskon" name="diskon_all_persen" value="0" required>
 									<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 								</div>
 								<div class="input-group">
 									<span class="input-group-addon">PPN Nota Jual (%)</span>
-									<input type="text" max="100" min="0" onchange="handleChange(this);" class="form-control" maxlength="6" id="ppn" name="ppn_all_persen" value="0" required>
+									<input type="text" max="100" min="0" onchange="handleChange(this);" maxlength="6" class="form-control" maxlength="6" id="ppn" name="ppn_all_persen" value="0" required>
 									<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 								</div>
 								<div class="text-right">
@@ -124,7 +124,7 @@ $plafon=$row['plafon'];
 								</div>
 								<div id="input_brg">
 									<div style="overflow-x: auto">
-									<table class="table table-bordered table-striped">
+									<table class="table table-bordered table-striped" style="min-width: 1400px;">
 										<thead>
 											<th>Nama Barang</th>
 											<th>Qty</th>
@@ -175,15 +175,15 @@ $plafon=$row['plafon'];
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&times;</button>
 				<h4 class="modal-title">Pilih Barang</h4>
 			</div>
-			<div class="modal-body">				
+			<div class="modal-body">
 				<div id="get_barang" class="col-xs-12">
-					
+
 				</div>
 			</div>
 			<div class="clearfix"></div><br/>
 			<div class="modal-footer">
 				<a onClick="add_barang();" class="btn btn-primary">Tambah</a>
-			</div>			
+			</div>
 		</div>
 	</div>
 </div>
@@ -263,7 +263,7 @@ if ($('#select_jenis').val()=='Kredit'){
 				'<td id="st" data-st="' + subtotal + '">' + format_uang(tot_set_disk_3) + '</td>' +
 				'<td><a href="#" class="btn btn-primary btn-xs remove_cart">Hapus</a></td>' +
 				'</tr>';
-	
+
 	if ($('#input_brg').html().search('name="id_harga_jual[]" value="' + id_harga_jual + '"')=='-1' && $('#input_brg').html().search(nama)=='-1' && stok >= qty && qty >= min_order){
 		valid=true;
 	} else {
@@ -279,7 +279,7 @@ if ($('#select_jenis').val()=='Kredit'){
 			AndroidFunction.showToast("Barang sudah pernah dipilih.");
 		}
 	}
-	
+
 	if (valid) {
 		total+=subtotal;
 		$('#info_total').html(format_uang(total));
@@ -316,11 +316,11 @@ $(document).ready(function(){
 		$('#get_barang').html('<center><i class="fa fa-spinner fa-spin" style="font-size:24px"></i></center>');
 		if (jenis=='Lunas'){
 			$('#get_barang').load('assets/page/sales/input_brg_tunai.php?id=' + id,function(){
-				
+
 			});
 		} else {
 			$('#get_barang').load('assets/page/sales/input_brg_kredit.php?id=' + id + '&tenor=' + tenor,function(){
-				
+
 			});
 		}
 	})
@@ -329,7 +329,7 @@ $(document).ready(function(){
 		var st = $(this).parent().closest('#list').find('#st').attr('data-st');
 		total-=st;
 		$('#info_total').html("Total : " + format_uang(total));
-		$(this).parent().closest('#list').remove();		
+		$(this).parent().closest('#list').remove();
 	});
 	$('#select_jenis').on('change', function(){
 		if ($(this).val() == 'Lunas') {

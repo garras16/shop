@@ -227,17 +227,17 @@ $jml_nota=format_angka(mysqli_num_rows($sql4));
 								<tr>
 									<th>Nama Barang</th>
 									<th>Qty Jual</th>
-									<th>Harga (Rp)</th>
-									<th>Diskon 1 (Rp)</th>
-									<th>Diskon 2 (Rp)</th>
-									<th>Diskon 3 (Rp)</th>
-									<th>SubTotal (Rp)</th>
+									<th>Harga</th>
+									<th>Diskon 1</th>
+									<th>Diskon 2</th>
+									<th>Diskon 3</th>
+									<th>SubTotal</th>
 									<th>Stok</th>
 									<th>Gudang</th>
 									<th>Rak</th>
 									<th>Tgl Exp.</th>
 									<th>Qty Ambil</th>
-									<th>Sub Total Ambil (Rp)</th>
+									<th>Sub Total Ambil</th>
 									<th></th>
 								</tr>
 							</thead>
@@ -294,11 +294,11 @@ ORDER BY expire, nama_gudang, nama_rak, tgl_datang");
 	echo '<tr>
 				<td style="vertical-align:middle;text-align:center;' .$color. '" rowspan="' .$n. '">' .$row['nama_barang']. '</td>
 				<td style="vertical-align:middle;text-align:center;min-width:85px;' .$color. '" rowspan="' .$n. '">' .$row['qty']. ' ' .$row['nama_satuan']. '</td>
-				<td style="vertical-align:middle;text-align:center;' .$color. '" rowspan="' .$n. '">' .format_uang($row['harga']). '</td>
-				<td style="vertical-align:middle;text-align:center;' .$color. '" rowspan="' .$n. '">' .format_uang($row['diskon_rp']). '</td>
-				<td style="vertical-align:middle;text-align:center;' .$color. '" rowspan="' .$n. '">' .format_uang($row['diskon_rp_2']). '</td>
-				<td style="vertical-align:middle;text-align:center;' .$color. '" rowspan="' .$n. '">' .format_uang($row['diskon_rp_3']). '</td>
-				<td style="vertical-align:middle;text-align:center;' .$color. '" rowspan="' .$n. '">' .format_uang(($row['harga']-$row['diskon_rp']-$row['diskon_rp_2']-$row['diskon_rp_3'])*$row['qty']). '</td>';
+				<td style="vertical-align:middle;text-align:center;' .$color. '" rowspan="' .$n. '">Rp ' .format_uang($row['harga']). '</td>
+				<td style="vertical-align:middle;text-align:center;' .$color. '" rowspan="' .$n. '">Rp ' .format_uang($row['diskon_rp']). '</td>
+				<td style="vertical-align:middle;text-align:center;' .$color. '" rowspan="' .$n. '">Rp ' .format_uang($row['diskon_rp_2']). '</td>
+				<td style="vertical-align:middle;text-align:center;' .$color. '" rowspan="' .$n. '">Rp ' .format_uang($row['diskon_rp_3']). '</td>
+				<td style="vertical-align:middle;text-align:center;' .$color. '" rowspan="' .$n. '">Rp ' .format_uang(($row['harga']-$row['diskon_rp']-$row['diskon_rp_2']-$row['diskon_rp_3'])*$row['qty']). '</td>';
 
 	while ($row2=mysqli_fetch_array($sql2)){
 		$sql3=mysqli_query($con, "SELECT id_nota_siap_kirim_detail, SUM(qty_ambil) AS qty_ambil
@@ -333,17 +333,17 @@ ORDER BY expire, nama_gudang, nama_rak, tgl_datang");
 			$selesai=true;
 			$total_+=($row['harga']-$row['diskon_rp']-$row['diskon_rp_2']-$row['diskon_rp_3'])*$row3['qty_ambil'];
 			echo '		<td align="center" style="' .$color. '">' .$row3['qty_ambil']. ' ' .$row['nama_satuan']. '</td>
-						<td align="center" style="' .$color. '">' .format_uang($row3['qty_ambil']*$row['harga']). '</td>
+						<td align="center" style="' .$color. '">Rp ' .format_uang($row3['qty_ambil']*$row['harga']). '</td>
 						<td align="center"><a href="?page=gudang&mode=konfirm_jual_2&id=' .$id. '&del=' .$row3['id_nota_siap_kirim_detail']. '" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Hapus</a></td>';
 		}
 echo '		</tr>';
 	}
 }
 echo '<tr>
-		<td colspan="6"><b>Total (Rp)</b></td>
-		<td align="center"><b>' .format_uang($total). '</b></td>
+		<td colspan="6"><b>Total</b></td>
+		<td align="center"><b>Rp ' .format_uang($total). '</b></td>
 		<td colspan="5"></td>
-		<td align="center"><b>' .format_uang($total_). '</b></td>
+		<td align="center"><b>Rp ' .format_uang($total_). '</b></td>
 		<td></td>
 	</tr>';
 if ($barang_expire) _alert("Ada barang yang akan / sudah expire.");

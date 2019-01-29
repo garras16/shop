@@ -82,36 +82,36 @@ if ($row['user']==null){
 					<div class="x_content">
 						<div class="col-xs-6">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-tags fa-fw"></i></span>
-								<input class="form-control" id="no_nota_beli" type="text" name="no_nota_beli" placeholder="No Nota Beli" value="<?php echo $row['no_nota_beli'] ?>" maxlength="50" readonly>
+								<span class="input-group-addon"><i class="fa fa-tags fa-fw" style="width: 43px;"></i><br><small>No. Nota</small></span>
+								<input class="form-control" id="no_nota_beli" type="text" style="padding: 19px 10px;" name="no_nota_beli" placeholder="No Nota Beli" value="<?php echo $row['no_nota_beli'] ?>" maxlength="50" readonly>
 								<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 							</div>
 						</div>
 						<div class="col-xs-6">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
-								<input class="form-control" id="tanggal" name="tanggal" placeholder="Tanggal Nota Beli" value="<?php echo date("d-m-Y",strtotime($row['tanggal'])) ?>" maxlength="50" readonly>
+								<span class="input-group-addon"><i class="fa fa-calendar fa-fw" style="width: 43px;"></i><br><small>Tgl. Nota</small></span>
+								<input class="form-control" id="tanggal" name="tanggal" placeholder="Tanggal Nota Beli" style="padding: 19px 10px;" value="<?php echo date("d-m-Y",strtotime($row['tanggal'])) ?>" maxlength="50" readonly>
 								<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 							</div>
 						</div>
 						<div class="col-xs-6">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-building fa-fw"></i></span>
-							<input class="form-control" id="supplier" type="text" name="supplier" placeholder="Supplier" value="<?php echo $row['nama_supplier'] ?>" maxlength="50" readonly>
+							<span class="input-group-addon"><i class="fa fa-building fa-fw" style="width: 43px;"></i><br><small>Supplier</small></span>
+							<input class="form-control" id="supplier" type="text" name="supplier" style="padding: 19px 10px;" placeholder="Supplier" value="<?php echo $row['nama_supplier'] ?>" maxlength="50" readonly>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						</div>
 						<div class="col-xs-6">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-							<input class="form-control" id="penerima" type="text" name="penerima" placeholder="Penerima Barang" value="<?php echo $user ?>" maxlength="50" readonly>
+							<span class="input-group-addon"><i class="fa fa-user fa-fw"></i><br><small>Penerima</small></span>
+							<input class="form-control" id="penerima" type="text" name="penerima" style="padding: 19px 10px;" placeholder="Penerima Barang" value="<?php echo $user ?>" maxlength="50" readonly>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						</div>
 						<div class="col-xs-6">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-truck fa-fw"></i></span>
-							<input class="form-control" id="ekspedisi" type="text" name="ekspedisi" placeholder="Nama Ekspedisi" value="<?php echo $row['nama_ekspedisi'] ?>" maxlength="50" readonly>
+							<span class="input-group-addon"><i class="fa fa-truck fa-fw"></i><br><small>Ekspedisi</small></span>
+							<input class="form-control" id="ekspedisi" type="text" style="padding: 19px 10px;" name="ekspedisi" placeholder="Nama Ekspedisi" value="<?php echo $row['nama_ekspedisi'] ?>" maxlength="50" readonly>
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						</div>
@@ -246,8 +246,8 @@ echo '<td><div style="text-align:center"><a data-barcode="' .$row['barcode']. '"
 			if ($n==$x && $status_konfirm <> 1){
 				echo "<script>$('.td_berat').attr('style','');</script>";
 				echo '<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-money fa-fw"></i></span>
-							<input class="form-control mask" id="tarif" type="tel" name="tarif" placeholder="Tarif Ekspedisi Berdasarkan Qty Datang (Rp)" value="" autocomplete="off">
+							<span class="input-group-addon"><i class="fa fa-money fa-fw"></i><br><small>Tarif Ekspedisi</small></span>
+							<input class="form-control" id="tarif" type="tel" style="padding: 19px 10px;" name="tarif" placeholder="Tarif Ekspedisi Berdasarkan Qty Datang (Rp)" value="" autocomplete="off">
 							<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 						</div>
 						<p align="center"><button type="submit" class="btn btn-primary">SIMPAN</button></p>';
@@ -299,6 +299,7 @@ function getBack(){
 $(document).ready(function(){
 	$('#select_ekspedisi').val('<?php echo $row["id_ekspedisi"] ?>');
 	$('.mask').inputmask('numeric', {allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, removeMaskOnSubmit: true});
+	$('#tarif').inputmask('currency', {prefix: "Rp ", allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, removeMaskOnSubmit: true});
 	$('#myModal').on('show.bs.modal', function(e){
 		var id = $(e.relatedTarget).data('id');
 			$('#get_detail').html('<center><i class="fa fa-spinner fa-spin" style="font-size:24px"></i></center>');

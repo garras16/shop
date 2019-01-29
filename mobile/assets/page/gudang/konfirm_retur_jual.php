@@ -1,7 +1,7 @@
 
 <div class="right_col loading" role="main">
 	<div class="">
-	
+
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
@@ -30,7 +30,7 @@
 						<th>No Retur</th>
 						<th>No Nota Jual</th>
 						<th>Nama Pelanggan</th>
-						<th>Jumlah Jual (Rp)</th>
+						<th>Jumlah Jual</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -52,10 +52,10 @@ $sql=mysqli_query($con, "SELECT
     , pelanggan.nama_pelanggan
 FROM
     retur_jual
-    INNER JOIN jual 
+    INNER JOIN jual
         ON (retur_jual.id_jual = jual.id_jual)
-    INNER JOIN pelanggan 
-        ON (jual.id_pelanggan = pelanggan.id_pelanggan) 
+    INNER JOIN pelanggan
+        ON (jual.id_pelanggan = pelanggan.id_pelanggan)
 WHERE $val AND retur_jual.status=0
 ORDER BY id_retur_jual DESC");
 while($row=mysqli_fetch_array($sql)){
@@ -71,20 +71,20 @@ if ($row['status']==0){
 						<td><a href="?page=gudang&mode=konfirm_retur_jual_2&id=' .$row['id_retur_jual']. '"><div style="min-width:70px">&nbsp;' .$row['no_retur_jual']. '</div></a></td>
 						<td><a href="?page=gudang&mode=konfirm_retur_jual_2&id=' .$row['id_retur_jual']. '"><div style="min-width:70px">&nbsp;' .$row['invoice']. '</div></a></td>
 						<td><a href="?page=gudang&mode=konfirm_retur_jual_2&id=' .$row['id_retur_jual']. '"><div style="min-width:70px">&nbsp;' .$row['nama_pelanggan']. '</div></a></td>
-						<td><a href="?page=gudang&mode=konfirm_retur_jual_2&id=' .$row['id_retur_jual']. '"><div style="min-width:70px">&nbsp;' .format_uang($r['jumlah']). '</div></a></td>
+						<td><a href="?page=gudang&mode=konfirm_retur_jual_2&id=' .$row['id_retur_jual']. '"><div style="min-width:70px">Rp &nbsp;' .format_uang($r['jumlah']). '</div></a></td>
 					</tr>';
 }
 ?>
-					
+
 				</tbody>
 			</table>
-			
+
 			</div>
 			</div>
 			<div id="dummy"></div>
 			</div>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 

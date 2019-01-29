@@ -12,19 +12,19 @@ require_once('../../../assets/inc/publicfunc.php');
 		$sql = mysqli_query($con, "SELECT DISTINCT(hari)
 FROM
     barang_masuk_rak
-    INNER JOIN barang_masuk 
+    INNER JOIN barang_masuk
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
-    INNER JOIN beli_detail 
+    INNER JOIN beli_detail
         ON (barang_masuk.id_beli_detail = beli_detail.id_beli_detail)
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (beli_detail.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-    INNER JOIN harga_jual 
+    INNER JOIN harga_jual
         ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN harga_jual_kredit 
+    INNER JOIN harga_jual_kredit
         ON (harga_jual.id_harga_jual = harga_jual_kredit.id_harga_jual)
-	INNER JOIN satuan 
+	INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE barang_masuk_rak.stok > 0 AND barang.status=1 AND id_pelanggan=" .$_GET['id']. "
 GROUP BY id_harga_jual_kredit");
@@ -38,19 +38,19 @@ GROUP BY id_harga_jual_kredit");
     , SUM(barang_masuk_rak.stok) AS total_stok
 FROM
     barang_masuk_rak
-    INNER JOIN barang_masuk 
+    INNER JOIN barang_masuk
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
-    INNER JOIN beli_detail 
+    INNER JOIN beli_detail
         ON (barang_masuk.id_beli_detail = beli_detail.id_beli_detail)
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (beli_detail.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-    INNER JOIN harga_jual 
+    INNER JOIN harga_jual
         ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN harga_jual_kredit 
+    INNER JOIN harga_jual_kredit
         ON (harga_jual.id_harga_jual = harga_jual_kredit.id_harga_jual)
-	INNER JOIN satuan 
+	INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE barang_masuk_rak.stok > 0 AND id_pelanggan=" .$_GET['id']. " AND hari>" .$_GET['tenor']. " AND hari <= $tenor
 GROUP BY id_harga_jual_kredit");
@@ -60,7 +60,7 @@ GROUP BY id_harga_jual_kredit");
 		$sql3=mysqli_query($con, "SELECT SUM(qty) as qty
 FROM
     jual
-    INNER JOIN jual_detail 
+    INNER JOIN jual_detail
         ON (jual.id_jual = jual_detail.id_jual)
 WHERE status_konfirm=0 AND id_harga_jual=" .$row['id_harga_jual']. "");
 		$r3=mysqli_fetch_array($sql3);
@@ -105,7 +105,7 @@ $(document).ready(function(){
 	$('#diskon_persen_1').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#diskon_persen_2').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#diskon_persen_3').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-	$('#harga_jual').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+	$('#harga_jual').inputmask('currency', {prefix: "Rp ", allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#select_barang_2').on('change', function(e){
 		var cari_data = $(this).find(':selected');
 		var stok = cari_data.data('stok');

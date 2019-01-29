@@ -14,20 +14,20 @@ $sql=mysqli_query($con, "SELECT
     , satuan.nama_satuan
 FROM
     retur_beli_detail
-    INNER JOIN barang_masuk_rak 
+    INNER JOIN barang_masuk_rak
         ON (retur_beli_detail.id_barang_masuk_rak = barang_masuk_rak.id_barang_masuk_rak)
-    INNER JOIN beli_detail 
+    INNER JOIN beli_detail
         ON (retur_beli_detail.id_beli_detail = beli_detail.id_beli_detail)
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (beli_detail.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-    INNER JOIN satuan 
+    INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
-    INNER JOIN rak 
+    INNER JOIN rak
         ON (barang_masuk_rak.id_rak = rak.id_rak)
-    INNER JOIN gudang 
-        ON (rak.id_gudang = gudang.id_gudang) 
+    INNER JOIN gudang
+        ON (rak.id_gudang = gudang.id_gudang)
 WHERE id_retur_beli_detail=$id");
 $row=mysqli_fetch_array($sql);
 $id_retur_beli=$row['id_retur_beli'];
@@ -38,7 +38,7 @@ if ($row['qty_retur']==''){
 ?>
 <div class="right_col loading" role="main">
 	<div class="">
-	
+
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
@@ -54,13 +54,13 @@ if ($row['qty_retur']==''){
 							<p align="center"><a id="scan" onClick="AndroidFunction.scan_rak('<?php echo $row['nama_rak'] ?>');" class="btn btn-primary">SCAN RAK</a>
 							<a id="selesai" onClick="getBack();" class="btn btn-warning">SELESAI</a></p>
 							<div id="div_gudang" class="input-group">
-								<span class="input-group-addon"><i class="fa fa-tags fa-fw"></i></span>
-								<input class="form-control" id="gudang" type="text" name="gudang" placeholder="Gudang" value="<?php echo $row['nama_gudang'] ?>" readonly>
+								<span class="input-group-addon"><i class="fa fa-tags fa-fw"></i><br><small>Gudang</small></span>
+								<input class="form-control" id="gudang" type="text" name="gudang" style="padding: 19px 10px;" placeholder="Gudang" value="<?php echo $row['nama_gudang'] ?>" readonly>
 								<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 							</div>
 							<div id="div_rak" class="input-group">
-								<span class="input-group-addon"><i class="fa fa-tags fa-fw"></i></span>
-								<input class="form-control" id="rak" type="text" name="rak" placeholder="Rak" value="<?php echo $row['nama_rak'] ?>" readonly>
+								<span class="input-group-addon"><i class="fa fa-tags fa-fw" style="width: 34px;"></i><br><small>Rak</small></span>
+								<input class="form-control" id="rak" type="text" name="rak" style="padding: 19px 10px;" placeholder="Rak" value="<?php echo $row['nama_rak'] ?>" readonly>
 								<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 							</div>
 							<div class="input-group">
@@ -76,15 +76,15 @@ if ($row['qty_retur']==''){
 							<div id="alert_me"></div>
 							<p align="center"><button id="lanjut" type="submit" class="btn btn-primary" style="display:none">SIMPAN</button></p>
 						</form>
-				
-				
-			
-			
+
+
+
+
 				</div>
 				<div id="dummy"></div>
 				</div>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 

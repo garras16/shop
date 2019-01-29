@@ -49,22 +49,22 @@
 				</div>
 				<div class="x_content">
 					<div class="table-responsive">
-						<table id="table1" class="table table-bordered table-striped">
+						<table id="table1" class="table table-bordered table-striped" style="min-width: 1500px;">
 							<thead>
 								<tr>
 									<th>Nama Pelanggan</th>
 									<th>No Nota Jual</th>
-									<th>Jumlah Jual (Rp)</th>
+									<th>Jumlah Jual</th>
 									<th>Debt Collector</th>
 									<th>Tgl Tagih</th>
-									<th>Jml Tagih (Rp)</th>
-									<th>Jml Bayar (Rp)</th>
+									<th>Jml Tagih</th>
+									<th>Jml Bayar</th>
 									<th>Tgl Bayar</th>
-									<th>Sisa Piutang (Rp)</th>
+									<th>Sisa Piutang</th>
 									<th>Tgl Kunjungan Berikutnya</th>
 									<th>Status Bayar</th>
 									<th>Status Kembali Nota</th>
-									<th>Setor (Rp)</th>
+									<th>Setor</th>
 									<th></th>
 								</tr>
 							</thead>
@@ -144,17 +144,17 @@
 		echo '<tr>
 				<td align="center">' .$row['nama_pelanggan']. '</td>
 				<td align="center">' .$row['invoice']. '</td>
-				<td align="center">' .format_uang($total_jual). '</td>
+				<td align="center">Rp ' .format_uang($total_jual). '</td>
 				<td align="center">' .$row['nama_karyawan']. '</td>
 				<td align="center">' .date("d-m-Y",strtotime($row['tanggal_tagih'])). '</td>
-				<td align="center">' .format_uang($total_jual). '</td>
-				<td align="center">' .format_uang($total_bayar). '</td>
+				<td align="center">Rp ' .format_uang($total_jual). '</td>
+				<td align="center">Rp ' .format_uang($total_bayar). '</td>
 				<td align="center">' .$tgl_bayar. '</td>
-				<td align="center">' .format_uang($total_jual-$total_bayar). '</td>
+				<td align="center">Rp ' .format_uang($total_jual-$total_bayar). '</td>
 				<td align="center" style="color: ' .$color2. '">' .$tgl_jb. '</td>
 				<td align="center" style="color: ' .$color. '">' .$status. '</td>
 				<td align="center">' .$status_nota. '</td>
-				<td align="center">' .format_uang($row['setor']). '</td>
+				<td align="center">Rp ' .format_uang($row['setor']). '</td>
 				<td align="center">';
 					if ($row['status_nota_kembali']==0) {
 						echo '<a data-toggle="modal" data-target="#myModal" data-status-nota="' .$row['status_nota_kembali']. '" data-status-bayar="' .$row['status_bayar']. '" data-id-penagihan-detail="' .$row['id_penagihan_detail']. '" data-invoice="' .$row['invoice']. '" data-bayar="' .$total_bayar. '" data-tgl-janji="' .$tgl_jb. '" class="btn btn-xs btn-primary"><i class="fa fa-barcode"></i> ' .$cmd. '</a>';
@@ -217,12 +217,11 @@
                                                     <i class="fa fa-tags fa-fw"></i>
                                                     Jumlah Setor (Rp)&nbsp</span>
                                                 <input
-                                                    class="form-control"
-                                                    type="tel"
-                                                    id="setor"
-                                                    name="setor"
-                                                    placeholder="Jumlah Setor"
-                                                    value=""></div>
+																									class="form-control"
+																									id="setor" name="setor" placeholder="Jumlah Setor"
+																									value=""
+																									readonly="readonly">
+																							</div>
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar fa-fw"></i>

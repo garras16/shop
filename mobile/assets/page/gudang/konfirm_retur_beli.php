@@ -1,7 +1,7 @@
 
 <div class="right_col loading" role="main">
 	<div class="">
-	
+
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
@@ -30,7 +30,7 @@
 						<th>No Retur</th>
 						<th>No Nota Beli</th>
 						<th>Nama Supplier</th>
-						<th>Jumlah Beli (Rp)</th>
+						<th>Jumlah Beli</th>
 						<th>Status</th>
 					</tr>
 				</thead>
@@ -55,10 +55,10 @@ $sql=mysqli_query($con, "SELECT
     , supplier.nama_supplier
 FROM
     retur_beli
-    INNER JOIN beli 
+    INNER JOIN beli
         ON (retur_beli.id_beli = beli.id_beli)
-    INNER JOIN supplier 
-        ON (beli.id_supplier = supplier.id_supplier) 
+    INNER JOIN supplier
+        ON (beli.id_supplier = supplier.id_supplier)
 WHERE $val
 ORDER BY id_retur_beli DESC");
 while($row=mysqli_fetch_array($sql)){
@@ -77,7 +77,7 @@ if ($row['status']==0){
 						<td><a href="?page=gudang&mode=konfirm_retur_beli_2&id=' .$row['id_retur_beli']. '"><div style="min-width:70px">&nbsp;' .$row['no_retur_beli']. '</div></a></td>
 						<td><a href="?page=gudang&mode=konfirm_retur_beli_2&id=' .$row['id_retur_beli']. '"><div style="min-width:70px">&nbsp;' .$row['no_nota_beli']. '</div></a></td>
 						<td><a href="?page=gudang&mode=konfirm_retur_beli_2&id=' .$row['id_retur_beli']. '"><div style="min-width:70px">&nbsp;' .$row['nama_supplier']. '</div></a></td>
-						<td><a href="?page=gudang&mode=konfirm_retur_beli_2&id=' .$row['id_retur_beli']. '"><div style="min-width:70px">&nbsp;' .format_uang($total_beli). '</div></a></td>';
+						<td><a href="?page=gudang&mode=konfirm_retur_beli_2&id=' .$row['id_retur_beli']. '"><div style="min-width:70px">Rp &nbsp;' .format_uang($total_beli). '</div></a></td>';
 	if ($status==""){
 		echo '			<td><a href="?page=gudang&mode=konfirm_retur_beli_2&id=' .$row['id_retur_beli']. '"><div style="min-width:70px">&nbsp;</div></a></td>';
 	} else {
@@ -86,16 +86,16 @@ if ($row['status']==0){
 	echo '				</tr>';
 }
 ?>
-					
+
 				</tbody>
 			</table>
-			
+
 			</div>
 			</div>
 			<div id="dummy"></div>
 			</div>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 

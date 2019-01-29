@@ -54,7 +54,7 @@ if (isset($selesai_cek_barang_mobil_post)){
 	$sql=mysqli_query($con, "SELECT *,canvass_keluar.status
 FROM
     canvass_keluar
-    LEFT JOIN kendaraan 
+    LEFT JOIN kendaraan
         ON (canvass_keluar.id_mobil = kendaraan.id_kendaraan)
 	WHERE id_canvass_keluar=$id");
 	$row=mysqli_fetch_array($sql);
@@ -65,9 +65,9 @@ FROM
 	$sql2=mysqli_query($con, "SELECT *
 FROM
     canvass_keluar_karyawan
-    INNER JOIN karyawan 
+    INNER JOIN karyawan
         ON (canvass_keluar_karyawan.id_karyawan = karyawan.id_karyawan)
-	INNER JOIN users 
+	INNER JOIN users
         ON (karyawan.id_karyawan = users.id_karyawan)
 	WHERE id_canvass_keluar=$id");
 	$baris=mysqli_num_rows($sql2);
@@ -76,7 +76,7 @@ FROM
 ?>
 <div class="right_col loading" role="main">
 	<div class="">
-	
+
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
@@ -93,7 +93,7 @@ FROM
 	echo '					<tr><td width="40%">Tanggal Canvass</td><td>' .date("d-m-Y", strtotime($tgl_canvass)). '</td></tr>
 							<tr><td width="40%">Nama Mobil</td><td>' .$nama_mobil. '</td></tr>
 							<tr><td width="40%">No Pol</td><td>' .$plat. '</td></tr>';
-	
+
 	echo '					<tr><td rowspan="' .$baris. '">Nama Karyawan</td>';
 	while ($row2=mysqli_fetch_array($sql2)){
 		echo '				<td>- ' .$row2['nama_karyawan']. ' ( ' .$row2['posisi']. ' )</td></tr>';
@@ -121,13 +121,13 @@ FROM
 	$sql=mysqli_query($con, "SELECT *,SUM(qty) as qty, SUM(qty_cek) as qty_cek
 FROM
     canvass_keluar_barang
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (canvass_keluar_barang.id_barang = barang.id_barang)
-    INNER JOIN rak 
+    INNER JOIN rak
         ON (canvass_keluar_barang.id_rak = rak.id_rak)
-    INNER JOIN gudang 
+    INNER JOIN gudang
         ON (rak.id_gudang = gudang.id_gudang)
-    INNER JOIN satuan 
+    INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE id_canvass_keluar=$id
 GROUP BY canvass_keluar_barang.id_barang,canvass_keluar_barang.id_rak");
@@ -136,7 +136,7 @@ $CEK_VALID=0;
 	($row['qty_cek']==$row['qty'] ? $style="" : $style="color:red;");
 	echo '<tr>
 				<td style="vertical-align:middle;text-align:center;' .$style. '">' .$row['nama_barang']. '</td>';
-	
+
 		if ($row['qty_cek']==''){
 			$CEK_VALID+=1;
 			echo '		<td></td>
@@ -157,7 +157,7 @@ $CEK_VALID=0;
 			}
 		}
 echo '		</tr>';
-	}	
+	}
 
 ?>
 							</tbody>
@@ -171,7 +171,7 @@ echo '		</tr>';
 								echo '<input type="hidden" name="id_barang[]" value="' .$row['id_barang']. '">';
 								echo '<input type="hidden" name="qty_cek[]" value="' .$row['qty_cek']. '">';
 							}
-							
+
 							if ($status=='9'){
 								echo '<center><input type="submit" class="btn btn-primary" value="SELESAI" ';
 								if ($locked OR $CEK_VALID>0) echo 'disabled';
@@ -183,7 +183,7 @@ echo '		</tr>';
 				</div>
 			<div id="dummy"></div>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
@@ -195,7 +195,7 @@ echo '		</tr>';
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title">Pilih Barang</h4>
 			</div>
-			<div class="modal-body">				
+			<div class="modal-body">
 				<form action="" method="post" onsubmit="return cek_valid();">
 					<input type="hidden" name="tambah_cek_barang_mobil_post" value="true">
 					<input type="hidden" id="id_canvass_keluar_barang" name="id_canvass_keluar_barang" value="">
@@ -232,10 +232,10 @@ echo '		</tr>';
 </div>
 
 <script>
-function getBack(){
+function getBackk(){
 	if ($('#myModal').is(':visible')){
 		$('#myModal').modal('hide');
-	} else {	
+	} else {
 		window.location='index.php?page=canvass_keluar&mode=cek_barang_mobil';
 	}
 }
@@ -266,7 +266,7 @@ function cek_scan_barang(barcode1){
 }
 
 function batal_scan(){
-	getBack();
+	getBackk();
 }
 $(document).ready(function(){
 	$('#qty_ambil').inputmask('decimal', {allowMinus: false, autoGroup: true, groupSeparator: '.', rightAlign: false, removeMaskOnSubmit: true});
@@ -295,10 +295,10 @@ $(document).ready(function(){
 		var today = x.getDate() + "/" + parseInt(x.getMonth()+1) + "/" + x.getFullYear();
 		var x = new Date(x.getFullYear() + "/" + parseInt(x.getMonth()+1) + "/" + x.getDate());
 		var input = $(this).val();
-		var i = input.split("/");	
+		var i = input.split("/");
 		var y = new Date(i[2] + "/" + i[1] + "/" + i[0]);
 		if (y >= x){
-			
+
 		} else {
 			$(this).val('');
 			AndroidFunction.showToast('Tanggal harus \u2265 ' + today + '.');

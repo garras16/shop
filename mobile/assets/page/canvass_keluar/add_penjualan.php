@@ -8,9 +8,9 @@
 			$sql=mysqli_query($con, "SELECT *
 		FROM
 			harga_jual
-			INNER JOIN barang_supplier 
+			INNER JOIN barang_supplier
 				ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-			INNER JOIN barang 
+			INNER JOIN barang
 				ON (barang_supplier.id_barang = barang.id_barang)
 		WHERE id_harga_jual=" .$id_harga_jual[$i]. " AND status=1");
 			if (mysqli_num_rows($sql)=='0'){
@@ -19,7 +19,7 @@
 				break 2;
 			}
 		}*/
-		
+
 		$sql=mysqli_query($con, "DELETE FROM data_nota_jual WHERE tgl_nota < '" .date("Y-m-d"). "'");
 		$sql=mysqli_query($con, "SELECT MAX(invoice) AS cID FROM data_nota_jual WHERE tgl_nota='" .date('Y-m-d'). "'");
 		$r=mysqli_fetch_array($sql);
@@ -35,11 +35,11 @@
 		$sql = mysqli_query($con, "INSERT INTO jual VALUES(null,'$tanggal','$invoice',$id_pelanggan,$id_karyawan,'$jenis_bayar',$tenor,5,0,null,$diskon_all_persen)");
 		$id_jual=mysqli_insert_id($con);
 
-		$sql = mysql_query("INSERT INTO data_nota_jual VALUES(null,'$tanggal','$invoice')");
-		$sql = mysql_query("INSERT INTO jual VALUES(null,'$tanggal','$invoice',$id_pelanggan,$id_karyawan,'$jenis_bayar',$tenor,5,0,null,$diskon_all_persen,$ppn_all_persen)");
-		$id_jual=mysql_insert_id();
+		$sql = mysqli_query($con, "INSERT INTO data_nota_jual VALUES(null,'$tanggal','$invoice')");
+		$sql = mysqli_query($con, "INSERT INTO jual VALUES(null,'$tanggal','$invoice',$id_pelanggan,$id_karyawan,'$jenis_bayar',$tenor,5,0,null,$diskon_all_persen,$ppn_all_persen)");
+		$id_jual=mysqli_insert_id($con);
 		$id_canvass_keluar[] = implode(',',$id_canvass_keluar);
-		
+
 		$sql = "INSERT INTO canvass_belum_siap VALUES(null,$id_canvass_keluar[0],'$tanggal',$id_jual,'0')";
 		$q = mysqli_query($con, $sql);
 		$id_harga_jual[] = implode(',',$id_harga_jual);
@@ -55,9 +55,9 @@
 			$sql=mysqli_query($con, "SELECT *
 					FROM
 						harga_jual
-					INNER JOIN barang_supplier 
+					INNER JOIN barang_supplier
 						ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-					INNER JOIN barang 
+					INNER JOIN barang
 						ON (barang_supplier.id_barang = barang.id_barang)
 					WHERE id_harga_jual=" .$id_harga_jual[$i]. " AND status=0");
 			if (mysqli_num_rows($sql)>0){
@@ -81,7 +81,7 @@
 	$plafon=$row['plafon'];
 ?>
 <div class="right_col loading " role=" main ">
- < div class = "" > <div class="row">
+ <div class = ""> <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
@@ -139,7 +139,7 @@
                                                     </span>
                                                 </div>
                                                 <div class="input-group">
-                                                    <span class="input-group-addon" style="padding: 2px 12px;">
+                                                    <span class="input-group-addon" style="padding: 2px 12px; width: 94px;">
                                                         <i class="fa fa-dollar fa-fw"></i>
                                                         <br>
                                                             <small>Pembayaran</small>
@@ -188,7 +188,7 @@
                                                                     </span>
                                                                 </div>
                                                                 <div class="input-group">
-                                                                    <span class="input-group-addon">PPn (%)</span>
+                                                                    <span class="input-group-addon" style="width: 135px;">PPn (%)</span>
                                                                     <input
                                                                         type="number"
                                                                         max="100"
@@ -218,35 +218,35 @@
                                                                                         <div style="min-width:70px">Qty</div>
                                                                                     </th>
                                                                                     <th>
-                                                                                        <div style="min-width:130px">Harga Jual (Rp)</div>
+                                                                                        <div style="min-width:130px">Harga Jual</div>
                                                                                     </th>
                                                                                     <th>
-                                                                                        <div style="min-width:130px">Tot. Seb. Disk (Rp)</div>
+                                                                                        <div style="min-width:130px">Tot. Seb. Disk</div>
                                                                                     </th>
                                                                                     <th>
-                                                                                        <div style="min-width:130px">Diskon 1 (Rp)</div>
+                                                                                        <div style="min-width:130px">Diskon 1</div>
                                                                                     </th>
                                                                                     <th>
-                                                                                        <div style="min-width:130px">Tot. Set. Disk 1 (Rp)</div>
+                                                                                        <div style="min-width:130px">Tot. Set. Disk 1</div>
                                                                                     </th>
                                                                                     <th>
-                                                                                        <div style="min-width:130px">Diskon 2 (Rp)</div>
+                                                                                        <div style="min-width:130px">Diskon 2</div>
                                                                                     </th>
                                                                                     <th>
-                                                                                        <div style="min-width:130px">Tot. Set. Disk 2 (Rp)</div>
+                                                                                        <div style="min-width:130px">Tot. Set. Disk 2</div>
                                                                                     </th>
                                                                                     <th>
-                                                                                        <div style="min-width:130px">Diskon 3 (Rp)</div>
+                                                                                        <div style="min-width:130px">Diskon 3</div>
                                                                                     </th>
                                                                                     <th>
-                                                                                        <div style="min-width:130px">Tot. Set. Disk 3 (Rp)</div>
+                                                                                        <div style="min-width:130px">Tot. Set. Disk 3</div>
                                                                                     </th>
                                                                                     <th></th>
                                                                                 </thead>
                                                                                 <tbody>
                                                                                     <tr id="info">
-                                                                                        <td colspan="9">Total (Rp)</td>
-                                                                                        <td id="info_total">0,00</td>
+                                                                                        <td colspan="9">Total</td>
+                                                                                        <td id="info_total">Rp 0,00</td>
                                                                                         <td></td>
                                                                                     </tr>
                                                                                 </tbody>
@@ -259,7 +259,7 @@
                                                                         <b>Info :<br/>
 <?php
 	$sql2=mysqli_query($con, "SELECT * FROM jual WHERE invoice NOT IN (SELECT no_nota_jual FROM bayar_nota_jual WHERE STATUS=1) AND id_pelanggan=" .$_SESSION['id_pelanggan']);
-	echo '* Jumlah Nota Gantung : ' .format_angka(mysqli_num_rows($sql2)). ' nota'; 
+	echo '* Jumlah Nota Gantung : ' .format_angka(mysqli_num_rows($sql2)). ' nota';
 ?>
                                                                         </b>
                                                                     </div>
@@ -348,24 +348,28 @@
         var diskon_rp_3 = (harga - diskon_rp - diskon_rp_2) * (diskon_persen_3 / 100);
         var tot_set_disk_3 = qty * (harga - diskon_rp - diskon_rp_2 - diskon_rp_3);
         var subtotal = tot_set_disk_3;
-        var isi = '<tr id="list"><input type="hidden" name="id_harga_jual[]" value="' +
-                id_harga_jual + '"><input type="hidden" name="id_canvass_keluar[]" value="' +
-                id_canvass + '"><input type="hidden" name="harga[]" value="' + harga + '"><inpu' +
-                't type="hidden" name="qty[]" value="' + qty + '"><input type="hidden" name="di' +
-                'skon_persen_1[]" value="' + diskon_persen + '"><input type="hidden" name="disk' +
-                'on_rp_1[]" value="' + diskon_rp + '"><input type="hidden" name="diskon_persen_' +
-                '2[]" value="' + diskon_persen_2 + '"><input type="hidden" name="diskon_rp_2[]"' +
-                ' value="' + diskon_rp_2 + '"><input type="hidden" name="diskon_persen_3[]" val' +
-                'ue="' + diskon_persen_3 +
-                '"><input type="hidden" name="diskon_rp_3[]" value="' + diskon_rp_3 +
-                '"><td>' + nama + '</td><td>' + qty + ' pcs</td><td>' + format_uang(harga) + '<' +
-                '/td><td>' + format_uang(tot_seb_disk) + '</td><td>' + format_uang(diskon_rp) +
-                '</td><td>' + format_uang(tot_set_disk_1) + '</td><td>' + format_uang(
-            diskon_rp_2
-        ) + '</td><td>' + format_uang(tot_set_disk_2) + '</td><td>' +
-                format_uang(diskon_rp_3) + '</td><td id="st" data-st="' + subtotal + '">' +
-                format_uang(subtotal) + '</td><td><a href="#" class="btn btn-primary btn-xs rem' +
-                'ove_cart">Hapus</a></td></tr>';
+        var isi = '<tr id="list">' +
+				'<input type="hidden" name="id_harga_jual[]" value="' + id_harga_jual + '">'+
+				'<input type="hidden" name="id_canvass_keluar[]" value="' + id_canvass + '">'+
+				'<input type="hidden" name="harga[]" value="' + harga + '">' +
+				'<input type="hidden" name="qty[]" value="' + qty + '">' +
+				'<input type="hidden" name="diskon_persen_1[]" value="' + diskon_persen + '">'+
+				'<input type="hidden" name="diskon_rp_1[]" value="' + diskon_rp + '">'+
+				'<input type="hidden" name="diskon_persen_2[]" value="' + diskon_persen_2 + '">'+
+				'<input type="hidden" name="diskon_rp_2[]" value="' + diskon_rp_2 + '">' +
+				'<input type="hidden" name="diskon_persen_3[]" value="' + diskon_persen_3 +'">' +
+				'<input type="hidden" name="diskon_rp_3[]" value="' + diskon_rp_3 + '">' +
+				'<td>' + nama + '</td>'+
+				'<td>' + qty + ' pcs</td>'+
+				'<td>Rp ' + format_uang(harga) + '</td>'+
+				'<td>Rp ' + format_uang(tot_seb_disk) + '</td>'+
+				'<td>Rp ' + format_uang(diskon_rp) + '</td>'+
+				'<td>Rp ' + format_uang(tot_set_disk_1) + '</td>'+
+				'<td>Rp ' + format_uang(diskon_rp_2) + '</td>'+
+				'<td>Rp ' + format_uang(tot_set_disk_2) + '</td>'+
+				'<td>Rp ' + format_uang(diskon_rp_3) + '</td>'+
+				'<td id="st" data-st="' + subtotal + '">Rp ' +format_uang(subtotal) + '</td>'+
+				'<td><a href="#" class="btn btn-primary btn-xs remove_cart">Hapus</a></td></tr>';
 
         if ($('#input_brg').html().search(
             'name="id_harga_jual[]" value="' + id_harga_jual + '"'
@@ -387,7 +391,7 @@
 
         if (valid) {
             total += subtotal;
-            $('#info_total').html(format_uang(total));
+            $('#info_total').html("Rp "+format_uang(total));
             $('#input_brg')
                 .find('tbody')
                 .prepend(isi);
