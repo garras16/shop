@@ -69,7 +69,7 @@ if (isset($id)){
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
 					<div id="table_content" class="x_content">
-						<table id="table2" class="table table-bordered table-striped" style="width: 500px;">
+						<table id="table2" class="table table-bordered table-striped" style="min-width: 500px;">
 							<thead>
 								<tr>
 									<th>Tgl. Nota Jual</th>
