@@ -24,7 +24,7 @@ if (isset($_GET['del'])){
 	$sql=mysqli_query($con, "SELECT *
 FROM
     nota_siap_kirim
-    INNER JOIN nota_siap_kirim_detail 
+    INNER JOIN nota_siap_kirim_detail
         ON (nota_siap_kirim.id_nota_siap_kirim = nota_siap_kirim_detail.id_nota_siap_kirim)
 WHERE id_jual=" .$_GET['del']. " AND qty_ambil>0");
 	while ($row=mysqli_fetch_array($sql)){
@@ -36,7 +36,7 @@ WHERE id_jual=" .$_GET['del']. " AND qty_ambil>0");
 ?>
 <div class="right_col" role="main">
 	<div class="">
-	
+
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
@@ -51,7 +51,7 @@ WHERE id_jual=" .$_GET['del']. " AND qty_ambil>0");
 					</div>
 					<div class="x_content">
 				<div class="table responsive">
-				<table id="table1" class="table table-bordered table-striped">
+				<table id="table1" class="table table-bordered table-striped" style="min-width: 1000px;">
 				<thead>
 					<tr>
 						<th>Tgl. Nota Jual</th>
@@ -60,7 +60,7 @@ WHERE id_jual=" .$_GET['del']. " AND qty_ambil>0");
 						<th>Tgl. Cetak Nota</th>
 						<th>Pelanggan</th>
 						<th>Alamat</th>
-						<th>Jumlah Jual (Rp)</th>
+						<th>Jumlah Jual</th>
 						<th>Tipe Kirim</th>
 						<th></th>
 					</tr>
@@ -79,18 +79,18 @@ while ($row=mysqli_fetch_array($sql)){
 	, karyawan.nama_karyawan
 FROM
     jual
-    INNER JOIN jual_detail 
+    INNER JOIN jual_detail
         ON (jual.id_jual = jual_detail.id_jual)
-    INNER JOIN pelanggan 
+    INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
-	INNER JOIN karyawan 
+	INNER JOIN karyawan
         ON (jual.id_karyawan = karyawan.id_karyawan)
-    LEFT JOIN harga_jual 
+    LEFT JOIN harga_jual
         ON (harga_jual.id_pelanggan = pelanggan.id_pelanggan) AND (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
-    LEFT JOIN barang_supplier 
+    LEFT JOIN barang_supplier
         ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-    LEFT JOIN barang 
-        ON (barang_supplier.id_barang = barang.id_barang) 
+    LEFT JOIN barang
+        ON (barang_supplier.id_barang = barang.id_barang)
 WHERE jual.id_jual=" .$row['id_jual']. "
 GROUP BY jual.id_jual");
 	while ($row2=mysqli_fetch_array($sql2)){
@@ -102,22 +102,22 @@ GROUP BY jual.id_jual");
 				<td><a href="?page=driver&mode=' .$pilih. '&id=' .$row['id_nota_sudah_cek']. '"><div style="min-width:70px">' .date("d-m-Y", strtotime($row['tanggal_cetak'])). '</div></a></td>
 				<td><a href="?page=driver&mode=' .$pilih. '&id=' .$row['id_nota_sudah_cek']. '"><div style="min-width:70px">' .$row2['nama_pelanggan']. '</div></a></td>
 				<td><a href="?page=driver&mode=' .$pilih. '&id=' .$row['id_nota_sudah_cek']. '"><div style="min-width:70px">' .$row2['alamat']. '</div></a></td>
-				<td><a href="?page=driver&mode=' .$pilih. '&id=' .$row['id_nota_sudah_cek']. '"><div style="min-width:70px">' .format_uang($row['jumlah']). '</div></a></td>
+				<td><a href="?page=driver&mode=' .$pilih. '&id=' .$row['id_nota_sudah_cek']. '"><div style="min-width:70px">Rp ' .format_uang($row['jumlah']). '</div></a></td>
 				<td><a href="?page=driver&mode=' .$pilih. '&id=' .$row['id_nota_sudah_cek']. '"><div style="min-width:70px">' .$row['tipe_kirim']. '</div></a></td>
 				<td align="center"><a href="?page=driver&mode=barang_keluar&del=' .$row2['id_jual']. '" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Batal</a></td>
 			  </tr>';
 	}
 }
-?>					
+?>
 				</tbody>
 			</table>
-			
+
 			</div>
 			</div>
 			<div id="dummy"></div>
 			</div>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
@@ -126,6 +126,6 @@ function getBack(){
 	AndroidFunction.closeApp();
 }
 $(document).ready(function(){
-	
+
 });
 </script>

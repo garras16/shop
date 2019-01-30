@@ -36,7 +36,7 @@ $selesai=false;
 ?>
 <div class="right_col" role="main">
 	<div class="">
-	
+
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
@@ -67,9 +67,9 @@ $selesai=false;
 	, karyawan.nama_karyawan
 FROM
     jual
-    INNER JOIN pelanggan 
+    INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
-	INNER JOIN karyawan 
+	INNER JOIN karyawan
         ON (jual.id_karyawan = karyawan.id_karyawan)
 WHERE jual.id_jual=" .$id_jual. "
 GROUP BY jual.id_jual");
@@ -78,7 +78,7 @@ echo '<tr><td width="30%">Tgl. Nota Jual</td><td>' .date("d-m-Y", strtotime($row
 		<tr><td width="30%">Nama Sales</td><td>' .$row['nama_karyawan']. '</td></th>
 		<tr><td width="30%">No Nota Jual</td><td>' .$row['invoice']. '</td></tr>
 		<tr><td width="30%">Pelanggan</td><td>' .$row['nama_pelanggan']. '</td></tr>';
-?>					
+?>
 				</tbody>
 			</table>
 			</div>
@@ -90,22 +90,22 @@ echo '<tr><td width="30%">Tgl. Nota Jual</td><td>' .date("d-m-Y", strtotime($row
 				<input type="hidden" name="akurasi" id="akurasi" value="">
 				<input type="hidden" name="mock" id="mock" value="">
 				<input type="hidden" name="distance" id="distance" value="">
-				<input type="hidden" name="id_pelanggan" id="id_pelanggan" value="<?php echo $row['id_pelanggan'] ?>">	
+				<input type="hidden" name="id_pelanggan" id="id_pelanggan" value="<?php echo $row['id_pelanggan'] ?>">
 				<input type="hidden" name="barcode" id="barcode_toko" value="<?php echo $row['barcode'] ?>">
 				<center><a id="scan" class="btn btn-primary" onClick="AndroidFunction.scanToko()" style="margin-bottom:10px"><i class="fa fa-barcode"></I> SCAN TOKO</a></center>
 			</div>
-			
+
 			<div id="table_content" style="display:none">
 			<table class="table table-bordered table-striped" style="margin-top:10px">
 				<thead>
 					<tr>
 						<th>Nama Barang</th>
 						<th>Qty</th>
-						<th>Harga (Rp)</th>
-						<th>Diskon 1 (Rp)</th>
-						<th>Diskon 2 (Rp)</th>
-						<th>Diskon 3 (Rp)</th>
-						<th>Sub Total (Rp)</th>
+						<th>Harga</th>
+						<th>Diskon 1</th>
+						<th>Diskon 2</th>
+						<th>Diskon 3</th>
+						<th>Sub Total</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -113,15 +113,15 @@ echo '<tr><td width="30%">Tgl. Nota Jual</td><td>' .date("d-m-Y", strtotime($row
 				$sql=mysqli_query($con, "SELECT jual_detail.id_jual_detail,nama_barang, nama_satuan, SUM(qty_ambil) AS jumlah, harga, diskon_rp, diskon_rp_2, diskon_rp_3
 FROM
     jual_detail
-    INNER JOIN harga_jual 
+    INNER JOIN harga_jual
         ON (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
-    INNER JOIN nota_siap_kirim_detail 
+    INNER JOIN nota_siap_kirim_detail
         ON (jual_detail.id_jual_detail = nota_siap_kirim_detail.id_jual_detail)
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-    INNER JOIN satuan 
+    INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
  WHERE id_jual=$id_jual
  GROUP BY jual_detail.id_jual_detail");
@@ -143,7 +143,7 @@ FROM
 				</tbody>
 			</table>
 			</div>
-			
+
 			<center><div id="pic_info" class="popup-gallery" style="display:none">
 			<?php
 			$cap="FOTO BARANG";
@@ -161,12 +161,12 @@ FROM
 			</div>
 			</form>
 			</center>
-			
+
 			</div>
 			<div id="dummy" style="display:none"></div>
 			</div>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 

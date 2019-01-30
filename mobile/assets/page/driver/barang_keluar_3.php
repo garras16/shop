@@ -12,7 +12,7 @@ if (isset($_GET['del'])){
 	$sql=mysqli_query($con, "SELECT *
 FROM
     nota_siap_kirim
-    INNER JOIN nota_siap_kirim_detail 
+    INNER JOIN nota_siap_kirim_detail
         ON (nota_siap_kirim.id_nota_siap_kirim = nota_siap_kirim_detail.id_nota_siap_kirim)
 WHERE id_jual=" .$_GET['del']);
 	while ($row=mysqli_fetch_array($sql)){
@@ -32,7 +32,7 @@ if (isset($simpan_nota_sudah_cek_post)){
 	} else {
 		$sql2 = mysqli_query($con, "INSERT INTO pengiriman VALUES(null, " .$row['id_jual']. ", 1, '$tanggal',$id_karyawan,$id_ekspedisi,$berat,$volume,$tarif,'DALAM KOTA')");
 	}
-	
+
 	$sql=mysqli_query($con, "SELECT * FROM checkin WHERE tanggal='$tanggal' AND id_pelanggan='$id_pelanggan' AND id_karyawan=$id_karyawan");
 	$c=mysqli_num_rows($sql);
 	$row=mysqli_fetch_array($sql);
@@ -53,7 +53,7 @@ $selesai=false;
 ?>
 <div class="right_col" role="main">
 	<div class="">
-	
+
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
@@ -85,9 +85,9 @@ $selesai=false;
 	, karyawan.nama_karyawan
 FROM
     jual
-    INNER JOIN pelanggan 
+    INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
-	INNER JOIN karyawan 
+	INNER JOIN karyawan
         ON (jual.id_karyawan = karyawan.id_karyawan)
 WHERE jual.id_jual=" .$id_jual. "
 GROUP BY jual.id_jual");
@@ -100,12 +100,12 @@ echo '<tr><td width="30%">Tgl. Nota Jual</td><td>' .date("d-m-Y", strtotime($row
 					<tr><td>Ekspedisi</td>
 					<td><select class="select2 form-control" id="select_ekspedisi" name="id_ekspedisi" required>
 						<option value="" disabled selected>Pilih Ekspedisi</option>
-							<?php 
+							<?php
 								$brg=mysqli_query($con, "SELECT * FROM ekspedisi");
 								while($b=mysqli_fetch_array($brg)){
-							?>	
+							?>
 						<option value="<?php echo $b['id_ekspedisi']; ?>"><?php echo $b['nama_ekspedisi'];?></option>
-							<?php 
+							<?php
 								}
 							?>
 					</select></td></tr>
@@ -128,21 +128,21 @@ echo '<tr><td width="30%">Tgl. Nota Jual</td><td>' .date("d-m-Y", strtotime($row
 				<input type="hidden" name="akurasi" id="akurasi" value="">
 				<input type="hidden" name="mock" id="mock" value="">
 				<input type="hidden" name="distance" id="distance" value="">
-				<input type="hidden" name="id_pelanggan" id="id_pelanggan" value="<?php echo $row['id_pelanggan'] ?>">	
+				<input type="hidden" name="id_pelanggan" id="id_pelanggan" value="<?php echo $row['id_pelanggan'] ?>">
 				<input type="hidden" name="barcode" id="barcode_toko" value="<?php echo $row['barcode'] ?>">
 			</div>
-			
+
 			<div id="table_content">
 			<table class="table table-bordered table-striped" style="margin-top:10px">
 				<thead>
 					<tr>
 						<th>Nama Barang</th>
 						<th>Qty</th>
-						<th>Harga (Rp)</th>
-						<th>Diskon 1 (Rp)</th>
-						<th>Diskon 2 (Rp)</th>
-						<th>Diskon 3 (Rp)</th>
-						<th>Sub Total (Rp)</th>
+						<th>Harga</th>
+						<th>Diskon 1</th>
+						<th>Diskon 2</th>
+						<th>Diskon 3</th>
+						<th>Sub Total</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -150,15 +150,15 @@ echo '<tr><td width="30%">Tgl. Nota Jual</td><td>' .date("d-m-Y", strtotime($row
 				$sql=mysqli_query($con, "SELECT nama_barang, nama_satuan, SUM(qty_ambil) AS jumlah, harga, diskon_rp, diskon_rp_2, diskon_rp_3
 FROM
     jual_detail
-    INNER JOIN harga_jual 
+    INNER JOIN harga_jual
         ON (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
-    INNER JOIN nota_siap_kirim_detail 
+    INNER JOIN nota_siap_kirim_detail
         ON (jual_detail.id_jual_detail = nota_siap_kirim_detail.id_jual_detail)
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-    INNER JOIN satuan 
+    INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
  WHERE id_jual=$id_jual
  GROUP BY jual_detail.id_jual_detail");
@@ -180,7 +180,7 @@ FROM
 				</tbody>
 			</table>
 			</div>
-			
+
 			<center><div id="pic_info" class="popup-gallery">
 			<?php
 			$cap="FOTO BARANG";
@@ -198,12 +198,12 @@ FROM
 			</div>
 			</form>
 			</center>
-			
+
 			</div>
 			<div id="dummy" style="display:none"></div>
 			</div>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
