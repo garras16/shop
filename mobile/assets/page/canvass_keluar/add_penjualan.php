@@ -175,12 +175,14 @@
                                                             <div class="input-group">
                                                                 <span class="input-group-addon">Diskon Nota Jual (%)</span>
                                                                 <input
-                                                                    type="number"
+                                                                    type="text"
                                                                     max="100"
                                                                     min="0"
                                                                     class="form-control"
                                                                     id="diskon"
+																																		maxlength="6"
                                                                     name="diskon_all_persen"
+																																		onchange="handleChange(this)"
                                                                     value="0"
                                                                     required="required">
                                                                     <span class="input-group-addon">
@@ -190,12 +192,14 @@
                                                                 <div class="input-group">
                                                                     <span class="input-group-addon" style="width: 135px;">PPn (%)</span>
                                                                     <input
-                                                                        type="number"
+                                                                        type="text"
                                                                         max="100"
                                                                         min="0"
+																																				maxlength="6"
                                                                         class="form-control"
                                                                         id="ppn"
                                                                         name="ppn_all_persen"
+																																				onchange="handleChange(this)"
                                                                         value="0"
                                                                         required="required">
                                                                         <span class="input-group-addon">
@@ -416,7 +420,16 @@
         }
     }
 
+		function handleChange(input) {
+		    if (input.value < 0)
+		        input.value = 0;
+		    if (input.value > 100)
+		        input.value = 100;
+		}
+
     $(document).ready(function () {
+				$('#diskon').numeric({decimalPlaces: 2, negative:false});
+				$('#ppn').numeric({decimalPlaces: 2, negative:false});
         $('#myModal').on('show.bs.modal', function (e) {
             var jenis = $('#select_jenis').val();
             var id = $('#id_pelanggan').val();

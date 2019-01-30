@@ -14,23 +14,23 @@ $id_karyawan=$_SESSION['id_karyawan'];
 		$sql = mysqli_query($con, "SELECT DISTINCT(hari)
 FROM
     canvass_keluar
-    INNER JOIN canvass_keluar_barang 
+    INNER JOIN canvass_keluar_barang
         ON (canvass_keluar.id_canvass_keluar = canvass_keluar_barang.id_canvass_keluar)
-    INNER JOIN canvass_keluar_karyawan 
+    INNER JOIN canvass_keluar_karyawan
         ON (canvass_keluar.id_canvass_keluar = canvass_keluar_karyawan.id_canvass_keluar)
-    INNER JOIN barang_masuk_rak 
+    INNER JOIN barang_masuk_rak
         ON (canvass_keluar_barang.id_barang_masuk_rak = barang_masuk_rak.id_barang_masuk_rak)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (canvass_keluar_barang.id_barang = barang.id_barang)
-    INNER JOIN barang_masuk 
+    INNER JOIN barang_masuk
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
-    INNER JOIN beli_detail 
+    INNER JOIN beli_detail
         ON (barang_masuk.id_beli_detail = beli_detail.id_beli_detail)
-    INNER JOIN harga_jual 
+    INNER JOIN harga_jual
         ON (beli_detail.id_barang_supplier = harga_jual.id_barang_supplier)
-    INNER JOIN harga_jual_kredit 
+    INNER JOIN harga_jual_kredit
         ON (harga_jual.id_harga_jual = harga_jual_kredit.id_harga_jual)
-    INNER JOIN satuan 
+    INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE canvass_keluar_barang.qty_cek > 0 AND barang.status=1 AND id_pelanggan=" .$_GET['id']. " AND canvass_keluar_karyawan.id_karyawan=" .$id_karyawan. " AND (canvass_keluar.status=1 OR canvass_keluar.status=2)
 GROUP BY id_harga_jual_kredit");
@@ -44,23 +44,23 @@ GROUP BY id_harga_jual_kredit");
     , SUM(canvass_keluar_barang.stok) AS total_stok
 FROM
     canvass_keluar
-    INNER JOIN canvass_keluar_barang 
+    INNER JOIN canvass_keluar_barang
         ON (canvass_keluar.id_canvass_keluar = canvass_keluar_barang.id_canvass_keluar)
-    INNER JOIN canvass_keluar_karyawan 
+    INNER JOIN canvass_keluar_karyawan
         ON (canvass_keluar.id_canvass_keluar = canvass_keluar_karyawan.id_canvass_keluar)
-    INNER JOIN barang_masuk_rak 
+    INNER JOIN barang_masuk_rak
         ON (canvass_keluar_barang.id_barang_masuk_rak = barang_masuk_rak.id_barang_masuk_rak)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (canvass_keluar_barang.id_barang = barang.id_barang)
-    INNER JOIN barang_masuk 
+    INNER JOIN barang_masuk
         ON (barang_masuk_rak.id_barang_masuk = barang_masuk.id_barang_masuk)
-    INNER JOIN beli_detail 
+    INNER JOIN beli_detail
         ON (barang_masuk.id_beli_detail = beli_detail.id_beli_detail)
-    INNER JOIN harga_jual 
+    INNER JOIN harga_jual
         ON (beli_detail.id_barang_supplier = harga_jual.id_barang_supplier)
-    INNER JOIN harga_jual_kredit 
+    INNER JOIN harga_jual_kredit
         ON (harga_jual.id_harga_jual = harga_jual_kredit.id_harga_jual)
-    INNER JOIN satuan 
+    INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE canvass_keluar_barang.qty_cek > 0 AND barang.status=1 AND id_pelanggan=" .$_GET['id']. " AND hari>" .$_GET['tenor']. " AND hari <= $tenor AND canvass_keluar_karyawan.id_karyawan=" .$id_karyawan. " AND (canvass_keluar.status=1 OR canvass_keluar.status=2)
 GROUP BY id_harga_jual_kredit");
@@ -71,9 +71,9 @@ GROUP BY id_harga_jual_kredit");
 		$sql3=mysqli_query($con, "SELECT SUM(qty) as qty
 FROM
     jual
-	INNER JOIN canvass_belum_siap 
+	INNER JOIN canvass_belum_siap
         ON (jual.id_jual = canvass_belum_siap.id_jual)
-    INNER JOIN jual_detail 
+    INNER JOIN jual_detail
         ON (jual.id_jual = jual_detail.id_jual)
 WHERE status_konfirm=5 AND id_harga_jual=" .$row['id_harga_jual']. "");
 		$r3=mysqli_fetch_array($sql3);
@@ -97,28 +97,34 @@ WHERE status_konfirm=5 AND id_harga_jual=" .$row['id_harga_jual']. "");
 </div>
 <div class="input-group">
 	<span class="input-group-addon"><i class="fa fa-cut fa-fw"></i><br><small>Diskon 1</small></span>
-	<input class="form-control" type="tel" id="diskon_persen_1" style="padding: 20px 15px;" name="diskon_persen_1" value="" autocomplete="off" placeHolder="Diskon Barang 1 (%)" required>
+	<input class="form-control" type="text" id="diskon_persen_1" onchange="handleChange(this)" style="padding: 20px 15px;" name="diskon_persen_1" value="" autocomplete="off" placeHolder="Diskon Barang 1 (%)" required>
 	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 </div>
 <div class="input-group">
 	<span class="input-group-addon"><i class="fa fa-cut fa-fw"></i><br><small>Diskon 2</small></span>
-	<input class="form-control" type="tel" id="diskon_persen_2" style="padding: 20px 15px;" name="diskon_persen_2" value="" autocomplete="off" placeHolder="Diskon Barang 2 (%)" required>
+	<input class="form-control" type="text" id="diskon_persen_2" onchange="handleChange(this)" style="padding: 20px 15px;" name="diskon_persen_2" value="" autocomplete="off" placeHolder="Diskon Barang 2 (%)" required>
 	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 </div>
 <div class="input-group">
 	<span class="input-group-addon"><i class="fa fa-cut fa-fw"></i><br><small>Diskon 3</small></span>
-	<input class="form-control" type="tel" id="diskon_persen_3" name="diskon_persen_3" style="padding: 20px 15px;" value="" autocomplete="off" placeHolder="Diskon Barang 3 (%)" required>
+	<input class="form-control" type="text" id="diskon_persen_3" onchange="handleChange(this)" name="diskon_persen_3" style="padding: 20px 15px;" value="" autocomplete="off" placeHolder="Diskon Barang 3 (%)" required>
 	<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 </div>
 <input type="hidden" id="tenor" name="tenor" value="" required>
 
 <script>
+function handleChange(input) {
+		if (input.value < 0)
+				input.value = 0;
+		if (input.value > 100)
+				input.value = 100;
+}
 $(document).ready(function(){
 	$('#qty').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-	$('#diskon_persen_1').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-	$('#diskon_persen_2').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-	$('#diskon_persen_3').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
-	$('#harga_jual').inputmask('decimal', {allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
+	$('#diskon_persen_1').numeric({decimalPlaces: 2, negative:false});
+	$('#diskon_persen_2').numeric({decimalPlaces: 2, negative:false});
+	$('#diskon_persen_3').numeric({decimalPlaces: 2, negative:false});
+	$('#harga_jual').inputmask('currency', {prefix: "Rp ", allowMinus:false, autoGroup: true, groupSeparator: '.', rightAlign: false, autoUnmask: true, removeMaskOnSubmit: true});
 	$('#select_barang_2').on('change', function(e){
 		var cari_data = $(this).find(':selected');
 		var stok = cari_data.data('stok');

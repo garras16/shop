@@ -135,7 +135,7 @@ $ppn_all_persen=$row['ppn_all_persen'];
 								<form method="post" onsubmit="return edit_diskon()">
 								<div class="input-group">
 									<span class="input-group-addon">Diskon Nota Jual (%)</span>
-									<input type="number" max="100" min="0" class="form-control" id="diskon" name="diskon_all_persen" value="<?php echo $row['diskon_all_persen'] ?>" readonly required>
+									<input type="text" max="100" min="0" onchange="handleChange(this)" class="form-control" id="diskon" maxlength="6" name="diskon_all_persen" value="<?php echo $row['diskon_all_persen'] ?>" readonly required>
 									<span class="input-group-btn">
 										<input type="hidden" name="edit_diskon_nota_jual" value="true">
 										<input id="btn_save_diskon" type="submit" class="btn btn-primary" value="Edit">
@@ -145,7 +145,7 @@ $ppn_all_persen=$row['ppn_all_persen'];
 								<form method="post" onsubmit="return edit_ppn()">
 								<div class="input-group">
 									<span class="input-group-addon" style="width: 135px;">PPN (%)</span>
-									<input type="number" max="100" min="0" class="form-control" id="ppn" name="ppn_all_persen" value="<?php echo $row['ppn_all_persen'] ?>" readonly required>
+									<input type="text" max="100" min="0" class="form-control" onchange="handleChange(this)" id="ppn" maxlength="6" name="ppn_all_persen" value="<?php echo $row['ppn_all_persen'] ?>" readonly required>
 									<span class="input-group-btn">
 										<input type="hidden" name="edit_ppn_nota_jual" value="true">
 										<input id="btn_save_ppn" type="submit" class="btn btn-primary" value="Edit">
@@ -239,6 +239,7 @@ $st=$tot_set_disk_3;
 	echo '  </tr>';
 }
 $diskon_all_rp=($diskon_all_persen/100)*$total;
+$so = $total-$diskon_all_rp;
 ?>
 											<tr id="info2">
 												<td colspan="9">Diskon Nota Jual</td>
@@ -247,7 +248,7 @@ $diskon_all_rp=($diskon_all_persen/100)*$total;
 											</tr>
 											<tr id="info">
 												<td colspan="9">Total Jual</td>
-												<td id="info_total">Rp <?php echo format_uang($total) ?></td>
+												<td id="info_total">Rp <?php echo format_uang($so) ?></td>
 												<td></td>
 											</tr>
 										</tbody>
@@ -292,6 +293,12 @@ $diskon_all_rp=($diskon_all_persen/100)*$total;
 
 <script>
 var total = <?php echo $total ?>;
+function handleChange(input) {
+    if (input.value < 0)
+        input.value = 0;
+    if (input.value > 100)
+        input.value = 100;
+}
 function cek_jenis(){
 	if ($('#select_jenis').val()==null){
 		AndroidFunction.showToast("Silahkan Pilih Jenis Pembayaran.");
@@ -382,6 +389,8 @@ function handleChange(input) {
 }
 
 $(document).ready(function(){
+	$('#diskon').numeric({decimalPlaces: 2, negative:false});
+	$('#ppn').numeric({decimalPlaces: 2, negative:false});
 	$('#select_jenis').val('<?php echo $jenis_bayar ?>');
 	$('#myModal').on('show.bs.modal', function(e){
 		var jenis=$('#select_jenis').val();

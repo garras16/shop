@@ -111,12 +111,12 @@ $plafon=$row['plafon'];
 								</div>
 								<div class="input-group">
 									<span class="input-group-addon">Diskon Nota Jual (%)</span>
-									<input type="text" max="100" min="0" onchange="handleChange(this);" maxlength="6" class="form-control" maxlength="6" id="diskon" name="diskon_all_persen" value="0" required>
+									<input type="text" max="100" min="0" onchange="handleChange(this);" maxlength="6" class="form-control" id="diskon" name="diskon_all_persen" value="0" required>
 									<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 								</div>
 								<div class="input-group">
 									<span class="input-group-addon">PPN Nota Jual (%)</span>
-									<input type="text" max="100" min="0" onchange="handleChange(this);" maxlength="6" class="form-control" maxlength="6" id="ppn" name="ppn_all_persen" value="0" required>
+									<input type="text" max="100" min="0" onchange="handleChange(this);" maxlength="6" class="form-control" id="ppn" name="ppn_all_persen" value="0" required>
 									<span class="input-group-addon"><i class="fa fa-star fa-fw" style="color:red"></i></span>
 								</div>
 								<div class="text-right">
@@ -128,20 +128,20 @@ $plafon=$row['plafon'];
 										<thead>
 											<th>Nama Barang</th>
 											<th>Qty</th>
-											<th>Harga Jual (Rp)</th>
-											<th>Tot. Seb. Diskon (Rp)</th>
-											<th>Disc 1 (Rp)</th>
-											<th>Tot. set. disc 1 (Rp)</th>
-											<th>Disc 2 (Rp)</th>
-											<th>Tot. set. disc 2 (Rp)</th>
-											<th>Disc 3 (Rp)</th>
-											<th>Tot. set. disc 3 (Rp)</th>
+											<th>Harga Jual</th>
+											<th>Tot. Seb. Diskon</th>
+											<th>Disc 1</th>
+											<th>Tot. set. disc 1</th>
+											<th>Disc 2</th>
+											<th>Tot. set. disc 2</th>
+											<th>Disc 3</th>
+											<th>Tot. set. disc 3</th>
 											<th></th>
 										</thead>
 										<tbody>
 											<tr id="info">
-												<td colspan="9">Total (Rp)</td>
-												<td id="info_total">0,00</td>
+												<td colspan="9">Total</td>
+												<td id="info_total">Rp 0,00</td>
 												<td></td>
 											</tr>
 										</tbody>
@@ -253,14 +253,14 @@ if ($('#select_jenis').val()=='Kredit'){
 				'<input type="hidden" name="diskon_rp_3[]" value="' + diskon_rp_3 + '">' +
 				'<td style="min-width:150px">' + nama + '</td>' +
 				'<td style="min-width:100px">' + qty + ' pcs</td>' +
-				'<td style="min-width:70px">' + format_uang(harga) + '</td>' +
-				'<td style="min-width:70px">' + format_uang(tot_seb_diskon) + '</td>' +
-				'<td style="min-width:70px">' + format_uang(diskon_rp_1) + '</td>' +
-				'<td style="min-width:70px">' + format_uang(tot_set_disk_1) + '</td>' +
-				'<td style="min-width:70px">' + format_uang(diskon_rp_2) + '</td>' +
-				'<td style="min-width:70px">' + format_uang(tot_set_disk_2) + '</td>' +
-				'<td style="min-width:70px">' + format_uang(diskon_rp_3) + '</td>' +
-				'<td id="st" data-st="' + subtotal + '">' + format_uang(tot_set_disk_3) + '</td>' +
+				'<td style="min-width:70px">Rp ' + format_uang(harga) + '</td>' +
+				'<td style="min-width:70px">Rp ' + format_uang(tot_seb_diskon) + '</td>' +
+				'<td style="min-width:70px">Rp ' + format_uang(diskon_rp_1) + '</td>' +
+				'<td style="min-width:70px">Rp ' + format_uang(tot_set_disk_1) + '</td>' +
+				'<td style="min-width:70px">Rp ' + format_uang(diskon_rp_2) + '</td>' +
+				'<td style="min-width:70px">Rp ' + format_uang(tot_set_disk_2) + '</td>' +
+				'<td style="min-width:70px">Rp ' + format_uang(diskon_rp_3) + '</td>' +
+				'<td id="st" data-st="' + subtotal + '">Rp ' + format_uang(tot_set_disk_3) + '</td>' +
 				'<td><a href="#" class="btn btn-primary btn-xs remove_cart">Hapus</a></td>' +
 				'</tr>';
 
@@ -282,7 +282,7 @@ if ($('#select_jenis').val()=='Kredit'){
 
 	if (valid) {
 		total+=subtotal;
-		$('#info_total').html(format_uang(total));
+		$('#info_total').html("Rp "+format_uang(total));
 		$('#input_brg').find('tbody').prepend(isi);
 		$('#myModal').modal('hide');
 	}
@@ -309,6 +309,7 @@ function getBack(){
 
 $(document).ready(function(){
 	$('#diskon').numeric({decimalPlaces: 2, negative:false});
+	$('#ppn').numeric({decimalPlaces: 2, negative:false});
 	$('#myModal').on('show.bs.modal', function(e){
 		var jenis=$('#select_jenis').val();
 		var id=$('#id_pelanggan').val();

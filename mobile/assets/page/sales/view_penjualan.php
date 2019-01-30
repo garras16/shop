@@ -56,7 +56,7 @@ $sql=mysqli_query($con, "DELETE FROM jual WHERE (status_konfirm=0 or status_konf
 						<th>Pelanggan</th>
 						<th>Jenis Bayar</th>
 						<th>Tenor</th>
-						<th>Jumlah (Rp)</th>
+						<th>Jumlah</th>
 						<th>Status</th>
 					</tr>
 				</thead>
@@ -132,7 +132,7 @@ $r=mysqli_fetch_array($sql2);
 						<td><a href="?page=sales&mode=edit_penjualan&id=' .$row['id_jual']. '"><div style="min-width:70px">' .$row['nama_pelanggan']. '</div></a></td>
 						<td><a href="?page=sales&mode=edit_penjualan&id=' .$row['id_jual']. '"><div style="min-width:70px">' .$row['jenis_bayar']. '</div></a></td>
 						<td><a href="?page=sales&mode=edit_penjualan&id=' .$row['id_jual']. '"><div style="min-width:70px">' .$row['tenor']. ' hari</div></a></td>
-						<td><a href="?page=sales&mode=edit_penjualan&id=' .$row['id_jual']. '"><div style="min-width:70px">' .format_uang($r['total_harga']). '</div></a></td>';
+						<td><a href="?page=sales&mode=edit_penjualan&id=' .$row['id_jual']. '"><div style="min-width:70px">Rp ' .format_uang($r['total_harga']). '</div></a></td>';
 	if ($status==""){
 		echo '			<td></td>';
 	} else {
