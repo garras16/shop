@@ -3,9 +3,9 @@ $id_karyawan=$_SESSION['id_karyawan'];
 	$sql=mysqli_query($con, "SELECT *
 FROM
     jual
-    INNER JOIN pelanggan 
+    INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
-    INNER JOIN karyawan 
+    INNER JOIN karyawan
         ON (jual.id_karyawan = karyawan.id_karyawan)
 	WHERE id_jual=$id");
 	$row=mysqli_fetch_array($sql);
@@ -21,7 +21,7 @@ FROM
 	$sql3=mysqli_query($con, "SELECT SUM(qty*(harga-diskon_rp-diskon_rp_2-diskon_rp_3)) AS jumlah_nota
 FROM
     jual
-    INNER JOIN jual_detail 
+    INNER JOIN jual_detail
         ON (jual.id_jual = jual_detail.id_jual)
 WHERE jual.id_pelanggan=" .$row['id_pelanggan']);
 $row3=mysqli_fetch_array($sql3);
@@ -29,7 +29,7 @@ $jumlah_nota=$row3['jumlah_nota'];
 		$sql3=mysqli_query($con, "SELECT SUM(jumlah) AS jumlah_bayar
 FROM
     bayar_nota_jual
-    INNER JOIN jual 
+    INNER JOIN jual
         ON (bayar_nota_jual.no_nota_jual = jual.invoice)
 WHERE jual.id_pelanggan=" .$row['id_pelanggan']);
 $row3=mysqli_fetch_array($sql3);
@@ -42,7 +42,7 @@ $sisa_plafon=$plafon-$jumlah_gantung;
 ?>
 <div class="right_col loading" role="main">
 	<div class="">
-	
+
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
@@ -75,14 +75,14 @@ $sisa_plafon=$plafon-$jumlah_gantung;
 								<tr>
 									<th>Nama Barang</th>
 									<th>Qty Jual</th>
-									<th>Harga (Rp)</th>
-									<th>Diskon 1 (Rp)</th>
-									<th>Diskon 2 (Rp)</th>
-									<th>Diskon 3 (Rp)</th>
-									<th>SubTotal (Rp)</th>
+									<th>Harga</th>
+									<th>Diskon 1</th>
+									<th>Diskon 2</th>
+									<th>Diskon 3</th>
+									<th>SubTotal</th>
 									<th>Stok</th>
 									<th>Qty Ambil</th>
-									<th>Sub Total Ambil (Rp)</th>
+									<th>Sub Total Ambil</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -90,13 +90,13 @@ $sisa_plafon=$plafon-$jumlah_gantung;
 	$sql=mysqli_query($con, "SELECT *
 FROM
     jual_detail
-    INNER JOIN harga_jual 
+    INNER JOIN harga_jual
         ON (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
-	INNER JOIN satuan 
+	INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE id_jual=$id AND barang.status=1");
 $total=0;$total_=0;
@@ -104,7 +104,7 @@ $total=0;$total_=0;
 	$sql4=mysqli_query($con, "SELECT SUM(qty_ambil) AS qty_ambil
 		FROM
 			canvass_siap_kirim
-			INNER JOIN canvass_siap_kirim_detail 
+			INNER JOIN canvass_siap_kirim_detail
 				ON (canvass_siap_kirim.id_canvass_siap_kirim = canvass_siap_kirim_detail.id_canvass_siap_kirim)
 		WHERE id_jual_detail=" .$row['id_jual_detail']. "");
 	$row4=mysqli_fetch_array($sql4);
@@ -113,29 +113,29 @@ $total=0;$total_=0;
 	$sql2=mysqli_query($con, "SELECT *, SUM(stok) as stok
 FROM
     canvass_belum_siap
-    INNER JOIN canvass_keluar_barang 
+    INNER JOIN canvass_keluar_barang
         ON (canvass_belum_siap.id_canvass_keluar = canvass_keluar_barang.id_canvass_keluar)
 WHERE canvass_keluar_barang.id_barang=" .$row['id_barang']. " AND id_jual=" .$row['id_jual']. " AND stok>0");
 	$total+=$row['harga']*$row['qty'];
 	echo '<tr>
 				<td style="vertical-align:middle;text-align:center;' .$color. '">' .$row['nama_barang']. '</td>
 				<td style="vertical-align:middle;text-align:center;' .$color. '">' .$row['qty']. ' ' .$row['nama_satuan']. '</td>
-				<td style="vertical-align:middle;text-align:center;' .$color. '">' .format_uang($row['harga']). '</td>
-				<td style="vertical-align:middle;text-align:center;' .$color. '">' .format_uang($row['diskon_rp']). '</td>
-				<td style="vertical-align:middle;text-align:center;' .$color. '">' .format_uang($row['diskon_rp_2']). '</td>
-				<td style="vertical-align:middle;text-align:center;' .$color. '">' .format_uang($row['diskon_rp_3']). '</td>
-				<td style="vertical-align:middle;text-align:center;' .$color. '">' .format_uang(($row['harga']-$row['diskon_rp']-$row['diskon_rp_2']-$row['diskon_rp_3'])*$row['qty']). '</td>';
+				<td style="vertical-align:middle;text-align:center;' .$color. '">Rp ' .format_uang($row['harga']). '</td>
+				<td style="vertical-align:middle;text-align:center;' .$color. '">Rp ' .format_uang($row['diskon_rp']). '</td>
+				<td style="vertical-align:middle;text-align:center;' .$color. '">Rp ' .format_uang($row['diskon_rp_2']). '</td>
+				<td style="vertical-align:middle;text-align:center;' .$color. '">Rp ' .format_uang($row['diskon_rp_3']). '</td>
+				<td style="vertical-align:middle;text-align:center;' .$color. '">Rp ' .format_uang(($row['harga']-$row['diskon_rp']-$row['diskon_rp_2']-$row['diskon_rp_3'])*$row['qty']). '</td>';
 	while ($row2=mysqli_fetch_array($sql2)){
 		$sql3=mysqli_query($con, "SELECT id_canvass_siap_kirim_detail, SUM(qty_ambil) AS qty_ambil
 		FROM
 			canvass_siap_kirim
-			INNER JOIN canvass_siap_kirim_detail 
+			INNER JOIN canvass_siap_kirim_detail
 				ON (canvass_siap_kirim.id_canvass_siap_kirim = canvass_siap_kirim_detail.id_canvass_siap_kirim)
 		WHERE id_jual_detail=" .$row['id_jual_detail']. "");
 		$row3=mysqli_fetch_array($sql3);
-		
+
 		echo '		<td align="center" style="' .$color. '">' .format_angka($row2['stok']). ' ' .$row['nama_satuan']. '</td>';
-		
+
 		if ($row3['qty_ambil']==''){
 				echo '		<td></td>
 							<td></td>';
@@ -143,16 +143,16 @@ WHERE canvass_keluar_barang.id_barang=" .$row['id_barang']. " AND id_jual=" .$ro
 			$selesai=true;
 			$total_+=($row['harga']-$row['diskon_rp']-$row['diskon_rp_2']-$row['diskon_rp_3'])*$row3['qty_ambil'];
 			echo '	<td align="center" style="' .$color. '">' .$row3['qty_ambil']. ' ' .$row['nama_satuan']. '</td>';
-			echo '	<td align="center" style="' .$color. '">' .format_uang($row3['qty_ambil']*($row['harga']-$row['diskon_rp']-$row['diskon_rp_2']-$row['diskon_rp_3'])). '</td>';
+			echo '	<td align="center" style="' .$color. '">Rp ' .format_uang($row3['qty_ambil']*($row['harga']-$row['diskon_rp']-$row['diskon_rp_2']-$row['diskon_rp_3'])). '</td>';
 		}
 echo '		</tr>';
-	}	
+	}
 }
 echo '<tr>
 		<td colspan="4"><b>Total</b></td>
-		<td align="center"><b>' .format_uang($total). '</b></td>
+		<td align="center"><b>Rp ' .format_uang($total). '</b></td>
 		<td colspan="2"></td>
-		<td align="center"><b>' .format_uang($total_). '</b></td>
+		<td align="center"><b>Rp ' .format_uang($total_). '</b></td>
 	</tr>';
 
 ?>
@@ -163,7 +163,7 @@ echo '<tr>
 				</div>
 			<div id="dummy"></div>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
@@ -172,6 +172,6 @@ function getBack(){
 	window.location='index.php?page=canvass_keluar&mode=konfirm_jual';
 }
 $(document).ready(function(){
-	
+
 })
 </script>
