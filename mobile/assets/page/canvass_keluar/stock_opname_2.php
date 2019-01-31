@@ -23,9 +23,9 @@ if (isset($_GET['del'])){
 	$sql=mysqli_query($con, "DELETE FROM lap_stock_opname WHERE id_canvass_keluar=$id AND id_barang=" .$_GET['del']. " AND id_karyawan=$id_karyawan");
 	_direct("?page=canvass_keluar&mode=stock_opname_2&id=$id");
 }
-if (isset($selesai_canvass_stock_opname)){	
+if (isset($selesai_canvass_stock_opname)){
 	$sql=mysqli_query($con, "UPDATE canvass_keluar SET status=3 WHERE id_canvass_keluar=$id");
-	
+
 	//jika ada yg belum scan
 	$sql=mysqli_query($con, "SELECT * FROM canvass_keluar_barang WHERE id_canvass_keluar=$id AND stok>0 AND id_barang NOT IN (SELECT id_barang FROM canvass_stock_opname WHERE id_canvass_keluar=$id AND stok>0)");
 	while ($row=mysqli_fetch_array($sql)){
@@ -36,12 +36,12 @@ if (isset($selesai_canvass_stock_opname)){
 		$sql2=mysqli_query($con, "INSERT INTO lap_stock_opname values(null,$id,'" .date("Y-m-d"). "'," .$row['id_barang']. "," .$row['stok']. ",0,-" .$row['stok']. ",$id_karyawan,'" .$row['expire']. "')");
 		echo mysqli_error();
 	}
-	
+
 	//jika ada qty yg salah
 	$sql=mysqli_query($con, "SELECT canvass_keluar_barang.id_barang
 FROM
     canvass_keluar_barang
-    LEFT JOIN canvass_stock_opname 
+    LEFT JOIN canvass_stock_opname
         ON (canvass_keluar_barang.id_canvass_keluar_barang = canvass_stock_opname.id_canvass_keluar_barang)
 WHERE canvass_stock_opname.id_canvass_keluar=$id
 GROUP BY id_barang");
@@ -71,7 +71,7 @@ GROUP BY id_barang");
 	$sql=mysqli_query($con, "SELECT *
 FROM
     canvass_keluar
-    LEFT JOIN kendaraan 
+    LEFT JOIN kendaraan
         ON (canvass_keluar.id_mobil = kendaraan.id_kendaraan)
 	WHERE id_canvass_keluar=$id");
 	$row=mysqli_fetch_array($sql);
@@ -81,16 +81,16 @@ FROM
 	$sql2=mysqli_query($con, "SELECT *
 FROM
     canvass_keluar_karyawan
-    INNER JOIN karyawan 
+    INNER JOIN karyawan
         ON (canvass_keluar_karyawan.id_karyawan = karyawan.id_karyawan)
-	INNER JOIN users 
+	INNER JOIN users
         ON (karyawan.id_karyawan = users.id_karyawan)
 	WHERE id_canvass_keluar=$id");
 	$baris=mysqli_num_rows($sql2);
 ?>
 <div class="right_col loading" role="main">
 	<div class="">
-	
+
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
@@ -107,7 +107,7 @@ FROM
 	echo '					<tr><td width="40%">Tanggal Canvass</td><td>' .date("d-m-Y", strtotime($tgl_canvass)). '</td></tr>
 							<tr><td width="40%">Nama Mobil</td><td>' .$nama_mobil. '</td></tr>
 							<tr><td width="40%">No Pol</td><td>' .$plat. '</td></tr>';
-	
+
 	echo '					<tr><td rowspan="' .$baris. '">Nama Karyawan</td>';
 	while ($row2=mysqli_fetch_array($sql2)){
 		echo '				<td>- ' .$row2['nama_karyawan']. ' ( ' .$row2['posisi']. ' )</td></tr>';
@@ -133,9 +133,9 @@ FROM
 	$sql=mysqli_query($con, "SELECT *,SUM(qty) as qty, SUM(qty_cek) as qty_cek
 FROM
     canvass_keluar_barang
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (canvass_keluar_barang.id_barang = barang.id_barang)
-    INNER JOIN satuan 
+    INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE id_canvass_keluar=$id
 GROUP BY canvass_keluar_barang.id_barang,canvass_keluar_barang.id_rak");
@@ -145,13 +145,13 @@ GROUP BY canvass_keluar_barang.id_barang,canvass_keluar_barang.id_rak");
 	$sql2=mysqli_query($con, "SELECT SUM(qty_ambil) AS qty_ambil
 FROM
     canvass_siap_kirim
-    INNER JOIN canvass_siap_kirim_detail 
+    INNER JOIN canvass_siap_kirim_detail
         ON (canvass_siap_kirim.id_canvass_siap_kirim = canvass_siap_kirim_detail.id_canvass_siap_kirim)
-    INNER JOIN jual_detail 
+    INNER JOIN jual_detail
         ON (canvass_siap_kirim_detail.id_jual_detail = jual_detail.id_jual_detail)
-    INNER JOIN harga_jual 
+    INNER JOIN harga_jual
         ON (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
 WHERE barang_supplier.id_barang=" .$row['id_barang']. "	AND id_canvass_keluar=$id");
 	$row2=mysqli_fetch_array($sql2);
@@ -168,13 +168,13 @@ WHERE barang_supplier.id_barang=" .$row['id_barang']. "	AND id_canvass_keluar=$i
 							<a data-toggle="modal" data-target="#myModal" data-barcode="' .$row['barcode']. '" data-id-canvass="' .$row['id_canvass_keluar_barang']. '" data-id-barang="' .$row['id_barang']. '" data-sisa="' .$qty_sisa. '" data-satuan="' .$row['nama_satuan']. '" data-ambil="' .$row['qty']. '" data-tot-cek="' .$row3['qty_cek_2']. '" class="btn btn-primary btn-xs"><i class="fa fa-barcode"></i> Scan</a>
 							<a href="?page=canvass_keluar&mode=stock_opname_2&id=' .$id. '&del=' .$row['id_barang']. '" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Hapus</a>
 						</td>';
-			} else {	
+			} else {
 				echo '	<td style="vertical-align:middle;text-align:center;" align="center">' .format_angka($row3['qty_cek_2']). ' ' .$row['nama_satuan']. '</td>
 						<td style="vertical-align:middle;text-align:center;"><a href="?page=canvass_keluar&mode=stock_opname_2&id=' .$id. '&del=' .$row['id_barang']. '" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Hapus</a></td>';
 			}
 		}
 echo '		</tr>';
-	}	
+	}
 
 ?>
 							</tbody>
@@ -188,7 +188,7 @@ echo '		</tr>';
 				</div>
 			<div id="dummy"></div>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
@@ -200,7 +200,7 @@ echo '		</tr>';
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title">Pilih Barang</h4>
 			</div>
-			<div class="modal-body">				
+			<div class="modal-body">
 				<form action="" method="post" onsubmit="return cek_valid();">
 					<input type="hidden" name="tambah_stock_opname_canvass" value="true">
 					<input type="hidden" id="id_canvass_keluar_barang" name="id_canvass_keluar_barang" value="">
@@ -239,7 +239,7 @@ echo '		</tr>';
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title">Konfirmasi</h4>
 			</div>
-			<div class="modal-body">				
+			<div class="modal-body">
 				<center><h4>Apakah Anda yakin? Stok Opname tidak dapat dibatalkan.</h4></center>
 				<div class="modal-footer">
 					<button id="ya" class="btn btn-primary">Ya</button>
@@ -258,7 +258,7 @@ echo '		</tr>';
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title">Konfirmasi</h4>
 			</div>
-			<div class="modal-body">				
+			<div class="modal-body">
 				<center><h4>Apakah Anda benar-benar yakin? Stok Opname tidak dapat dibatalkan.</h4></center>
 				<div class="modal-footer">
 					<button id="ya_2" class="btn btn-primary">Ya</button>
@@ -273,7 +273,7 @@ echo '		</tr>';
 function getBack(){
 	if ($('#myModal').is(':visible')){
 		$('#myModal').modal('hide');
-	} else {	
+	} else {
 		window.location='index.php?page=canvass_keluar&mode=stock_opname';
 	}
 }
@@ -336,10 +336,10 @@ $(document).ready(function(){
 		var today = x.getDate() + "/" + parseInt(x.getMonth()+1) + "/" + x.getFullYear();
 		var x = new Date(x.getFullYear() + "/" + parseInt(x.getMonth()+1) + "/" + x.getDate());
 		var input = $(this).val();
-		var i = input.split("/");	
+		var i = input.split("/");
 		var y = new Date(i[2] + "/" + i[1] + "/" + i[0]);
 		if (y >= x){
-			
+
 		} else {
 			$(this).val('');
 			AndroidFunction.showToast('Tanggal harus \u2265 ' + today + '.');
