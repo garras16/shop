@@ -107,18 +107,18 @@ if (isset($batal_penagihan_post)){
 																						if (isset($_GET['dari'])){
 																							$dari=date("Y-m-d", strtotime($_GET['dari']));
 																							$sampai=date("Y-m-d", strtotime($_GET['sampai']));
-																							$val="(tgl_nota BETWEEN '$dari' AND '$sampai') AND";
+																							$val = "(tgl_nota BETWEEN '$dari' AND '$sampai') AND";
 																						}else{
 																							$val = "";
 																						}
 	$sql=mysqli_query($con, "SELECT *
-FROM
+	FROM
     jual
-    INNER JOIN pelanggan
-        ON (jual.id_pelanggan = pelanggan.id_pelanggan)
-    INNER JOIN karyawan
-        ON (jual.id_karyawan = karyawan.id_karyawan)
-WHERE $val status_konfirm=2 AND id_jual NOT IN (SELECT id_jual FROM penagihan INNER JOIN penagihan_detail
+  INNER JOIN pelanggan
+    ON (jual.id_pelanggan = pelanggan.id_pelanggan)
+  INNER JOIN karyawan
+    ON (jual.id_karyawan = karyawan.id_karyawan)
+	WHERE $val status_konfirm=2 AND id_jual NOT IN (SELECT id_jual FROM penagihan INNER JOIN penagihan_detail
     ON (penagihan.id_penagihan=penagihan_detail.id_penagihan) WHERE status_tagih<>2)");
 	//0=belum bayar
 	//1=terbayar sebagian
@@ -166,9 +166,9 @@ while ($row2=mysqli_fetch_array($sql2)){
 
 $sql2=mysqli_query($con, "SELECT *
 FROM
-    penagihan_detail
-    INNER JOIN jual
-        ON (penagihan_detail.id_jual = jual.id_jual)
+  penagihan_detail
+INNER JOIN jual
+  ON (penagihan_detail.id_jual = jual.id_jual)
 WHERE jual.id_jual=" .$row['id_jual']);
 while ($row2=mysqli_fetch_array($sql2)){
 	if ($row2['jenis']=='Giro'){
