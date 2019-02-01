@@ -52,7 +52,7 @@ $id_karyawan=$_SESSION['id_karyawan'];
                                         <th>Tgl Tagih</th>
                                         <th>Jumlah Tagih</th>
                                         <th>Jumlah Bayar</th>
-                                        <th>Sisa Piutang (</th>
+                                        <th>Sisa Piutang</th>
                                         <th>Tgl Kunjungan Berikutnya</th>
                                         <th>Status Bayar</th>
                                         <th>Status Kembali Nota</th>

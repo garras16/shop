@@ -5,11 +5,11 @@
 		($row['status_bayar']==2 ? $status_nota=2 : $status_nota=1);
 		if ($setor=='') $setor=0;
 		if ($tgl_janji_next==''){
-			$sql = mysqli_query($con, "UPDATE penagihan_detail SET setor=$setor,status_nota_kembali=$status_nota,tgl_janji_next=null WHERE id_penagihan_detail=$id_penagihan_detail");
+			$sql = mysqli_query($con, "UPDATE penagihan_detail SET status_setor=1, setor=$setor,status_nota_kembali=$status_nota,tgl_janji_next=null WHERE id_penagihan_detail=$id_penagihan_detail");
 		} else {
 			$tgl = explode("/", $tgl_janji_next);
 			$tgl_janji_next = $tgl[2] ."-". $tgl[1] ."-". $tgl[0];
-			$sql = mysqli_query($con, "UPDATE penagihan_detail SET setor=$setor,status_nota_kembali=$status_nota,tgl_janji_next='$tgl_janji_next' WHERE id_penagihan_detail=$id_penagihan_detail");
+			$sql = mysqli_query($con, "UPDATE penagihan_detail SET status_setor=1, setor=$setor,status_nota_kembali=$status_nota,tgl_janji_next='$tgl_janji_next' WHERE id_penagihan_detail=$id_penagihan_detail");
 		}
 
 		if ($sql){
@@ -20,7 +20,7 @@
 		_direct("?page=admin&mode=setoran");
 	}
 	if (isset($_GET['del'])){
-		$sql = mysqli_query($con, "UPDATE penagihan_detail SET setor=0,status_nota_kembali=0,tgl_janji_next=null WHERE id_penagihan_detail=" .$_GET['del']);
+		$sql = mysqli_query($con, "UPDATE penagihan_detail SET setor=null,status_nota_kembali=0,tgl_janji_next=null WHERE id_penagihan_detail=" .$_GET['del']);
 		if ($sql){
 			_buat_pesan("Input Berhasil.","green");
 		} else {
@@ -49,7 +49,7 @@
 				</div>
 				<div class="x_content">
 					<div class="table-responsive">
-						<table id="table1" class="table table-bordered table-striped" style="min-width: 1500px;">
+						<table id="table1" class="table table-bordered table-striped" style="min-width: 1800px;">
 							<thead>
 								<tr>
 									<th>Nama Pelanggan</th>
@@ -64,6 +64,7 @@
 									<th>Tgl Kunjungan Berikutnya</th>
 									<th>Status Bayar</th>
 									<th>Status Kembali Nota</th>
+									<th>Jenis Bayar</th>
 									<th>Setor</th>
 									<th></th>
 								</tr>
@@ -141,21 +142,36 @@
 		} else {
 			$color2='black';
 		}
+		if($row['status_nota_kembali']!=0)
+			$style="background:yellow; color: blue;";
+		else
+			$style="";
+		if($row['setor'] < $total_bayar) {
+			$warn = "color: red;";
+		}else{
+			$warn = "";
+		}
+		if($row['setor'] != null) {
+			$nilai = "Rp ".format_uang($row['setor'])."";
+		}else{
+			$nilai = "";
+		}
 		echo '<tr>
-				<td align="center">' .$row['nama_pelanggan']. '</td>
-				<td align="center">' .$row['invoice']. '</td>
-				<td align="center">Rp ' .format_uang($total_jual). '</td>
-				<td align="center">' .$row['nama_karyawan']. '</td>
-				<td align="center">' .date("d-m-Y",strtotime($row['tanggal_tagih'])). '</td>
-				<td align="center">Rp ' .format_uang($total_jual). '</td>
-				<td align="center">Rp ' .format_uang($total_bayar). '</td>
-				<td align="center">' .$tgl_bayar. '</td>
-				<td align="center">Rp ' .format_uang($total_jual-$total_bayar). '</td>
-				<td align="center" style="color: ' .$color2. '">' .$tgl_jb. '</td>
-				<td align="center" style="color: ' .$color. '">' .$status. '</td>
-				<td align="center">' .$status_nota. '</td>
-				<td align="center">Rp ' .format_uang($row['setor']). '</td>
-				<td align="center">';
+				<td align="center" style="'.$style.'">' .$row['nama_pelanggan']. '</td>
+				<td align="center" style="'.$style.'" style="'.$style.'">' .$row['invoice']. '</td>
+				<td align="center" style="'.$style.'">Rp ' .format_uang($total_jual). '</td>
+				<td align="center" style="'.$style.'">' .$row['nama_karyawan']. '</td>
+				<td align="center" style="'.$style.'">' .date("d-m-Y",strtotime($row['tanggal_tagih'])). '</td>
+				<td align="center" style="'.$style.'">Rp ' .format_uang($total_jual). '</td>
+				<td align="center" style="'.$style.'">Rp ' .format_uang($total_bayar). '</td>
+				<td align="center" style="'.$style.'">' .$tgl_bayar. '</td>
+				<td align="center" style="'.$style.'">Rp ' .format_uang($total_jual-$total_bayar). '</td>
+				<td align="center" style="color: ' .$color2. ';'.$style.'">' .$tgl_jb. '</td>
+				<td align="center" style="'.$style.'color: ' .$color. ';">' .$status. '</td>
+				<td align="center" style="'.$style.'">' .$status_nota. '</td>
+				<td align="center" style="'.$style.'">'.$row['jenis'].'</td>
+				<td align="center" style="'.$style.';'.$warn.'">' .$nilai. '</td>
+				<td align="center" style="'.$style.'">';
 					if ($row['status_nota_kembali']==0) {
 						echo '<a data-toggle="modal" data-target="#myModal" data-status-nota="' .$row['status_nota_kembali']. '" data-status-bayar="' .$row['status_bayar']. '" data-id-penagihan-detail="' .$row['id_penagihan_detail']. '" data-invoice="' .$row['invoice']. '" data-bayar="' .$total_bayar. '" data-tgl-janji="' .$tgl_jb. '" class="btn btn-xs btn-primary"><i class="fa fa-barcode"></i> ' .$cmd. '</a>';
 					} else {
@@ -204,9 +220,10 @@
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fa fa-book fa-fw"></i>
-                                                Jumlah Bayar (Rp)</span>
+                                                Jumlah Bayar</span>
                                             <input
                                                 class="form-control"
+																								type="text"
                                                 id="bayar"
                                                 name="bayar"
                                                 placeholder="Jumlah Bayar"
@@ -215,12 +232,11 @@
                                             <div class="input-group">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-tags fa-fw"></i>
-                                                    Jumlah Setor (Rp)&nbsp</span>
+                                                    Jumlah Setor</span>
                                                 <input
 																									class="form-control"
-																									id="setor" name="setor" placeholder="Jumlah Setor"
-																									value=""
-																									readonly="readonly">
+																									id="setor" type="text" name="setor" placeholder="Jumlah Setor"
+																									value="">
 																							</div>
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
@@ -255,16 +271,15 @@ function batal_scan() {
 }
 
 function cek_valid() {
-    var jumlah_bayar = parseFloat($('#bayar').val());
-    var jumlah_setor = parseFloat($('#setor').val());
+    var jumlah_bayar = $('#bayar').val();
+    var jumlah_setor = $('#setor').val();
     var inv1 = $('#invoice').val();
     var inv2 = $('#invoice_2').val();
     var bypass = $('#bypass').val();
     var status_bayar = $('#status_bayar').val();
 
-    if (jumlah_setor > jumlah_bayar) {
-        AndroidFunction.showToast("Jumlah setor tidak boleh melebihi jumlah bayar.");
-        return false;
+		if ((jumlah_setor >= jumlah_bayar) || (jumlah_setor == 0)) {
+        return true;
     } else if (status_bayar == 2 && $('#tgl_janji_next').val().length > 0) {
         AndroidFunction.showToast("Tanggal kunjungan berikutnya harus kosong.");
         $('#tgl_janji_next').val('');
@@ -275,8 +290,10 @@ function cek_valid() {
     } else if (inv1 != inv2 && bypass == 'true') {
         AndroidFunction.showToast("Input No Nota Jual salah.");
         return false;
-    } else {
-        return true;
+    }
+		else {
+			AndroidFunction.showToast("Jumlah setor tidak boleh kurang dari jumlah bayar");
+        return false;
     }
 }
 function cek_scan_nota(barcode) {
@@ -289,19 +306,21 @@ function cek_scan_nota(barcode) {
 
 $(document).ready(function () {
     $('#scan_nota').hide();
-    $('#setor').inputmask('decimal', {
-        allowMinus: false,
-        autoGroup: true,
-        groupSeparator: '.',
-        rightAlign: false,
-        removeMaskOnSubmit: true
+    $('#setor').inputmask('currency', {
+			prefix: "Rp ",
+      allowMinus: false,
+      autoGroup: true,
+      groupSeparator: '.',
+      rightAlign: false,
+      removeMaskOnSubmit: true
     });
-    $('#bayar').inputmask('decimal', {
-        allowMinus: false,
-        autoGroup: true,
-        groupSeparator: '.',
-        rightAlign: false,
-        removeMaskOnSubmit: true
+    $('#bayar').inputmask('currency', {
+			prefix: "Rp ",
+      allowMinus: false,
+      autoGroup: true,
+      groupSeparator: '.',
+      rightAlign: false,
+      removeMaskOnSubmit: true
     });
     $('#myModal').on('show.bs.modal', function (e) {
         var id_penagihan_detail = $(e.relatedTarget).data('id-penagihan-detail');

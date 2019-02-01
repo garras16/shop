@@ -34,7 +34,7 @@ if (isset($_GET['act']) && $_GET['act']=='terima'){
 	$sql=mysqli_query($con, "SELECT *
 FROM
     canvass_keluar
-    LEFT JOIN kendaraan 
+    LEFT JOIN kendaraan
         ON (canvass_keluar.id_mobil = kendaraan.id_kendaraan)
 	WHERE id_canvass_keluar=$id");
 	$row=mysqli_fetch_array($sql);
@@ -44,12 +44,12 @@ FROM
 	$sql2=mysqli_query($con, "SELECT *
 FROM
     canvass_keluar_karyawan
-    INNER JOIN karyawan 
+    INNER JOIN karyawan
         ON (canvass_keluar_karyawan.id_karyawan = karyawan.id_karyawan)
-	INNER JOIN users 
+	INNER JOIN users
         ON (karyawan.id_karyawan = users.id_karyawan)
 	WHERE id_canvass_keluar=$id");
-	$baris=mysql_num_rows($sql2);
+	$baris=mysqli_num_rows($sql2);
 	$sql4=mysqli_query($con, "SELECT tgl_lap
 FROM
     lap_stock_opname
@@ -80,7 +80,7 @@ FROM
 							<tr><td width="40%">Tanggal Stock Opname</td><td>' .date("d-m-Y", strtotime($tgl_so)). '</td></tr>
 							<tr><td width="40%">Nama Mobil</td><td>' .$nama_mobil. '</td></tr>
 							<tr><td width="40%">No Pol</td><td>' .$plat. '</td></tr>';
-	
+
 	echo '					<tr><td rowspan="' .$baris. '">Nama Karyawan</td>';
 	while ($row2=mysqli_fetch_array($sql2)){
 		echo '				<td>- ' .$row2['nama_karyawan']. ' ( ' .$row2['posisi']. ' )</td></tr>';
@@ -105,9 +105,9 @@ FROM
 	$sql=mysqli_query($con, "SELECT *
 FROM
     lap_stock_opname
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (lap_stock_opname.id_barang = barang.id_barang)
-    INNER JOIN satuan 
+    INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
  WHERE id_canvass_keluar=$id");
 	while ($row=mysqli_fetch_array($sql)){
@@ -123,7 +123,7 @@ FROM
 	}
 	echo '		<td style="vertical-align:middle;text-align:center;' .$style. '">' .format_angka($row['selisih']). ' ' .$row['nama_satuan']. '</td>
 			</tr>';
-	}	
+	}
 ?>
                                 </tbody>
                             </table>

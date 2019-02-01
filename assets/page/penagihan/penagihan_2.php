@@ -43,6 +43,7 @@ $thn_sql="YEAR(CURRENT_DATE())";
                                         <th>Tgl Kunjungan Berikutnya</th>
                                         <th>Status Bayar</th>
                                         <th>Status Kembali Nota</th>
+                                        <th>Status Setoran</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -125,7 +126,11 @@ $total_jual=0;
 	$nama_driver=$row3['nama_karyawan'];
 	($sisa_plafon<0 ? $color1='red' : $color1='black');
 	(strtotime($row['tgl_janji_next'])<=strtotime(date("Y-m-d")) ? $color2='red' : $color2='black');
-
+  if($row['status_setor'] == 0) {
+    $ss = "Belum Selesai";
+  }else{
+    $ss = "Selesai";
+  }
 	if ($total_jual-$row['bayar']==0) continue;
 	echo '<tr>
 			<td align="center">' .$row['nama_pelanggan']. '</td>
@@ -144,6 +149,7 @@ $total_jual=0;
 			<td align="center" style="color:' .$color2. '">' .$tgl_jb. '</td>
 			<td align="center" style="color: ' .$color. '">' .$status. '</td>
 			<td align="center">' .$status_nota. '</td>
+      <td align="center">'.$ss.'</td>
 		</tr>';
 }
 ?>

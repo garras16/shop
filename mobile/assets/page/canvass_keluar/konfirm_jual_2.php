@@ -220,7 +220,7 @@ $sisa_plafon=$plafon-$jumlah_gantung;
 						<div class="clearfix"></div>
 						<a class="btn btn-danger btn-xs" style="width:10px;height:10px">&nbsp;</a><font color="red">Qty Jual dan Qty Ambil tidak sama</font>
 						<div class="table-responsive">
-						<table class="table table-bordered table-striped">
+						<table class="table table-bordered table-striped" style="min-width:1000px;">
 							<thead>
 								<tr>
 									<th>Nama Barang</th>
@@ -309,9 +309,9 @@ echo '		</tr>';
 }
 echo '<tr>
 		<td colspan="3"><b>Total</b></td>
-		<td align="center"><b>' .format_uang($total). '</b></td>
+		<td align="center"><b>Rp ' .format_uang($total). '</b></td>
 		<td colspan="2"></td>
-		<td align="center"><b>' .format_uang($total_). '</b></td>
+		<td align="center"><b>Rp ' .format_uang($total_). '</b></td>
 		<td colspan="2"></td>
 	</tr>';
 

@@ -24,6 +24,7 @@ if (isset($batal_penagihan_post)){
                             <h3>PENAGIHAN</h3>
                         </div>
                         <div class="clearfix"></div>
+
                     </div>
                     <div class="x_content">
 
@@ -53,7 +54,35 @@ if (isset($batal_penagihan_post)){
                                     id="tab_content1"
                                     aria-labelledby="tab1">
 
-                                    <div class="table-responsive">
+																			<div class="col-md-4" style="margin-bottom: 25px;">
+							                            <table>
+							                                <tr>
+							                                    <td>Periode :<br><input
+							                                        class="form-control"
+							                                        style="width:100px"
+							                                        id="tgl_dari"
+							                                        type="text"
+							                                        value=""
+							                                        placeholder="Tanggal"
+							                                        readonly="readonly"></td>
+							                                    <td><br>&nbsp; - &nbsp;</td>
+							                                    <td><br><input
+							                                        class="form-control"
+							                                        style="width:100px"
+							                                        id="tgl_sampai"
+							                                        type="text"
+							                                        value=""
+							                                        placeholder="Tanggal"
+							                                        readonly="readonly"></td>
+							                                    <td>&nbsp;&nbsp;</td>
+							                                    <td><br>
+							                                        <a class="btn btn-primary" id="btn_dari_sampai" onclick="submit();">
+							                                            <i class="fa fa-search"></i>
+							                                        </a>
+							                                    </td>
+							                                </tr>
+							                            </table>
+							                        </div>
                                         <table
                                             id="table1"
                                             class="table table-bordered table-striped"
@@ -75,6 +104,13 @@ if (isset($batal_penagihan_post)){
                                             </thead>
                                             <tbody>
                                             <?php
+																						if (isset($_GET['dari'])){
+																							$dari=date("Y-m-d", strtotime($_GET['dari']));
+																							$sampai=date("Y-m-d", strtotime($_GET['sampai']));
+																							$val="(tgl_nota BETWEEN '$dari' AND '$sampai') AND";
+																						}else{
+																							$val = "";
+																						}
 	$sql=mysqli_query($con, "SELECT *
 FROM
     jual
@@ -82,7 +118,7 @@ FROM
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
     INNER JOIN karyawan
         ON (jual.id_karyawan = karyawan.id_karyawan)
-WHERE status_konfirm=2 AND id_jual NOT IN (SELECT id_jual FROM penagihan INNER JOIN penagihan_detail
+WHERE $val status_konfirm=2 AND id_jual NOT IN (SELECT id_jual FROM penagihan INNER JOIN penagihan_detail
     ON (penagihan.id_penagihan=penagihan_detail.id_penagihan) WHERE status_tagih<>2)");
 	//0=belum bayar
 	//1=terbayar sebagian
@@ -203,7 +239,6 @@ if ($row2['tgl_janji_next']!=''){
 ?>
                                             </tbody>
                                         </table>
-                                    </div>
                                 </div>
                                 <div
                                     role="tabpanel"
@@ -302,6 +337,10 @@ $total_jual=0;
 function getBack() {
     AndroidFunction.closeApp();
 }
+function submit() {
+    window.location = "?page=penagihan&mode=penagihan&dari=" + $('#tgl_dari').val() +
+            "&sampai=" + $('#tgl_sampai').val();
+}
 function cek_valid2() {
     var len = $('#table_siap_tagih')
         .find("input:checkbox:checked")
@@ -311,6 +350,19 @@ function cek_valid2() {
         return false;
     } else {
         return true;
+    }
+}
+function validasi() {
+    var startDate = new Date.parse(get_global_tanggal($('#tgl_dari').val()));
+    var endDate = new Date.parse(get_global_tanggal($('#tgl_sampai').val()));
+    if (startDate > endDate) {
+        $('#tgl_dari').val('');
+        $('#tgl_sampai').val('');
+        $('#btn_dari_sampai').attr('style', 'display:none');
+        alert("Terjadi kesalahan penulisan tanggal");
+        AndroidFunction.showToast("Terjadi kesalahan penulisan tanggal");
+    } else {
+        $('#btn_dari_sampai').removeAttr('style');
     }
 }
 $(document).ready(function () {
@@ -325,6 +377,24 @@ $(document).ready(function () {
         rightAlign: false,
         autoUnmask: true,
         removeMaskOnSubmit: true
+    });
+		$('#tgl_dari').daterangepicker({
+        locale: {
+            format: 'DD-MM-YYYY'
+        },
+        singleDatePicker: true
+    });
+    $('#tgl_sampai').daterangepicker({
+        locale: {
+            format: 'DD-MM-YYYY'
+        },
+        singleDatePicker: true
+    });
+    $("#tgl_dari").on('change', function () {
+        validasi();
+    });
+    $("#tgl_sampai").on('change', function () {
+        validasi();
     });
     <?php if (isset($_GET['reset'])) echo "$('#tab2').click()"; ?>
 })
