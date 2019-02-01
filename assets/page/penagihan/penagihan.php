@@ -249,7 +249,9 @@ if ($row2['tgl_janji_next']!=''){
                                         <input type="hidden" name="batal_penagihan_post" value="true">
                                         <center><input class="btn btn-primary" type="submit" value="Batalkan Penagihan"></center><br/>
 
-                                        <div class="table-responsive">
+																				<div class="alert alert-info">
+								                            <strong>Klik kolom pada tabel untuk detail.</strong>
+								                        </div>
                                             <table id="table_siap_tagih" class="table table-bordered table-striped" style="min-width: 700px;">
                                                 <thead>
                                                     <tr>
@@ -318,7 +320,6 @@ $total_jual=0;
 ?>
                                                 </tbody>
                                             </table>
-                                        </div>
                                     </form>
                                 </div>
                             </div>
