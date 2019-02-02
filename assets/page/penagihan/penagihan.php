@@ -109,7 +109,7 @@ if (isset($batal_penagihan_post)){
 																							$sampai=date("Y-m-d", strtotime($_GET['sampai']));
 																							$val = "(tgl_nota BETWEEN '$dari' AND '$sampai') AND";
 																						}else{
-																							$val = "";
+																							$val = "tgl_nota BETWEEN NOW() - INTERVAL 30 DAY AND NOW() AND";
 																						}
 	$sql=mysqli_query($con, "SELECT *
 	FROM
