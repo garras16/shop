@@ -461,33 +461,33 @@ retur jual																						OK
 - konfirm admin, tambah nama pelanggan, no nota jual, status bayar,								
 
 jumlah jual, jumlah retur jual																	OK
-- debt collector, tagihan, jika bayar retur tidak dihitung di tagihan_2							OK	-
+- debt collector, tagihan, jika bayar retur tidak dihitung di tagihan_2							OK	
 
 - debt collector, tagihan_2 (pembayaran tagihan), portrait										OK	
 - pembelian, samping diskon nota beli, diberi keterangan kecil: "tidak mempengaruhi
 
 harga modal" (beri icon kecil, saat klik muncul notifikasi)										OK	
 
-- diskon barang bisa 3 level (beli & jual)														OK	-
+- diskon barang bisa 3 level (beli & jual)										OK	-
 
-- pembelian, view_detail, perhatikan layout tombol edit diskon nota beli						OK	-
+- pembelian, view_detail, perhatikan layout tombol edit diskon nota beli						        OK        -
 
-- penjualan, beri total jual set diskon															OK
+- penjualan, beri total jual set diskon											OK
 
 - konfirmasi admin dipindah ke penjualan (konfirmasi retur jual)								OK	
 
-- semua histori jd riwayat																		OK	
+- semua histori jd riwayat												OK	
 
 - penjualan, view detail kasih keterangan font kecil utk semua menu (yg kira2 user		
-tak paham)																						OK	-
+tak paham)														OK	 -
 
-- input diskon (%) 6 digit xxx.xx% (pembelian sudah)											OK	-	
+- input diskon (%) 6 digit xxx.xx% (pembelian sudah)									OK	 -	
 
-- ubah data diskon nota beli, jumlah diskon (rp) nya masih error								OK	-
+- ubah data diskon nota beli, jumlah diskon (rp) nya masih error								OK       -
 
-- hilangkan border/background di info tambahan di bawah				 							OK	-
+- hilangkan border/background di info tambahan di bawah				 					OK	-
 
-- jika angka minus, beri warna merah															OK	-
+- jika angka minus, beri warna merah											OK	-
 
 - javascript add_penjualan, format_uang masih error utk koma									OK	-
 
