@@ -10,10 +10,10 @@ $sql=mysqli_query($con, "DELETE FROM canvass_keluar_barang WHERE qty=0 AND qty_c
                     <div class="x_title">
                         <h3>LIHAT STOK CANVASS</h3>
                         <?php
-							if (isset($pesan)){
-								echo '<span class="badge bg-' .$warna. '">' .$pesan. '</span>';
-							}
-						?>
+            							if (isset($pesan)){
+            								echo '<span class="badge bg-' .$warna. '">' .$pesan. '</span>';
+            							}
+            						?>
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">

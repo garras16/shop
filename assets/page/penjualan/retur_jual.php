@@ -26,7 +26,7 @@ $q = mysqli_query($con, $sql);
                                 <i class="fa fa-plus"></i>
                                 Tambah</a>
                         </p>
-
+                        <?php if(!isset($_GET['dari']) && !isset($_GET['sampai'])) { ?>
                         <div
                             class="col-xs-12"
                             style="background:gray; padding-top:10px;padding-bottom:10px; margin-bottom: 30px;">
@@ -54,6 +54,35 @@ $q = mysqli_query($con, $sql);
                                 <i class="fa fa-refresh"></i>
                                 RESET</a>
                         </div>
+                      <?php }else{ ?>
+                        <div
+                            class="col-xs-12"
+                            style="background:gray; padding-top:10px;padding-bottom:10px; margin-bottom: 30px;">
+                            <font color="white">Cari Tanggal Retur :
+                            </font><br/>
+                            <input
+                                style="width:100px;height:30px"
+                                id="tgl_dari"
+                                type="text"
+                                value="<?= $_GET['dari'] ?>"
+                                placeholder="Tanggal"
+                                readonly="readonly">
+                            <font color="white">
+                                -
+                            </font><input
+                                style="width:100px;height:30px"
+                                id="tgl_sampai"
+                                type="text"
+                                value="<?= $_GET['sampai'] ?>"
+                                placeholder="Tanggal"
+                                readonly="readonly">&nbsp;<a class="btn btn-primary" id="btn_dari_sampai" onclick="submit();">
+                                <i class="fa fa-search"></i>
+                                CARI</a>
+                            <a class="btn btn-primary" id="btn_dari_sampai" onclick="reset();">
+                                <i class="fa fa-refresh"></i>
+                                RESET</a>
+                        </div>
+                      <?php } ?>
                         <div class="clearfix"></div><br/>
                         <table id="table1" class="table table-bordered table-striped" style="min-width:1000px;">
                             <thead>

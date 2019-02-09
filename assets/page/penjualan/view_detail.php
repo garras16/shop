@@ -57,14 +57,15 @@ WHERE id_jual=$id");
 
                         <form action="" method="post">
                             <input type="hidden" name="edit_penjualan_post" value="true">
-                            <div class="col-sm-6">
+                            <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-calendar fa-fw"></i>
-                                        <small>Tgl Nota Jual</small>
+                                        <i class="fa fa-calendar fa-fw" style="width: 94px;"></i>
+                                        <small><br>Tgl Nota Jual</small>
                                     </span>
                                     <input
                                         class="form-control"
+																				style="padding: 20px 10px;"
                                         id="tgl_nota"
                                         name="tgl_nota"
                                         title="Tgl Nota Jual"
@@ -72,15 +73,16 @@ WHERE id_jual=$id");
                                         readonly="readonly">
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-file fa-fw"></i>
-                                        <small>No Nota Jual</small>
+                                        <i class="fa fa-file fa-fw" style="width: 94px;"></i>
+                                        <small><br>No Nota Jual</small>
                                     </span>
                                     <input
                                         id="invoice"
                                         name="invoice"
+																				style="padding: 20px 10px;"
                                         class="form-control"
                                         placeholder="No Nota Jual"
                                         title="No Nota Jual"
@@ -88,73 +90,77 @@ WHERE id_jual=$id");
                                         readonly="readonly">
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-building fa-fw"></i>
-                                        <small>Pelanggan</small>
+                                        <i class="fa fa-building fa-fw" style="width: 94px;"></i>
+                                        <small><br>Pelanggan</small>
                                     </span>
                                     <input
                                         name="pelanggan"
                                         class="form-control"
                                         placeholder="Pelanggan"
                                         title="Pelanggan"
+																				style="padding: 20px 10px;"
                                         value="<?php echo $row['nama_pelanggan']; ?>"
                                         readonly="readonly">
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-user fa-fw"></i>
-                                        <small>Sales</small>
+                                        <i class="fa fa-user fa-fw" style="width: 94px;"></i>
+                                        <small><br>Sales</small>
                                     </span>
                                     <input
                                         name="sales"
                                         class="form-control"
                                         placeholder="Sales"
+																				style="padding: 20px 10px;"
                                         title="Sales"
                                         value="<?php echo $row['nama_karyawan']; ?>"
                                         readonly="readonly">
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-dollar fa-fw"></i>
-                                        <small>Jenis Bayar</small>
+                                        <i class="fa fa-dollar fa-fw" style="width: 94px;"></i>
+                                        <small><br>Jenis Bayar</small>
                                     </span>
                                     <input
                                         id="jenis_bayar"
                                         name="jenis_bayar"
                                         class="form-control"
+																				style="padding: 20px 10px;"
                                         placeholder="Jenis Bayar"
                                         title="Jenis Bayar"
                                         value="<?php echo $row['jenis_bayar']; ?>"
                                         readonly="readonly">
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-tags fa-fw"></i>
-                                        <small>Tenor</small>
+                                        <i class="fa fa-tags fa-fw" style="width: 94px;"></i>
+                                        <small><br>Tenor</small>
                                     </span>
                                     <input
                                         id="tenor"
                                         name="tenor"
                                         class="form-control"
                                         placeholder="TENOR"
+																				style="padding: 20px 10px;"
                                         title="TENOR"
                                         value="<?php echo $row['tenor']; ?> hari"
                                         readonly="readonly">
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-tags fa-fw"></i>
-                                        <small>Tot. Jual Sementara</small>
+                                        <i class="fa fa-tags fa-fw" style="width: 94px;"></i>
+                                        <small style="font-size: 11px;"><br>Tot. Jual Sementara</small>
                                     </span>
                                     <input
                                         id="total_jual"
@@ -162,39 +168,42 @@ WHERE id_jual=$id");
                                         placeholder="Total Jual Sementara"
                                         title="Total Jual Sementara"
                                         value=""
+																				style="padding: 20px 10px;"
                                         readonly="readonly">
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-hashtag fa-fw"></i>
-                                        <small>Tgl Jatuh Tempo</small>
+                                        <i class="fa fa-hashtag fa-fw" style="width: 94px;"></i>
+                                        <small><br>Tgl Jatuh Tempo</small>
                                     </span>
                                     <input
                                         id="tgl_jatuh_tempo"
                                         class="form-control"
                                         placeholder="Tanggal Jatuh Tempo"
                                         title="Tanggal Jatuh Tempo"
+																				style="padding: 20px 10px;"
                                         value="<?php echo $tgl_jt_tempo; ?>"
                                         readonly="readonly">
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-cut fa-fw"></i>
-                                        <small>Disc. Nota Jual</small>
+                                        <i class="fa fa-cut fa-fw" style="width: 94px;"></i>
+                                        <small style="font-size: 11px;"><br>Disc. Nota Jual</small>
                                     </span>
                                     <input
                                         id="diskon_nota"
                                         class="form-control"
-                                        placeholder="Diskon Nota Jual (Rp)"
+                                        placeholder="Diskon Nota Jual"
                                         title="Diskon Nota Jual"
+																				style="padding: 20px 10px;"
                                         value=""
                                         readonly="readonly">
                                     <span class="input-group-btn">
-                                        <a data-toggle="modal" data-target="#myModal" class="btn btn-primary">Edit</a>
+                                        <a data-toggle="modal" data-target="#myModal" class="btn btn-primary" style="padding: 10px 12px;">Edit</a>
                                     </span>
                                 </div>
                             </div>
@@ -234,6 +243,7 @@ $sql=mysqli_query($con, "SELECT
     barang.nama_barang
     , barang.barcode
     , satuan.nama_satuan
+		, jual.ppn_all_persen
     , jual_detail.diskon_persen
     , jual_detail.diskon_rp
 	, jual_detail.diskon_persen_2
@@ -244,7 +254,9 @@ $sql=mysqli_query($con, "SELECT
     , jual_detail.qty
     , harga_jual.harga_jual
 FROM
-    jual_detail
+		jual
+		INNER JOIN jual_detail
+				ON (jual.id_jual = jual_detail.id_jual)
     INNER JOIN harga_jual
         ON (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
     , barang_supplier
@@ -280,7 +292,9 @@ while($row=mysqli_fetch_array($sql)){
 						<td style="'.$val.'" class="uang">' .$tot_set_disk_3. '</td>
 					</tr>';
 }
-$diskon_all_rp=($diskon_nota/100)*$total_jual;
+$diskon_all_rp=$diskon_nota*$total_jual;
+$ppn_all = $diskon_all_rp*($row['ppn_all_persen']/100);
+$total_all_rp = ($total_jual-$diskon_all_rp)+$ppn_all;
 ?>
 
                             </tbody>
@@ -289,26 +303,47 @@ $diskon_all_rp=($diskon_nota/100)*$total_jual;
                             <!--<div class="col-md-6"> </div> -->
                             <div class="col-md-6 text-right" style="padding-left: 0px;">
                                 <div class="input-group">
-                                    <span
-                                        class="input-group-addon"
-                                        style=" margin-left:10px; padding-left: 0px; width:90px;text-align:left; background: #fff;color:#000; border: none; outline: none;"
-                                        ">
-                                        <small>Tot. Jual Set. Disc.</small>
-                                    </span>
-                                    <span
-                                        class="input-group-addon"
-                                        style="width:2px; padding:10px 0px; text-align:left; background: #fff;color:#000; border: none; outline: none;"
-                                        ">
-                                        <small>:</small>
-                                    </span>
-                                    <input
-                                        class="form-control uang"
-                                        id="total_jual_2"
-                                        style="border: none; background: #fff; outline: none;"
-                                        name="berat"
-                                        value="<?php echo $total_jual ?>"
-                                        readonly="readonly">
-                                </div>
+																		<span
+																				class="input-group-addon"
+																				style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;">
+																				<small>Tot. Set. Disc.</small>
+																		</span>
+																		<input
+																				class="form-control"
+																				id="total_jual_2"
+																				name="totaljual"
+																				style="background: #fff; outline: none; border: none;"
+																				value="<?php echo $total_jual ?>"
+																				readonly="readonly">
+																</div>
+																<div class="input-group">
+																		<span
+																				class="input-group-addon"
+																				style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;">
+																				<small>PPN</small>
+																		</span>
+																		<input
+																				class="form-control uang"
+																				id="ppn"
+																				name="total"
+																				style="background: #fff; outline: none; border: none;"
+																				value="<?php echo $ppn_all ?>"
+																				readonly="readonly">
+																</div>
+																<div class="input-group">
+																		<span
+																				class="input-group-addon"
+																				style="width:200px;text-align:left;color:#000;background: #fff; outline: none; border: none;">
+																				<small>Tot. N.Jual Set. Disc & PPN</small>
+																		</span>
+																		<input
+																				class="form-control uang"
+																				id="total_2"
+																				style="background: #fff; outline: none; border: none;"
+																				name="total"
+																				value="<?php echo $total_all_rp ?>"
+																				readonly="readonly">
+																</div>
                             </div>
                         </div>
                         <?php
@@ -336,7 +371,7 @@ $diskon_all_rp=($diskon_nota/100)*$total_jual;
                     <input type="hidden" name="edit_diskon_nota_jual" value="true">
                     <div class="input-group">
                         <span class="input-group-addon">
-                            <i class="fa fa-cut fa-fw" style="width: 40px;"></i><br>
+                            <i class="fa fa-cut fa-fw" style="width: 52px;"></i><br>
                             <small>Diskon</small>
                         </span>
                         <input

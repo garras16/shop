@@ -1,4 +1,4 @@
-<?php
+p<?php
     date_default_timezone_set('Asia/Jakarta');
     require_once('../../../assets/inc/config.php');
     $id=$_GET['id'];
@@ -20,7 +20,7 @@ $test2="";
 $sql=mysqli_query($con, "SELECT SUM(stok) AS stok
     FROM
         canvass_keluar
-    INNER JOIN canvass_keluar_barang 
+    INNER JOIN canvass_keluar_barang
         ON (canvass_keluar.id_canvass_keluar = canvass_keluar_barang.id_canvass_keluar)
     WHERE canvass_keluar.id_canvass_keluar=$canvass AND canvass_keluar_barang.id_barang=$id AND stok>0
     GROUP BY canvass_keluar_barang.id_barang,expire");
@@ -36,11 +36,11 @@ $total_qty_cek=$r['qty_cek'];
 $sql=mysqli_query($con, "SELECT barang.id_barang,expire,nama_satuan,SUM(stok) AS total
 FROM
     canvass_keluar
-    INNER JOIN canvass_keluar_barang 
+    INNER JOIN canvass_keluar_barang
         ON (canvass_keluar.id_canvass_keluar = canvass_keluar_barang.id_canvass_keluar)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (canvass_keluar_barang.id_barang = barang.id_barang)
-    INNER JOIN satuan 
+    INNER JOIN satuan
         ON (barang.id_satuan = satuan.id_satuan)
 WHERE canvass_keluar.id_canvass_keluar=$canvass AND barang.id_barang=$id
 GROUP BY barang.id_barang,expire");

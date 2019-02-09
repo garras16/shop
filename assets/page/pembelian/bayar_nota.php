@@ -43,6 +43,9 @@ if (isset($_GET['del'])){
                     </div>
                     <div class="x_content">
                         <div class="clearfix"></div>
+												<?php
+														if(!isset($_GET['dari']) && !isset($_GET['sampai'])) {
+												 ?>
                         <div
                             class="col-xs-12"
                             style="background:gray; padding-top:10px;padding-bottom:10px">
@@ -66,6 +69,31 @@ if (isset($_GET['del'])){
                                 <i class="fa fa-search"></i>
                             </a>
                         </div>
+											<?php }else{ ?>
+												<div
+                            class="col-xs-12"
+                            style="background:gray; padding-top:10px;padding-bottom:10px">
+                            <font color="white">Cari Tanggal Bayar :</font><br/>
+                            <input
+                                style="width:100px"
+                                id="tgl_dari"
+                                type="text"
+                                value="<?= $_GET['dari'] ?>"
+                                placeholder="Tanggal"
+                                readonly="readonly">
+                            <font color="white">
+                                -
+                            </font><input
+                                style="width:100px"
+                                id="tgl_sampai"
+                                type="text"
+                                value="<?= $_GET['sampai'] ?>"
+                                placeholder="Tanggal"
+                                readonly="readonly">&nbsp;<a class="btn btn-primary btn-xs" id="btn_dari_sampai" onclick="submit();">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </div>
+											<?php } ?>
                         <div class="clearfix" style="margin-bottom: 20px;"></div><br/>
                         <div class="col-md-12">
                             <p align="right">

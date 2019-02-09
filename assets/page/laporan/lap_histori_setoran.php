@@ -14,31 +14,116 @@ $id_karyawan=$_SESSION['id_karyawan'];
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-                        <div class="col-xs-12" style="text-align:left">
-                            <input
-                                type="text"
-                                id="datepicker"
-                                placeholder="Bulan & Tahun Tagih"
-                                style="width:150px"
-                                value="<?php if (isset($_GET['tanggal'])) echo $_GET['tanggal'] ;?>"
-                                readonly="readonly"></input>
-                            <input
-                                type="text"
-                                id="cari_debt"
-                                name="cari_debt"
-                                placeholder="Debt Collector"
-                                style="width:100px"
-                                value="<?php if (isset($_GET['debt'])) echo $_GET['debt'] ;?>"></input>
-                            <input
-                                type="text"
-                                id="cari_pelanggan"
-                                name="cari_pelanggan"
-                                placeholder="Pelanggan"
-                                style="width:150px"
-                                value="<?php if (isset($_GET['pelanggan'])) echo $_GET['pelanggan'] ;?>"></input>
-                            <input type="button" id="cari" onclick="cari_debt_pelanggan()" value="Cari"></input>
-                            <input type="button" id="reset" onclick="reset()" value="Reset"></input>
-                        </div>
+                      <div class="col-md-12">
+                        <?php
+                        if(isset($_GET['sampai']) || isset($_GET['dari']) || isset($_GET['pelanggan']) || isset($_GET['debt'])) {
+                         ?>
+                         <div class="col-md-3" style="overflow:hidden;">Cari Tanggal :<br>
+                         <input
+                             class="form-control"
+                             style="width:100px; float: left"
+                             id="tgl_dari"
+                             type="text"
+                             value="<?php if(isset($_GET['dari'])) { echo $_GET['dari']; } ?>"
+                             placeholder="Tanggal"
+                             readonly="readonly">
+                             <span style="float:left;">&nbsp; - &nbsp;</span>
+                         <input
+                             class="form-control"
+                             style="width:100px; float:left;"
+                             id="tgl_sampai"
+                             type="text"
+                             value="<?php if(isset($_GET['sampai'])) { echo $_GET['sampai']; } ?>"
+                             placeholder="Tanggal"
+                             readonly="readonly">
+                             <br><a class="btn btn-primary" style="font-size:12px; margin-top:10px;" id="btn_dari_sampai" onclick="submittgl();">
+                               <i class="fa fa-search">Cari Tanggal</i>
+                           </a></div>
+                         <!-- <td>&nbsp;&nbsp;</td> -->
+                         <div class="col-md-3">Pelanggan :<br><input
+                             class="form-control"
+                             id="pelanggan"
+                             type="text"
+                             value="<?php if(isset($_GET['pelanggan'])) { echo $_GET['pelanggan']; } ?>"
+                             placeholder="Pelanggan"><br>
+                             <a class="btn btn-primary" id="btn_dari_sampai" style="font-size: 12px; margin-top: -10px;" onclick="submitpelanggan();">
+                                 <i class="fa fa-search">Cari Pelanggan</i>
+                             </a>
+                           </div>
+                         <!--<td>&nbsp;&nbsp;</td>-->
+                         <div class="col-md-3">Debtcollector :<br><input
+                             class="form-control"
+                             id="debt"
+                             type="text"
+                             value="<?php if(isset($_GET['debt'])) { echo $_GET['debt']; } ?>"
+                             placeholder="Debtcollector">
+                           <br><a class="btn btn-primary" style="font-size:12px; margin-top: -10px;" id="btn_dari_sampai" onclick="submitdebt();">
+                               <i class="fa fa-search">Cari dept</i>
+                           </a>
+                         </div>
+                         <!-- <td>&nbsp;&nbsp;</td> -->
+                         <div class="col-md-3">
+                             <a class="btn btn-primary" style="font-size:12px; margin-top: 20px;" id="btn_dari_sampai" onclick="submit();">
+                                 <i class="fa fa-search">Cari Semua</i>
+                             </a>
+                         </div>
+                        <?php }else{ ?>
+                          <!--<table>
+                              <tr>
+                                  <td-->
+                                  <div class="col-md-3" style="overflow:hidden;">Cari Tanggal :<br>
+                                  <input
+                                      class="form-control"
+                                      style="width:100px; float: left"
+                                      id="tgl_dari"
+                                      type="text"
+                                      value="01-01-2000"
+                                      placeholder="Tanggal"
+                                      readonly="readonly">
+                                      <span style="float:left;">&nbsp; - &nbsp;</span>
+                                  <input
+                                      class="form-control"
+                                      style="width:100px; float:left;"
+                                      id="tgl_sampai"
+                                      type="text"
+                                      value=""
+                                      placeholder="Tanggal"
+                                      readonly="readonly">
+                                      <br><a class="btn btn-primary" style="font-size:12px; margin-top:10px;" id="btn_dari_sampai" onclick="submittgl();">
+                                        <i class="fa fa-search">Cari Tanggal</i>
+                                    </a></div>
+                                  <!-- <td>&nbsp;&nbsp;</td> -->
+                                  <div class="col-md-3">Pelanggan :<br><input
+                                      class="form-control"
+                                      id="pelanggan"
+                                      type="text"
+                                      value=""
+                                      placeholder="Pelanggan"><br>
+                                      <a class="btn btn-primary" id="btn_dari_sampai" style="font-size: 12px; margin-top: -10px;" onclick="submitpelanggan();">
+                                          <i class="fa fa-search">Cari Pelanggan</i>
+                                      </a>
+                                    </div>
+                                  <!--<td>&nbsp;&nbsp;</td>-->
+                                  <div class="col-md-3">Debtcollector :<br><input
+                                      class="form-control"
+                                      id="debt"
+                                      type="text"
+                                      value=""
+                                      placeholder="Debtcollector">
+                                    <br><a class="btn btn-primary" style="font-size:12px; margin-top: -10px;" id="btn_dari_sampai" onclick="submitdebt();">
+                                        <i class="fa fa-search">Cari dept</i>
+                                    </a>
+                                  </div>
+                                  <!-- <td>&nbsp;&nbsp;</td> -->
+                                  <div class="col-md-3">
+                                      <a class="btn btn-primary" style="font-size:12px; margin-top: 20px;" id="btn_dari_sampai" onclick="submit();">
+                                          <i class="fa fa-search">Cari Semua</i>
+                                      </a>
+                                  </div>
+                              <!-- </tr>
+                          </table> -->
+                        <?php } ?>
+                      </div>
                         <div class="clearfix"></div><br>
                         <div class="table-responsive">
                             <table
@@ -64,20 +149,46 @@ $id_karyawan=$_SESSION['id_karyawan'];
                                 <tbody style="font-size: 13px;">
                                 <?php
 $val="";
-if (isset($_GET['tanggal']) && $_GET['tanggal']!=''){
-	$tgl = explode("-", $_GET['tanggal']);
-	$bln = $tgl[0];	$thn = $tgl[1];
-	$val.=" AND MONTH(tanggal_tagih)=$bln AND YEAR(tanggal_tagih)=$thn";
+if (!isset($_GET['dari']) && !isset($_GET['sampai']) && !isset($_GET['pelanggan']) && !isset($_GET['debt'])){
+	$val.="AND tanggal_tagih BETWEEN NOW() - INTERVAL 3 MONTH AND NOW()";
 }
-if (isset($_GET['debt']) && $_GET['debt']!=''){
-	$val.=" AND karyawan.nama_karyawan LIKE '%" .$_GET['debt']. "%'";
+if (isset($_GET['dari']) && isset($_GET['sampai']) && !isset($_GET['pelangan']) && !isset($_GET['debt'])){
+  $dari=date("Y-m-d", strtotime($_GET['dari']));
+	$sampai=date("Y-m-d", strtotime($_GET['sampai']));
+  $val = "AND penagihan.tanggal_tagih BETWEEN '$dari' AND '$sampai'";
+  //$val.=" AND karyawan.nama_karyawan LIKE '%" .$_GET['debt']. "%'";
 }
-if (isset($_GET['pelanggan']) && $_GET['pelanggan']!=''){
-	$val.=" AND pelanggan.nama_pelanggan LIKE '%" .$_GET['pelanggan']. "%'";
+if(isset($_GET['dari']) && isset($_GET['sampai']) && isset($_GET['pelangan']) && isset($_GET['debt'])) {
+  $dari=date("Y-m-d", strtotime($_GET['dari']));
+	$sampai=date("Y-m-d", strtotime($_GET['sampai']));
+  if($_GET['pelanggan'] == NULL) {
+    $val = "AND penagihan.tanggal_tagih BETWEEN '$dari' AND '$sampai' AND karyawan.nama_karyawan LIKE '%" .$_GET['debt']. "%'";
+  }else if($_GET['debt'] == NULL) {
+    $val = "AND penagihan.tanggal_tagih BETWEEN '$dari' AND '$sampai' AND pelanggan.nama_pelanggan LIKE '%" .$_GET['pelanggan']. "%'";
+  }else{
+    $val = "AND penagihan.tanggal_tagih BETWEEN '$dari' AND '$sampai' AND pelanggan.nama_pelanggan LIKE '%" .$_GET['pelanggan']. "%' AND karyawan.karyawan LIKE '%" .$_GET['debt']. "%'";
+  }
 }
-if (!isset($_GET['tanggal']) && !isset($_GET['debt']) && !isset($_GET['pelangan'])){
-	$val="AND status_tagih<>2";
+if(isset($_GET['pelanggan'])) {
+  $val = "AND pelanggan.nama_pelanggan LIKE '%" .$_GET['pelanggan']. "%'";
 }
+if(isset($_GET['debt'])) {
+  $val = "AND karyawan.nama_karyawan LIKE '%" .$_GET['debt']. "%'";
+}
+// if (isset($_GET['tanggal']) && $_GET['tanggal']!=''){
+// 	$tgl = explode("-", $_GET['tanggal']);
+// 	$bln = $tgl[0];	$thn = $tgl[1];
+// 	$val.=" AND MONTH(tanggal_tagih)=$bln AND YEAR(tanggal_tagih)=$thn";
+// }
+// if (isset($_GET['debt']) && $_GET['debt']!=''){
+// 	$val.=" AND karyawan.nama_karyawan LIKE '%" .$_GET['debt']. "%'";
+// }
+// if (isset($_GET['pelanggan']) && $_GET['pelanggan']!=''){
+// 	$val.=" AND pelanggan.nama_pelanggan LIKE '%" .$_GET['pelanggan']. "%'";
+// }
+// if (!isset($_GET['tanggal']) && !isset($_GET['debt']) && !isset($_GET['pelangan'])){
+// 	$val="AND status_tagih<>2";
+// }
 	$sql=mysqli_query($con, "SELECT *, SUM(bayar) as bayar
 FROM
     penagihan
@@ -155,9 +266,14 @@ WHERE id_jual=" .$row['id_jual']);
 			<td align="center" style="width: 130px;" class="uang">' .($total_jual-$total_bayar). '</td>
 			<td align="center" style="color: ' .$color2. '; width: 105px;">' .$tgl_jb. '</td>
 			<td align="center" style="color: ' .$color. '; width: 100px;">' .$status. '</td>
-			<td align="center" style="width: 120px;">' .$status_nota. '</td>
-			<td align="center" style="width: 110px;" class="uang">' .$row['setor']. '</td>
+			<td align="center" style="width: 120px;">' .$status_nota. '</td>';
+  if($row['setor'] != NULL) {
+    echo '<td align="center" style="width: 110px;" class="uang">' .$row['setor']. '</td>
+  </tr>';
+  }else{
+      echo '<td align="center" style="width: 110px;">' .$row['setor']. '</td>
 		</tr>';
+  }
 }
 ?>
                                 </tbody>
@@ -172,6 +288,19 @@ WHERE id_jual=" .$row['id_jual']);
 </div>
 
 <script>
+    function validasi() {
+        var startDate = new Date.parse(get_global_tanggal($('#tgl_dari').val()));
+        var endDate = new Date.parse(get_global_tanggal($('#tgl_sampai').val()));
+        if (startDate > endDate) {
+            $('#tgl_dari').val('');
+            $('#tgl_sampai').val('');
+            $('#btn_dari_sampai').attr('style', 'display:none');
+            alert("Terjadi kesalahan penulisan tanggal");
+            AndroidFunction.showToast("Terjadi kesalahan penulisan tanggal");
+        } else {
+            $('#btn_dari_sampai').removeAttr('style');
+        }
+    }
     function cari_debt_pelanggan() {
         var debt = $('#cari_debt').val();
         var pelanggan = $('#cari_pelanggan').val();
@@ -185,9 +314,23 @@ WHERE id_jual=" .$row['id_jual']);
         var url = "?page=laporan&mode=lap_histori_setoran";
         window.location = url;
     }
+    function submit() {
+        window.location = "?page=laporan&mode=lap_histori_setoran&dari=" + $('#tgl_dari').val() +
+                "&sampai=" + $('#tgl_sampai').val() + "&pelanggan=" + $('#pelanggan').val() + "&debt=" + $('#debt').val();
+    }
+    function submittgl() {
+        window.location = "?page=laporan&mode=lap_histori_setoran&dari=" + $('#tgl_dari').val() +
+                "&sampai=" + $('#tgl_sampai').val();
+    }
+    function submitpelanggan() {
+        window.location = "?page=laporan&mode=lap_histori_setoran&pelanggan=" + $('#pelanggan').val();
+    }
+    function submitdebt() {
+        window.location = "?page=laporan&mode=lap_histori_setoran&debt=" + $('#debt').val();
+    }
     $(document).ready(function () {
         $('#datepicker').datepicker(
-            {orientation: "bottom auto", format: "mm-yyyy", startView: 1, minViewMode: 1, autoclose: true}
+            {orientation: "bottom auto", format: "dd-mm-yyyy", startView: 1, minViewMode: 1, autoclose: true}
         );
         $('.uang').inputmask('currency', {
             prefix: "Rp ",
@@ -197,6 +340,24 @@ WHERE id_jual=" .$row['id_jual']);
             rightAlign: false,
             autoUnmask: true,
             removeMaskOnSubmit: true
+        });
+        $('#tgl_dari').daterangepicker({
+            locale: {
+                format: 'DD-MM-YYYY'
+            },
+            singleDatePicker: true,
+        });
+        $('#tgl_sampai').daterangepicker({
+            locale: {
+                format: 'DD-MM-YYYY'
+            },
+            singleDatePicker: true
+        });
+        $("#tgl_dari").on('change', function () {
+            validasi();
+        });
+        $("#tgl_sampai").on('change', function () {
+            validasi();
         });
     })
 </script>

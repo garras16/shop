@@ -178,7 +178,7 @@ $id_beli=$row['id_beli'];
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-building fa-fw" style="width: 48px;"></i><br>
+                                        <i class="fa fa-building fa-fw" style="width: 68px;"></i><br>
                                         <small>Supplier</small>
                                     </span>
                                     <input
@@ -192,7 +192,7 @@ $id_beli=$row['id_beli'];
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-calendar fa-fw" style="width: 48px;"></i><br>
+                                        <i class="fa fa-calendar fa-fw" style="width: 68px;"></i><br>
                                         <small>Tgl.</small>
                                     </span>
                                     <input
@@ -206,7 +206,7 @@ $id_beli=$row['id_beli'];
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-file fa-fw" style="width: 48px;"></i><br>
+                                        <i class="fa fa-file fa-fw" style="width: 68px;"></i><br>
                                         <small>No. Nota</small>
                                     </span>
                                     <input
@@ -221,7 +221,7 @@ $id_beli=$row['id_beli'];
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-money fa-fw" style="width: 48px;"></i><br>
+                                        <i class="fa fa-money fa-fw" style="width: 68px;"></i><br>
                                         <small>Jml.</small>
                                     </span>
                                     <input
@@ -236,7 +236,7 @@ $id_beli=$row['id_beli'];
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-info fa-fw" style="width: 48px;"></i><br>
+                                        <i class="fa fa-info fa-fw" style="width: 68px;"></i><br>
                                         <small>Jenis</small>
                                     </span>
                                     <input
@@ -252,7 +252,7 @@ $id_beli=$row['id_beli'];
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-money fa-fw" style="width: 48px;"></i><br>
+                                        <i class="fa fa-money fa-fw" style="width: 68px;"></i><br>
                                         <small>Sisa</small>
                                     </span>
                                     <input

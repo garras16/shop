@@ -21,7 +21,8 @@
                             <strong>Klik kolom pada tabel untuk detail.</strong>
                         </div>
                         <div class="col-md-4" style="margin-bottom: 35px;">
-                            <table>
+														<?php if(!isset($_GET['dari']) && !isset($_GET['sampai'])) {?>
+														<table>
                                 <tr>
                                     <td>Periode :<br><input
                                         class="form-control"
@@ -48,6 +49,35 @@
                                     </td>
                                 </tr>
                             </table>
+													<?php }else{ ?>
+														<table>
+                                <tr>
+                                    <td>Periode :<br><input
+                                        class="form-control"
+                                        style="width:100px"
+                                        id="tgl_dari"
+                                        type="text"
+                                        value="<?= $_GET['dari'] ?>"
+                                        placeholder="Tanggal"
+                                        readonly="readonly"></td>
+                                    <td><br>&nbsp; - &nbsp;</td>
+                                    <td><br><input
+                                        class="form-control"
+                                        style="width:100px"
+                                        id="tgl_sampai"
+                                        type="text"
+                                        value="<?= $_GET['sampai'] ?>"
+                                        placeholder="Tanggal"
+                                        readonly="readonly"></td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td><br>
+                                        <a class="btn btn-primary" id="btn_dari_sampai" onclick="submit();">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+													<?php } ?>
                         </div>
                         <div class="col-md-4" style="margin-top:-2px" align="right">
                             <table>

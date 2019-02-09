@@ -32,6 +32,7 @@
                     <!-- <div class="x_content"> <div class="alert alert-info"> <strong>Klik kolom
                     pada tabel untuk detail.</strong> </div> -->
                     <div class="clearfix"></div>
+										<?php if(!isset($_GET['dari']) && !isset($_GET['sampai'])) { ?>
                     <div
                         class="col-xs-12"
                         style="margin-bottom:30px; background:gray; padding-top:10px;padding-bottom:10px">
@@ -56,6 +57,32 @@
                             <i class="fa fa-search"></i>
                         </a>
                     </div>
+									<?php }else{ ?>
+										<div
+                        class="col-xs-12"
+                        style="margin-bottom:30px; background:gray; padding-top:10px;padding-bottom:10px">
+                        <font color="white">Cari Tanggal Bayar :
+                        </font><br/>
+                        <input
+                            style="width:100px"
+                            id="tgl_dari"
+                            type="text"
+                            value="<?= $_GET['dari'] ?>"
+                            placeholder="Tanggal"
+                            readonly="readonly">
+                        <font color="white">
+                            -
+                        </font><input
+                            style="width:100px"
+                            id="tgl_sampai"
+                            type="text"
+                            value="<?= $_GET['sampai'] ?>"
+                            placeholder="Tanggal"
+                            readonly="readonly">&nbsp;<a class="btn btn-primary btn-xs" id="btn_dari_sampai" onclick="submit();">
+                            <i class="fa fa-search"></i>
+                        </a>
+                    </div>
+									<?php } ?>
                     <div class="col-md-12">
                         <p align="right">
                             <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
@@ -208,7 +235,7 @@ if ($row['status']=='1'){
                 <input type="hidden" id="jumlah_bayar" name="jumlah_bayar" value="">
                 <div class="col-md-12">
                     <div class="input-group">
-                        <span class="input-group-addon">
+                        <span class="input-group-addon" style="padding: 2px 12px;">
                             <i class="fa fa-file fa-fw"></i><br>
                             <small>No. Nota Jual</small>
                         </span>
@@ -287,8 +314,8 @@ GROUP BY id_jual");
                         </span>
                     </div>
                     <div class="input-group">
-                        <span class="input-group-addon">
-                            <i class="fa fa-money fa-fw"></i><br>
+                        <span class="input-group-addon" style="padding: 2px 12px;">
+                            <i class="fa fa-money fa-fw" style="width: 72px;"></i><br>
                             <small>Jenis</small>
                         </span>
                         <select id="jenis" name="jenis" class="select2 form-control" required="true">
@@ -303,7 +330,9 @@ GROUP BY id_jual");
                         </span>
                     </div>
                     <div class="input-group">
-                        <span class="input-group-addon">Sisa Piutang (Rp)</span>
+                        <span class="input-group-addon">
+													<i class="fa fa-fw" style="width:72px;"><small>Sisa Piutang</small></i>
+												</span>
                         <input
                             class="form-control"
                             id="piutang"

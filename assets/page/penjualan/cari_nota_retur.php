@@ -29,10 +29,10 @@ if (isset($id)){
                         <center>
                             <form action="" method="post">
                                 <input type="hidden" name="cari_nota_retur_jual_post" value="true">
-                                <div class="col-xs-6">
+                                <div class="col-md-6">
                                     <div class="input-group">
                                         <span class="input-group-addon">
-                                            <i class="fa fa-building fa-fw"></i><br>
+                                            <i class="fa fa-building fa-fw" style="width: 68px;"></i><br>
                                             <small>Pelanggan</small>
                                         </span>
                                         <input
@@ -48,11 +48,11 @@ if (isset($id)){
                                         </span>
                                     </div>
                                 </div>
-                                <div class="col-xs-6">
+                                <div class="col-md-6">
                                     <div class="input-group">
                                         <span class="input-group-addon">
-                                            <i class="fa fa-file fa-fw"></i><br>
-                                            <small style="font-size: 10px;">Tgl. Nota Jual</small>
+                                            <i class="fa fa-file fa-fw" style="width: 64px;"></i><br>
+                                            <small style="font-size: 11px;">Tgl. Nota Jual</small>
                                         </span>
                                         <input
                                             class="form-control"
@@ -63,11 +63,11 @@ if (isset($id)){
                                             value="<?php if (isset($tgl_nota)) echo $tgl_nota ?>">
                                     </div>
                                 </div>
-                                <div class="col-xs-6">
+                                <div class="col-md-6">
                                     <div class="input-group">
                                         <span class="input-group-addon">
-                                            <i class="fa fa-truck fa-fw"></i><br>
-                                            <small>Tgl. Kirim</small>
+                                            <i class="fa fa-truck fa-fw" style="width: 64px;"></i>
+                                            <small><br>Tgl. Kirim</small>
                                         </span>
                                         <input
                                             class="form-control"
@@ -78,10 +78,10 @@ if (isset($id)){
                                             value="<?php if (isset($tgl_kirim)) echo $tgl_kirim ?>">
                                     </div>
                                 </div>
-                                <div class="col-xs-6">
+                                <div class="col-md-6">
                                     <div class="input-group">
                                         <span class="input-group-addon">
-                                            <i class="fa fa-bookmark fa-fw"></i><br>
+                                            <i class="fa fa-bookmark fa-fw" style="width: 68px;"></i><br>
                                             <small>Barang</small>
                                         </span>
                                         <input
@@ -110,7 +110,7 @@ if (isset($id)){
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div id="table_content" class="x_content">
-                        <table id="table2" class="table table-bordered table-striped">
+                        <table id="table2" class="table table-bordered table-striped" style="min-width: 1200px;">
                             <thead>
                                 <tr>
                                     <th>Tgl. Nota Jual</th>
@@ -151,19 +151,19 @@ $val.=" AND barang.nama_barang LIKE '%" .$barang. "%'";
 $sql=mysqli_query($con, "SELECT *
 FROM
     jual
-    INNER JOIN pelanggan 
+    INNER JOIN pelanggan
         ON (jual.id_pelanggan = pelanggan.id_pelanggan)
-    LEFT JOIN pengiriman 
+    LEFT JOIN pengiriman
         ON (pengiriman.id_jual = jual.id_jual)
-    INNER JOIN jual_detail 
+    INNER JOIN jual_detail
         ON (pengiriman.id_jual = jual_detail.id_jual)
-    INNER JOIN harga_jual 
+    INNER JOIN harga_jual
         ON (harga_jual.id_pelanggan = pelanggan.id_pelanggan) AND (jual_detail.id_harga_jual = harga_jual.id_harga_jual)
-    INNER JOIN barang_supplier 
+    INNER JOIN barang_supplier
         ON (harga_jual.id_barang_supplier = barang_supplier.id_barang_supplier)
-    INNER JOIN barang 
+    INNER JOIN barang
         ON (barang_supplier.id_barang = barang.id_barang)
- WHERE $val  
+ WHERE $val
  GROUP BY jual.id_jual
  ORDER BY jual.id_jual DESC");
 	while ($row=mysqli_fetch_array($sql)){

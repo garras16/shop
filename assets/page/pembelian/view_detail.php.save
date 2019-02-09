@@ -203,7 +203,7 @@ FROM
 				if ($_SESSION['posisi']=="DIREKSI" or $_SESSION['posisi']=="OWNER"){
 					echo '<p align="right"><a data-toggle="modal" data-target="#myModal" data-id-beli="<?php echo $id ?>" data-id-supplier="<?php echo $id_supplier ?>" class="btn btn-warning"><i class="fa fa-plus"></i> Tambah Data</a></p>';
 				}
-			?>
+				>
                         <div class="table responsive">
                             <table
                                 id="table1"
@@ -334,11 +334,11 @@ $sql2=mysqli_query($con, "SELECT * FROM barang_masuk WHERE id_beli_detail=$id_be
 	}
 	echo '</tr>';
 }
+$ppn_all_rp=$jumlah*($ppn_all_persen/100);
 $diskon_all_rp=$jumlah*($diskon_all_persen/100);
-$ppn_all_rp=($jumlah-$diskon_all_rp)*($ppn_all_persen/100);
 $jumlah_akhir=$jumlah-$diskon_all_rp+$ppn_all_rp;
-$total_datang=$total_datang-($total_datang*($diskon_all_persen/100));
 $total_datang=$total_datang+($total_datang*($ppn_all_persen/100));
+$total_datang=$total_datang-($total_datang*($diskon_all_persen/100));
 ?>
 
                                 </tbody>
@@ -508,10 +508,10 @@ FROM
 		ON (satuan.id_satuan=barang.id_satuan)
 WHERE
 	barang_supplier.id_supplier=$id_supplier");
-					while($row=mysqli_fetch_array($sql)){
-						echo '<option data-satuan="' .$row['nama_satuan']. '" value="' .$row['id_barang_supplier']. '">' .$row['nama_barang']. '</option>';
-					}
-			?>
+								while($row=mysqli_fetch_array($sql)){
+									echo '<option data-satuan="' .$row['nama_satuan']. '" value="' .$row['id_barang_supplier']. '">' .$row['nama_barang']. '</option>';
+								}
+							?>
                             </select>
                             <span class="input-group-addon">
                                 <i class="fa fa-star fa-fw" style="color:red"></i>
@@ -757,7 +757,7 @@ WHERE
                             maxlength="6"
                             placeholder="Diskon Nota Beli (%)"
                             title="Diskon Nota Beli (%)"
-                            value="<?php echo ($diskon_nota*100); ?>">
+                            value="<?php echo $diskon_nota*100 ?>">
                         <span class="input-group-addon">%</span>
                     </div>
                     <div class="input-group">

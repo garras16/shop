@@ -172,7 +172,7 @@ $grand = $total_nota+($total_nota*($row['ppn_all_persen']/100));
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-building fa-fw" style="width:72px;"></i><br>
+                                        <i class="fa fa-building fa-fw" style="width:67px;"></i><br>
                                         <small>Pelanggan</small>
                                     </span>
                                     <input
@@ -186,7 +186,7 @@ $grand = $total_nota+($total_nota*($row['ppn_all_persen']/100));
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-calendar fa-fw" style="width:72px;"></i><br>
+                                        <i class="fa fa-calendar fa-fw" style="width:67px;"></i><br>
                                         <small>Tgl. Nota</small>
                                     </span>
                                     <input
@@ -200,8 +200,8 @@ $grand = $total_nota+($total_nota*($row['ppn_all_persen']/100));
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-file fa-fw" style="width:72px;"></i><br>
-                                        <small>No. Nota Jual</small>
+                                        <i class="fa fa-file fa-fw" style="width:67px;"></i><br>
+                                        <small style="font-size: 11px;">No. Nota Jual</small>
                                     </span>
                                     <input
                                         class="form-control"
@@ -215,8 +215,8 @@ $grand = $total_nota+($total_nota*($row['ppn_all_persen']/100));
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-money fa-fw" style="width:72px;"></i><br>
-                                        <small>Ttl. Nota Jual</small>
+                                        <i class="fa fa-money fa-fw" style="width:67px;"></i><br>
+                                        <small style="font-size: 11px;">Ttl. Nota Jual</small>
                                     </span>
                                     <input
                                         class="form-control"
@@ -230,7 +230,7 @@ $grand = $total_nota+($total_nota*($row['ppn_all_persen']/100));
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-info fa-fw" style="width:60px;"></i><br>
+                                        <i class="fa fa-info fa-fw" style="width:67px;"></i><br>
                                         <small>Jenis</small>
                                     </span>
                                     <input
@@ -246,7 +246,7 @@ $grand = $total_nota+($total_nota*($row['ppn_all_persen']/100));
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-money fa-fw" style="width:60px;"></i><br>
+                                        <i class="fa fa-money fa-fw" style="width:67px;"></i><br>
                                         <small>Sisa</small>
                                     </span>
                                     <input
@@ -262,7 +262,7 @@ $grand = $total_nota+($total_nota*($row['ppn_all_persen']/100));
                             <div class="col-md-12">
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-money fa-fw" style="width:60px;"></i><br>
+                                        <i class="fa fa-money fa-fw" style="width:67px;"></i><br>
                                         <small>Jml. Bayar</small>
                                     </span>
                                 <?php

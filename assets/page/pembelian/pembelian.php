@@ -30,10 +30,10 @@ if (isset($tambah_pembelian_post)){
                     <div class="x_title">
                         <h3>PEMBELIAN</h3>
                         <?php
-							if (isset($pesan)){
-								echo '<span class="badge bg-' .$warna. '">' .$pesan. '</span>';
-							}
-						?>
+			     if (isset($pesan)){
+				echo '<span class="badge bg-' .$warna. '">' .$pesan. '</span>';
+			     }
+                        ?>
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
@@ -41,7 +41,38 @@ if (isset($tambah_pembelian_post)){
                             <strong>Klik kolom pada tabel untuk detail.</strong>
                         </div>
                         <div class="col-md-4">
+													<?php
+													if(isset($_GET['sampai']) && isset($_GET['dari'])) {
+													 ?>
                             <table>
+                                <tr>
+                                    <td>Cari Tanggal :<br><input
+                                        class="form-control"
+                                        style="width:100px"
+                                        id="tgl_dari"
+                                        type="text"
+                                        value="<?= $_GET['dari'] ?>"
+                                        placeholder="Tanggal"
+                                        readonly="readonly"></td>
+                                    <td><br>&nbsp; - &nbsp;</td>
+                                    <td><br><input
+                                        class="form-control"
+                                        style="width:100px"
+                                        id="tgl_sampai"
+                                        type="text"
+                                        value="<?= $_GET['sampai'] ?>"
+                                        placeholder="Tanggal"
+                                        readonly="readonly"></td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td><br>
+                                        <a class="btn btn-primary" id="btn_dari_sampai" onclick="submit();">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+													<?php }else{ ?>
+														<table>
                                 <tr>
                                     <td>Cari Tanggal :<br><input
                                         class="form-control"
@@ -68,6 +99,7 @@ if (isset($tambah_pembelian_post)){
                                     </td>
                                 </tr>
                             </table>
+													<?php } ?>
                         </div>
                         <div class="col-md-4">
                             <table>
@@ -194,8 +226,8 @@ FROM
 WHERE beli.id_beli=$id_beli");
 $s=mysqli_fetch_array($sql3);
 $total_datang=$s['total_datang']+($s['total_datang']*$s['ppn_all_persen']/100);
-	echo '			<tr>
-						<td><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '"><div style="min-width:70px">' .date("d-m-Y", strtotime($row['tanggal'])). '</div></a></td>
+	echo '<tr>
+		<td><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '"><div style="min-width:70px">' .date("d-m-Y", strtotime($row['tanggal'])). '</div></a></td>
 						<td><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '"><div style="min-width:70px">' .$row['no_nota_beli']. '</div></a></td>
 						<td><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '"><div style="min-width:70px">' .$row['nama_supplier']. '</div></a></td>
 						<td align="right"><a href="?page=pembelian&mode=view_detail&id=' .$row['id_beli']. '"><div style="min-width:70px" class="uang">' .$total_beli. '</div></a></td>
@@ -258,11 +290,11 @@ $total_datang=$s['total_datang']+($s['total_datang']*$s['ppn_all_persen']/100);
                             <select name="id_supplier" class="select2 form-control" required="true">
                                 <option value="" disabled="disabled" selected="selected">-= Pilih Supplier =-</option>
                                 <?php
-								$cust=mysqli_query($con, "SELECT id_supplier, nama_supplier FROM supplier");
-								while($b=mysqli_fetch_array($cust)){
-									echo '<option value="' .$b['id_supplier']. '">' .$b['nama_supplier']. '</option>';
-								}
-							?>
+				    $cust=mysqli_query($con, "SELECT id_supplier, nama_supplier FROM supplier");
+				    while($b=mysqli_fetch_array($cust)){
+					echo '<option value="' .$b['id_supplier']. '">' .$b['nama_supplier']. '</option>';
+				    }
+				?>
                             </select>
                             <span class="input-group-addon">
                                 <i class="fa fa-star fa-fw" style="color:red"></i>
